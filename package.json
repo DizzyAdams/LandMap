@@ -1,0 +1,11 @@
+{
+  "name": "landmap",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "db:migrate": "pnpm -F db migrate",
+    "pipeline:run": "pnpm -F llm run"
+  }
+}
