@@ -7,4 +7,4 @@
   - [x] dashboard: streamlit live mods conectado a /stats, /cities, /compare (scripts/live_dashboard.py)
   - [x] kpis: skills de mercado financeiro com réguas Claude/JPMorgan/Quantum (packages/api /kpi + packages/llm kpi)
 - [x] safety/commit-prep. Corrigir .gitignore (node_modules/build/logs), author streamlit dashboard, atualizar todos (concluído)
-- [>] design-audit. Auditoria de design + melhorias "fora do comum" (in_progress)
+- [x] design-audit. Auditoria de design + melhorias "fora do comum" (concluído: cursor, aurora+grain, gradiente dual, spotlight cards, marquee, monograma SVG, focus-visible)
