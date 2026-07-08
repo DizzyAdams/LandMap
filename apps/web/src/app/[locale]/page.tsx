@@ -25,6 +25,10 @@ export default async function LocaleHomePage() {
       {/* Ambient glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] bg-[radial-gradient(40rem_30rem_at_50%_-10%,rgba(52,211,153,0.10),transparent_70%)]" />
 
+      {/* Surreal layer: bioluminescent aurora + film grain */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[70rem] aurora opacity-70" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grain opacity-[0.05] mix-blend-overlay" />
+
       {/* Hero */}
       <Reveal className="relative mx-auto max-w-6xl px-6 pt-32 pb-20">
         <div className="max-w-2xl">
@@ -109,6 +113,43 @@ export default async function LocaleHomePage() {
           </Stagger>
         </Reveal>
       )}
+
+      {/* Agentes & Skills — todas online */}
+      <Reveal delay={0.1} className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <h2 className="text-lg font-medium">Agentes &amp; Skills — todas online</h2>
+            <p className="mt-1 text-sm text-neutral-500">Ecossistema vivo: IA, automação e dados operando em produção.</p>
+          </div>
+          <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+            All systems live
+          </span>
+        </div>
+        <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { href: './sales', title: 'Agente de Vendas', desc: 'Esquadrão de 6 agentes: prospecção → fechamento.', tag: '6 agentes' },
+            { href: './chat', title: 'Chat RAG (IA grátis)', desc: 'Pergunte sobre imóveis. MiniMax via Puter.js.', tag: 'LLM' },
+            { href: './map', title: 'Mapa Interativo', desc: 'Leaflet com pins, clusters e geocodificação.', tag: 'Geo' },
+            { href: './compare', title: 'Comparador', desc: 'Diff de preço, área e quartos entre imóveis.', tag: 'Diff' },
+            { href: './studio', title: 'Studio (IA & Design)', desc: 'Geração de copy e variações de marca.', tag: 'GenAI' },
+            { href: './favorites', title: 'Favoritos & Alertas', desc: 'Salve e receba alertas por filtro.', tag: 'Sync' },
+            { href: './status', title: 'Status & Live', desc: 'Telemetria ao vivo das skills e pipeline.', tag: 'Live' },
+            { href: './calculator', title: 'Calculadora', desc: 'Simule financiamento e ROI.', tag: 'Fin' },
+          ].map((s) => (
+            <SpotlightCard key={s.href} className="p-5">
+              <Link href={s.href} className="group block h-full">
+                <div className="flex items-center justify-between">
+                  <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+                  <span className="rounded-md border border-neutral-800 px-2 py-0.5 text-[10px] uppercase tracking-wide text-neutral-500">{s.tag}</span>
+                </div>
+                <p className="mt-3 text-sm font-medium text-neutral-100 transition group-hover:text-white">{s.title}</p>
+                <p className="mt-1 text-xs text-neutral-500">{s.desc}</p>
+              </Link>
+            </SpotlightCard>
+          ))}
+        </Stagger>
+      </Reveal>
 
       {/* CTA */}
       <Reveal className="border-t hairline">

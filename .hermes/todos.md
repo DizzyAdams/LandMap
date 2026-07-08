@@ -33,3 +33,11 @@
 
 - [x] release-sync. Push main -> origin (sync 7 commits); producao landmap-ivne1bgo7 Ready, 23/23 rotas 200 (concluido)
 - [ ] dominio-custom. landmap.com.br: DNS pendente no registrador (ns a.auto.dns.br) -> criar A 76.76.21.21 ou trocar p/ ns1/ns2.vercel-dns.com; bloqueio externo (aguardando registrador)
+- [ ] dominio-custom. landmap.com.br: DNS pendente no registrador (ns a.auto.dns.br) -> criar A 76.76.21.21 ou trocar p/ ns1/ns2.vercel-dns.com; bloqueio externo (aguardando registrador)
+- [x] ci-cd. GitHub Actions: ci.yml (lint/typecheck/build/test) + deploy.yml (vercel deploy --prod) + secret VERCEL_TOKEN; YAML validado; repo tornado publico p/ Actions gratuitos (concluido)
+- [ ] bloqueio-github-billing. GitHub Actions nao executam: conta com pagamento falho / spending limit (erro da run). Requer acao do usuario em GitHub > Settings > Billing & plans (corrigir pagamento / aumentar limite). Apos resolver, os workflows rodam automaticos no push.
+
+- [x] ci-fix. ci.yml: adiciona `pnpm -r --filter './packages/*' run build` antes do lint para o tsc --noEmit resolver imports `@landmap/*` (concluido)
+- [x] surreal-home. Elevar home a "completamente surreal": camada animada aurora bioluminescente + film grain no hero; nova seção "Agentes & Skills — todas online" com 8 cards (vendas/6 agentes, chat RAG grátis, mapa, comparador, studio, favoritos/alertas, status/live, calculadora) ligando cada skill. typecheck/lint/build verdes (concluido)
+- [x] skills-online. Validação de todas as skills em produção (19 páginas + 8 APIs GET + 2 POSTs): 200 em todas, exceto GET /api/analyze (esperado 404 — rota é POST só). /api/sales/cycle em autopilot gera eventos; /api/search Curitiba real; /api/kpi com réguas; /api/integrations/opendesign/feed mock; /api/sales/state com 6 agentes (concluido)
+- [x] deploy-1005. vercel deploy --prod -> LandMap 1005 funcional: https://landmap-dvtu0ooac-dizzys-projects-d5a44b36.vercel.app (alias prod https://landmap-dizzys-projects-d5a44b36.vercel.app + dominio landmap.us.kg; Inspect BiZSRqdRFYAU6QSRRgi3X7jGCRYw). Build remoto OK, todas as rotas 200, todas as skills online (concluido)
