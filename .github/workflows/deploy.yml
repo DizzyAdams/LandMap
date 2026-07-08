@@ -1,11 +1,13 @@
 name: Deploy
 
+# Só roda após o CI passar (production só recebe código verde).
 on:
-  push:
+  workflow_run:
+    workflows: ["CI"]
     branches: [main]
+    types: [completed]
   workflow_dispatch:
 
-# Permissions mínimas necessárias.
 permissions:
   contents: read
 
@@ -15,16 +17,25 @@ env:
 
 jobs:
   deploy:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Configure Vercel auth
+        # O CLI do Vercel v54 rejeita JWT passado via --token; gravar o token
+        # na session store faz o CLI autenticar normalmente.
+        run: |
+          mkdir -p ~/.local/share/com.vercel.cli ~/.vercel
+          printf '{"configurationVersion":1,"token":"%s"}' "$VERCEL_TOKEN" > ~/.local/share/com.vercel.cli/auth.json
+          printf '{"configurationVersion":1,"token":"%s"}' "$VERCEL_TOKEN" > ~/.vercel/auth.json
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
       - name: Deploy to Vercel (production)
         # `vercel deploy --prod` faz o build remoto usando vercel.json
         # (pnpm install + build dos pacotes + next build). Nenhum passo
-        # manual necessário: todo push em main publica em produção.
-        run: npx vercel deploy --prod --token "$VERCEL_TOKEN" --yes --scope "$VERCEL_ORG_ID"
-        env:
-          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+        # manual necessário: a cada push em main com CI verde, publica em produção.
+        run: npx vercel deploy --prod --yes --scope "$VERCEL_ORG_ID"
 

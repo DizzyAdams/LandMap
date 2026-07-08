@@ -6,7 +6,7 @@ const execAsync = promisify(exec)
 
 describe('apps/docs', () => {
   it('docs package scaffold responds to build script', async () => {
-    const result = await execAsync('pnpm --filter @landmap/docs run build', { cwd: 'C:/Users/forrydev/Desktop/LandMap' })
+    const result = await execAsync('pnpm --filter @landmap/docs run build', { cwd: process.cwd() })
     expect(result.stdout).toContain('docs package scaffold')
   })
 })
