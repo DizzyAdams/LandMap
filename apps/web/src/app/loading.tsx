@@ -1,9 +1,17 @@
+import { Logo } from '../components/Logo';
+
 export default function RootLoading() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#050505]">
+    <div className="relative flex min-h-screen flex-col">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0 aurora" />
+        <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+      </div>
+
       {/* Skeleton header */}
       <header className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-        <div className="h-4 w-20 animate-pulse rounded bg-neutral-800" />
+        <Logo className="h-6 w-6" />
         <div className="flex gap-4">
           <div className="h-4 w-12 animate-pulse rounded bg-neutral-800" />
           <div className="h-4 w-14 animate-pulse rounded bg-neutral-800" />
@@ -54,3 +62,4 @@ export default function RootLoading() {
     </div>
   );
 }
+

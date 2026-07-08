@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { Logo } from '../components/Logo';
 
 export default function Error({
   error,
@@ -10,9 +11,15 @@ export default function Error({
   reset: () => void;
 }) {
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-[#050505] px-6">
-      <span className="text-7xl font-bold tracking-tight text-neutral-800">500</span>
-      <h1 className="mt-4 text-xl font-medium text-neutral-100">Algo deu errado</h1>
+    <div className="relative flex min-h-screen flex-col items-center justify-center px-6">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0 aurora" />
+        <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+      </div>
+      <Logo className="h-10 w-10" />
+      <span className="mt-8 text-8xl font-bold tracking-tight text-gradient">500</span>
+      <h1 className="mt-2 text-xl font-medium text-neutral-100">Algo deu errado</h1>
       <p className="mt-2 max-w-md text-center text-sm text-neutral-500">
         Ocorreu um erro inesperado. Nossa equipe foi notificada e estamos trabalhando
         para resolver o problema.
@@ -20,7 +27,7 @@ export default function Error({
       <div className="mt-8 flex items-center gap-3">
         <button
           onClick={reset}
-          className="inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
+          className="glow-emerald inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
         >
           Tentar novamente
         </button>
@@ -34,3 +41,4 @@ export default function Error({
     </div>
   );
 }
+

@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Logo } from '../../../components/Logo';
+import { SpotlightCard } from '../../../components/SpotlightCard';
 
 type ServiceStatus = 'UP' | 'DOWN' | 'DEGRADED';
 
@@ -70,10 +72,16 @@ export default function StatusPage() {
   const overallConfig = statusConfig[overall];
 
   return (
-    <div className="min-h-screen bg-[#050505]">
+    <div className="relative min-h-screen">
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0 aurora" />
+        <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+      </div>
       <div className="mx-auto max-w-3xl px-6 py-20">
         {/* Overall status */}
         <div className="text-center">
+          <Logo className="mx-auto mb-6 h-10 w-10" />
           <div className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/40 px-4 py-1.5">
             <span
               className={`h-2 w-2 rounded-full ${
@@ -101,9 +109,9 @@ export default function StatusPage() {
           {services.map((service) => {
             const cfg = statusConfig[service.status];
             return (
-              <div
+              <SpotlightCard
                 key={service.id}
-                className="flex items-center justify-between rounded-xl border border-neutral-800 bg-neutral-900/40 px-5 py-4"
+                className="flex items-center justify-between px-5 py-4"
               >
                 <div className="flex items-center gap-3">
                   <span
@@ -124,7 +132,7 @@ export default function StatusPage() {
                     {new Date(service.lastCheck).toLocaleTimeString('pt-BR')}
                   </span>
                 </div>
-              </div>
+              </SpotlightCard>
             );
           })}
         </div>
