@@ -4,7 +4,14 @@
  */
 export function Logo({ className = '' }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={className} fill="none" aria-hidden role="img">
+    <svg
+      viewBox="0 0 32 32"
+      className={className}
+      fill="none"
+      aria-hidden
+      role="img"
+      style={{ filter: 'drop-shadow(0 0 6px rgba(52,211,153,0.45))' }}
+    >
       <defs>
         <linearGradient id="lm-grad" x1="2" y1="2" x2="30" y2="30" gradientUnits="userSpaceOnUse">
           <stop stopColor="#34d399" />

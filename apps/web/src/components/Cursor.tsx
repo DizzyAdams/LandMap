@@ -59,12 +59,16 @@ export function Cursor() {
         ref={auraRef}
         aria-hidden
         data-hover="0"
-        className="cursor-aura pointer-events-none fixed left-0 top-0 z-[60] h-8 w-8 rounded-full bg-emerald-400/30 blur-md transition-[width,height,background-color] duration-200 data-[hover='1']:h-14 data-[hover='1']:w-14 data-[hover='1']:bg-emerald-300/20"
+        className="cursor-aura pointer-events-none fixed left-0 top-0 z-[60] h-10 w-10 rounded-full blur-lg mix-blend-screen transition-[width,height] duration-200 data-[hover='1']:h-16 data-[hover='1']:w-16"
+        style={{
+          background:
+            'radial-gradient(50% 50% at 50% 50%, rgba(52,211,153,0.55), rgba(34,211,238,0.30) 55%, transparent 72%)',
+        }}
       />
       <div
         ref={dotRef}
         aria-hidden
-        className="pointer-events-none fixed left-0 top-0 z-[61] h-1.5 w-1.5 rounded-full bg-emerald-300 shadow-[0_0_12px_rgba(52,211,153,0.9)]"
+        className="pointer-events-none fixed left-0 top-0 z-[61] h-2 w-2 rounded-full bg-emerald-200 shadow-[0_0_16px_rgba(52,211,153,1)] ring-2 ring-cyan-300/40"
       />
     </>
   );

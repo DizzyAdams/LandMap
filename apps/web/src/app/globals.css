@@ -110,16 +110,25 @@ body {
 
 .aurora {
   background:
-    radial-gradient(50rem 35rem at 12% -10%, rgba(34, 211, 238, 0.10), transparent 60%),
-    radial-gradient(45rem 35rem at 92% 0%, rgba(167, 139, 250, 0.08), transparent 55%),
-    radial-gradient(60rem 40rem at 50% 115%, rgba(52, 211, 153, 0.10), transparent 60%);
-  filter: blur(8px);
+    radial-gradient(48rem 34rem at 8% -12%, rgba(34, 211, 238, 0.16), transparent 60%),
+    radial-gradient(42rem 32rem at 94% -8%, rgba(167, 139, 250, 0.10), transparent 55%),
+    radial-gradient(66rem 46rem at 50% 120%, rgba(52, 211, 153, 0.18), transparent 60%);
+  filter: blur(10px);
+  animation: aurora-drift 20s ease-in-out infinite alternate;
+}
+@keyframes aurora-drift {
+  from {
+    transform: translate3d(-2%, -1%, 0) scale(1);
+  }
+  to {
+    transform: translate3d(2%, 1%, 0) scale(1.05);
+  }
 }
 
 /* Dual-tone signature gradient for headlines / accents (overrides the
    earlier monochrome gradient so existing .text-gradient gets the new look). */
 .text-gradient {
-  background: linear-gradient(100deg, #ffffff 0%, #a7f3d0 38%, #67e8f9 72%, #c4b5fd 100%);
+  background: linear-gradient(100deg, #ffffff 0%, #6ee7b7 28%, #34d399 52%, #22d3ee 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -127,9 +136,9 @@ body {
 
 .glow-dual {
   box-shadow:
-    0 0 0 1px rgba(52, 211, 153, 0.18),
-    0 10px 50px -12px rgba(34, 211, 238, 0.30),
-    0 8px 40px -12px rgba(52, 211, 153, 0.25);
+    0 0 0 1px rgba(52, 211, 153, 0.22),
+    0 12px 60px -12px rgba(34, 211, 238, 0.38),
+    0 10px 48px -12px rgba(52, 211, 153, 0.32);
 }
 
 /* Accessible, on-brand focus rings */
@@ -149,5 +158,6 @@ body {
 }
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
+  .aurora { animation: none; }
 }
 

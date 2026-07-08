@@ -27,14 +27,14 @@ export function SpotlightCard({
     <div
       ref={ref}
       onPointerMove={onMove}
-      className={`spotlight-card group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 transition-colors hover:border-neutral-600 ${className}`}
+      className={`spotlight-card group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.35)] ${className}`}
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background:
-            'radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), rgba(52,211,153,0.14), transparent 60%)',
+            'radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(52,211,153,0.20), rgba(34,211,238,0.10) 42%, transparent 66%)',
         }}
       />
       <div className="relative">{children}</div>
