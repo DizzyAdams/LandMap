@@ -23,7 +23,7 @@ export function AdminSidebar() {
 
   return (
     <aside
-      className={`flex flex-col border-r border-neutral-800 bg-neutral-900/40 transition-all duration-200 ${
+      className={`hidden md:flex flex-col border-r border-neutral-800 bg-neutral-900/40 transition-all duration-200 ${
         collapsed ? 'w-16' : 'w-56'
       }`}
     >
@@ -57,6 +57,7 @@ export function AdminSidebar() {
                   : 'text-neutral-400 hover:bg-neutral-800/50 hover:text-neutral-200'
               }`}
               title={link.label}
+              aria-current={active ? 'page' : undefined}
             >
               <span className="shrink-0 text-base">{link.icon}</span>
               {!collapsed && <span>{link.label}</span>}

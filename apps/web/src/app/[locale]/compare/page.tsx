@@ -1,5 +1,7 @@
 import Link from 'next/link';
 import { LANDMAP_API_BASE, type Property } from '../../../lib/api';
+import { EmptyState, Button } from '@landmap/ui';
+import { Reveal } from '../../../components/Motion';
 
 export const dynamic = 'force-dynamic';
 
@@ -42,7 +44,7 @@ export default async function ComparePage({
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] px-6 py-10">
+    <main className="min-h-screen grid-bg px-6 py-16">
       <div className="mx-auto max-w-6xl">
         <Link
           href={`/${locale}/search`}
@@ -51,25 +53,30 @@ export default async function ComparePage({
           ← Voltar para busca
         </Link>
 
-        <h1 className="mt-4 text-2xl font-semibold tracking-tight text-neutral-50">
+        <h1 className="mt-4 text-2xl font-semibold tracking-tight text-gradient">
           Comparar imóveis
         </h1>
 
         {idList.length === 0 && (
-          <p className="mt-6 text-sm text-neutral-400">
-            Nenhum imóvel selecionado para comparação. Adicione IDs na URL:{' '}
-            <code className="text-neutral-300">?ids=1,2,3</code>
-          </p>
+          <EmptyState
+            title="Nenhum imóvel selecionado"
+            description="Adicione IDs na URL para comparar, por exemplo ?ids=1,2,3."
+          >
+            <Link href={`/${locale}/search`}>
+              <Button className="mt-4">Buscar imóveis</Button>
+            </Link>
+          </EmptyState>
         )}
 
         {idList.length > 0 && properties.length === 0 && (
-          <p className="mt-6 text-sm text-neutral-400">
-            Nenhum imóvel encontrado para os IDs informados.
-          </p>
+          <EmptyState
+            title="Nenhum imóvel encontrado"
+            description="Não localizamos imóveis para os IDs informados. Verifique a URL."
+          />
         )}
 
         {properties.length > 0 && (
-          <div className="mt-6 overflow-x-auto">
+          <Reveal className="mt-6 overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="border-b border-white/10 text-left text-xs text-neutral-400">
@@ -103,7 +110,7 @@ export default async function ComparePage({
                 ))}
               </tbody>
             </table>
-          </div>
+          </Reveal>
         )}
       </div>
     </main>

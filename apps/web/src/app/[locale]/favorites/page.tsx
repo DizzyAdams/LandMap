@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { Button, Card } from '@landmap/ui';
+import { Button, Card, EmptyState } from '@landmap/ui';
+import { Reveal, Stagger } from '../../../components/Motion';
 
 interface Favorite {
   id: string;
@@ -40,7 +41,7 @@ export default function FavoritesPage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-screen bg-[#050505] px-6 py-10">
+      <main className="min-h-screen grid-bg px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
             Favoritos
@@ -51,27 +52,29 @@ export default function FavoritesPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] px-6 py-10">
+    <main className="min-h-screen grid-bg px-6 py-16">
       <div className="mx-auto max-w-6xl">
-        <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
-          Favoritos
-        </h1>
-        <p className="mt-1 text-sm text-neutral-400">
-          {favorites.length} imóve{favorites.length === 1 ? 'l' : 'is'} salvo
-         {favorites.length === 1 ? '' : 's'}
-        </p>
+        <Reveal>
+          <h1 className="text-2xl font-semibold tracking-tight text-gradient">
+            Favoritos
+          </h1>
+          <p className="mt-1 text-sm text-neutral-400">
+            {favorites.length} imóve{favorites.length === 1 ? 'l' : 'is'} salvo
+           {favorites.length === 1 ? '' : 's'}
+          </p>
+        </Reveal>
 
         {favorites.length === 0 ? (
-          <Card variant="default" className="mt-8 text-center text-neutral-500">
-            <p>Nenhum imóvel favoritado ainda.</p>
+          <EmptyState
+            title="Nenhum imóvel favoritado ainda"
+            description="Explore o catálogo e salve seus imóveis preferidos para compará-los depois."
+          >
             <Link href={`/${locale}/search`}>
-              <Button variant="default" className="mt-4">
-                Buscar imóveis
-              </Button>
+              <Button className="mt-4">Buscar imóveis</Button>
             </Link>
-          </Card>
+          </EmptyState>
         ) : (
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {favorites.map((fav) => (
               <Card key={fav.id} variant="interactive">
                 <Link href={`/${locale}/property/${fav.id}`} className="block">
@@ -97,7 +100,7 @@ export default function FavoritesPage() {
                 </button>
               </Card>
             ))}
-          </div>
+          </Stagger>
         )}
       </div>
     </main>

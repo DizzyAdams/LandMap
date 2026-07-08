@@ -2,6 +2,8 @@
 
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { Reveal, Stagger } from '../../../components/Motion';
+import { SpotlightCard } from '../../../components/SpotlightCard';
 
 const PLANS = [
   {
@@ -77,28 +79,30 @@ export default function PricingPage() {
     <div className="min-h-screen bg-[#050505]">
       <div className="mx-auto max-w-6xl px-6 py-20">
         {/* Header */}
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold tracking-tight text-neutral-50">
+        <Reveal className="text-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-xs font-medium tracking-wide text-emerald-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+            Preços em reais (BRL) · Sem fidelidade
+          </span>
+          <h1 className="mt-6 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
             Planos e Preços
           </h1>
           <p className="mt-3 text-sm text-neutral-500">
             Escolha o plano ideal para o seu negócio
           </p>
-        </div>
+        </Reveal>
 
         {/* Cards */}
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
+        <Stagger className="mt-12 grid gap-6 md:grid-cols-3">
           {PLANS.map((plan) => (
-            <div
+            <SpotlightCard
               key={plan.name}
-              className={`relative rounded-2xl border p-6 transition ${
-                plan.highlight
-                  ? 'border-neutral-600 bg-neutral-900/60 shadow-lg shadow-neutral-900/50'
-                  : 'border-neutral-800 bg-neutral-900/40 hover:border-neutral-700'
+              className={`flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1 ${
+                plan.highlight ? 'glow-dual ring-1 ring-emerald-400/40' : ''
               }`}
             >
               {plan.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full bg-neutral-50 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-[#050505]">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 to-cyan-400/20 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-emerald-200">
                   Mais Popular
                 </span>
               )}
@@ -111,8 +115,8 @@ export default function PricingPage() {
 
               <ul className="mt-6 space-y-3">
                 {plan.features.map((feat) => (
-                  <li key={feat} className="flex items-start gap-2 text-xs text-neutral-400">
-                    <span className="mt-0.5 text-neutral-600">✓</span>
+                  <li key={feat} className="flex items-start gap-2 text-xs text-neutral-300">
+                    <span className="mt-0.5 text-emerald-400">✓</span>
                     {feat}
                   </li>
                 ))}
@@ -120,20 +124,26 @@ export default function PricingPage() {
 
               <Link
                 href={plan.highlight ? `/${locale}/register` : `/${locale}/register?plan=free`}
-                className={`mt-6 flex w-full items-center justify-center rounded-lg py-2.5 text-xs font-medium transition ${
+                className={`mt-6 flex w-full items-center justify-center rounded-lg py-2.5 text-xs font-semibold transition ${
                   plan.highlight
-                    ? 'bg-neutral-50 text-[#050505] hover:bg-neutral-200'
-                    : 'border border-neutral-800 text-neutral-300 hover:border-neutral-600 hover:text-white'
+                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-400 text-[#050505] shadow-[0_0_0_1px_rgba(52,211,153,0.15),0_8px_30px_-12px_rgba(34,211,238,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(52,211,153,0.45),0_14px_44px_-12px_rgba(34,211,238,0.65)]'
+                    : 'border border-emerald-500/30 text-emerald-200 hover:border-emerald-400/60 hover:text-emerald-100 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_12px_48px_-12px_rgba(34,211,238,0.35)]'
                 }`}
               >
                 {plan.cta}
               </Link>
-            </div>
+            </SpotlightCard>
           ))}
-        </div>
+        </Stagger>
+
+        {/* Honest trust signal */}
+        <Reveal className="mt-8 text-center text-xs text-neutral-500">
+          Todos os planos incluem acesso à base de dados abertos do LandMap. Cancele a qualquer
+          momento, sem multa.
+        </Reveal>
 
         {/* Comparative table */}
-        <div className="mt-20">
+        <Reveal className="mt-20">
           <h2 className="text-center text-lg font-medium text-neutral-50">
             Comparação de Planos
           </h2>
@@ -154,7 +164,7 @@ export default function PricingPage() {
                     className="border-b border-neutral-800/50 transition hover:bg-neutral-900/20"
                   >
                     <td className="px-4 py-3 text-xs text-neutral-300">{row.label}</td>
-                    <td className="px-4 py-3 text-center text-xs text-neutral-600">{row.free}</td>
+                    <td className="px-4 py-3 text-center text-xs text-neutral-500">{row.free}</td>
                     <td className="px-4 py-3 text-center text-xs text-neutral-400">{row.pro}</td>
                     <td className="px-4 py-3 text-center text-xs text-neutral-400">{row.enterprise}</td>
                   </tr>
@@ -162,7 +172,7 @@ export default function PricingPage() {
               </tbody>
             </table>
           </div>
-        </div>
+        </Reveal>
       </div>
     </div>
   );

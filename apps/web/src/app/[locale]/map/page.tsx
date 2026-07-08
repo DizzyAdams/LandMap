@@ -3,6 +3,9 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
+import { EmptyState } from '@landmap/ui';
+import { Reveal, Stagger } from '../../../components/Motion';
+import { SpotlightCard } from '../../../components/SpotlightCard';
 
 type Property = {
   id: string;
@@ -71,27 +74,31 @@ export default function MapPage() {
   );
 
   return (
-    <main className="min-h-screen bg-[#050505] text-neutral-50">
-      <section className="mx-auto max-w-6xl px-6 py-10">
-        <div className="flex items-end justify-between">
-          <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Mapa mundial</h1>
-            <p className="mt-2 text-sm text-neutral-400">
-              Navegue por localizações disponíveis ou refine por cidade.
-            </p>
+    <main className="min-h-screen grid-bg text-neutral-50">
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <Reveal>
+          <div className="flex items-end justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold tracking-tight text-gradient">Mapa mundial</h1>
+              <p className="mt-2 text-sm text-neutral-400">
+                Navegue por localizações disponíveis ou refine por cidade.
+              </p>
+            </div>
+            <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
+              Voltar para Home
+            </Link>
           </div>
-          <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
-            Voltar para Home
-          </Link>
-        </div>
+        </Reveal>
 
-        <div className="mt-8 rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 space-y-4">
+        <Reveal delay={0.1} className="mt-8">
+          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 space-y-4">
           {/* Search input */}
           <input
             ref={inputRef}
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="Filtrar por cidade ou bairro"
+            aria-label="Filtrar por cidade ou bairro"
             className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-2.5 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-neutral-500"
           />
 
@@ -105,6 +112,7 @@ export default function MapPage() {
               step={5}
               value={radiusKm}
               onChange={(e) => setRadiusKm(Number(e.target.value))}
+              aria-label="Raio de busca em quilômetros"
               className="flex-1 accent-neutral-50"
             />
             <span className="text-xs text-neutral-400 w-16 text-right">{radiusKm} km</span>
@@ -121,6 +129,7 @@ export default function MapPage() {
                 step={50_000}
                 value={minPrice}
                 onChange={(e) => setMinPrice(Number(e.target.value))}
+                aria-label="Preço mínimo"
                 className="flex-1 accent-neutral-50"
               />
               <span className="text-xs text-neutral-400 w-24 text-right">
@@ -141,6 +150,7 @@ export default function MapPage() {
                 step={50_000}
                 value={maxPrice}
                 onChange={(e) => setMaxPrice(Number(e.target.value))}
+                aria-label="Preço máximo"
                 className="flex-1 accent-neutral-50"
               />
               <span className="text-xs text-neutral-400 w-24 text-right">
@@ -173,10 +183,11 @@ export default function MapPage() {
               Comercial
             </span>
           </div>
-        </div>
+          </div>
+        </Reveal>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-6xl px-6 pb-24">
         <MapView
           items={filteredItems}
           loading={loading}
@@ -308,13 +319,12 @@ function MapView({
             style={{ zIndex: 0 }}
           >
             {items.length === 0 && !loading && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="flex flex-col items-center gap-2 text-neutral-400">
-                  <span className="text-sm">Sem pontos para este filtro.</span>
-                  <span className="text-xs text-neutral-500">
-                    Tente outro filtro ou explore as próximas tasks do roadmap.
-                  </span>
-                </div>
+              <div className="absolute inset-0 flex items-center justify-center p-6">
+                <EmptyState
+                  title="Sem pontos para este filtro"
+                  description="Tente outro filtro ou explore as próximas tasks do roadmap."
+                  className="border-0 bg-transparent"
+                />
               </div>
             )}
           </div>
@@ -336,13 +346,13 @@ function MapView({
         <p className="text-xs text-neutral-500">
           {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
         </p>
-        <div className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
+        <Stagger className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
           {items.map((item) => (
+            <SpotlightCard key={`${item.latitude}-${item.longitude}-${item.id}`}>
             <Link
-              key={`${item.latitude}-${item.longitude}-${item.id}`}
-              href={`/${locale}/property/${item.id}`}
-              className="block rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-neutral-500"
-            >
+                href={`/${locale}/property/${item.id}`}
+                className="block rounded-xl p-4 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+              >
               <div className="flex items-start gap-2">
                 <span
                   className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full"
@@ -356,8 +366,9 @@ function MapView({
                 </div>
               </div>
             </Link>
+            </SpotlightCard>
           ))}
-        </div>
+        </Stagger>
       </div>
     </div>
   );

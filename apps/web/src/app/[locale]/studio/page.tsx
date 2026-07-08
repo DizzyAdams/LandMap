@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Reveal, Stagger } from '../../../components/Motion';
 import { listWorkflows, runWorkflow, ragQuery, type WorkflowDefinition, type WorkflowRunStep } from '../../../lib/api';
+import { Button } from '@landmap/ui';
 
 const SAMPLE_INPUT: Record<string, string> = {
   'market-report': JSON.stringify({ query: 'São Paulo', stats: { total: 1500, avgPrice: 520000, avgPricePerSqm: 6800, cities: [{ city: 'São Paulo', state: 'SP', count: 320, avgPrice: 610000 }] } }),
@@ -65,7 +66,7 @@ export default function StudioPage() {
         </Reveal>
 
         <div className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 lg:grid-cols-2">
-          <Reveal className="rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6">
+          <Reveal className="rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-500/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
             <h2 className="text-lg font-medium">Laboratório de Workflows</h2>
             <p className="mt-1 text-sm text-neutral-500">Selecione um fluxo e execute passo a passo.</p>
 
@@ -83,10 +84,9 @@ export default function StudioPage() {
             <textarea value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} rows={9}
               className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 p-3 font-mono text-xs text-neutral-200 outline-none transition focus:border-emerald-400/50" />
 
-            <button onClick={handleRun} disabled={running}
-              className="glow-emerald mt-4 inline-flex h-11 items-center rounded-lg bg-white px-6 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200 disabled:opacity-50">
+            <Button onClick={handleRun} disabled={running} className="mt-4 h-11 px-6">
               {running ? 'Executando…' : 'Executar workflow'}
-            </button>
+            </Button>
 
             {runError && (
               <div className="mt-4 rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-300">{runError}</div>
@@ -148,7 +148,7 @@ function RagChat() {
   }
 
   return (
-    <Reveal delay={0.1} className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6">
+    <Reveal delay={0.1} className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-500/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
       <h2 className="text-lg font-medium">Chat RAG</h2>
       <p className="mt-1 text-sm text-neutral-500">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
 
@@ -176,12 +176,17 @@ function RagChat() {
       </div>
 
       <form onSubmit={handleChat} className="mt-4 flex gap-3">
-        <input value={chatInput} onChange={(e) => setChatInput(e.target.value)} placeholder="Sua pergunta…" disabled={chatLoading}
-          className="flex-1 rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition focus:border-neutral-500 disabled:opacity-50" />
-        <button type="submit" disabled={chatLoading || !chatInput.trim()}
-          className="rounded-xl bg-neutral-50 px-5 py-3 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200 disabled:opacity-40">
+        <input
+          value={chatInput}
+          onChange={(e) => setChatInput(e.target.value)}
+          placeholder="Sua pergunta…"
+          disabled={chatLoading}
+          aria-label="Sua pergunta sobre o catálogo de imóveis"
+          className="flex-1 rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition focus:border-emerald-400/50 disabled:opacity-50"
+        />
+        <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="px-5 py-3">
           Enviar
-        </button>
+        </Button>
       </form>
     </Reveal>
   );

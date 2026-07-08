@@ -12,6 +12,7 @@ import {
   Tabs,
   EmptyState,
 } from '@landmap/ui';
+import { Reveal, Stagger } from '../../../components/Motion';
 import type {
   AutonomyLevel,
   Deal,
@@ -116,11 +117,12 @@ export default function SalesCockpitPage() {
   const pending = state.tasks.filter((t) => t.status === 'pending');
 
   return (
-    <main className="relative min-h-screen text-neutral-50">
+    <main className="relative min-h-screen grid-bg text-neutral-50">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(40rem_28rem_at_70%_-10%,rgba(52,211,153,0.10),transparent_70%)]" />
 
       <div className="mx-auto max-w-6xl px-6 pb-24 pt-24">
-        <div className="flex flex-col gap-5 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
+        <Reveal>
+          <div className="flex flex-col gap-5 border-b border-white/10 pb-6 md:flex-row md:items-end md:justify-between">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-emerald-800/50 bg-emerald-950/40 px-3 py-1 text-[11px] uppercase tracking-wide text-emerald-300">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
@@ -143,8 +145,9 @@ export default function SalesCockpitPage() {
             </Button>
           </div>
         </div>
+        </Reveal>
 
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+        <Stagger className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
           <Stat label="Pipeline" value={BRL(analytics.totals.pipelineValue)} hint="em aberto" />
           <Stat label="Ponderado" value={BRL(analytics.totals.weightedPipeline)} hint="prob. × valor" />
           <Stat
@@ -155,7 +158,7 @@ export default function SalesCockpitPage() {
           <Stat label="Reuniões" value={analytics.totals.meetingsBooked} hint="agendadas" />
           <Stat label="Ticket médio" value={BRL(analytics.totals.avgDealSize)} hint="fechados" />
           <Stat label="Previsões" value={analytics.totals.forecasts} hint="ciclos" />
-        </div>
+        </Stagger>
 
         <Tabs
           tabs={[
@@ -229,12 +232,12 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
               <span className={`text-xs font-medium ${STAGE_COLOR[stage]}`}>{STAGE_LABEL[stage]}</span>
               <span className="text-[11px] text-neutral-500">{deals.length}</span>
             </div>
-            <p className="mt-1 text-[11px] text-neutral-600">{BRL(value)}</p>
+            <p className="mt-1 text-[11px] text-neutral-500">{BRL(value)}</p>
             <div className="mt-3 space-y-2">
               {deals.map((d) => (
                 <DealCard key={d.id} deal={d} agentName={agentName[d.ownerAgent] ?? d.ownerAgent} />
               ))}
-              {deals.length === 0 && <p className="py-4 text-center text-[11px] text-neutral-700">—</p>}
+              {deals.length === 0 && <p className="py-4 text-center text-[11px] text-neutral-500">—</p>}
             </div>
           </div>
         );
@@ -245,7 +248,7 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
 
 function DealCard({ deal, agentName }: { deal: Deal; agentName: string }) {
   return (
-    <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
+    <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3 transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01]">
       <p className="text-xs font-medium leading-tight text-neutral-100">{deal.title}</p>
       <p className="mt-1 text-sm font-semibold tabular-nums">{BRL(deal.amount)}</p>
       <div className="mt-2">
@@ -284,7 +287,7 @@ function AgentsView({ state }: { state: SalesState }) {
             <span>{a.successToday} sucessos</span>
           </div>
           {a.lastActionAt && (
-            <p className="mt-1 text-[10px] text-neutral-700">
+            <p className="mt-1 text-[10px] text-neutral-500">
               última ação: {new Date(a.lastActionAt).toLocaleTimeString('pt-BR')}
             </p>
           )}
@@ -308,7 +311,7 @@ function ActivityView({ events }: { events: AgentEvent[] }) {
         >
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-neutral-100">{e.title}</p>
-            <span className="shrink-0 text-[10px] text-neutral-600">
+            <span className="shrink-0 text-[10px] text-neutral-500">
               {new Date(e.at).toLocaleTimeString('pt-BR')}
             </span>
           </div>

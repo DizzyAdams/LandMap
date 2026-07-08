@@ -3,6 +3,9 @@ import Link from 'next/link';
 import React from 'react';
 import { searchProperties, type SearchQuery, type Property } from '../../../lib/api';
 import { SearchKeyboardShortcuts } from '../../../components/SearchKeyboardShortcuts';
+import { Button, EmptyState } from '@landmap/ui';
+import { Reveal, Stagger } from '../../../components/Motion';
+import { SpotlightCard } from '../../../components/SpotlightCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -117,52 +120,54 @@ export default async function SearchPage({
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(v);
 
   return (
-    <main className="min-h-screen bg-[#050505] text-neutral-50">
+    <main className="min-h-screen grid-bg text-neutral-50">
       <SearchKeyboardShortcuts />
-      <section className="mx-auto max-w-6xl px-6 py-10">
-        <div className="flex items-end justify-between">
-          <div>
-            <h1 className="text-3xl font-semibold tracking-tight">Buscar imóveis</h1>
-            <p className="mt-2 text-sm text-neutral-400">
-              Filtros diretamente por tipologia, modalidade, local e faixa de preço.
-            </p>
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <Reveal>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <h1 className="text-3xl font-semibold tracking-tight text-gradient">Buscar imóveis</h1>
+              <p className="mt-2 text-sm text-neutral-400">
+                Filtros diretamente por tipologia, modalidade, local e faixa de preço.
+              </p>
+            </div>
+            <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
+              Voltar para Home
+            </Link>
           </div>
-          <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
-            Voltar para Home
-          </Link>
-        </div>
+        </Reveal>
 
-        <form className="mt-8 grid grid-cols-1 gap-3 rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 md:grid-cols-3 lg:grid-cols-5">
-          <input name="q" defaultValue={sp.q} placeholder="Busca" className="input" id="search-input" />
-          <select name="type" defaultValue={sp.type} className="input">
+        <Reveal delay={0.1} className="mt-8">
+          <form className="grid grid-cols-1 gap-3 rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 md:grid-cols-3 lg:grid-cols-5">
+          <input name="q" defaultValue={sp.q} placeholder="Busca" aria-label="Busca" className="input" id="search-input" />
+          <select name="type" defaultValue={sp.type} aria-label="Tipo de imóvel" className="input">
             <option value="">Tipo</option>
             <option value="apartamento">Apartamento</option>
             <option value="casa">Casa</option>
             <option value="terreno">Terreno</option>
             <option value="comercial">Comercial</option>
           </select>
-          <select name="modality" defaultValue={sp.modality} className="input">
+          <select name="modality" defaultValue={sp.modality} aria-label="Modalidade" className="input">
             <option value="">Modalidade</option>
             <option value="venda">Venda</option>
             <option value="aluguel">Aluguel</option>
             <option value="lancamento">Lançamento</option>
           </select>
-          <input name="city" defaultValue={sp.city} placeholder="Cidade" className="input" />
-          <input name="state" defaultValue={sp.state} placeholder="UF" className="input" />
-          <input name="minPrice" defaultValue={sp.minPrice} type="number" placeholder="Preço mín." className="input" />
-          <input name="maxPrice" defaultValue={sp.maxPrice} type="number" placeholder="Preço máx." className="input" />
+          <input name="city" defaultValue={sp.city} placeholder="Cidade" aria-label="Cidade" className="input" />
+          <input name="state" defaultValue={sp.state} placeholder="UF" aria-label="UF" className="input" />
+          <input name="minPrice" defaultValue={sp.minPrice} type="number" placeholder="Preço mín." aria-label="Preço mínimo" className="input" />
+          <input name="maxPrice" defaultValue={sp.maxPrice} type="number" placeholder="Preço máx." aria-label="Preço máximo" className="input" />
           <div className="lg:col-span-5 flex items-center justify-between">
             <p className="text-xs text-neutral-500">
               {sp.q ? `Filtro ativo: ${sp.q}` : 'Use filtros para refinar.'}
             </p>
-            <button className="btn btn-primary" type="submit">
-              Aplicar filtros
-            </button>
+            <Button type="submit">Aplicar filtros</Button>
           </div>
         </form>
+        </Reveal>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-16">
+      <section className="mx-auto max-w-6xl px-6 pb-24">
         {error ? (
           <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
             {error}
@@ -198,20 +203,21 @@ export default async function SearchPage({
               </div>
             </div>
 
-            <div className="grid gap-3">
+            <Stagger className="grid gap-3">
               {pageItems.length === 0 && (
-                <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 text-sm text-neutral-400">
-                  Nenhum imóvel correspondente para esses filtros. Ajuste tipologia, modalidade ou cidade.
-                </div>
+                <EmptyState
+                  title="Nenhum imóvel encontrado"
+                  description="Ajuste tipologia, modalidade ou cidade para ver mais opções."
+                />
               )}
               {pageItems.map((item) => {
                 const pricePerM2 = item.areaM2 > 0 ? Math.round(item.price / item.areaM2) : 0;
                 return (
-                  <Link
-                    key={item.id}
-                    href={`/${locale}/property/${item.id}`}
-                    className="group rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 transition hover:border-neutral-500"
-                  >
+                  <SpotlightCard key={item.id}>
+                    <Link
+                      href={`/${locale}/property/${item.id}`}
+                      className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+                    >
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="text-sm text-neutral-300">{item.title}</p>
@@ -235,10 +241,11 @@ export default async function SearchPage({
                         <span className="text-xs text-neutral-400 capitalize">{item.type}</span>
                       </span>
                     </div>
-                  </Link>
+                    </Link>
+                  </SpotlightCard>
                 );
               })}
-            </div>
+            </Stagger>
 
             {/* Pagination */}
             {totalPages > 1 && (
@@ -253,7 +260,7 @@ export default async function SearchPage({
                   .map((p, idx, arr) => (
                     <span key={p} className="flex items-center gap-1">
                       {idx > 0 && arr[idx - 1] !== p - 1 && (
-                        <span className="px-1 text-neutral-600">...</span>
+                        <span className="px-1 text-neutral-500">...</span>
                       )}
                       {p === safePage ? (
                         <span className="rounded-md bg-neutral-800 px-3 py-1.5 text-white">{p}</span>

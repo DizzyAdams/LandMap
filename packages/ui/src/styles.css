@@ -1,9 +1,32 @@
 :root {
-  --background: 0 0% 4%;
-  --foreground: 0 0% 98%;
-}
+  /* LandMap "fora do comum" dark-premium tokens (mirrors apps/web globals.css) */
+  --bg: #050505;
+  --surface-1: #0a0a0a;
+  --surface-2: #0f0f0f;
+  --surface-3: #141414;
 
-[data-theme="dark"] {
-  --background: 0 0% 4%;
-  --foreground: 0 0% 98%;
+  --border: #1a1a1a;
+  --border-strong: #262626;
+
+  --text: #f5f5f5;
+  --text-strong: #ffffff;
+  --muted: #a3a3a3;
+  --muted-2: #737373;
+
+  --emerald: #34d399;
+  --emerald-bright: #6ee7b7;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+
+  --accent: #ffffff;
+  --accent-dim: #e5e5e5;
+  --danger: #ff4d4d;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --glow-emerald: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25);
+  --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
 }

@@ -3,14 +3,43 @@
 @tailwind utilities;
 
 :root {
+  /* ── Canvas ── */
   --bg: #050505;
-  --surface: #0a0a0a;
-  --border: #111111;
+  --surface: #0a0a0a;          /* surface-1 alias (back-compat) */
+  --surface-1: #0a0a0a;
+  --surface-2: #0f0f0f;
+  --surface-3: #141414;
+
+  /* ── Lines ── */
+  --border: #1a1a1a;            /* hairline / default border */
+  --border-strong: #262626;
+
+  /* ── Text ── */
   --text: #f5f5f5;
+  --text-strong: #ffffff;
   --muted: #a3a3a3;
+  --muted-2: #737373;
+
+  /* ── Brand (bioluminescent) ── */
+  --emerald: #34d399;
+  --emerald-bright: #6ee7b7;
+  --cyan: #22d3ee;
+  --violet: #a78bfa;
+
+  /* ── Semantic ── */
   --accent: #ffffff;
   --accent-dim: #e5e5e5;
   --danger: #ff4d4d;
+
+  /* ── Radii ── */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* ── Signature glows ── */
+  --glow-emerald: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25);
+  --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
 }
 
 html,
@@ -40,7 +69,9 @@ body {
 }
 
 .surface {
-  @apply rounded-xl border border-neutral-800 bg-neutral-900/40;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--surface-1) 40%, transparent);
 }
 
 ::selection {
@@ -68,13 +99,13 @@ body {
 }
 
 .glass {
-  background: rgba(10, 10, 10, 0.6);
+  background: color-mix(in srgb, var(--bg) 60%, transparent);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .glow-emerald {
-  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.15), 0 8px 40px -12px rgba(52, 211, 153, 0.25);
+  box-shadow: var(--glow-emerald);
 }
 
 .text-gradient {
@@ -85,7 +116,7 @@ body {
 }
 
 .hairline {
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--border);
 }
 
 /* Refined scrollbar */
@@ -128,22 +159,19 @@ body {
 /* Dual-tone signature gradient for headlines / accents (overrides the
    earlier monochrome gradient so existing .text-gradient gets the new look). */
 .text-gradient {
-  background: linear-gradient(100deg, #ffffff 0%, #6ee7b7 28%, #34d399 52%, #22d3ee 100%);
+  background: linear-gradient(100deg, var(--text-strong) 0%, var(--emerald-bright) 28%, var(--emerald) 52%, var(--cyan) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
 .glow-dual {
-  box-shadow:
-    0 0 0 1px rgba(52, 211, 153, 0.22),
-    0 12px 60px -12px rgba(34, 211, 238, 0.38),
-    0 10px 48px -12px rgba(52, 211, 153, 0.32);
+  box-shadow: var(--glow-dual);
 }
 
 /* Accessible, on-brand focus rings */
 :focus-visible {
-  outline: 2px solid rgba(52, 211, 153, 0.7);
+  outline: 2px solid color-mix(in srgb, var(--emerald) 70%, transparent);
   outline-offset: 2px;
   border-radius: 6px;
 }

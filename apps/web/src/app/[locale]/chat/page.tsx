@@ -9,6 +9,8 @@ import {
   LANDMAP_SYSTEM_PROMPT,
 } from '../../../lib/puter-chat';
 import FreeAIBadge from '../../../components/FreeAIBadge';
+import { Button } from '@landmap/ui';
+import { Reveal } from '../../../components/Motion';
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -140,13 +142,13 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
   return (
     <main className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-3xl flex-col px-6 py-8">
       <div className="mb-4 flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">Chat Imobiliário</h1>
+        <Reveal>
+          <h1 className="text-2xl font-semibold tracking-tight text-gradient">Chat Imobiliário</h1>
           <p className="mt-1 flex items-center gap-2 text-sm text-neutral-400">
             Pergunte sobre imóveis, preços, e regiões no Brasil.
             <FreeAIBadge model={model} />
           </p>
-        </div>
+        </Reveal>
         <button
           onClick={handleSuggest}
           disabled={suggesting}
@@ -162,7 +164,8 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
           value={model}
           onChange={(e) => setModel(e.target.value)}
           disabled={loading}
-          className="rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-1.5 text-xs text-neutral-100 outline-none transition focus:border-neutral-500 disabled:opacity-50"
+          aria-label="Modelo de IA"
+          className="rounded-lg border border-neutral-700 bg-neutral-900 px-3 py-1.5 text-xs text-neutral-100 outline-none transition focus:border-emerald-400/50 disabled:opacity-50"
         >
           {MINIMAX_MODELS.map((m) => (
             <option key={m.id} value={m.id}>
@@ -243,15 +246,16 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
           onChange={(e) => setInput(e.target.value)}
           placeholder="Digite sua pergunta sobre imóveis..."
           disabled={loading}
-          className="flex-1 rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition focus:border-neutral-500 disabled:opacity-50"
+          aria-label="Sua pergunta sobre imóveis"
+          className="flex-1 rounded-xl border border-neutral-700 bg-neutral-900 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition focus:border-emerald-400/50 disabled:opacity-50"
         />
-        <button
+        <Button
           type="submit"
           disabled={loading || !input.trim()}
-          className="rounded-xl bg-neutral-50 px-5 py-3 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200 disabled:opacity-40"
+          className="px-5 py-3"
         >
           Enviar
-        </button>
+        </Button>
       </form>
     </main>
   );

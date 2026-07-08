@@ -1,8 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { Logo } from './Logo';
+import { localeHref, useActiveLocale } from '../lib/locale';
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const locale = useActiveLocale();
 
   return (
     <footer className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-neutral-500">
@@ -20,12 +24,12 @@ export function Footer() {
         </div>
 
         <nav className="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-3">
-          <Link href="/" className="transition hover:text-neutral-300">Início</Link>
-          <Link href="/search" className="transition hover:text-neutral-300">Buscar</Link>
-          <Link href="/map" className="transition hover:text-neutral-300">Mapa</Link>
-          <Link href="/compare" className="transition hover:text-neutral-300">Comparar</Link>
-          <Link href="/favorites" className="transition hover:text-neutral-300">Favoritos</Link>
-          <Link href="/chat" className="transition hover:text-emerald-300">Chat IA</Link>
+          <Link href={localeHref('/', locale)} className="transition hover:text-neutral-300">Início</Link>
+          <Link href={localeHref('/search', locale)} className="transition hover:text-neutral-300">Buscar</Link>
+          <Link href={localeHref('/map', locale)} className="transition hover:text-neutral-300">Mapa</Link>
+          <Link href={localeHref('/compare', locale)} className="transition hover:text-neutral-300">Comparar</Link>
+          <Link href={localeHref('/favorites', locale)} className="transition hover:text-neutral-300">Favoritos</Link>
+          <Link href={localeHref('/chat', locale)} className="transition hover:text-emerald-300">Chat IA</Link>
         </nav>
       </div>
 

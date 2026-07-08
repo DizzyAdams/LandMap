@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { Reveal, Stagger } from '../../../components/Motion';
+import { SpotlightCard } from '../../../components/SpotlightCard';
 
 export const dynamic = 'force-dynamic';
 
@@ -106,46 +108,50 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
   return (
     <div className="min-h-screen bg-[#050505]">
       <div className="mx-auto max-w-6xl px-6 py-20">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <Reveal className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              Dados abertos
+            </span>
+            <h1 className="mt-5 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
               Documentação da API
             </h1>
             <p className="mt-2 text-sm text-neutral-500">
               Referência completa dos endpoints REST do LandMap
             </p>
           </div>
-          <p className="text-xs text-neutral-600">Base URL: <code className="text-neutral-400">http://localhost:4000</code></p>
-        </div>
+          <p className="text-xs text-neutral-500">Base URL: <code className="text-neutral-400">http://localhost:4000</code></p>
+        </Reveal>
 
         {/* Auth + Rate limit card */}
-        <div className="mt-8 grid gap-4 sm:grid-cols-2">
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <Stagger className="mt-8 grid gap-4 sm:grid-cols-2">
+          <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-neutral-50">Autenticação</h2>
             <p className="mt-2 text-xs text-neutral-500">
               Endpoints marcados com <span className="text-amber-400">🔒 Auth</span> exigem o header{' '}
               <code className="text-neutral-400">Authorization: Bearer seu_token</code>.
             </p>
-          </div>
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+          </SpotlightCard>
+          <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-neutral-50">Rate Limiting</h2>
             <p className="mt-2 text-xs text-neutral-500">
               Gratuito: <span className="text-neutral-300">100 req/min</span>
               {' · '}Profissional: <span className="text-neutral-300">1.000 req/min</span>
               {' · '}Enterprise: <span className="text-neutral-300">Sob consulta</span>
             </p>
-          </div>
-        </div>
+          </SpotlightCard>
+        </Stagger>
 
         {/* Categories */}
         {CATEGORIES.map((cat) => (
-          <section key={cat.title} className="mt-12">
+          <Reveal key={cat.title} className="mt-12">
             <h2 className="text-lg font-medium text-neutral-100">{cat.title}</h2>
-            <div className="mt-4 space-y-2">
+            <Stagger className="mt-4 space-y-2">
               {cat.endpoints.map((ep) => (
                 <details
                   key={`${ep.method}-${ep.path}`}
-                  className="group rounded-xl border border-neutral-800 bg-neutral-900/40 transition hover:border-neutral-700"
+                  className="group rounded-xl border border-neutral-800 bg-neutral-900/40 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]"
                 >
                   <summary className="flex cursor-pointer items-center gap-3 px-5 py-3.5">
                     <span
@@ -159,7 +165,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                     )}
                     <span className="ml-auto text-xs text-neutral-500">{ep.desc}</span>
                     <svg
-                      className="h-4 w-4 shrink-0 text-neutral-600 transition group-open:rotate-180"
+                      className="h-4 w-4 shrink-0 text-neutral-500 transition group-open:rotate-180"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -185,8 +191,8 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                   </div>
                 </details>
               ))}
-            </div>
-          </section>
+            </Stagger>
+          </Reveal>
         ))}
       </div>
     </div>

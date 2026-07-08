@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { Button } from '@landmap/ui';
+import { Reveal } from '../../../components/Motion';
 
 export default function CalculatorPage() {
   const [preco, setPreco] = useState('500000');
@@ -30,8 +32,14 @@ export default function CalculatorPage() {
 
   return (
     <main className="min-h-screen bg-[#050505] text-neutral-50">
-      <section className="mx-auto max-w-2xl px-6 py-10">
-        <h1 className="text-2xl font-semibold tracking-tight">Simulador de financiamento</h1>
+      <Reveal className="mx-auto max-w-2xl px-6 py-10">
+        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
+          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+          Simulação de referência
+        </span>
+        <h1 className="mt-5 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
+          Simulador de financiamento
+        </h1>
         <p className="mt-2 text-sm text-neutral-400">
           Calcule a parcela mensal e o total de juros do seu financiamento imobiliário.
         </p>
@@ -78,24 +86,30 @@ export default function CalculatorPage() {
             />
           </label>
 
-          <button onClick={calc} className="btn-primary w-full">
+          <Button onClick={calc} className="mt-2 w-full">
             Calcular
-          </button>
+          </Button>
         </div>
 
         {result && (
-          <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
-              <p className="text-xs text-neutral-500">Parcela mensal</p>
-              <p className="mt-1 text-xl font-medium text-neutral-100">{fmt(result.parcela)}</p>
+          <>
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
+                <p className="text-xs text-neutral-500">Parcela mensal</p>
+                <p className="mt-1 text-xl font-medium text-emerald-300">{fmt(result.parcela)}</p>
+              </div>
+              <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
+                <p className="text-xs text-neutral-500">Total de juros</p>
+                <p className="mt-1 text-xl font-medium text-neutral-100">{fmt(result.totalJuros)}</p>
+              </div>
             </div>
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
-              <p className="text-xs text-neutral-500">Total de juros</p>
-              <p className="mt-1 text-xl font-medium text-neutral-100">{fmt(result.totalJuros)}</p>
-            </div>
-          </div>
+            <p className="mt-4 text-xs text-neutral-500">
+              Simulação de referência. Taxas, prazos e encargos são exemplos — confirme as
+              condições com seu banco.
+            </p>
+          </>
         )}
-      </section>
+      </Reveal>
     </main>
   );
 }

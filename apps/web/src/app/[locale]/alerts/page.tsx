@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { createAlert, deleteAlert, getAlerts, clearAlerts } from '../../../lib/alerts';
 import type { AlertFilter } from '../../../lib/alerts';
+import { localeHref } from '../../../lib/locale';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                             */
@@ -110,7 +111,7 @@ export default function AlertsPage() {
             </p>
           </div>
           <Link
-            href={`/${locale}`}
+            href={localeHref('/', locale)}
             className="text-xs text-neutral-400 transition hover:text-white"
           >
             Voltar para Home
@@ -314,7 +315,7 @@ function AlertCard({
 
       <div className="ml-4 flex items-center gap-2 shrink-0">
         <Link
-          href={`/pt-BR/search${qs ? `?${qs}` : ''}`}
+          href={localeHref(`/search${qs ? `?${qs}` : ''}`, alertLocale)}
           className="rounded-lg border border-neutral-800 px-3 py-1.5 text-[11px] text-neutral-300 transition hover:border-neutral-500 hover:text-white"
         >
           Buscar

@@ -154,7 +154,7 @@ function ScoreBadge({ score }: { score: number }) {
     score >= 90
       ? 'text-emerald-400 border-emerald-800'
       : score >= 75
-        ? 'text-amber-400 border-amber-800'
+        ? 'text-violet-400 border-violet-800'
         : 'text-neutral-400 border-neutral-700';
   return (
     <span className={`inline-block rounded-md border px-2 py-0.5 text-[11px] font-mono ${color}`}>
@@ -165,9 +165,9 @@ function ScoreBadge({ score }: { score: number }) {
 
 function StageBadge({ stage }: { stage: string }) {
   const colors: Record<string, string> = {
-    Novo: 'text-blue-400 border-blue-800',
+    Novo: 'text-cyan-400 border-cyan-800',
     Contatado: 'text-cyan-400 border-cyan-800',
-    'Agendou Visita': 'text-amber-400 border-amber-800',
+    'Agendou Visita': 'text-violet-400 border-violet-800',
     'Negociação': 'text-violet-400 border-violet-800',
     'Fechado': 'text-emerald-400 border-emerald-800',
     'Perdido': 'text-red-400 border-red-800',

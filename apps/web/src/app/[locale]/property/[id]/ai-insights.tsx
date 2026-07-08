@@ -91,7 +91,7 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
   return (
     <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
       <h2 className="text-sm font-medium text-neutral-400">
-        Análise por IA <span className="ml-1.5 text-[10px] text-neutral-600">· gerado automaticamente</span>
+        Análise por IA <span className="ml-1.5 text-[10px] text-neutral-500">· gerado automaticamente</span>
       </h2>
 
       {analysis.strengths.length > 0 && (

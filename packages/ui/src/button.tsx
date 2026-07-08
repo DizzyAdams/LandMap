@@ -1,8 +1,10 @@
 import React from 'react';
 import { cn } from './cn';
 
+// `default` is the bioluminescent primary action; `hero` keeps an explicit,
+// opt-in high-contrast white only for rare cases (never the default).
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'default' | 'outline' | 'ghost';
+  variant?: 'default' | 'outline' | 'ghost' | 'hero';
   size?: 'sm' | 'md' | 'lg';
 };
 
@@ -13,7 +15,8 @@ const base: React.CSSProperties = {
   whiteSpace: 'nowrap',
   borderRadius: 6,
   fontWeight: 500,
-  transition: 'background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease',
+  transition:
+    'background-color 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease, box-shadow 0.2s ease, transform 0.15s ease',
   outline: 'none',
   border: 'none',
   cursor: 'pointer',
@@ -22,13 +25,44 @@ const base: React.CSSProperties = {
 
 const focusBase: React.CSSProperties = {
   outline: 'none',
-  boxShadow: '0 0 0 1px #fff, 0 0 0 3px rgba(255,255,255,0.18)',
+  boxShadow: '0 0 0 1px var(--emerald), 0 0 0 3px rgba(52,211,153,0.25)',
 };
 
-const variantMap: Record<'default' | 'outline' | 'ghost', React.CSSProperties> = {
-  default: { backgroundColor: '#fff', color: '#000' },
-  outline: { backgroundColor: 'transparent', border: '1px solid #525252', color: '#e5e5e5' },
-  ghost: { backgroundColor: 'transparent', color: '#d4d4d4' },
+const disabledBase: React.CSSProperties = {
+  opacity: 0.5,
+  pointerEvents: 'none',
+};
+
+// Bioluminescent emerald->cyan primary; neutral ghost/outline stay on-brand.
+const variantMap: Record<
+  'default' | 'outline' | 'ghost' | 'hero',
+  { base: React.CSSProperties; hover: React.CSSProperties }
+> = {
+  default: {
+    base: {
+      background: 'linear-gradient(90deg, var(--emerald) 0%, var(--cyan) 100%)',
+      color: 'var(--bg)',
+      boxShadow: 'var(--glow-emerald)',
+    },
+    hover: {
+      background: 'linear-gradient(90deg, var(--emerald-bright) 0%, var(--cyan) 100%)',
+      transform: 'translateY(-1px)',
+      boxShadow: 'var(--glow-dual)',
+    },
+  },
+  outline: {
+    base: { backgroundColor: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text)' },
+    hover: { backgroundColor: 'rgba(255,255,255,0.06)', borderColor: '#737373', color: '#ffffff' },
+  },
+  ghost: {
+    base: { backgroundColor: 'transparent', color: 'var(--muted)' },
+    hover: { backgroundColor: 'rgba(255,255,255,0.06)', color: '#ffffff' },
+  },
+  // Explicit, rarely-used high-contrast white. Never the default.
+  hero: {
+    base: { backgroundColor: '#ffffff', color: '#050505' },
+    hover: { backgroundColor: '#e5e5e5' },
+  },
 };
 
 const sizeMap: Record<'sm' | 'md' | 'lg', React.CSSProperties> = {
@@ -42,35 +76,31 @@ export function Button({
   variant = 'default',
   size = 'md',
   type = 'button',
+  disabled,
   onFocus,
   onBlur,
   ...props
 }: ButtonProps) {
   const [focused, setFocused] = React.useState(false);
+  const [hovered, setHovered] = React.useState(false);
 
   const rootStyle: React.CSSProperties = {
     ...base,
+    ...(disabled ? disabledBase : {}),
+    ...variantMap[variant].base,
+    ...(hovered && !disabled ? variantMap[variant].hover : {}),
     ...(focused ? focusBase : {}),
-    ...variantMap[variant],
     ...sizeMap[size],
-    ...(props.disabled ? { opacity: 0.5, pointerEvents: 'none' as any } : {}),
   };
 
   return (
     <button
       type={type}
+      disabled={disabled}
       className={cn(className)}
       style={rootStyle}
-      onMouseEnter={(e) => {
-        if (variant === 'default') {
-          (e.currentTarget as HTMLButtonElement).style.backgroundColor = '#e5e5e5';
-        } else {
-          (e.currentTarget as HTMLButtonElement).style.backgroundColor = 'rgba(255,255,255,0.06)';
-        }
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.backgroundColor = variant === 'default' ? '#fff' : 'transparent';
-      }}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       onFocus={(e) => {
         setFocused(true);
         onFocus?.(e);

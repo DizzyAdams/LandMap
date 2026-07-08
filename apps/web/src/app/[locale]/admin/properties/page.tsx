@@ -348,8 +348,8 @@ function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
     active: 'border-emerald-800 text-emerald-400 bg-emerald-950/40',
     sold: 'border-red-800 text-red-400 bg-red-950/40',
-    rented: 'border-blue-800 text-blue-400 bg-blue-950/40',
-    reserved: 'border-amber-800 text-amber-400 bg-amber-950/40',
+    rented: 'border-cyan-800 text-cyan-400 bg-cyan-950/40',
+    reserved: 'border-violet-800 text-violet-400 bg-violet-950/40',
   };
   const labels: Record<string, string> = {
     active: 'Ativo',

@@ -2,7 +2,10 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { Badge, Card, Button } from '@landmap/ui';
+import { Reveal, Stagger } from '../../../../components/Motion';
+import { SpotlightCard } from '../../../../components/SpotlightCard';
 import { getProperty, type Property } from '../../../../lib/api';
+import { localeHref } from '../../../../lib/locale';
 import { SocialProof } from '../../../../components/SocialProof';
 import { UrgencyTimer } from '../../../../components/UrgencyTimer';
 import { PriceAnchoring } from '../../../../components/PriceAnchoring';
@@ -29,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
     openGraph: {
       title: `${property.title} | LandMap`,
       description: `${property.title} em ${property.city}/${property.state}.`,
-      url: `/property/${property.id}`,
+      url: localeHref(`/property/${property.id}`, resolved.locale),
       type: 'website',
     },
   };
@@ -63,8 +66,8 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
   const originalPrice = Math.round(property.price * 1.2); // mock original price 20% higher
 
   return (
-    <main className="min-h-screen bg-[#050505] text-neutral-50">
-      <section className="mx-auto max-w-6xl px-6 py-10">
+    <main className="min-h-screen grid-bg text-neutral-50">
+      <section className="mx-auto max-w-6xl px-6 py-16">
         {/* Dark patterns row */}
         <div className="mb-6 flex flex-wrap items-center gap-3">
           <SocialProof propertyId={property.id} />
@@ -72,26 +75,28 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
           <PriceAnchoring originalPrice={originalPrice} currentPrice={property.price} />
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-          <div>
-            <p className="text-xs text-neutral-500">Imóvel</p>
-            <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
-            <p className="mt-2 text-sm text-neutral-400">
-              {property.city}, {property.state} · {property.areaM2} m²
-              {property.bedrooms ? ` · ${property.bedrooms} quarto(s)` : ''}
-            </p>
+        <Reveal>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+            <div>
+              <p className="text-xs text-neutral-500">Imóvel</p>
+              <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
+              <p className="mt-2 text-sm text-neutral-400">
+                {property.city}, {property.state} · {property.areaM2} m²
+                {property.bedrooms ? ` · ${property.bedrooms} quarto(s)` : ''}
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Badge variant={modalityVariant[property.modality] || 'default'}>
+                {property.modality}
+              </Badge>
+              <Badge variant="default" className="capitalize">
+                {property.type}
+              </Badge>
+            </div>
           </div>
-          <div className="flex gap-2">
-            <Badge variant={modalityVariant[property.modality] || 'default'}>
-              {property.modality}
-            </Badge>
-            <Badge variant="default" className="capitalize">
-              {property.type}
-            </Badge>
-          </div>
-        </div>
+        </Reveal>
 
-        <div className="mt-8 grid gap-3 sm:grid-cols-3">
+        <Stagger className="mt-8 grid gap-3 sm:grid-cols-3">
           <Card variant="default" className="sm:col-span-2">
             <p className="text-xs text-neutral-500">Valor</p>
             <p className="mt-1 text-2xl font-medium">{priceText}</p>
@@ -115,14 +120,14 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
               Ver mapa da cidade
             </Link>
           </Card>
-        </div>
+        </Stagger>
 
         <div className="mt-6 flex gap-3">
           <Link href={`/${resolved.locale}/search`}>
             <Button variant="ghost">Voltar para busca</Button>
           </Link>
           <Link href={`/${resolved.locale}`}>
-            <Button variant="default">Home</Button>
+            <Button variant="outline">Home</Button>
           </Link>
         </div>
 
@@ -168,19 +173,21 @@ async function SimilarProperties({
 
   return (
     <section className="mt-12">
-      <h2 className="text-lg font-semibold tracking-tight text-neutral-50">
-        Imóveis Similares
-      </h2>
-      <p className="mt-1 text-sm text-neutral-400">
-        Outras opções em {city} com preço próximo.
-      </p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <Reveal>
+        <h2 className="text-lg font-semibold tracking-tight text-gradient">
+          Imóveis Similares
+        </h2>
+        <p className="mt-1 text-sm text-neutral-400">
+          Outras opções em {city} com preço próximo.
+        </p>
+      </Reveal>
+      <Stagger className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {similar.map((item) => (
-          <Link
-            key={item.id}
-            href={`/${locale}/property/${item.id}`}
-            className="group rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 transition hover:border-neutral-500"
-          >
+          <SpotlightCard key={item.id}>
+            <Link
+              href={`/${locale}/property/${item.id}`}
+              className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+            >
             <p className="text-sm text-neutral-300">{item.title}</p>
             <p className="mt-1 text-xs text-neutral-500">
               {item.city}, {item.state} · {item.areaM2} m²
@@ -190,8 +197,9 @@ async function SimilarProperties({
               {formatBRL(item.price)}
             </p>
           </Link>
+          </SpotlightCard>
         ))}
-      </div>
+      </Stagger>
     </section>
   );
 }

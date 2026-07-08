@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import { Logo } from '../../../components/Logo';
+import { localeHref } from '../../../lib/locale';
 
-export default function OfflinePage() {
+export default async function OfflinePage({
+  params,
+}: {
+  params: Promise<{ locale?: string }>;
+}) {
+  const { locale } = await params;
+
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-neutral-50">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
@@ -28,7 +35,7 @@ export default function OfflinePage() {
             Recarregar
           </button>
           <Link
-            href="/"
+            href={localeHref('/', locale)}
             className="inline-flex h-10 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition hover:border-neutral-500 hover:text-white"
           >
             Voltar ao início
