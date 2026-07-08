@@ -35,6 +35,17 @@ app.use('*', async (c, next) => {
 
 app.get('/health', (c) => c.json({ status: 'ok', env: c.env ? 'bound' : 'missing' }));
 
+// Uniform error responses — never leak raw stack traces; Zod input errors -> 400.
+app.onError((err, c) => {
+  console.error('[api error]', err);
+  if (err instanceof z.ZodError) {
+    return c.json({ error: 'Invalid input', issues: err.issues }, 400);
+  }
+  const status = (err as { status?: number }).status ?? 500;
+  const message = err instanceof Error ? err.message : 'Internal Server Error';
+  return c.json({ error: message }, { status });
+});
+
 const propertySchema = z.object({
   id: z.string(),
   title: z.string(),
@@ -197,31 +208,53 @@ const allProperties: PropertyRecord[] = [
 
 let nextId = 7;
 
+// Lenient search input: empty-string / null / missing fields are treated as
+// "no filter" so clients (and the validation harness) never get a 500 from
+// Zod enum coercion. `query` is accepted as an alias of `q` for convenience.
+const emptyToUndef = (v: unknown) =>
+  v === '' || v === null || v === undefined ? undefined : v;
+
 const searchInput = z.object({
-  q: z.string().optional(),
-  type: z.enum(['apartamento', 'casa', 'terreno', 'comercial']).optional(),
-  modality: z.enum(['venda', 'aluguel', 'lancamento']).optional(),
-  city: z.string().optional(),
-  state: z.string().optional(),
+  q: z.preprocess(emptyToUndef, z.string().optional()),
+  query: z.preprocess(emptyToUndef, z.string().optional()),
+  type: z.preprocess(emptyToUndef, z.enum(['apartamento', 'casa', 'terreno', 'comercial']).optional()),
+  modality: z.preprocess(emptyToUndef, z.enum(['venda', 'aluguel', 'lancamento']).optional()),
+  city: z.preprocess(emptyToUndef, z.string().optional()),
+  state: z.preprocess(emptyToUndef, z.string().optional()),
 });
 
-app.get('/markdowns', async (c) => {
-  const query = searchInput.parse(c.req.query());
-  const filtered = allProperties.filter((item) => {
-    if (query.q && !item.title.toLowerCase().includes(query.q.toLowerCase())) return false;
+type SearchInput = z.infer<typeof searchInput>;
+
+function applySearchFilters(query: SearchInput) {
+  const term = (query.q ?? query.query ?? '').toLowerCase();
+  return allProperties.filter((item) => {
+    if (term && !item.title.toLowerCase().includes(term)) return false;
     if (query.type && item.type !== query.type) return false;
     if (query.modality && item.modality !== query.modality) return false;
     if (query.city && item.city.toLowerCase() !== query.city.toLowerCase()) return false;
     if (query.state && item.state.toLowerCase() !== query.state.toLowerCase()) return false;
     return true;
   });
+}
+
+app.get('/markdowns', async (c) => {
+  const query = searchInput.parse(c.req.query());
+  const filtered = applySearchFilters(query);
 
   return c.json({ items: filtered, total: filtered.length });
 });
 
 app.post('/search', async (c) => {
-  const body = searchInput.parse(await c.req.json());
-  return c.json({ ok: true, query: body });
+  let raw: unknown = {};
+  try {
+    raw = await c.req.json();
+  } catch {
+    raw = {};
+  }
+  const query = searchInput.parse(raw);
+  const filtered = applySearchFilters(query);
+
+  return c.json({ ok: true, items: filtered, total: filtered.length, query });
 });
 
 const analyzeInputSchema = z.object({
