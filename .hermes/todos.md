@@ -13,3 +13,9 @@
 - [x] sales-verify. Sub-agentes validam build/typecheck/lint/testes em paralelo: `@landmap/sales` 6/6 testes verdes, `@landmap/api` e `@landmap/ui` build/typecheck verdes, `apps/web` next build verde para pt-BR/en-US/es-ES (concluído)
 - [x] sales-commit. Stage + commit da feature de vendas no main (concluído)
 
+- [x] ux-audit. Auditoria UX/UI (score 5/10): split identidade branco×bioluminescente, sem tokens centralizados, locale routing quebrado, componentes mortos, dark-patterns (concluído)
+- [x] ux-elevate. Sub-agentes (A–E) elevam para "fora do comum": Button bioluminescent primário, localeHref + i18n, coesão das páginas (marketing/dados/admin), AdminSidebar montado, paleta on-brand, remoção de dark-patterns. typecheck+lint verdes (concluído)
+- [x] color-schema. Design tokens centralizados (globals.css + ui/styles.css + tokens.ts); classes signature (.text-gradient/.glow-dual/.glow-emerald/.glass/.surface/.hairline/:focus-visible) token-driven; Button consome var() (concluído)
+- [x] ux-commit. Stage + commit da elevação UX/UI + schema de cores no main (32 arquivos) (concluído)
+- [x] deploy. `vercel deploy --prod` disparado: building remoto → https://landmap-6mqhgjrsz-dizzys-projects-d5a44b36.vercel.app (domínio prod: landmap-dizzys-projects-d5a44b36.vercel.app) (concluído disparo)
+
