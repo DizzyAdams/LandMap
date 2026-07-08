@@ -26,4 +26,6 @@
 
 - [x] test-fix-2. Corrigir web specs (Nenhum imovel encontrado) + vitest.config (jsx automatico) + vitest.setup.ts (polyfill matchMedia) (concluido)
 - [x] verify-parallel. Sub-agentes validam pipeline em paralelo: typecheck VERDE, lint VERDE, build VERDE, testes VERDES (25 arquivos / 97 testes) (concluido)
-- [ ] optimize-pipeline. Padronizar verificacao paralela (typecheck/lint/build/test) via sub-agents para todo o monorepo (em curso)
+- [x] optimize-pipeline. Verificacao paralela via sub-agents padronizada (typecheck/lint/build/test + validate live) (concluido)
+- [x] deploy-fix. Corrigir POST /api/search (500->200) + busca real + handler erro global (Zod->400) (concluido)
+- [x] deploy-prod. vercel deploy --prod -> landmap-ivne1bgo7 Ready; 23 rotas 200 (incl. /api/search); filtro funciona e entrada invalida -> 400 (concluido)
