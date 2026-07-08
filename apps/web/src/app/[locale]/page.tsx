@@ -66,7 +66,7 @@ export default async function LocaleHomePage() {
         <Stagger className="grid gap-px overflow-hidden rounded-xl border border-neutral-800 bg-neutral-800 sm:grid-cols-3">
           {[
             { label: 'Imóveis catalogados', value: '1.500+' },
-            { label: 'Cidades mapeadas', value: '50+' },
+            { label: 'Cidades mapeadas', value: '10' },
             { label: 'Modalidades', value: 'Venda · Aluguel · Lançamento' },
           ].map((stat) => (
             <SpotlightCard key={stat.label} className="bg-[#050505] p-6">

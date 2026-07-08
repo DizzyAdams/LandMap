@@ -13,6 +13,7 @@ import { createSearchSuggestionsRouter } from './routes/search-suggestions.js';
 import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
 import { createSalesRouter } from './routes/sales.js';
+import allPropertiesData from './data/properties.json'
 import { OpenDesignClient } from '@landmap/integrations';
 
 export type Env = {
@@ -73,140 +74,9 @@ type PropertyRecord = z.infer<typeof propertySchema>;
 
 const now = new Date().toISOString();
 
-const allProperties: PropertyRecord[] = [
-  {
-    id: '1',
-    title: 'Apartamento padrão',
-    city: 'Curitiba',
-    state: 'PR',
-    price: 420000,
-    areaM2: 72,
-    bedrooms: 2,
-    type: 'apartamento',
-    modality: 'venda',
-    available: true,
-    latitude: -25.4290,
-    longitude: -49.2671,
-    neighborhood: 'Centro',
-    zone: 'Central',
-    street: 'Rua das Flores, 123',
-    status: 'active',
-    createdAt: '2025-01-15T10:00:00Z',
-    updatedAt: '2025-01-15T10:00:00Z',
-    images: [],
-    tags: ['centro', 'financiamento'],
-  },
-  {
-    id: '2',
-    title: 'Casa térrea',
-    city: 'Florianópolis',
-    state: 'SC',
-    price: 890000,
-    areaM2: 180,
-    bedrooms: 3,
-    type: 'casa',
-    modality: 'venda',
-    available: true,
-    latitude: -27.5954,
-    longitude: -48.5480,
-    neighborhood: 'Trindade',
-    zone: 'Continental',
-    street: 'Av. Beira Mar, 500',
-    status: 'active',
-    createdAt: '2025-02-20T08:30:00Z',
-    updatedAt: '2025-02-20T08:30:00Z',
-    images: [],
-    tags: ['garagem', 'piscina'],
-  },
-  {
-    id: '3',
-    title: 'Terreno plano',
-    city: 'Curitiba',
-    state: 'PR',
-    price: 210000,
-    areaM2: 360,
-    type: 'terreno',
-    modality: 'venda',
-    available: true,
-    latitude: -25.4486,
-    longitude: -49.2869,
-    neighborhood: 'Batel',
-    zone: 'Norte',
-    street: 'Rua do Terreno, 0',
-    status: 'active',
-    createdAt: '2025-03-01T14:00:00Z',
-    updatedAt: '2025-03-01T14:00:00Z',
-    images: [],
-    tags: ['esquina', 'topografia'],
-  },
-  {
-    id: '4',
-    title: 'Sala comercial',
-    city: 'Curitiba',
-    state: 'PR',
-    price: 1800,
-    areaM2: 35,
-    type: 'comercial',
-    modality: 'aluguel',
-    available: true,
-    latitude: -25.4320,
-    longitude: -49.2731,
-    neighborhood: 'Centro Cívico',
-    zone: 'Central',
-    street: 'Rua XV de Novembro, 200',
-    status: 'active',
-    createdAt: '2025-03-10T09:00:00Z',
-    updatedAt: '2025-03-10T09:00:00Z',
-    images: [],
-    tags: ['centro', 'comercial'],
-  },
-  {
-    id: '5',
-    title: 'Cobertura duplex',
-    city: 'Florianópolis',
-    state: 'SC',
-    price: 1500000,
-    areaM2: 140,
-    bedrooms: 3,
-    type: 'apartamento',
-    modality: 'venda',
-    available: true,
-    latitude: -27.6010,
-    longitude: -48.5210,
-    neighborhood: 'Centro',
-    zone: 'Insular',
-    street: 'Rua do Centro, 88',
-    status: 'active',
-    createdAt: '2025-04-05T11:00:00Z',
-    updatedAt: '2025-04-05T11:00:00Z',
-    images: [],
-    tags: ['vista_mar', 'luxo'],
-  },
-  {
-    id: '6',
-    title: 'Apartamento lançamento',
-    city: 'Balneário Camboriú',
-    state: 'SC',
-    price: 780000,
-    areaM2: 85,
-    bedrooms: 2,
-    type: 'apartamento',
-    modality: 'lancamento',
-    available: true,
-    latitude: -26.9907,
-    longitude: -48.6301,
-    neighborhood: 'Centro',
-    zone: 'Orla',
-    street: 'Av. Atlântica, 1500',
-    status: 'active',
-    createdAt: '2025-05-12T07:00:00Z',
-    updatedAt: '2025-05-12T07:00:00Z',
-    images: [],
-    tags: ['lancamento', 'orla', 'vista_mar'],
-  },
-];
+const allProperties: PropertyRecord[] = allPropertiesData as unknown as PropertyRecord[];
 
-let nextId = 7;
+let nextId = allProperties.length + 1;
 
 // Lenient search input: empty-string / null / missing fields are treated as
 // "no filter" so clients (and the validation harness) never get a 500 from
@@ -613,4 +483,3 @@ app.get('/integrations/opendesign/feed', async (c) => {
 });
 
 export default app;
-

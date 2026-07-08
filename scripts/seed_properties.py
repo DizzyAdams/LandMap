@@ -11,7 +11,7 @@ from typing import Any
 OUTPUT_DIR = os.path.join("data", "seeds")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "properties.json")
 
-TYPES = ["apartamento", "casa", "terreno", "comercial", "cobertura"]
+TYPES = ["apartamento", "casa", "terreno", "comercial"]
 MODALITIES = ["venda", "aluguel", "lancamento"]
 
 CITIES: list[dict[str, str]] = [
@@ -174,7 +174,7 @@ def generate_property(idx: int) -> dict[str, Any]:
     updated_at = created_at
 
     record: dict[str, Any] = {
-        "id": f"prop-{idx:04d}",
+        "id": str(idx),
         "title": title,
         "type": ptype,
         "modality": modality,
@@ -201,7 +201,7 @@ def generate_property(idx: int) -> dict[str, Any]:
 
 
 def main() -> int:
-    count = 50
+    count = 1500
     random.seed(42)
 
     properties = [generate_property(i) for i in range(1, count + 1)]
@@ -210,7 +210,15 @@ def main() -> int:
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(properties, f, ensure_ascii=False, indent=2)
 
-    print(f"✅ Generated {len(properties)} mock properties → {OUTPUT_FILE}")
+    # Also drop a bundle copy inside the API package so it is compiled into the
+    # serverless build (no runtime filesystem access needed on Vercel).
+    api_data_dir = os.path.join("packages", "api", "src", "data")
+    os.makedirs(api_data_dir, exist_ok=True)
+    api_data_file = os.path.join(api_data_dir, "properties.json")
+    with open(api_data_file, "w", encoding="utf-8") as f:
+        json.dump(properties, f, ensure_ascii=False, indent=2)
+
+    print(f"[OK] Generated {len(properties)} mock properties -> {OUTPUT_FILE}")
 
     # Print priceHistory stats for verification
     with_ph = [p for p in properties if p.get("priceHistory")]

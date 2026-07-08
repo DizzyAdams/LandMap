@@ -2,7 +2,7 @@
 
 const ITEMS = [
   '1.500+ imóveis',
-  '50+ cidades',
+  '10 cidades',
   'Venda',
   'Aluguel',
   'Lançamento',
