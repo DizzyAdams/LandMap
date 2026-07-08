@@ -77,7 +77,7 @@ describe('SearchPage', () => {
 
     render(pageElement);
 
-    expect(screen.getByText(/Nenhum imóvel correspondente/)).toBeTruthy();
+    expect(screen.getByText(/Nenhum imóvel encontrado/)).toBeTruthy();
   });
 
   it('should render property results when items are found', async () => {

@@ -22,3 +22,8 @@
 - [x] custom-domain. Domínio `landmap.com.br` associado ao projeto Vercel (produção); DNS A 76.76.21.21 pendente no registro (ns atuais a.auto.dns.br). Produção já Ready e será servida no domínio após propagação (concluído associação)
 - [x] prod-ready. Produção `● Ready` em landmap-6mqhgjrsz-dizzys-projects-d5a44b36.vercel.app; domínio customizado anexado → roteia para produção após DNS (concluído)
 
+
+
+- [x] test-fix-2. Corrigir web specs (Nenhum imovel encontrado) + vitest.config (jsx automatico) + vitest.setup.ts (polyfill matchMedia) (concluido)
+- [x] verify-parallel. Sub-agentes validam pipeline em paralelo: typecheck VERDE, lint VERDE, build VERDE, testes VERDES (25 arquivos / 97 testes) (concluido)
+- [ ] optimize-pipeline. Padronizar verificacao paralela (typecheck/lint/build/test) via sub-agents para todo o monorepo (em curso)
