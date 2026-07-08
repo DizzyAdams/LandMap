@@ -1,31 +1,30 @@
 name: Deploy
+
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+# Permissions mínimas necessárias.
+permissions:
+  contents: read
+
 env:
-  NODE_VERSION: "20"
-  PNPM_VERSION: "9"
+  VERCEL_ORG_ID: "team_XjbwyiZfHYAWIGIugWYIkzSd"
+  VERCEL_PROJECT_ID: "prj_yGGRzfAXO3nfp96QwuvdA1jWARkt"
 
 jobs:
-  deploy-api:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-        with:
-          version: ${{ env.PNPM_VERSION }}
-      - uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          cache: pnpm
-      - run: pnpm install
-      - run: pnpm -r --filter @landmap/api run build
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      # Deploy step — ajuste conforme provider (Railway, Render, Fly.io, etc.)
-      - name: Deploy API
-        run: |
-          echo "Deploy do @landmap/api pendente de configuração do provider"
-          # Exemplo Railway:
-          # npx railway up --service landmap-api
+      - name: Deploy to Vercel (production)
+        # `vercel deploy --prod` faz o build remoto usando vercel.json
+        # (pnpm install + build dos pacotes + next build). Nenhum passo
+        # manual necessário: todo push em main publica em produção.
+        run: npx vercel deploy --prod --token "$VERCEL_TOKEN" --yes --scope "$VERCEL_ORG_ID"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
