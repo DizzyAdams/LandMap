@@ -1,0 +1,2500 @@
+[
+  {
+    "id": "prop-0001",
+    "title": "Apartamento Florianópolis #1",
+    "type": "apartamento",
+    "modality": "lancamento",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 105,
+    "price": 735630,
+    "priceFormatted": "R$ 735,630.00",
+    "bedrooms": 4,
+    "available": true,
+    "status": "active",
+    "latitude": -27.617028,
+    "longitude": -48.57185,
+    "neighborhood": "Ingleses",
+    "zone": "Ingleses",
+    "tags": [
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1499914?w=800&q=80",
+      "https://images.unsplash.com/photo-2571945?w=800&q=80",
+      "https://images.unsplash.com/photo-4668136?w=800&q=80"
+    ],
+    "createdAt": "2025-10-01T17:12:00Z",
+    "updatedAt": "2025-10-01T17:12:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-02-12T11:38:00Z",
+        "price": 660985,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-05-05T06:48:00Z",
+        "price": 693608,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-10-09T00:48:00Z",
+        "price": 735630,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0002",
+    "title": "Cobertura Joinville #2",
+    "type": "cobertura",
+    "modality": "venda",
+    "city": "Joinville",
+    "state": "SC",
+    "areaM2": 349,
+    "price": 4956149,
+    "priceFormatted": "R$ 4,956,149.00",
+    "bedrooms": 4,
+    "available": false,
+    "status": "reserved",
+    "latitude": -26.301378,
+    "longitude": -48.828936,
+    "neighborhood": "Bucarein",
+    "zone": "Bucarein",
+    "tags": [
+      "rooftop",
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-4823498?w=800&q=80",
+      "https://images.unsplash.com/photo-5855124?w=800&q=80",
+      "https://images.unsplash.com/photo-2338687?w=800&q=80"
+    ],
+    "createdAt": "2023-02-13T08:29:00Z",
+    "updatedAt": "2023-02-13T08:29:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-05-21T22:35:00Z",
+        "price": 4543718,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-06-07T21:17:00Z",
+        "price": 4956149,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-11-06T17:46:00Z",
+        "price": 4736722,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0003",
+    "title": "Residência Curitiba #3",
+    "type": "casa",
+    "modality": "venda",
+    "city": "Curitiba",
+    "state": "PR",
+    "areaM2": 492,
+    "price": 3239328,
+    "priceFormatted": "R$ 3,239,328.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -25.442936,
+    "longitude": -49.284441,
+    "neighborhood": "Mercês",
+    "zone": "Mercês",
+    "tags": [
+      "área_lazer",
+      "churrasqueira"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8698256?w=800&q=80",
+      "https://images.unsplash.com/photo-3396987?w=800&q=80",
+      "https://images.unsplash.com/photo-5443951?w=800&q=80",
+      "https://images.unsplash.com/photo-3342608?w=800&q=80",
+      "https://images.unsplash.com/photo-5137722?w=800&q=80",
+      "https://images.unsplash.com/photo-5408072?w=800&q=80",
+      "https://images.unsplash.com/photo-8187926?w=800&q=80",
+      "https://images.unsplash.com/photo-7700828?w=800&q=80"
+    ],
+    "createdAt": "2023-03-17T15:05:00Z",
+    "updatedAt": "2023-03-17T15:05:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-11-06T21:27:00Z",
+        "price": 3239328,
+        "source": "registro"
+      },
+      {
+        "date": "2023-10-15T16:16:00Z",
+        "price": 2766544,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-12-04T21:56:00Z",
+        "price": 2530901,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0004",
+    "title": "Apto Belo Horizonte #4",
+    "type": "apartamento",
+    "modality": "aluguel",
+    "city": "Belo Horizonte",
+    "state": "MG",
+    "areaM2": 146,
+    "price": 4595,
+    "priceFormatted": "R$ 4,595.00",
+    "bedrooms": 3,
+    "available": false,
+    "status": "sold",
+    "latitude": -19.946505,
+    "longitude": -43.921174,
+    "neighborhood": "Funcionários",
+    "zone": "Funcionários",
+    "tags": [
+      "financiamento",
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6007072?w=800&q=80",
+      "https://images.unsplash.com/photo-9517169?w=800&q=80",
+      "https://images.unsplash.com/photo-4337174?w=800&q=80",
+      "https://images.unsplash.com/photo-3564217?w=800&q=80",
+      "https://images.unsplash.com/photo-7273233?w=800&q=80",
+      "https://images.unsplash.com/photo-3710343?w=800&q=80",
+      "https://images.unsplash.com/photo-9897858?w=800&q=80",
+      "https://images.unsplash.com/photo-1009594?w=800&q=80"
+    ],
+    "createdAt": "2024-08-01T03:59:00Z",
+    "updatedAt": "2024-08-01T03:59:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0005",
+    "title": "Casa Rio de Janeiro #5",
+    "type": "casa",
+    "modality": "venda",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 203,
+    "price": 1755341,
+    "priceFormatted": "R$ 1,755,341.00",
+    "bedrooms": 5,
+    "available": false,
+    "status": "rented",
+    "latitude": -22.931661,
+    "longitude": -43.173741,
+    "neighborhood": "Copacabana",
+    "zone": "Copacabana",
+    "tags": [
+      "quintal",
+      "segurança"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-3770370?w=800&q=80",
+      "https://images.unsplash.com/photo-5446912?w=800&q=80",
+      "https://images.unsplash.com/photo-9852897?w=800&q=80",
+      "https://images.unsplash.com/photo-8099076?w=800&q=80",
+      "https://images.unsplash.com/photo-4553384?w=800&q=80",
+      "https://images.unsplash.com/photo-4374754?w=800&q=80"
+    ],
+    "createdAt": "2024-07-22T20:23:00Z",
+    "updatedAt": "2024-07-22T20:23:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-01-28T10:04:00Z",
+        "price": 1452942,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-08-26T13:12:00Z",
+        "price": 1261309,
+        "source": "registro"
+      },
+      {
+        "date": "2023-02-08T07:04:00Z",
+        "price": 1755341,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-04-01T02:45:00Z",
+        "price": 1582695,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-08-07T17:08:00Z",
+        "price": 1291274,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0006",
+    "title": "Sala Belo Horizonte #6",
+    "type": "comercial",
+    "modality": "aluguel",
+    "city": "Belo Horizonte",
+    "state": "MG",
+    "areaM2": 259,
+    "price": 11618,
+    "priceFormatted": "R$ 11,618.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -19.906298,
+    "longitude": -43.90545,
+    "neighborhood": "Savassi",
+    "zone": "Savassi",
+    "tags": [
+      "vitrine"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6692553?w=800&q=80",
+      "https://images.unsplash.com/photo-2833230?w=800&q=80",
+      "https://images.unsplash.com/photo-5171761?w=800&q=80",
+      "https://images.unsplash.com/photo-4214348?w=800&q=80",
+      "https://images.unsplash.com/photo-4191175?w=800&q=80",
+      "https://images.unsplash.com/photo-9997381?w=800&q=80",
+      "https://images.unsplash.com/photo-8526486?w=800&q=80",
+      "https://images.unsplash.com/photo-3351868?w=800&q=80"
+    ],
+    "createdAt": "2023-05-15T07:55:00Z",
+    "updatedAt": "2023-05-15T07:55:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0007",
+    "title": "Sala Florianópolis #7",
+    "type": "comercial",
+    "modality": "lancamento",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 70,
+    "price": 238980,
+    "priceFormatted": "R$ 238,980.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -27.56726,
+    "longitude": -48.522418,
+    "neighborhood": "Trindade",
+    "zone": "Trindade",
+    "tags": [
+      "vitrine",
+      "fachada"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-4586084?w=800&q=80",
+      "https://images.unsplash.com/photo-7728339?w=800&q=80",
+      "https://images.unsplash.com/photo-1983738?w=800&q=80",
+      "https://images.unsplash.com/photo-3762152?w=800&q=80",
+      "https://images.unsplash.com/photo-7358113?w=800&q=80",
+      "https://images.unsplash.com/photo-1036161?w=800&q=80"
+    ],
+    "createdAt": "2024-08-10T13:44:00Z",
+    "updatedAt": "2024-08-10T13:44:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-09-03T05:04:00Z",
+        "price": 167005,
+        "source": "avaliação"
+      },
+      {
+        "date": "2022-10-16T16:58:00Z",
+        "price": 184192,
+        "source": "avaliação"
+      },
+      {
+        "date": "2022-10-24T17:03:00Z",
+        "price": 211565,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-02-19T07:37:00Z",
+        "price": 151434,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-11-23T15:09:00Z",
+        "price": 238980,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0008",
+    "title": "Penthouse Porto Alegre #8",
+    "type": "cobertura",
+    "modality": "lancamento",
+    "city": "Porto Alegre",
+    "state": "RS",
+    "areaM2": 233,
+    "price": 3071639,
+    "priceFormatted": "R$ 3,071,639.00",
+    "bedrooms": 4,
+    "available": false,
+    "status": "sold",
+    "latitude": -30.052344,
+    "longitude": -51.204728,
+    "neighborhood": "Bela Vista",
+    "zone": "Bela Vista",
+    "tags": [
+      "penthouse",
+      "luxo",
+      "cobertura"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6304573?w=800&q=80",
+      "https://images.unsplash.com/photo-2217071?w=800&q=80",
+      "https://images.unsplash.com/photo-1156287?w=800&q=80",
+      "https://images.unsplash.com/photo-8688755?w=800&q=80",
+      "https://images.unsplash.com/photo-2677407?w=800&q=80",
+      "https://images.unsplash.com/photo-2229110?w=800&q=80"
+    ],
+    "createdAt": "2023-09-09T04:59:00Z",
+    "updatedAt": "2023-09-09T04:59:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-06-10T05:28:00Z",
+        "price": 3071639,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-02-05T08:07:00Z",
+        "price": 2327638,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-11-17T00:42:00Z",
+        "price": 2689543,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0009",
+    "title": "Lote Rio de Janeiro #9",
+    "type": "terreno",
+    "modality": "lancamento",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 415,
+    "price": 1842185,
+    "priceFormatted": "R$ 1,842,185.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -22.924584,
+    "longitude": -43.164846,
+    "neighborhood": "Barra da Tijuca",
+    "zone": "Barra da Tijuca",
+    "tags": [
+      "plano",
+      "esquina",
+      "escritura",
+      "loteamento"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-5641923?w=800&q=80",
+      "https://images.unsplash.com/photo-1739653?w=800&q=80",
+      "https://images.unsplash.com/photo-1059486?w=800&q=80",
+      "https://images.unsplash.com/photo-6596150?w=800&q=80",
+      "https://images.unsplash.com/photo-3194789?w=800&q=80",
+      "https://images.unsplash.com/photo-5394880?w=800&q=80"
+    ],
+    "createdAt": "2025-08-18T22:27:00Z",
+    "updatedAt": "2025-08-18T22:27:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-02-03T22:57:00Z",
+        "price": 1842185,
+        "source": "proprietário"
+      },
+      {
+        "date": "2022-03-14T00:11:00Z",
+        "price": 1342602,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-01-12T06:43:00Z",
+        "price": 1710421,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-09-28T13:39:00Z",
+        "price": 1513847,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-10-18T04:27:00Z",
+        "price": 1790894,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0010",
+    "title": "Casa Porto Alegre #10",
+    "type": "casa",
+    "modality": "aluguel",
+    "city": "Porto Alegre",
+    "state": "RS",
+    "areaM2": 161,
+    "price": 7843,
+    "priceFormatted": "R$ 7,843.00",
+    "bedrooms": 4,
+    "available": true,
+    "status": "active",
+    "latitude": -30.041647,
+    "longitude": -51.245377,
+    "neighborhood": "Petrópolis",
+    "zone": "Petrópolis",
+    "tags": [
+      "churrasqueira",
+      "condomínio"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6866294?w=800&q=80",
+      "https://images.unsplash.com/photo-6120253?w=800&q=80",
+      "https://images.unsplash.com/photo-4818418?w=800&q=80",
+      "https://images.unsplash.com/photo-4740036?w=800&q=80",
+      "https://images.unsplash.com/photo-1397023?w=800&q=80",
+      "https://images.unsplash.com/photo-4240180?w=800&q=80"
+    ],
+    "createdAt": "2024-05-28T02:49:00Z",
+    "updatedAt": "2024-05-28T02:49:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0011",
+    "title": "Penthouse Belo Horizonte #11",
+    "type": "cobertura",
+    "modality": "aluguel",
+    "city": "Belo Horizonte",
+    "state": "MG",
+    "areaM2": 273,
+    "price": 22911,
+    "priceFormatted": "R$ 22,911.00",
+    "bedrooms": 5,
+    "available": false,
+    "status": "rented",
+    "latitude": -19.890346,
+    "longitude": -43.957579,
+    "neighborhood": "Funcionários",
+    "zone": "Funcionários",
+    "tags": [
+      "privativa",
+      "cobertura"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-2818692?w=800&q=80",
+      "https://images.unsplash.com/photo-8290770?w=800&q=80",
+      "https://images.unsplash.com/photo-6799667?w=800&q=80"
+    ],
+    "createdAt": "2024-07-20T16:07:00Z",
+    "updatedAt": "2024-07-20T16:07:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0012",
+    "title": "Residência Maringá #12",
+    "type": "casa",
+    "modality": "aluguel",
+    "city": "Maringá",
+    "state": "PR",
+    "areaM2": 102,
+    "price": 5001,
+    "priceFormatted": "R$ 5,001.00",
+    "bedrooms": 3,
+    "available": false,
+    "status": "rented",
+    "latitude": -23.450399,
+    "longitude": -51.907765,
+    "neighborhood": "Zona 02",
+    "zone": "Zona 02",
+    "tags": [
+      "condomínio",
+      "garagem",
+      "segurança"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6266630?w=800&q=80",
+      "https://images.unsplash.com/photo-3090865?w=800&q=80",
+      "https://images.unsplash.com/photo-6038571?w=800&q=80",
+      "https://images.unsplash.com/photo-9508103?w=800&q=80",
+      "https://images.unsplash.com/photo-6188935?w=800&q=80"
+    ],
+    "createdAt": "2024-06-13T22:18:00Z",
+    "updatedAt": "2024-06-13T22:18:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0013",
+    "title": "Sala São Paulo #13",
+    "type": "comercial",
+    "modality": "lancamento",
+    "city": "São Paulo",
+    "state": "SP",
+    "areaM2": 214,
+    "price": 1829272,
+    "priceFormatted": "R$ 1,829,272.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -23.543569,
+    "longitude": -46.645243,
+    "neighborhood": "Barra Funda",
+    "zone": "Barra Funda",
+    "tags": [
+      "ponto_referência"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-4526280?w=800&q=80",
+      "https://images.unsplash.com/photo-8212326?w=800&q=80",
+      "https://images.unsplash.com/photo-6406444?w=800&q=80",
+      "https://images.unsplash.com/photo-8801207?w=800&q=80",
+      "https://images.unsplash.com/photo-8411939?w=800&q=80"
+    ],
+    "createdAt": "2025-04-17T15:50:00Z",
+    "updatedAt": "2025-04-17T15:50:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-01-08T15:39:00Z",
+        "price": 1397508,
+        "source": "proprietário"
+      },
+      {
+        "date": "2022-04-22T09:14:00Z",
+        "price": 1604420,
+        "source": "avaliação"
+      },
+      {
+        "date": "2022-11-03T09:32:00Z",
+        "price": 1829272,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-07-08T04:41:00Z",
+        "price": 1110898,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-07-21T18:12:00Z",
+        "price": 1242987,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0014",
+    "title": "Residência Porto Alegre #14",
+    "type": "casa",
+    "modality": "venda",
+    "city": "Porto Alegre",
+    "state": "RS",
+    "areaM2": 491,
+    "price": 4762700,
+    "priceFormatted": "R$ 4,762,700.00",
+    "bedrooms": 5,
+    "available": true,
+    "status": "active",
+    "latitude": -30.061587,
+    "longitude": -51.232748,
+    "neighborhood": "Moinhos de Vento",
+    "zone": "Moinhos de Vento",
+    "tags": [
+      "quintal",
+      "condomínio",
+      "churrasqueira",
+      "jardim"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6323376?w=800&q=80",
+      "https://images.unsplash.com/photo-8425149?w=800&q=80",
+      "https://images.unsplash.com/photo-9468772?w=800&q=80",
+      "https://images.unsplash.com/photo-8159521?w=800&q=80",
+      "https://images.unsplash.com/photo-8481188?w=800&q=80",
+      "https://images.unsplash.com/photo-3670226?w=800&q=80",
+      "https://images.unsplash.com/photo-8963715?w=800&q=80"
+    ],
+    "createdAt": "2024-04-27T20:17:00Z",
+    "updatedAt": "2024-04-27T20:17:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-05-15T02:45:00Z",
+        "price": 4762700,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-06-18T02:08:00Z",
+        "price": 4614502,
+        "source": "registro"
+      },
+      {
+        "date": "2024-03-23T06:04:00Z",
+        "price": 4300339,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-08-14T01:13:00Z",
+        "price": 3755895,
+        "source": "registro"
+      },
+      {
+        "date": "2024-12-01T18:24:00Z",
+        "price": 3467528,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0015",
+    "title": "Sala Rio de Janeiro #15",
+    "type": "comercial",
+    "modality": "aluguel",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 295,
+    "price": 11022,
+    "priceFormatted": "R$ 11,022.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -22.907506,
+    "longitude": -43.186524,
+    "neighborhood": "Botafogo",
+    "zone": "Botafogo",
+    "tags": [
+      "vitrine"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-7783308?w=800&q=80",
+      "https://images.unsplash.com/photo-3768991?w=800&q=80",
+      "https://images.unsplash.com/photo-8841505?w=800&q=80",
+      "https://images.unsplash.com/photo-3141239?w=800&q=80",
+      "https://images.unsplash.com/photo-9961107?w=800&q=80"
+    ],
+    "createdAt": "2024-10-19T21:01:00Z",
+    "updatedAt": "2024-10-19T21:01:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0016",
+    "title": "Sala Florianópolis #16",
+    "type": "comercial",
+    "modality": "venda",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 463,
+    "price": 3140066,
+    "priceFormatted": "R$ 3,140,066.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -27.622383,
+    "longitude": -48.555254,
+    "neighborhood": "Trindade",
+    "zone": "Trindade",
+    "tags": [
+      "ponto_referência",
+      "fachada",
+      "vitrine",
+      "comercial"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-5232413?w=800&q=80",
+      "https://images.unsplash.com/photo-2374158?w=800&q=80",
+      "https://images.unsplash.com/photo-8890439?w=800&q=80",
+      "https://images.unsplash.com/photo-1325197?w=800&q=80",
+      "https://images.unsplash.com/photo-1873851?w=800&q=80",
+      "https://images.unsplash.com/photo-6871360?w=800&q=80"
+    ],
+    "createdAt": "2025-02-25T20:02:00Z",
+    "updatedAt": "2025-02-25T20:02:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-04-27T00:39:00Z",
+        "price": 3140066,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-03-20T19:47:00Z",
+        "price": 2583111,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-11-04T18:13:00Z",
+        "price": 2904232,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0017",
+    "title": "Apto Rio de Janeiro #17",
+    "type": "apartamento",
+    "modality": "lancamento",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 41,
+    "price": 309755,
+    "priceFormatted": "R$ 309,755.00",
+    "bedrooms": 1,
+    "available": false,
+    "status": "rented",
+    "latitude": -22.913001,
+    "longitude": -43.159999,
+    "neighborhood": "Copacabana",
+    "zone": "Copacabana",
+    "tags": [
+      "financiamento",
+      "mobiliado"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-3030966?w=800&q=80",
+      "https://images.unsplash.com/photo-1689025?w=800&q=80",
+      "https://images.unsplash.com/photo-6825112?w=800&q=80",
+      "https://images.unsplash.com/photo-9937982?w=800&q=80",
+      "https://images.unsplash.com/photo-8186990?w=800&q=80"
+    ],
+    "createdAt": "2024-02-17T20:21:00Z",
+    "updatedAt": "2024-02-17T20:21:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-02-14T11:40:00Z",
+        "price": 309755,
+        "source": "registro"
+      },
+      {
+        "date": "2023-04-27T02:17:00Z",
+        "price": 228662,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-03-14T05:46:00Z",
+        "price": 284031,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-09-25T15:29:00Z",
+        "price": 263870,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0018",
+    "title": "Penthouse Joinville #18",
+    "type": "cobertura",
+    "modality": "lancamento",
+    "city": "Joinville",
+    "state": "SC",
+    "areaM2": 271,
+    "price": 3850639,
+    "priceFormatted": "R$ 3,850,639.00",
+    "bedrooms": 3,
+    "available": true,
+    "status": "active",
+    "latitude": -26.332778,
+    "longitude": -48.827643,
+    "neighborhood": "América",
+    "zone": "América",
+    "tags": [
+      "luxo",
+      "cobertura",
+      "rooftop",
+      "privativa"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-5635017?w=800&q=80",
+      "https://images.unsplash.com/photo-1170307?w=800&q=80",
+      "https://images.unsplash.com/photo-9667566?w=800&q=80",
+      "https://images.unsplash.com/photo-4205394?w=800&q=80",
+      "https://images.unsplash.com/photo-2436347?w=800&q=80"
+    ],
+    "createdAt": "2025-07-16T17:48:00Z",
+    "updatedAt": "2025-07-16T17:48:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-04-13T22:15:00Z",
+        "price": 3647060,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-09-17T11:27:00Z",
+        "price": 3101720,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-11-23T15:28:00Z",
+        "price": 3850639,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-12-15T08:19:00Z",
+        "price": 2961533,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-04-11T03:47:00Z",
+        "price": 2709740,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0019",
+    "title": "Residência São Paulo #19",
+    "type": "casa",
+    "modality": "lancamento",
+    "city": "São Paulo",
+    "state": "SP",
+    "areaM2": 327,
+    "price": 2048655,
+    "priceFormatted": "R$ 2,048,655.00",
+    "bedrooms": 5,
+    "available": true,
+    "status": "active",
+    "latitude": -23.521669,
+    "longitude": -46.613342,
+    "neighborhood": "Pinheiros",
+    "zone": "Pinheiros",
+    "tags": [
+      "segurança",
+      "piscina"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1237370?w=800&q=80",
+      "https://images.unsplash.com/photo-9961299?w=800&q=80",
+      "https://images.unsplash.com/photo-3123709?w=800&q=80",
+      "https://images.unsplash.com/photo-5602180?w=800&q=80",
+      "https://images.unsplash.com/photo-1763626?w=800&q=80"
+    ],
+    "createdAt": "2025-05-23T04:40:00Z",
+    "updatedAt": "2025-05-23T04:40:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-05-28T15:07:00Z",
+        "price": 1792376,
+        "source": "registro"
+      },
+      {
+        "date": "2022-10-10T15:30:00Z",
+        "price": 2048655,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-02-19T20:43:00Z",
+        "price": 1760999,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0020",
+    "title": "Lote Maringá #20",
+    "type": "terreno",
+    "modality": "venda",
+    "city": "Maringá",
+    "state": "PR",
+    "areaM2": 454,
+    "price": 901190,
+    "priceFormatted": "R$ 901,190.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "rented",
+    "latitude": -23.414121,
+    "longitude": -51.915856,
+    "neighborhood": "Zona 02",
+    "zone": "Zona 02",
+    "tags": [
+      "murado",
+      "loteamento",
+      "plano",
+      "escritura"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6123430?w=800&q=80",
+      "https://images.unsplash.com/photo-2010496?w=800&q=80",
+      "https://images.unsplash.com/photo-2664863?w=800&q=80",
+      "https://images.unsplash.com/photo-4486102?w=800&q=80",
+      "https://images.unsplash.com/photo-4540415?w=800&q=80",
+      "https://images.unsplash.com/photo-5440025?w=800&q=80"
+    ],
+    "createdAt": "2023-03-08T05:35:00Z",
+    "updatedAt": "2023-03-08T05:35:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-01-14T14:44:00Z",
+        "price": 901190,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-04-10T22:18:00Z",
+        "price": 803484,
+        "source": "registro"
+      },
+      {
+        "date": "2022-11-08T08:50:00Z",
+        "price": 706443,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0021",
+    "title": "Apartamento Porto Alegre #21",
+    "type": "apartamento",
+    "modality": "lancamento",
+    "city": "Porto Alegre",
+    "state": "RS",
+    "areaM2": 92,
+    "price": 948060,
+    "priceFormatted": "R$ 948,060.00",
+    "bedrooms": 4,
+    "available": false,
+    "status": "rented",
+    "latitude": -30.010095,
+    "longitude": -51.198102,
+    "neighborhood": "Moinhos de Vento",
+    "zone": "Moinhos de Vento",
+    "tags": [
+      "sacada"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-5842082?w=800&q=80",
+      "https://images.unsplash.com/photo-8367772?w=800&q=80",
+      "https://images.unsplash.com/photo-3086308?w=800&q=80",
+      "https://images.unsplash.com/photo-8863447?w=800&q=80",
+      "https://images.unsplash.com/photo-6101803?w=800&q=80"
+    ],
+    "createdAt": "2024-05-17T17:31:00Z",
+    "updatedAt": "2024-05-17T17:31:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-04-22T18:37:00Z",
+        "price": 812383,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-01-14T23:20:00Z",
+        "price": 948060,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-01-25T05:30:00Z",
+        "price": 745235,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0022",
+    "title": "Residência Rio de Janeiro #22",
+    "type": "casa",
+    "modality": "lancamento",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 303,
+    "price": 2787600,
+    "priceFormatted": "R$ 2,787,600.00",
+    "bedrooms": 4,
+    "available": false,
+    "status": "rented",
+    "latitude": -22.878657,
+    "longitude": -43.174699,
+    "neighborhood": "Botafogo",
+    "zone": "Botafogo",
+    "tags": [
+      "segurança",
+      "área_lazer",
+      "garagem"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6533187?w=800&q=80",
+      "https://images.unsplash.com/photo-7906258?w=800&q=80",
+      "https://images.unsplash.com/photo-9312590?w=800&q=80",
+      "https://images.unsplash.com/photo-5835492?w=800&q=80"
+    ],
+    "createdAt": "2024-09-02T14:05:00Z",
+    "updatedAt": "2024-09-02T14:05:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-02-25T12:55:00Z",
+        "price": 2787600,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-03-10T14:56:00Z",
+        "price": 2355740,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-08-21T14:48:00Z",
+        "price": 2640240,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-09-15T13:03:00Z",
+        "price": 2686517,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0023",
+    "title": "Penthouse Curitiba #23",
+    "type": "cobertura",
+    "modality": "venda",
+    "city": "Curitiba",
+    "state": "PR",
+    "areaM2": 281,
+    "price": 2976914,
+    "priceFormatted": "R$ 2,976,914.00",
+    "bedrooms": 3,
+    "available": true,
+    "status": "active",
+    "latitude": -25.42595,
+    "longitude": -49.263965,
+    "neighborhood": "Centro",
+    "zone": "Centro",
+    "tags": [
+      "piscina",
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-2970754?w=800&q=80",
+      "https://images.unsplash.com/photo-3583206?w=800&q=80",
+      "https://images.unsplash.com/photo-9361353?w=800&q=80",
+      "https://images.unsplash.com/photo-5896624?w=800&q=80",
+      "https://images.unsplash.com/photo-9537455?w=800&q=80",
+      "https://images.unsplash.com/photo-5587308?w=800&q=80"
+    ],
+    "createdAt": "2024-08-08T14:35:00Z",
+    "updatedAt": "2024-08-08T14:35:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-08-18T15:22:00Z",
+        "price": 2089563,
+        "source": "registro"
+      },
+      {
+        "date": "2022-10-17T23:56:00Z",
+        "price": 2976914,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-07-11T16:17:00Z",
+        "price": 2605166,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-05-27T18:37:00Z",
+        "price": 2214791,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0024",
+    "title": "Lote Joinville #24",
+    "type": "terreno",
+    "modality": "venda",
+    "city": "Joinville",
+    "state": "SC",
+    "areaM2": 914,
+    "price": 2264892,
+    "priceFormatted": "R$ 2,264,892.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "reserved",
+    "latitude": -26.320486,
+    "longitude": -48.832167,
+    "neighborhood": "Centro",
+    "zone": "Centro",
+    "tags": [
+      "loteamento",
+      "murado",
+      "escritura"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-3551903?w=800&q=80",
+      "https://images.unsplash.com/photo-9310235?w=800&q=80",
+      "https://images.unsplash.com/photo-1621086?w=800&q=80",
+      "https://images.unsplash.com/photo-3118060?w=800&q=80",
+      "https://images.unsplash.com/photo-9427047?w=800&q=80",
+      "https://images.unsplash.com/photo-6569946?w=800&q=80"
+    ],
+    "createdAt": "2023-08-04T16:58:00Z",
+    "updatedAt": "2023-08-04T16:58:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-08-26T08:21:00Z",
+        "price": 2044616,
+        "source": "registro"
+      },
+      {
+        "date": "2022-12-05T13:55:00Z",
+        "price": 2264892,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-11-23T15:55:00Z",
+        "price": 1674131,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-02-28T10:54:00Z",
+        "price": 1831137,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0025",
+    "title": "Lote São Paulo #25",
+    "type": "terreno",
+    "modality": "venda",
+    "city": "São Paulo",
+    "state": "SP",
+    "areaM2": 964,
+    "price": 1802680,
+    "priceFormatted": "R$ 1,802,680.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "reserved",
+    "latitude": -23.5218,
+    "longitude": -46.617678,
+    "neighborhood": "Perdizes",
+    "zone": "Perdizes",
+    "tags": [
+      "murado"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6024207?w=800&q=80",
+      "https://images.unsplash.com/photo-1485654?w=800&q=80",
+      "https://images.unsplash.com/photo-1771600?w=800&q=80",
+      "https://images.unsplash.com/photo-6442103?w=800&q=80"
+    ],
+    "createdAt": "2023-05-12T11:27:00Z",
+    "updatedAt": "2023-05-12T11:27:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-02-20T12:39:00Z",
+        "price": 1612246,
+        "source": "registro"
+      },
+      {
+        "date": "2022-09-14T18:43:00Z",
+        "price": 1802680,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-03-08T14:40:00Z",
+        "price": 1538797,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0026",
+    "title": "Sala Curitiba #26",
+    "type": "comercial",
+    "modality": "aluguel",
+    "city": "Curitiba",
+    "state": "PR",
+    "areaM2": 366,
+    "price": 13682,
+    "priceFormatted": "R$ 13,682.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -25.454568,
+    "longitude": -49.240386,
+    "neighborhood": "Bigorrilho",
+    "zone": "Bigorrilho",
+    "tags": [
+      "fachada",
+      "ponto_referência",
+      "vitrine",
+      "comercial"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-7454081?w=800&q=80",
+      "https://images.unsplash.com/photo-9106886?w=800&q=80",
+      "https://images.unsplash.com/photo-2789344?w=800&q=80",
+      "https://images.unsplash.com/photo-4979651?w=800&q=80"
+    ],
+    "createdAt": "2025-06-19T09:44:00Z",
+    "updatedAt": "2025-06-19T09:44:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0027",
+    "title": "Apartamento Rio de Janeiro #27",
+    "type": "apartamento",
+    "modality": "lancamento",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 136,
+    "price": 985728,
+    "priceFormatted": "R$ 985,728.00",
+    "bedrooms": 1,
+    "available": false,
+    "status": "rented",
+    "latitude": -22.902844,
+    "longitude": -43.161752,
+    "neighborhood": "Flamengo",
+    "zone": "Flamengo",
+    "tags": [
+      "elevador"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-4860745?w=800&q=80",
+      "https://images.unsplash.com/photo-6910964?w=800&q=80",
+      "https://images.unsplash.com/photo-4674286?w=800&q=80",
+      "https://images.unsplash.com/photo-4189885?w=800&q=80",
+      "https://images.unsplash.com/photo-5204819?w=800&q=80"
+    ],
+    "createdAt": "2025-11-22T04:40:00Z",
+    "updatedAt": "2025-11-22T04:40:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-05-11T23:26:00Z",
+        "price": 951632,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-02-05T07:55:00Z",
+        "price": 704049,
+        "source": "registro"
+      },
+      {
+        "date": "2023-08-26T09:47:00Z",
+        "price": 786371,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-01-10T14:02:00Z",
+        "price": 985728,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-06-17T16:58:00Z",
+        "price": 905807,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0028",
+    "title": "Lote Londrina #28",
+    "type": "terreno",
+    "modality": "venda",
+    "city": "Londrina",
+    "state": "PR",
+    "areaM2": 604,
+    "price": 940428,
+    "priceFormatted": "R$ 940,428.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "rented",
+    "latitude": -23.308106,
+    "longitude": -51.165513,
+    "neighborhood": "Jardim Higienópolis",
+    "zone": "Jardim Higienópolis",
+    "tags": [
+      "loteamento",
+      "plano",
+      "esquina",
+      "escritura"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8910069?w=800&q=80",
+      "https://images.unsplash.com/photo-1419843?w=800&q=80",
+      "https://images.unsplash.com/photo-6503032?w=800&q=80",
+      "https://images.unsplash.com/photo-4713925?w=800&q=80"
+    ],
+    "createdAt": "2023-11-27T14:58:00Z",
+    "updatedAt": "2023-11-27T14:58:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-08-04T03:15:00Z",
+        "price": 814207,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-08-12T21:47:00Z",
+        "price": 726673,
+        "source": "registro"
+      },
+      {
+        "date": "2023-10-14T08:02:00Z",
+        "price": 604982,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-11-14T03:08:00Z",
+        "price": 940428,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-12-24T04:56:00Z",
+        "price": 677198,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0029",
+    "title": "Sala Joinville #29",
+    "type": "comercial",
+    "modality": "venda",
+    "city": "Joinville",
+    "state": "SC",
+    "areaM2": 457,
+    "price": 2728747,
+    "priceFormatted": "R$ 2,728,747.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "rented",
+    "latitude": -26.275644,
+    "longitude": -48.85666,
+    "neighborhood": "Bucarein",
+    "zone": "Bucarein",
+    "tags": [
+      "vitrine"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-4184459?w=800&q=80",
+      "https://images.unsplash.com/photo-3049499?w=800&q=80",
+      "https://images.unsplash.com/photo-8628891?w=800&q=80",
+      "https://images.unsplash.com/photo-2538024?w=800&q=80",
+      "https://images.unsplash.com/photo-4558545?w=800&q=80"
+    ],
+    "createdAt": "2025-10-01T01:50:00Z",
+    "updatedAt": "2025-10-01T01:50:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-03-26T18:13:00Z",
+        "price": 2728747,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-03-05T17:16:00Z",
+        "price": 2112644,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-01-05T00:22:00Z",
+        "price": 1857863,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-04-27T07:21:00Z",
+        "price": 2405631,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0030",
+    "title": "Terreno Maringá #30",
+    "type": "terreno",
+    "modality": "venda",
+    "city": "Maringá",
+    "state": "PR",
+    "areaM2": 378,
+    "price": 977508,
+    "priceFormatted": "R$ 977,508.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "sold",
+    "latitude": -23.442894,
+    "longitude": -51.938042,
+    "neighborhood": "Zona 01",
+    "zone": "Zona 01",
+    "tags": [
+      "murado"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-7074006?w=800&q=80",
+      "https://images.unsplash.com/photo-9610704?w=800&q=80",
+      "https://images.unsplash.com/photo-2829622?w=800&q=80",
+      "https://images.unsplash.com/photo-8583392?w=800&q=80",
+      "https://images.unsplash.com/photo-9453010?w=800&q=80",
+      "https://images.unsplash.com/photo-4716988?w=800&q=80"
+    ],
+    "createdAt": "2023-12-26T21:33:00Z",
+    "updatedAt": "2023-12-26T21:33:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-10-05T02:08:00Z",
+        "price": 863037,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-10-17T09:29:00Z",
+        "price": 793323,
+        "source": "registro"
+      },
+      {
+        "date": "2023-11-01T01:30:00Z",
+        "price": 977508,
+        "source": "registro"
+      },
+      {
+        "date": "2024-02-16T22:58:00Z",
+        "price": 907030,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0031",
+    "title": "Apartamento Florianópolis #31",
+    "type": "apartamento",
+    "modality": "lancamento",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 176,
+    "price": 1919280,
+    "priceFormatted": "R$ 1,919,280.00",
+    "bedrooms": 3,
+    "available": true,
+    "status": "active",
+    "latitude": -27.599596,
+    "longitude": -48.524715,
+    "neighborhood": "Lagoa da Conceição",
+    "zone": "Lagoa da Conceição",
+    "tags": [
+      "elevador",
+      "vaga_garagem",
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-2595275?w=800&q=80",
+      "https://images.unsplash.com/photo-6243691?w=800&q=80",
+      "https://images.unsplash.com/photo-8159911?w=800&q=80",
+      "https://images.unsplash.com/photo-6243275?w=800&q=80",
+      "https://images.unsplash.com/photo-5276341?w=800&q=80",
+      "https://images.unsplash.com/photo-7279729?w=800&q=80",
+      "https://images.unsplash.com/photo-3560856?w=800&q=80",
+      "https://images.unsplash.com/photo-8956894?w=800&q=80"
+    ],
+    "createdAt": "2023-02-03T13:06:00Z",
+    "updatedAt": "2023-02-03T13:06:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-06-28T21:48:00Z",
+        "price": 1786444,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-10-10T11:06:00Z",
+        "price": 1624040,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-01-19T17:35:00Z",
+        "price": 1919280,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0032",
+    "title": "Ponto Comercial Balneário Camboriú #32",
+    "type": "comercial",
+    "modality": "venda",
+    "city": "Balneário Camboriú",
+    "state": "SC",
+    "areaM2": 453,
+    "price": 1760358,
+    "priceFormatted": "R$ 1,760,358.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -26.969978,
+    "longitude": -48.638046,
+    "neighborhood": "Pioneiros",
+    "zone": "Pioneiros",
+    "tags": [
+      "vitrine",
+      "estacionamento"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1440466?w=800&q=80",
+      "https://images.unsplash.com/photo-5487028?w=800&q=80",
+      "https://images.unsplash.com/photo-1485753?w=800&q=80",
+      "https://images.unsplash.com/photo-4026879?w=800&q=80",
+      "https://images.unsplash.com/photo-5584716?w=800&q=80",
+      "https://images.unsplash.com/photo-6183902?w=800&q=80",
+      "https://images.unsplash.com/photo-6701311?w=800&q=80"
+    ],
+    "createdAt": "2023-03-28T04:36:00Z",
+    "updatedAt": "2023-03-28T04:36:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-03-06T19:03:00Z",
+        "price": 1253622,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-02-05T23:40:00Z",
+        "price": 1760358,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-05-24T10:49:00Z",
+        "price": 1399688,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-11-14T15:38:00Z",
+        "price": 1163503,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-09-07T12:26:00Z",
+        "price": 1630953,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0033",
+    "title": "Cobertura São Paulo #33",
+    "type": "cobertura",
+    "modality": "venda",
+    "city": "São Paulo",
+    "state": "SP",
+    "areaM2": 188,
+    "price": 2828084,
+    "priceFormatted": "R$ 2,828,084.00",
+    "bedrooms": 5,
+    "available": true,
+    "status": "active",
+    "latitude": -23.563505,
+    "longitude": -46.622591,
+    "neighborhood": "Moema",
+    "zone": "Moema",
+    "tags": [
+      "vista_mar",
+      "luxo",
+      "penthouse"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1919088?w=800&q=80",
+      "https://images.unsplash.com/photo-1128967?w=800&q=80",
+      "https://images.unsplash.com/photo-4429650?w=800&q=80",
+      "https://images.unsplash.com/photo-6056977?w=800&q=80",
+      "https://images.unsplash.com/photo-4543918?w=800&q=80",
+      "https://images.unsplash.com/photo-3302417?w=800&q=80",
+      "https://images.unsplash.com/photo-5286905?w=800&q=80"
+    ],
+    "createdAt": "2024-02-01T15:47:00Z",
+    "updatedAt": "2024-02-01T15:47:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-06-19T13:36:00Z",
+        "price": 2452074,
+        "source": "registro"
+      },
+      {
+        "date": "2022-07-18T22:14:00Z",
+        "price": 2828084,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-07-28T23:02:00Z",
+        "price": 2627089,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0034",
+    "title": "Apartamento Rio de Janeiro #34",
+    "type": "apartamento",
+    "modality": "aluguel",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 40,
+    "price": 1532,
+    "priceFormatted": "R$ 1,532.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -22.888721,
+    "longitude": -43.165812,
+    "neighborhood": "Flamengo",
+    "zone": "Flamengo",
+    "tags": [
+      "financiamento",
+      "vaga_garagem",
+      "centro"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8309439?w=800&q=80",
+      "https://images.unsplash.com/photo-7718433?w=800&q=80",
+      "https://images.unsplash.com/photo-9790632?w=800&q=80",
+      "https://images.unsplash.com/photo-2319479?w=800&q=80"
+    ],
+    "createdAt": "2024-12-11T07:21:00Z",
+    "updatedAt": "2024-12-11T07:21:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0035",
+    "title": "Cobertura Florianópolis #35",
+    "type": "cobertura",
+    "modality": "lancamento",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 129,
+    "price": 2153397,
+    "priceFormatted": "R$ 2,153,397.00",
+    "bedrooms": 5,
+    "available": false,
+    "status": "reserved",
+    "latitude": -27.571045,
+    "longitude": -48.557037,
+    "neighborhood": "Ingleses",
+    "zone": "Ingleses",
+    "tags": [
+      "luxo",
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-5294434?w=800&q=80",
+      "https://images.unsplash.com/photo-4309671?w=800&q=80",
+      "https://images.unsplash.com/photo-3910830?w=800&q=80",
+      "https://images.unsplash.com/photo-3564729?w=800&q=80"
+    ],
+    "createdAt": "2025-02-06T20:31:00Z",
+    "updatedAt": "2025-02-06T20:31:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-01-02T11:53:00Z",
+        "price": 1852046,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-10-02T11:32:00Z",
+        "price": 1949914,
+        "source": "registro"
+      },
+      {
+        "date": "2024-06-05T14:04:00Z",
+        "price": 1990494,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-08-22T18:41:00Z",
+        "price": 2153397,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-10-17T12:29:00Z",
+        "price": 1683053,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0036",
+    "title": "Penthouse Joinville #36",
+    "type": "cobertura",
+    "modality": "lancamento",
+    "city": "Joinville",
+    "state": "SC",
+    "areaM2": 148,
+    "price": 1963516,
+    "priceFormatted": "R$ 1,963,516.00",
+    "bedrooms": 3,
+    "available": false,
+    "status": "rented",
+    "latitude": -26.304418,
+    "longitude": -48.821237,
+    "neighborhood": "Atiradores",
+    "zone": "Atiradores",
+    "tags": [
+      "piscina"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-2414808?w=800&q=80",
+      "https://images.unsplash.com/photo-9464927?w=800&q=80",
+      "https://images.unsplash.com/photo-3895058?w=800&q=80",
+      "https://images.unsplash.com/photo-1656695?w=800&q=80",
+      "https://images.unsplash.com/photo-5156449?w=800&q=80"
+    ],
+    "createdAt": "2024-08-17T16:39:00Z",
+    "updatedAt": "2024-08-17T16:39:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-02-19T21:09:00Z",
+        "price": 1496603,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-05-13T13:49:00Z",
+        "price": 1963516,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-05-24T21:58:00Z",
+        "price": 1736893,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-11-11T02:21:00Z",
+        "price": 1917901,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0037",
+    "title": "Residência Porto Alegre #37",
+    "type": "casa",
+    "modality": "lancamento",
+    "city": "Porto Alegre",
+    "state": "RS",
+    "areaM2": 442,
+    "price": 2074748,
+    "priceFormatted": "R$ 2,074,748.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -30.031065,
+    "longitude": -51.20909,
+    "neighborhood": "Centro Histórico",
+    "zone": "Centro Histórico",
+    "tags": [
+      "piscina",
+      "segurança"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8103580?w=800&q=80",
+      "https://images.unsplash.com/photo-9531021?w=800&q=80",
+      "https://images.unsplash.com/photo-7070468?w=800&q=80",
+      "https://images.unsplash.com/photo-1305857?w=800&q=80",
+      "https://images.unsplash.com/photo-7083379?w=800&q=80",
+      "https://images.unsplash.com/photo-6181912?w=800&q=80",
+      "https://images.unsplash.com/photo-4024309?w=800&q=80",
+      "https://images.unsplash.com/photo-4593556?w=800&q=80"
+    ],
+    "createdAt": "2024-04-08T04:09:00Z",
+    "updatedAt": "2024-04-08T04:09:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-03-27T22:49:00Z",
+        "price": 1697238,
+        "source": "avaliação"
+      },
+      {
+        "date": "2022-09-25T17:53:00Z",
+        "price": 2074748,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-06-25T19:08:00Z",
+        "price": 1880521,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-08-02T13:23:00Z",
+        "price": 1519552,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0038",
+    "title": "Cobertura Joinville #38",
+    "type": "cobertura",
+    "modality": "aluguel",
+    "city": "Joinville",
+    "state": "SC",
+    "areaM2": 292,
+    "price": 22418,
+    "priceFormatted": "R$ 22,418.00",
+    "bedrooms": 5,
+    "available": true,
+    "status": "active",
+    "latitude": -26.302459,
+    "longitude": -48.860132,
+    "neighborhood": "Atiradores",
+    "zone": "Atiradores",
+    "tags": [
+      "cobertura",
+      "rooftop"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8391997?w=800&q=80",
+      "https://images.unsplash.com/photo-8745704?w=800&q=80",
+      "https://images.unsplash.com/photo-5727345?w=800&q=80",
+      "https://images.unsplash.com/photo-7406756?w=800&q=80",
+      "https://images.unsplash.com/photo-9437374?w=800&q=80",
+      "https://images.unsplash.com/photo-9849306?w=800&q=80",
+      "https://images.unsplash.com/photo-8023963?w=800&q=80"
+    ],
+    "createdAt": "2023-10-05T08:03:00Z",
+    "updatedAt": "2023-10-05T08:03:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0039",
+    "title": "Cobertura Belo Horizonte #39",
+    "type": "cobertura",
+    "modality": "venda",
+    "city": "Belo Horizonte",
+    "state": "MG",
+    "areaM2": 282,
+    "price": 4639464,
+    "priceFormatted": "R$ 4,639,464.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -19.929596,
+    "longitude": -43.918713,
+    "neighborhood": "Funcionários",
+    "zone": "Funcionários",
+    "tags": [
+      "privativa",
+      "luxo",
+      "penthouse",
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8568671?w=800&q=80",
+      "https://images.unsplash.com/photo-6865064?w=800&q=80",
+      "https://images.unsplash.com/photo-1447451?w=800&q=80",
+      "https://images.unsplash.com/photo-7960815?w=800&q=80"
+    ],
+    "createdAt": "2024-09-12T07:24:00Z",
+    "updatedAt": "2024-09-12T07:24:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-01-11T03:53:00Z",
+        "price": 4639464,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-03-02T09:58:00Z",
+        "price": 4054118,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-04-27T04:35:00Z",
+        "price": 3003802,
+        "source": "registro"
+      },
+      {
+        "date": "2024-08-15T19:00:00Z",
+        "price": 3499433,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0040",
+    "title": "Terreno Florianópolis #40",
+    "type": "terreno",
+    "modality": "venda",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 508,
+    "price": 1015492,
+    "priceFormatted": "R$ 1,015,492.00",
+    "bedrooms": 0,
+    "available": false,
+    "status": "sold",
+    "latitude": -27.611094,
+    "longitude": -48.539663,
+    "neighborhood": "Canasvieiras",
+    "zone": "Canasvieiras",
+    "tags": [
+      "esquina",
+      "loteamento",
+      "murado",
+      "plano"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-1275739?w=800&q=80",
+      "https://images.unsplash.com/photo-9646569?w=800&q=80",
+      "https://images.unsplash.com/photo-5059048?w=800&q=80",
+      "https://images.unsplash.com/photo-3408819?w=800&q=80",
+      "https://images.unsplash.com/photo-5886733?w=800&q=80",
+      "https://images.unsplash.com/photo-8201433?w=800&q=80",
+      "https://images.unsplash.com/photo-1026245?w=800&q=80"
+    ],
+    "createdAt": "2024-04-19T13:11:00Z",
+    "updatedAt": "2024-04-19T13:11:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-08-02T20:24:00Z",
+        "price": 865863,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-01-12T02:22:00Z",
+        "price": 827974,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-02-17T11:04:00Z",
+        "price": 1015492,
+        "source": "proprietário"
+      },
+      {
+        "date": "2024-03-27T21:29:00Z",
+        "price": 694559,
+        "source": "registro"
+      },
+      {
+        "date": "2024-12-25T10:08:00Z",
+        "price": 814555,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0041",
+    "title": "Casa Balneário Camboriú #41",
+    "type": "casa",
+    "modality": "venda",
+    "city": "Balneário Camboriú",
+    "state": "SC",
+    "areaM2": 446,
+    "price": 3456054,
+    "priceFormatted": "R$ 3,456,054.00",
+    "bedrooms": 2,
+    "available": false,
+    "status": "reserved",
+    "latitude": -27.003093,
+    "longitude": -48.657472,
+    "neighborhood": "Nações",
+    "zone": "Nações",
+    "tags": [
+      "segurança"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-9646701?w=800&q=80",
+      "https://images.unsplash.com/photo-7681090?w=800&q=80",
+      "https://images.unsplash.com/photo-8942330?w=800&q=80",
+      "https://images.unsplash.com/photo-5249899?w=800&q=80",
+      "https://images.unsplash.com/photo-1614394?w=800&q=80"
+    ],
+    "createdAt": "2025-04-10T11:55:00Z",
+    "updatedAt": "2025-04-10T11:55:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-12-14T02:27:00Z",
+        "price": 2880682,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-05-04T11:27:00Z",
+        "price": 3456054,
+        "source": "registro"
+      },
+      {
+        "date": "2023-06-06T15:44:00Z",
+        "price": 3180767,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-08-20T22:27:00Z",
+        "price": 2628980,
+        "source": "registro"
+      },
+      {
+        "date": "2024-05-11T03:05:00Z",
+        "price": 2719626,
+        "source": "mercado"
+      }
+    ]
+  },
+  {
+    "id": "prop-0042",
+    "title": "Ponto Comercial Belo Horizonte #42",
+    "type": "comercial",
+    "modality": "venda",
+    "city": "Belo Horizonte",
+    "state": "MG",
+    "areaM2": 392,
+    "price": 2308096,
+    "priceFormatted": "R$ 2,308,096.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -19.930227,
+    "longitude": -43.905698,
+    "neighborhood": "Savassi",
+    "zone": "Savassi",
+    "tags": [
+      "fachada"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-7815076?w=800&q=80",
+      "https://images.unsplash.com/photo-7095349?w=800&q=80",
+      "https://images.unsplash.com/photo-9608154?w=800&q=80",
+      "https://images.unsplash.com/photo-3684131?w=800&q=80",
+      "https://images.unsplash.com/photo-1522452?w=800&q=80",
+      "https://images.unsplash.com/photo-3395441?w=800&q=80",
+      "https://images.unsplash.com/photo-8351320?w=800&q=80",
+      "https://images.unsplash.com/photo-1583829?w=800&q=80"
+    ],
+    "createdAt": "2023-04-25T20:23:00Z",
+    "updatedAt": "2023-04-25T20:23:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-06-21T08:15:00Z",
+        "price": 1916826,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-08-25T02:36:00Z",
+        "price": 2240521,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-10-02T19:09:00Z",
+        "price": 2308096,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-03-16T16:24:00Z",
+        "price": 1652503,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0043",
+    "title": "Lote Rio de Janeiro #43",
+    "type": "terreno",
+    "modality": "lancamento",
+    "city": "Rio de Janeiro",
+    "state": "RJ",
+    "areaM2": 656,
+    "price": 1559968,
+    "priceFormatted": "R$ 1,559,968.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -22.895161,
+    "longitude": -43.142982,
+    "neighborhood": "Ipanema",
+    "zone": "Ipanema",
+    "tags": [
+      "topografia"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8584017?w=800&q=80",
+      "https://images.unsplash.com/photo-3896693?w=800&q=80",
+      "https://images.unsplash.com/photo-8467726?w=800&q=80"
+    ],
+    "createdAt": "2025-06-22T11:45:00Z",
+    "updatedAt": "2025-06-22T11:45:00Z",
+    "priceHistory": [
+      {
+        "date": "2023-01-12T17:36:00Z",
+        "price": 1286841,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-09-08T03:12:00Z",
+        "price": 1371384,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-09-10T09:54:00Z",
+        "price": 1559968,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0044",
+    "title": "Apto Maringá #44",
+    "type": "apartamento",
+    "modality": "venda",
+    "city": "Maringá",
+    "state": "PR",
+    "areaM2": 114,
+    "price": 941754,
+    "priceFormatted": "R$ 941,754.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -23.418958,
+    "longitude": -51.91715,
+    "neighborhood": "Zona 01",
+    "zone": "Zona 01",
+    "tags": [
+      "mobiliado",
+      "elevador"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-8549319?w=800&q=80",
+      "https://images.unsplash.com/photo-8815384?w=800&q=80",
+      "https://images.unsplash.com/photo-9679860?w=800&q=80"
+    ],
+    "createdAt": "2023-09-21T18:11:00Z",
+    "updatedAt": "2023-09-21T18:11:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-05-07T20:35:00Z",
+        "price": 768317,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-06-23T07:22:00Z",
+        "price": 807415,
+        "source": "mercado"
+      },
+      {
+        "date": "2024-01-27T03:33:00Z",
+        "price": 941754,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-09-03T16:41:00Z",
+        "price": 742494,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0045",
+    "title": "Penthouse Balneário Camboriú #45",
+    "type": "cobertura",
+    "modality": "lancamento",
+    "city": "Balneário Camboriú",
+    "state": "SC",
+    "areaM2": 330,
+    "price": 5911620,
+    "priceFormatted": "R$ 5,911,620.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -26.970148,
+    "longitude": -48.626283,
+    "neighborhood": "Centro",
+    "zone": "Centro",
+    "tags": [
+      "vista_mar"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-5440189?w=800&q=80",
+      "https://images.unsplash.com/photo-4536777?w=800&q=80",
+      "https://images.unsplash.com/photo-7989166?w=800&q=80",
+      "https://images.unsplash.com/photo-1508113?w=800&q=80",
+      "https://images.unsplash.com/photo-9355692?w=800&q=80",
+      "https://images.unsplash.com/photo-5859883?w=800&q=80",
+      "https://images.unsplash.com/photo-6068298?w=800&q=80",
+      "https://images.unsplash.com/photo-9102469?w=800&q=80"
+    ],
+    "createdAt": "2025-07-10T14:04:00Z",
+    "updatedAt": "2025-07-10T14:04:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-06-17T17:06:00Z",
+        "price": 5262300,
+        "source": "registro"
+      },
+      {
+        "date": "2023-07-16T14:13:00Z",
+        "price": 5911620,
+        "source": "avaliação"
+      },
+      {
+        "date": "2023-12-11T23:55:00Z",
+        "price": 5566665,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0046",
+    "title": "Terreno Florianópolis #46",
+    "type": "terreno",
+    "modality": "aluguel",
+    "city": "Florianópolis",
+    "state": "SC",
+    "areaM2": 453,
+    "price": 4704,
+    "priceFormatted": "R$ 4,704.00",
+    "bedrooms": 0,
+    "available": true,
+    "status": "active",
+    "latitude": -27.622364,
+    "longitude": -48.521277,
+    "neighborhood": "Canasvieiras",
+    "zone": "Canasvieiras",
+    "tags": [
+      "topografia",
+      "loteamento",
+      "plano",
+      "murado"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6246485?w=800&q=80",
+      "https://images.unsplash.com/photo-4184887?w=800&q=80",
+      "https://images.unsplash.com/photo-3673322?w=800&q=80",
+      "https://images.unsplash.com/photo-9359508?w=800&q=80",
+      "https://images.unsplash.com/photo-9635649?w=800&q=80",
+      "https://images.unsplash.com/photo-8831858?w=800&q=80",
+      "https://images.unsplash.com/photo-9367799?w=800&q=80",
+      "https://images.unsplash.com/photo-6176450?w=800&q=80"
+    ],
+    "createdAt": "2023-02-13T16:29:00Z",
+    "updatedAt": "2023-02-13T16:29:00Z",
+    "priceHistory": []
+  },
+  {
+    "id": "prop-0047",
+    "title": "Casa São Paulo #47",
+    "type": "casa",
+    "modality": "lancamento",
+    "city": "São Paulo",
+    "state": "SP",
+    "areaM2": 260,
+    "price": 1143480,
+    "priceFormatted": "R$ 1,143,480.00",
+    "bedrooms": 4,
+    "available": true,
+    "status": "active",
+    "latitude": -23.563619,
+    "longitude": -46.627449,
+    "neighborhood": "Itaim Bibi",
+    "zone": "Itaim Bibi",
+    "tags": [
+      "jardim",
+      "área_lazer",
+      "garagem",
+      "segurança"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-3247055?w=800&q=80",
+      "https://images.unsplash.com/photo-5437118?w=800&q=80",
+      "https://images.unsplash.com/photo-7136730?w=800&q=80",
+      "https://images.unsplash.com/photo-7765480?w=800&q=80",
+      "https://images.unsplash.com/photo-7139410?w=800&q=80",
+      "https://images.unsplash.com/photo-1759041?w=800&q=80"
+    ],
+    "createdAt": "2023-10-18T06:23:00Z",
+    "updatedAt": "2023-10-18T06:23:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-02-13T11:50:00Z",
+        "price": 974073,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-04-20T16:25:00Z",
+        "price": 896136,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-09-15T17:17:00Z",
+        "price": 1143480,
+        "source": "proprietário"
+      }
+    ]
+  },
+  {
+    "id": "prop-0048",
+    "title": "Residência Curitiba #48",
+    "type": "casa",
+    "modality": "lancamento",
+    "city": "Curitiba",
+    "state": "PR",
+    "areaM2": 250,
+    "price": 1970000,
+    "priceFormatted": "R$ 1,970,000.00",
+    "bedrooms": 5,
+    "available": true,
+    "status": "active",
+    "latitude": -25.450064,
+    "longitude": -49.243512,
+    "neighborhood": "Centro Cívico",
+    "zone": "Centro Cívico",
+    "tags": [
+      "segurança",
+      "piscina",
+      "churrasqueira"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-6020319?w=800&q=80",
+      "https://images.unsplash.com/photo-6643410?w=800&q=80",
+      "https://images.unsplash.com/photo-9511333?w=800&q=80",
+      "https://images.unsplash.com/photo-9551583?w=800&q=80",
+      "https://images.unsplash.com/photo-9931180?w=800&q=80",
+      "https://images.unsplash.com/photo-9218263?w=800&q=80",
+      "https://images.unsplash.com/photo-6029651?w=800&q=80"
+    ],
+    "createdAt": "2023-06-11T21:07:00Z",
+    "updatedAt": "2023-06-11T21:07:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-01-15T10:26:00Z",
+        "price": 1393660,
+        "source": "avaliação"
+      },
+      {
+        "date": "2022-11-08T01:36:00Z",
+        "price": 1438544,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-11-26T18:36:00Z",
+        "price": 1887543,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-12-28T22:40:00Z",
+        "price": 1970000,
+        "source": "registro"
+      },
+      {
+        "date": "2024-08-06T16:40:00Z",
+        "price": 1678090,
+        "source": "registro"
+      }
+    ]
+  },
+  {
+    "id": "prop-0049",
+    "title": "Cobertura Porto Alegre #49",
+    "type": "cobertura",
+    "modality": "lancamento",
+    "city": "Porto Alegre",
+    "state": "RS",
+    "areaM2": 335,
+    "price": 5268210,
+    "priceFormatted": "R$ 5,268,210.00",
+    "bedrooms": 4,
+    "available": true,
+    "status": "active",
+    "latitude": -30.022253,
+    "longitude": -51.216579,
+    "neighborhood": "Centro Histórico",
+    "zone": "Centro Histórico",
+    "tags": [
+      "privativa",
+      "penthouse",
+      "cobertura",
+      "luxo"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-9944387?w=800&q=80",
+      "https://images.unsplash.com/photo-6743294?w=800&q=80",
+      "https://images.unsplash.com/photo-6943949?w=800&q=80",
+      "https://images.unsplash.com/photo-5435261?w=800&q=80",
+      "https://images.unsplash.com/photo-9123194?w=800&q=80",
+      "https://images.unsplash.com/photo-4225657?w=800&q=80"
+    ],
+    "createdAt": "2024-09-10T07:19:00Z",
+    "updatedAt": "2024-09-10T07:19:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-12-23T15:20:00Z",
+        "price": 5268210,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-02-19T21:34:00Z",
+        "price": 4935484,
+        "source": "registro"
+      },
+      {
+        "date": "2023-03-10T01:18:00Z",
+        "price": 4226038,
+        "source": "proprietário"
+      },
+      {
+        "date": "2023-08-21T08:47:00Z",
+        "price": 3900332,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-05-18T22:17:00Z",
+        "price": 3786371,
+        "source": "avaliação"
+      }
+    ]
+  },
+  {
+    "id": "prop-0050",
+    "title": "Apartamento São Paulo #50",
+    "type": "apartamento",
+    "modality": "lancamento",
+    "city": "São Paulo",
+    "state": "SP",
+    "areaM2": 170,
+    "price": 1164160,
+    "priceFormatted": "R$ 1,164,160.00",
+    "bedrooms": 2,
+    "available": true,
+    "status": "active",
+    "latitude": -23.577351,
+    "longitude": -46.638502,
+    "neighborhood": "Perdizes",
+    "zone": "Perdizes",
+    "tags": [
+      "financiamento",
+      "mobiliado",
+      "elevador",
+      "centro"
+    ],
+    "images": [
+      "https://images.unsplash.com/photo-3649811?w=800&q=80",
+      "https://images.unsplash.com/photo-7826774?w=800&q=80",
+      "https://images.unsplash.com/photo-8980915?w=800&q=80",
+      "https://images.unsplash.com/photo-9010256?w=800&q=80",
+      "https://images.unsplash.com/photo-4346315?w=800&q=80",
+      "https://images.unsplash.com/photo-5819172?w=800&q=80",
+      "https://images.unsplash.com/photo-6388299?w=800&q=80"
+    ],
+    "createdAt": "2025-01-25T02:41:00Z",
+    "updatedAt": "2025-01-25T02:41:00Z",
+    "priceHistory": [
+      {
+        "date": "2022-01-10T18:38:00Z",
+        "price": 1044960,
+        "source": "mercado"
+      },
+      {
+        "date": "2022-01-27T12:50:00Z",
+        "price": 1071779,
+        "source": "mercado"
+      },
+      {
+        "date": "2023-08-21T17:33:00Z",
+        "price": 962253,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-08-09T06:51:00Z",
+        "price": 937455,
+        "source": "avaliação"
+      },
+      {
+        "date": "2024-12-28T01:58:00Z",
+        "price": 1164160,
+        "source": "registro"
+      }
+    ]
+  }
+]

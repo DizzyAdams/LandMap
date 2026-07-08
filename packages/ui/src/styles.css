@@ -1,0 +1,9 @@
+:root {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 98%;
+}
+
+[data-theme="dark"] {
+  --background: 0 0% 4%;
+  --foreground: 0 0% 98%;
+}

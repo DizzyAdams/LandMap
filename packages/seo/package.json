@@ -1,0 +1,33 @@
+{
+  "name": "@landmap/seo",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./coverage": {
+      "types": "./dist/cli/coverage.d.ts",
+      "import": "./dist/cli/coverage.js"
+    }
+  },
+  "bin": {
+    "@landmap/seo:coverage": "./dist/cli/coverage.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "devDependencies": {
+    "@types/node": "22.0.0",
+    "typescript": "5.5.4",
+    "vitest": "2.1.0"
+  }
+}

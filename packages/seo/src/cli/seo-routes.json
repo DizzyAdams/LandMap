@@ -1,0 +1,14 @@
+[
+  { "pattern": "/pt-BR", "route": "/pt-BR", "types": ["PropertyListingPage", "Place"] },
+  { "pattern": "/pt-BR/search", "route": "/pt-BR/search", "types": ["PropertyListingPage", "Offer", "Place"] },
+  { "pattern": "/pt-BR/map", "route": "/pt-BR/map", "types": ["Place"] },
+  { "pattern": "/pt-BR/property/*", "route": "/pt-BR/property/:id", "types": ["PropertyListingPage", "Offer", "Place"] },
+  { "pattern": "/en-US", "route": "/en-US", "types": ["PropertyListingPage", "Place"] },
+  { "pattern": "/en-US/search", "route": "/en-US/search", "types": ["PropertyListingPage", "Offer", "Place"] },
+  { "pattern": "/en-US/map", "route": "/en-US/map", "types": ["Place"] },
+  { "pattern": "/en-US/property/*", "route": "/en-US/property/:id", "types": ["PropertyListingPage", "Offer", "Place"] },
+  { "pattern": "/es-ES", "route": "/es-ES", "types": ["PropertyListingPage", "Place"] },
+  { "pattern": "/es-ES/search", "route": "/es-ES/search", "types": ["PropertyListingPage", "Offer", "Place"] },
+  { "pattern": "/es-ES/map", "route": "/es-ES/map", "types": ["Place"] },
+  { "pattern": "/es-ES/property/*", "route": "/es-ES/property/:id", "types": ["PropertyListingPage", "Offer", "Place"] }
+]

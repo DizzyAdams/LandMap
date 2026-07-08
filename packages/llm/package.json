@@ -1,0 +1,112 @@
+{
+  "name": "@landmap/llm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "rag.js": [
+        "./dist/rag.d.ts"
+      ],
+      "agents/*.js": [
+        "./dist/agents/*.d.ts"
+      ],
+      "types.js": [
+        "./dist/types.d.ts"
+      ],
+      "embeddings.js": [
+        "./dist/embeddings.d.ts"
+      ],
+      "callbacks/*.js": [
+        "./dist/callbacks/*.d.ts"
+      ],
+      "generators/*.js": [
+        "./dist/generators/*.d.ts"
+      ],
+      "langchain/*.js": [
+        "./dist/langchain/*.d.ts"
+      ],
+      "langgraph/*.js": [
+        "./dist/langgraph/*.d.ts"
+      ],
+      "memory/*.js": [
+        "./dist/memory/*.d.ts"
+      ],
+      "tools.js": [
+        "./dist/tools.d.ts"
+      ]
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./rag.js": {
+      "types": "./dist/rag.d.ts",
+      "import": "./dist/rag.js"
+    },
+    "./agents/*.js": {
+      "types": "./dist/agents/*.d.ts",
+      "import": "./dist/agents/*.js"
+    },
+    "./types.js": {
+      "types": "./dist/types.d.ts",
+      "import": "./dist/types.js"
+    },
+    "./embeddings.js": {
+      "types": "./dist/embeddings.d.ts",
+      "import": "./dist/embeddings.js"
+    },
+    "./callbacks/*.js": {
+      "types": "./dist/callbacks/*.d.ts",
+      "import": "./dist/callbacks/*.js"
+    },
+    "./generators/*.js": {
+      "types": "./dist/generators/*.d.ts",
+      "import": "./dist/generators/*.js"
+    },
+    "./langchain/*.js": {
+      "types": "./dist/langchain/*.d.ts",
+      "import": "./dist/langchain/*.js"
+    },
+    "./langflow.js": {
+      "types": "./dist/langflow.d.ts",
+      "import": "./dist/langflow.js"
+    },
+    "./langflow/*.js": {
+      "types": "./dist/langflow/*.d.ts",
+      "import": "./dist/langflow/*.js"
+    },
+    "./langgraph/*.js": {
+      "types": "./dist/langgraph/*.d.ts",
+      "import": "./dist/langgraph/*.js"
+    },
+    "./memory/*.js": {
+      "types": "./dist/memory/*.d.ts",
+      "import": "./dist/memory/*.js"
+    },
+    "./tools.js": {
+      "types": "./dist/tools.d.ts",
+      "import": "./dist/tools.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "tsc --noEmit",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "typescript": "5.5.4"
+  },
+  "dependencies": {
+    "@langchain/community": "0.3.19",
+    "@langchain/core": "0.3.6",
+    "@langchain/langgraph": "0.2.47",
+    "@langchain/openai": "0.3.17",
+    "langchain": "0.3.7"
+  }
+}

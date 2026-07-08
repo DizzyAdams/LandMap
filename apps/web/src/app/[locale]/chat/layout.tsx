@@ -1,0 +1,19 @@
+import type { Metadata } from 'next';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale?: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Chat RAG | LandMap',
+    description: 'Converse com o assistente imobiliário do LandMap. Pergunte sobre imóveis, preços e regiões no Brasil.',
+    openGraph: {
+      title: 'Chat RAG | LandMap',
+      description: 'Assistente imobiliário inteligente do LandMap.',
+      url: `/${locale}/chat`,
+      locale: locale,
+    },
+  };
+}
+
+export default function ChatLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
+}

@@ -1,11 +1,45 @@
 {
   "name": "landmap",
-  "private": true,
+  "version": "0.1.0",
+  "private": false,
+  "description": "Plataforma de inteligência de dados imobiliários - open data e API aberta para cobrir todo o mercado.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forrydev/LandMap.git"
+  },
   "scripts": {
-    "dev": "pnpm -r --parallel dev",
-    "build": "pnpm -r build",
-    "lint": "pnpm -r lint",
-    "db:migrate": "pnpm -F db migrate",
-    "pipeline:run": "pnpm -F llm run"
+    "build": "pnpm -r run build",
+    "lint": "pnpm -r run lint",
+    "typecheck": "pnpm -r run typecheck",
+    "db:generate": "pnpm --filter @landmap/db run generate",
+    "db:migrate": "pnpm --filter @landmap/db run migrate",
+    "db:seed": "pnpm --filter @landmap/db run seed",
+    "markdown:build": "python scripts/build_markdowns.py",
+    "docs": "pnpm --filter @landmap/web run storybook",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "pnpm --filter @landmap/web dev",
+    "dev:api": "pnpm --filter @landmap/api dev",
+    "vercel-build": "pnpm -r --filter './packages/*' run build && cd apps/web && npx next build && cd .. && rm -rf .next && cp -r apps/web/.next .next"
+  },
+  "keywords": [
+    "real-estate",
+    "market-intelligence",
+    "rag",
+    "open-data",
+    "nextjs",
+    "monorepo",
+    "landmap",
+    "brazil"
+  ],
+  "engines": {
+    "node": ">=20.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "next": "^14.2.0",
+    "vitest": "^2.1.0",
+    "zod": "^3.24.2"
   }
 }

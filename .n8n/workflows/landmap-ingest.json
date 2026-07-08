@@ -1,0 +1,86 @@
+{
+  "name": "LandMap Ingest",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "landmap-ingest",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $input.first().json.body;\n\nif (!body || !body.source) {\n  throw new Error('body.source é obrigatório');\n}\n\nconst record = {\n  source: body.source,\n  rawData: body.data,\n  ingestedAt: new Date().toISOString(),\n  status: 'pending',\n};\n\nreturn [{ json: record }];"
+      },
+      "id": "validate",
+      "name": "Validate & Transform",
+      "type": "n8n-nodes-base.code",
+      "position": [450, 300]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "filePath": "/data/landmap/ingest_log.json"
+      },
+      "id": "log",
+      "name": "Append to Log",
+      "type": "n8n-nodes-base.writeBinaryFile",
+      "position": [650, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "pending",
+              "operation": "equal"
+            }
+          ]
+        }
+      },
+      "id": "router",
+      "name": "Route by Status",
+      "type": "n8n-nodes-base.if",
+      "position": [850, 300]
+    },
+    {
+      "parameters": {
+        "content": "={{ $json }}"
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [1050, 220]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [["Validate & Transform"]]
+    },
+    "Validate & Transform": {
+      "main": [["Append to Log"]]
+    },
+    "Append to Log": {
+      "main": [["Route by Status"]]
+    },
+    "Route by Status": {
+      "main": [
+        [],
+        ["Respond to Webhook"]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": ["ingestion"],
+  "triggerCount": 0
+}

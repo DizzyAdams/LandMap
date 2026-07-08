@@ -1,0 +1,35 @@
+[
+  {
+    "slug": "pt-BR",
+    "name": "Português (Brasil)",
+    "nativeName": "Português",
+    "files": {
+      "home": "home.json",
+      "search": "search.json",
+      "explorer": "explorer.json",
+      "settings": "settings.json"
+    }
+  },
+  {
+    "slug": "en-US",
+    "name": "English (US)",
+    "nativeName": "English",
+    "files": {
+      "home": "home.json",
+      "search": "search.json",
+      "explorer": "explorer.json",
+      "settings": "settings.json"
+    }
+  },
+  {
+    "slug": "es-ES",
+    "name": "Español",
+    "nativeName": "Español",
+    "files": {
+      "home": "home.json",
+      "search": "search.json",
+      "explorer": "explorer.json",
+      "settings": "settings.json"
+    }
+  }
+]

@@ -1,0 +1,282 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import React from 'react';
+import { searchProperties, type SearchQuery, type Property } from '../../../lib/api';
+import { SearchKeyboardShortcuts } from '../../../components/SearchKeyboardShortcuts';
+
+export const dynamic = 'force-dynamic';
+
+const DEFAULT_PAGE_SIZE = 10;
+
+type SortKey = '' | 'price_asc' | 'price_desc' | 'area' | 'date';
+
+export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    title: 'Buscar Imóveis | LandMap',
+    description: 'Encontre imóveis para compra, aluguel ou lançamento no Brasil. Filtre por tipo, modalidade, localização e preço.',
+    openGraph: {
+      title: 'Buscar Imóveis | LandMap',
+      description: 'Encontre imóveis para compra, aluguel ou lançamento no Brasil.',
+      url: `/${locale}/search`,
+      locale: locale,
+    },
+  };
+}
+
+function sortProperties(items: Property[], sort: SortKey): Property[] {
+  if (!sort) return items;
+  const sorted = [...items];
+  switch (sort) {
+    case 'price_asc':
+      sorted.sort((a, b) => a.price - b.price);
+      break;
+    case 'price_desc':
+      sorted.sort((a, b) => b.price - a.price);
+      break;
+    case 'area':
+      sorted.sort((a, b) => b.areaM2 - a.areaM2);
+      break;
+    case 'date':
+      sorted.sort((a, b) => {
+        const da = a.updatedAt || a.createdAt || '';
+        const db = b.updatedAt || b.createdAt || '';
+        return db.localeCompare(da);
+      });
+      break;
+  }
+  return sorted;
+}
+
+export default async function SearchPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ locale: string }>;
+  searchParams: Promise<{
+    q?: string;
+    type?: string;
+    modality?: string;
+    city?: string;
+    state?: string;
+    minPrice?: string;
+    maxPrice?: string;
+    sort?: string;
+    page?: string;
+  }>;
+}) {
+  const { locale } = await params;
+  const sp = await searchParams;
+
+  const query: SearchQuery = {
+    q: sp.q,
+    type: sp.type as Property['type'] | undefined,
+    modality: sp.modality as Property['modality'] | undefined,
+    city: sp.city,
+    state: sp.state,
+  };
+
+  const sort = (sp.sort as SortKey) || '';
+  const currentPage = Math.max(1, parseInt(sp.page || '1', 10) || 1);
+
+  let items: Property[] = [];
+  let total = 0;
+  let error: string | null = null;
+
+  try {
+    const response = await searchProperties(query);
+    items = response.items;
+    total = response.total;
+  } catch (err) {
+    error = err instanceof Error ? err.message : 'Falha na busca';
+  }
+
+  const sorted = sortProperties(items, sort);
+  const totalPages = Math.max(1, Math.ceil(sorted.length / DEFAULT_PAGE_SIZE));
+  const safePage = Math.min(currentPage, totalPages);
+  const pageItems = sorted.slice((safePage - 1) * DEFAULT_PAGE_SIZE, safePage * DEFAULT_PAGE_SIZE);
+
+  function buildHref(overrides: Record<string, string | undefined>) {
+    const p = new URLSearchParams();
+    if (sp.q) p.set('q', sp.q);
+    if (sp.type) p.set('type', sp.type);
+    if (sp.modality) p.set('modality', sp.modality);
+    if (sp.city) p.set('city', sp.city);
+    if (sp.state) p.set('state', sp.state);
+    if (sp.minPrice) p.set('minPrice', sp.minPrice);
+    if (sp.maxPrice) p.set('maxPrice', sp.maxPrice);
+    Object.entries(overrides).forEach(([k, v]) => {
+      if (v !== undefined && v !== '') p.set(k, v);
+      else p.delete(k);
+    });
+    const qs = p.toString();
+    return `/${locale}/search${qs ? `?${qs}` : ''}`;
+  }
+
+  const formatBRL = (v: number) =>
+    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(v);
+
+  return (
+    <main className="min-h-screen bg-[#050505] text-neutral-50">
+      <SearchKeyboardShortcuts />
+      <section className="mx-auto max-w-6xl px-6 py-10">
+        <div className="flex items-end justify-between">
+          <div>
+            <h1 className="text-3xl font-semibold tracking-tight">Buscar imóveis</h1>
+            <p className="mt-2 text-sm text-neutral-400">
+              Filtros diretamente por tipologia, modalidade, local e faixa de preço.
+            </p>
+          </div>
+          <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
+            Voltar para Home
+          </Link>
+        </div>
+
+        <form className="mt-8 grid grid-cols-1 gap-3 rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 md:grid-cols-3 lg:grid-cols-5">
+          <input name="q" defaultValue={sp.q} placeholder="Busca" className="input" id="search-input" />
+          <select name="type" defaultValue={sp.type} className="input">
+            <option value="">Tipo</option>
+            <option value="apartamento">Apartamento</option>
+            <option value="casa">Casa</option>
+            <option value="terreno">Terreno</option>
+            <option value="comercial">Comercial</option>
+          </select>
+          <select name="modality" defaultValue={sp.modality} className="input">
+            <option value="">Modalidade</option>
+            <option value="venda">Venda</option>
+            <option value="aluguel">Aluguel</option>
+            <option value="lancamento">Lançamento</option>
+          </select>
+          <input name="city" defaultValue={sp.city} placeholder="Cidade" className="input" />
+          <input name="state" defaultValue={sp.state} placeholder="UF" className="input" />
+          <input name="minPrice" defaultValue={sp.minPrice} type="number" placeholder="Preço mín." className="input" />
+          <input name="maxPrice" defaultValue={sp.maxPrice} type="number" placeholder="Preço máx." className="input" />
+          <div className="lg:col-span-5 flex items-center justify-between">
+            <p className="text-xs text-neutral-500">
+              {sp.q ? `Filtro ativo: ${sp.q}` : 'Use filtros para refinar.'}
+            </p>
+            <button className="btn btn-primary" type="submit">
+              Aplicar filtros
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16">
+        {error ? (
+          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+            {error}
+          </div>
+        ) : (
+          <>
+            {/* Sort + count bar */}
+            <div className="mb-4 flex items-center justify-between text-xs text-neutral-500">
+              <span>
+                {sorted.length} resultado{sorted.length === 1 ? '' : 's'}
+              </span>
+              <div className="flex items-center gap-2">
+                <span>Ordenar:</span>
+                {[
+                  { key: '', label: 'Relevância' },
+                  { key: 'price_asc', label: 'Preço ↑' },
+                  { key: 'price_desc', label: 'Preço ↓' },
+                  { key: 'area', label: 'Área' },
+                  { key: 'date', label: 'Data' },
+                ].map((opt) => (
+                  <a
+                    key={opt.key}
+                    href={buildHref({ sort: opt.key, page: '1' })}
+                    className={`rounded-md px-2 py-1 transition ${
+                      sort === opt.key
+                        ? 'bg-neutral-800 text-white'
+                        : 'hover:text-white'
+                    }`}
+                  >
+                    {opt.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <div className="grid gap-3">
+              {pageItems.length === 0 && (
+                <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 text-sm text-neutral-400">
+                  Nenhum imóvel correspondente para esses filtros. Ajuste tipologia, modalidade ou cidade.
+                </div>
+              )}
+              {pageItems.map((item) => {
+                const pricePerM2 = item.areaM2 > 0 ? Math.round(item.price / item.areaM2) : 0;
+                return (
+                  <Link
+                    key={item.id}
+                    href={`/${locale}/property/${item.id}`}
+                    className="group rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 transition hover:border-neutral-500"
+                  >
+                    <div className="flex items-start justify-between">
+                      <div>
+                        <p className="text-sm text-neutral-300">{item.title}</p>
+                        <p className="mt-1 text-xs text-neutral-500">
+                          {item.city}, {item.state} · {item.areaM2} m²
+                          {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
+                        </p>
+                      </div>
+                      <span className="text-xs text-neutral-400">{item.modality}</span>
+                    </div>
+                    <div className="mt-4 flex items-center justify-between">
+                      <span className="text-sm font-medium">
+                        {formatBRL(item.price)}
+                      </span>
+                      <span className="flex items-center gap-2">
+                        {pricePerM2 > 0 && (
+                          <span className="text-xs text-neutral-500">
+                            {formatBRL(pricePerM2)}/m²
+                          </span>
+                        )}
+                        <span className="text-xs text-neutral-400 capitalize">{item.type}</span>
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="mt-8 flex items-center justify-center gap-2 text-xs text-neutral-400">
+                {safePage > 1 && (
+                  <a href={buildHref({ page: String(safePage - 1) })} className="rounded-md border border-neutral-800 px-3 py-1.5 transition hover:border-neutral-500 hover:text-white">
+                    Anterior
+                  </a>
+                )}
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter((p) => p === 1 || p === totalPages || Math.abs(p - safePage) <= 2)
+                  .map((p, idx, arr) => (
+                    <span key={p} className="flex items-center gap-1">
+                      {idx > 0 && arr[idx - 1] !== p - 1 && (
+                        <span className="px-1 text-neutral-600">...</span>
+                      )}
+                      {p === safePage ? (
+                        <span className="rounded-md bg-neutral-800 px-3 py-1.5 text-white">{p}</span>
+                      ) : (
+                        <a
+                          href={buildHref({ page: String(p) })}
+                          className="rounded-md px-3 py-1.5 transition hover:text-white"
+                        >
+                          {p}
+                        </a>
+                      )}
+                    </span>
+                  ))}
+                {safePage < totalPages && (
+                  <a href={buildHref({ page: String(safePage + 1) })} className="rounded-md border border-neutral-800 px-3 py-1.5 transition hover:border-neutral-500 hover:text-white">
+                    Próximo
+                  </a>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </section>
+    </main>
+  );
+}

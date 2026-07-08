@@ -1,0 +1,153 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: #050505;
+  --surface: #0a0a0a;
+  --border: #111111;
+  --text: #f5f5f5;
+  --muted: #a3a3a3;
+  --accent: #ffffff;
+  --accent-dim: #e5e5e5;
+  --danger: #ff4d4d;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+.input {
+  @apply w-full rounded-lg border border-neutral-800 bg-neutral-900/40 px-3 py-2 text-sm text-neutral-100 outline-none transition focus:border-neutral-500;
+}
+
+.btn {
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition;
+}
+
+.btn-primary {
+  @apply btn bg-white text-neutral-900 hover:bg-neutral-200;
+}
+
+.btn-ghost {
+  @apply btn border border-neutral-800 text-neutral-200 hover:border-neutral-500 hover:text-white;
+}
+
+.badge {
+  @apply rounded-md border border-neutral-800 px-2 py-1 text-xs text-neutral-300;
+}
+
+.surface {
+  @apply rounded-xl border border-neutral-800 bg-neutral-900/40;
+}
+
+::selection {
+  background: #262626;
+  color: #f5f5f5;
+}
+
+/* ─── Silicon-Valley-startup polish ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(60rem 60rem at 50% -10%, rgba(52, 211, 153, 0.08), transparent 60%),
+    radial-gradient(40rem 40rem at 100% 0%, rgba(99, 102, 241, 0.06), transparent 55%);
+  background-attachment: fixed;
+}
+
+/* Subtle dotted grid overlay for depth */
+.grid-bg {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+.glass {
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glow-emerald {
+  box-shadow: 0 0 0 1px rgba(52, 211, 153, 0.15), 0 8px 40px -12px rgba(52, 211, 153, 0.25);
+}
+
+.text-gradient {
+  background: linear-gradient(180deg, #ffffff 0%, #a3a3a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hairline {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Refined scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f1f1f;
+  border-radius: 9999px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2e2e2e;
+}
+
+/* ─── Out-of-the-ordinary layer: grain + bioluminescent aurora ─── */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.aurora {
+  background:
+    radial-gradient(50rem 35rem at 12% -10%, rgba(34, 211, 238, 0.10), transparent 60%),
+    radial-gradient(45rem 35rem at 92% 0%, rgba(167, 139, 250, 0.08), transparent 55%),
+    radial-gradient(60rem 40rem at 50% 115%, rgba(52, 211, 153, 0.10), transparent 60%);
+  filter: blur(8px);
+}
+
+/* Dual-tone signature gradient for headlines / accents (overrides the
+   earlier monochrome gradient so existing .text-gradient gets the new look). */
+.text-gradient {
+  background: linear-gradient(100deg, #ffffff 0%, #a7f3d0 38%, #67e8f9 72%, #c4b5fd 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glow-dual {
+  box-shadow:
+    0 0 0 1px rgba(52, 211, 153, 0.18),
+    0 10px 50px -12px rgba(34, 211, 238, 0.30),
+    0 8px 40px -12px rgba(52, 211, 153, 0.25);
+}
+
+/* Accessible, on-brand focus rings */
+:focus-visible {
+  outline: 2px solid rgba(52, 211, 153, 0.7);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Perpetual market ticker */
+.marquee-track {
+  animation: marquee 28s linear infinite;
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+

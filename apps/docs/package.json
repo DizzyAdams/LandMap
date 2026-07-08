@@ -1,0 +1,10 @@
+{
+  "name": "@landmap/docs",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "build": "echo \"docs package scaffold\"",
+    "lint": "echo \"docs package scaffold\"",
+    "typecheck": "echo \"docs package scaffold\""
+  }
+}
