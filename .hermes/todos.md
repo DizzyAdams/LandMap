@@ -29,3 +29,7 @@
 - [x] optimize-pipeline. Verificacao paralela via sub-agents padronizada (typecheck/lint/build/test + validate live) (concluido)
 - [x] deploy-fix. Corrigir POST /api/search (500->200) + busca real + handler erro global (Zod->400) (concluido)
 - [x] deploy-prod. vercel deploy --prod -> landmap-ivne1bgo7 Ready; 23 rotas 200 (incl. /api/search); filtro funciona e entrada invalida -> 400 (concluido)
+
+
+- [x] release-sync. Push main -> origin (sync 7 commits); producao landmap-ivne1bgo7 Ready, 23/23 rotas 200 (concluido)
+- [ ] dominio-custom. landmap.com.br: DNS pendente no registrador (ns a.auto.dns.br) -> criar A 76.76.21.21 ou trocar p/ ns1/ns2.vercel-dns.com; bloqueio externo (aguardando registrador)
