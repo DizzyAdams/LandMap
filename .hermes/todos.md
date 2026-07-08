@@ -8,3 +8,8 @@
   - [x] kpis: skills de mercado financeiro com réguas Claude/JPMorgan/Quantum (packages/api /kpi + packages/llm kpi)
 - [x] safety/commit-prep. Corrigir .gitignore (node_modules/build/logs), author streamlit dashboard, atualizar todos (concluído)
 - [x] design-audit. Auditoria de design + melhorias "fora do comum" (concluído: cursor, aurora+grain, gradiente dual, spotlight cards, marquee, monograma SVG, focus-visible)
+
+- [x] sales-feature. Implementar agente de vendas autônomo (`packages/sales`), rotas `/sales` na API (`packages/api`), novos componentes de UI (`packages/ui`) e cockpit no web (`apps/web/src/app/[locale]/sales`) + link na Navbar (concluído)
+- [x] sales-verify. Sub-agentes validam build/typecheck/lint/testes em paralelo: `@landmap/sales` 6/6 testes verdes, `@landmap/api` e `@landmap/ui` build/typecheck verdes, `apps/web` next build verde para pt-BR/en-US/es-ES (concluído)
+- [x] sales-commit. Stage + commit da feature de vendas no main (concluído)
+

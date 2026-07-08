@@ -5,5 +5,8 @@ export default defineConfig({
   format: ['esm'],
   dts: true,
   clean: true,
+  // Mark the whole bundle as a client module so Next.js server components
+  // can safely import interactive primitives (Tabs, Segmented, etc.).
+  banner: { js: '"use client";' },
   external: ['react', 'react-dom'],
 });

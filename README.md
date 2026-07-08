@@ -6,7 +6,7 @@ Plataforma de inteligência imobiliária open-source — API REST, busca intelig
 
 - **Front**: Next.js 14 + TypeScript + Tailwind v4 + next-intl (pt-BR, en-US, es-ES)
 - **API**: Hono + Zod (REST)
-- **Packages**: `@landmap/ui`, `@landmap/config`, `@landmap/db`, `@landmap/llm`, `@landmap/seo`, `@landmap/twenty`
+- **Packages**: `@landmap/ui`, `@landmap/config`, `@landmap/db`, `@landmap/llm`, `@landmap/seo`, `@landmap/twenty`, `@landmap/sales`
 - **LLM**: RAG local (TF-IDF) + OpenRouter API + **MiniMax grátis via Puter.js** (client-side, sem API key)
 - **CRM**: Twenty REST client
 - **SEO**: Schema.org generators + coverage CLI
@@ -26,6 +26,7 @@ LandMap/
     api          -> API REST Hono (cidades, stats, CRUD imóveis, compare, analyze)
     seo          -> Schema.org generators + coverage CLI + AEO
     twenty       -> Twenty CRM client (people, leads, opportunities, notes)
+    sales        -> Agente autônomo de vendas (orquestração de agentes)
   scripts/       -> Geradores, seeds, build markdowns
   .n8n/          -> Workflows de automação (ingest, sync)
 ```
@@ -43,6 +44,7 @@ LandMap/
 - **API REST**: CRUD properties, /cities, /stats, /compare, /analyze
 - **SEO**: schema.org (PropertyListing, FAQ, HowTo, Video, Organization, WebSite, BreadcrumbList, ItemList)
 - **CRM**: Twenty integration com lead scoring e bulk import
+- **Agente de Vendas Autônomo**: esquadrão de 6 agentes (prospector, qualifier, outreacher, closer, account_manager, forecaster) com autonomia Off/Copilot/Autopilot e human-in-the-loop — acesse o **Sales Cockpit** em `/sales`.
 
 ## Rotas da API
 
@@ -59,6 +61,10 @@ LandMap/
 | POST | `/properties` | Criar imóvel |
 | PUT | `/properties/:id` | Atualizar imóvel |
 | DELETE | `/properties/:id` | Soft delete |
+| GET | `/sales/state` | Estado do cockpit de vendas (agentes, leads, deals, tarefas) |
+| POST | `/sales/cycle` | Roda um ciclo do agente autônomo (autonomy: off/copilot/autopilot) |
+| POST | `/sales/approve/:id` | Aprova uma tarefa pendente (modo Copilot) |
+| POST | `/sales/reject/:id` | Rejeita uma tarefa pendente |
 
 ## Dev quickstart
 

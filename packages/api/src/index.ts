@@ -12,6 +12,7 @@ import { createInsightsRouter } from './routes/insights.js';
 import { createSearchSuggestionsRouter } from './routes/search-suggestions.js';
 import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
+import { createSalesRouter } from './routes/sales.js';
 import { OpenDesignClient } from '@landmap/integrations';
 
 export type Env = {
@@ -467,6 +468,10 @@ app.route('/langflow', createLangflowRouter());
 
 /* ?* RAG chat routes ?* */
 app.route('/rag', createRagRouter());
+
+/* ─── Autonomous Sales Agent routes ─── */
+app.route('/sales', createSalesRouter());
+
 
 /* ─── Search suggestions routes ─── */
 app.route('/', createSearchSuggestionsRouter());

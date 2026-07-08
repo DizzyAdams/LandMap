@@ -2,6 +2,7 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig = {
   reactStrictMode: true,
+  transpilePackages: ['@landmap/sales'],
   experimental: {
     // typedRoutes kept off to avoid build friction across the large route tree
   },

@@ -16,6 +16,7 @@ const links = [
   { href: 'map', labelKey: 'Mapa' },
   { href: 'studio', labelKey: 'Studio' },
   { href: 'live', labelKey: 'Live' },
+  { href: 'sales', labelKey: 'Vendas' },
   { href: 'pricing', labelKey: 'Preços' },
   { href: 'alerts', labelKey: 'Alertas' },
   { href: 'favorites', labelKey: 'Favoritos' },
