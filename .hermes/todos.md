@@ -19,3 +19,6 @@
 - [x] ux-commit. Stage + commit da elevação UX/UI + schema de cores no main (32 arquivos) (concluído)
 - [x] deploy. `vercel deploy --prod` disparado: building remoto → https://landmap-6mqhgjrsz-dizzys-projects-d5a44b36.vercel.app (domínio prod: landmap-dizzys-projects-d5a44b36.vercel.app) (concluído disparo)
 
+- [x] custom-domain. Domínio `landmap.com.br` associado ao projeto Vercel (produção); DNS A 76.76.21.21 pendente no registro (ns atuais a.auto.dns.br). Produção já Ready e será servida no domínio após propagação (concluído associação)
+- [x] prod-ready. Produção `● Ready` em landmap-6mqhgjrsz-dizzys-projects-d5a44b36.vercel.app; domínio customizado anexado → roteia para produção após DNS (concluído)
+
