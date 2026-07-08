@@ -2,6 +2,7 @@
   "name": "landmap",
   "version": "0.1.0",
   "private": false,
+  "packageManager": "pnpm@9.6.0",
   "description": "Plataforma de inteligência de dados imobiliários - open data e API aberta para cobrir todo o mercado.",
   "license": "MIT",
   "repository": {
