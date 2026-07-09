@@ -7,6 +7,7 @@ import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 import { Filters } from './Filters';
+import { formatBRL } from '../../../lib/format';
 
 export const dynamic = 'force-dynamic';
 
@@ -116,9 +117,6 @@ export default async function SearchPage({
     const qs = p.toString();
     return `/${locale}/search${qs ? `?${qs}` : ''}`;
   }
-
-  const formatBRL = (v: number) =>
-    new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(v);
 
   return (
     <main className="min-h-screen grid-bg text-neutral-50">

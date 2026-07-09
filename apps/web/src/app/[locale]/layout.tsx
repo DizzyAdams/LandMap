@@ -1,11 +1,11 @@
-import { GeistSans } from 'geist/font/sans';
-import { GeistMono } from 'geist/font/mono';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { Navbar } from '../../components/Navbar';
 import { Footer } from '../../components/Footer';
 import { ScrollToTop } from '../../components/ScrollToTop';
+import { WhatsNewBanner } from '../../components/WhatsNewBanner';
+import { ShortcutsHelp } from '../../components/ShortcutsHelp';
 import { Cursor } from '../../components/Cursor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import '@landmap/ui/styles.css';
@@ -85,37 +85,35 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={resolvedLocale} className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className={GeistSans.className}>
-        <NextIntlClientProvider messages={messages} locale={resolvedLocale}>
-          <a
-            href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-neutral-900"
-          >
-            Pular para o conteúdo
-          </a>
-          <style
-            dangerouslySetInnerHTML={{
-              __html:
-                ':focus-visible{outline:2px solid rgba(52,211,153,0.7);outline-offset:2px;border-radius:6px;}',
-            }}
-          />
-          <div className="relative min-h-[100dvh] text-neutral-50 antialiased">
-            <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-              <div className="absolute inset-0 bg-[#050505]" />
-              <div className="absolute inset-0 aurora" />
-              <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
-            </div>
-            <Cursor />
-            <Navbar />
-            <div id="main-content" tabIndex={-1}>
-              <ErrorBoundary>{children}</ErrorBoundary>
-            </div>
-            <Footer />
-            <ScrollToTop />
-          </div>
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider messages={messages} locale={resolvedLocale}>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-neutral-900"
+      >
+        Pular para o conteúdo
+      </a>
+      <WhatsNewBanner />
+      <style
+        dangerouslySetInnerHTML={{
+          __html:
+            ':focus-visible{outline:2px solid rgba(212,175,55,0.8);outline-offset:2px;border-radius:6px;}',
+        }}
+      />
+      <div className="relative min-h-[100dvh] text-neutral-50 antialiased">
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-[#050505]" />
+          <div className="absolute inset-0 aurora" />
+          <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+        </div>
+        <Cursor />
+        <Navbar />
+        <div id="main-content" tabIndex={-1}>
+          <ErrorBoundary>{children}</ErrorBoundary>
+        </div>
+        <Footer />
+        <ScrollToTop />
+        <ShortcutsHelp />
+      </div>
+    </NextIntlClientProvider>
   );
 }

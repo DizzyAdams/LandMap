@@ -6,6 +6,7 @@ import { Reveal, Stagger } from '../../../../components/Motion';
 import { SpotlightCard } from '../../../../components/SpotlightCard';
 import { getProperty, type Property } from '../../../../lib/api';
 import { localeHref } from '../../../../lib/locale';
+import { formatBRL } from '../../../../lib/format';
 import { SocialProof } from '../../../../components/SocialProof';
 import { UrgencyTimer } from '../../../../components/UrgencyTimer';
 import { PriceAnchoring } from '../../../../components/PriceAnchoring';
@@ -28,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
 
   return {
     title: `${property.title} | LandMap`,
-    description: `${property.title} em ${property.city}/${property.state} — ${new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(property.price)}. ${property.areaM2} m².`,
+    description: `${property.title} em ${property.city}/${property.state} — ${formatBRL(property.price)}. ${property.areaM2} m².`,
     openGraph: {
       title: `${property.title} | LandMap`,
       description: `${property.title} em ${property.city}/${property.state}.`,
@@ -44,9 +45,6 @@ const modalityVariant = {
   lancamento: 'success' as const,
 };
 
-const formatBRL = (v: number) =>
-  new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(v);
-
 export default async function PropertyPage({ params }: { params: Promise<{ locale?: string; id?: string }> }) {
   const resolved = await params;
   const id = resolved.id;
@@ -61,7 +59,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
     notFound();
   }
 
-  const priceText = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(property.price);
+  const priceText = formatBRL(property.price);
   const mapQuery = encodeURIComponent(`${property.title} ${property.city} ${property.state}`);
   const originalPrice = Math.round(property.price * 1.2); // mock original price 20% higher
 

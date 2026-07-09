@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* Include UI package sources so shared component utilities/classes are generated */
-@source '../../../packages/ui/src/**/*.{ts,tsx}';
+@source '../../../../packages/ui/src/**/*.{ts,tsx}';
 
 :root {
   /* ── Canvas ── */
@@ -27,6 +27,12 @@
   --cyan: #22d3ee;
   --violet: #a78bfa;
 
+  /* ── Sovereign gold (capital / investor accent — Gulf & sovereign-fund feel) ── */
+  --gold: #d4af37;
+  --gold-soft: #e8c873;
+  --gold-bright: #f4e2a1;
+  --gold-deep: #a67c00;
+
   /* ── Semantic ── */
   --accent: #ffffff;
   --accent-dim: #e5e5e5;
@@ -41,6 +47,8 @@
   /* ── Signature glows ── */
   --glow-emerald: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25);
   --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
+  --glow-gold: 0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38);
+  --glow-sovereign: 0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28);
 }
 
 html,
@@ -97,6 +105,7 @@ body {
   background-color: var(--bg);
   background-image:
     radial-gradient(60rem 60rem at 50% -10%, rgba(52, 211, 153, 0.08), transparent 60%),
+    radial-gradient(48rem 48rem at 88% 4%, rgba(212, 175, 55, 0.07), transparent 58%),
     radial-gradient(40rem 40rem at 100% 0%, rgba(99, 102, 241, 0.06), transparent 55%);
   background-attachment: fixed;
 }
@@ -145,6 +154,7 @@ body {
   background:
     radial-gradient(48rem 34rem at 8% -12%, rgba(34, 211, 238, 0.16), transparent 60%),
     radial-gradient(42rem 32rem at 94% -8%, rgba(167, 139, 250, 0.10), transparent 55%),
+    radial-gradient(54rem 38rem at 78% 2%, rgba(212, 175, 55, 0.14), transparent 58%),
     radial-gradient(66rem 46rem at 50% 120%, rgba(52, 211, 153, 0.18), transparent 60%);
   filter: blur(10px);
   animation: aurora-drift 20s ease-in-out infinite alternate;
@@ -187,6 +197,64 @@ body {
   box-shadow: var(--glow-dual);
 }
 
+/* ─── Sovereign gold layer (capital / investor accent) ─── */
+.glow-gold {
+  box-shadow: var(--glow-gold);
+}
+.glow-sovereign {
+  box-shadow: var(--glow-sovereign);
+}
+.hairline-gold {
+  border-color: rgba(212, 175, 55, 0.28);
+}
+
+/* Gold champagne gradient for hero words / accent type. */
+.text-gradient-gold {
+  background: linear-gradient(
+    100deg,
+    var(--gold-bright) 0%,
+    var(--gold-soft) 38%,
+    var(--gold) 62%,
+    #b8860b 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft gold radial halo — used behind the hero mandala / key focal points. */
+.gold-aura {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(212, 175, 55, 0.22),
+    rgba(212, 175, 55, 0.06) 42%,
+    transparent 70%
+  );
+}
+
+/* Slowly rotating geometric mandala (Gulf / Islamic-geometry inspired).
+   Pure transform — GPU friendly, respects reduced motion below. */
+.mandala-spin {
+  animation: mandala-spin 90s linear infinite;
+  will-change: transform;
+}
+@keyframes mandala-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Drifting gold dust — a field of faint champagne motes for the sovereign surreal. */
+.gold-dust {
+  background-image: radial-gradient(rgba(232, 200, 115, 0.5) 1px, transparent 1.4px);
+  background-size: 46px 46px;
+  animation: gold-drift 26s linear infinite;
+  opacity: 0.5;
+}
+@keyframes gold-drift {
+  from { background-position: 0 0; }
+  to { background-position: 46px 92px; }
+}
+
 /* ─── Surreal ornament motion (pure transform/opacity, GPU-friendly) ─── */
 @keyframes orb-float {
   0% { transform: translate3d(0, 0, 0) scale(1); }
@@ -208,7 +276,7 @@ body {
 
 /* Accessible, on-brand focus rings */
 :focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--emerald) 70%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--gold) 75%, transparent);
   outline-offset: 2px;
   border-radius: 6px;
 }
@@ -226,5 +294,7 @@ body {
   .aurora { animation: none; }
   .orb-float { animation: none; }
   .ring-spin { animation: none; }
+  .mandala-spin { animation: none; }
+  .gold-dust { animation: none; }
 }
 

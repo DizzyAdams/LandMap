@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { searchProperties } from '../../lib/api';
+import { formatBRL } from '../../lib/format';
 import { Reveal, Stagger, ScrollProgress } from '../../components/Motion';
 import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
@@ -23,44 +24,68 @@ export default async function LocaleHomePage() {
     <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      {/* Surreal ambient stage — constellation + aurora + grain + localized glow */}
+      {/* Surreal ambient stage — constellation + aurora + grain + sovereign gold */}
       <SurrealBackground className="pointer-events-none absolute inset-0 -z-20 h-full w-full opacity-60" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[70rem] aurora opacity-70" />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(48rem_36rem_at_16%_-10%,rgba(52,211,153,0.14),transparent_70%)]" />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grain opacity-[0.05] mix-blend-overlay" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 gold-dust opacity-40" />
+
+      {/* Sovereign gold mandala — slow rotating geometric focal point (Gulf / Islamic-geometry inspired) */}
+      <div aria-hidden className="pointer-events-none absolute left-1/2 top-24 -z-10 hidden -translate-x-1/2 md:block">
+        <div className="gold-aura absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 blur-2xl" />
+        <svg
+          className="mandala-spin relative h-[34rem] w-[34rem]"
+          viewBox="0 0 200 200"
+          fill="none"
+          style={{ color: 'rgba(212,175,55,0.30)' }}
+        >
+          <circle cx="100" cy="100" r="96" stroke="currentColor" strokeWidth="0.6" />
+          <circle cx="100" cy="100" r="74" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
+          <circle cx="100" cy="100" r="52" stroke="currentColor" strokeWidth="0.5" />
+          <g stroke="currentColor" strokeWidth="0.5">
+            <path d="M100 4 L100 196 M4 100 L196 100 M29 29 L171 171 M171 29 L29 171" />
+            <path d="M100 48 L152 100 L100 152 L48 100 Z" />
+            <path d="M100 48 L152 100 L100 152 L48 100 Z" transform="rotate(45 100 100)" />
+          </g>
+          <g stroke="currentColor" strokeWidth="0.4" opacity="0.7">
+            <path d="M100 24 L124 76 L176 100 L124 124 L100 176 L76 124 L24 100 L76 76 Z" />
+          </g>
+        </svg>
+      </div>
 
       {/* Asymmetric orbiting ornament (desktop only) */}
       <div aria-hidden className="pointer-events-none absolute right-[-7rem] top-28 -z-10 hidden md:block">
         <div className="ring-spin relative h-80 w-80 rounded-full border border-emerald-400/15">
-          <div className="absolute inset-10 rounded-full border border-cyan-400/10" />
+          <div className="absolute inset-10 rounded-full border border-amber-300/15" />
           <div className="absolute inset-[5.5rem] rounded-full border border-emerald-400/10" />
-          <div className="orb-float absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_32%_30%,rgba(110,231,183,0.55),rgba(34,211,238,0.14)_58%,transparent_72%)] blur-2xl" />
+          <div className="orb-float absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_32%_30%,rgba(232,200,115,0.55),rgba(212,175,55,0.14)_58%,transparent_72%)] blur-2xl" />
         </div>
       </div>
 
       {/* Hero */}
       <Reveal className="relative mx-auto max-w-6xl px-6 pt-32 pb-20">
         <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/40 px-4 py-1 text-xs text-neutral-400 tracking-wide uppercase">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
-            Inteligência Imobiliária
+          <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/5 px-4 py-1 text-xs text-amber-200/90 tracking-wide uppercase">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(212,175,55,0.9)]" />
+            Inteligência Imobiliária Soberana
           </span>
           <h1 className="mt-8 text-5xl font-semibold tracking-tight leading-[1.04] text-aurora md:text-7xl">
-            Dados que transformam<br />o mercado imobiliário
+            Dados que movem <span className="text-gradient-gold">capital</span><br />no mercado imobiliário
           </h1>
           <p className="mt-4 text-base text-neutral-400 max-w-lg">
-            1.500+ imóveis estruturados, busca inteligente, mapa interativo e análises RAG — com IA 100% gratuita.
+            1.500+ imóveis estruturados, busca inteligente, mapa interativo e análises RAG — com IA 100% gratuita e dados abertos.
           </p>
           <div className="mt-10 flex items-center gap-4">
             <Link
               href="./search"
-              className="glow-emerald inline-flex h-11 items-center rounded-lg bg-white px-6 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
+              className="glow-gold inline-flex h-11 items-center rounded-lg bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600 px-6 text-sm font-semibold text-[#1a1206] transition hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(212,175,55,0.55),0_16px_54px_-12px_rgba(212,175,55,0.7)]"
             >
               Buscar imóveis
             </Link>
             <Link
               href="./map"
-              className="inline-flex h-11 items-center rounded-lg border border-neutral-800 px-6 text-sm font-medium text-neutral-300 transition hover:border-neutral-500 hover:text-white"
+              className="inline-flex h-11 items-center rounded-lg border border-amber-300/25 px-6 text-sm font-medium text-amber-100/90 transition hover:border-amber-300/50 hover:text-white"
             >
               Explorar mapa
             </Link>
@@ -115,7 +140,7 @@ export default async function LocaleHomePage() {
                       {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
                     </p>
                     <p className="mt-3 text-sm font-medium">
-                      {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(item.price)}
+                      {formatBRL(item.price)}
                     </p>
                   </Link>
                 </SpotlightCard>
@@ -132,8 +157,8 @@ export default async function LocaleHomePage() {
             <h2 className="text-lg font-medium">Agentes &amp; Skills — todas online</h2>
             <p className="mt-1 text-sm text-neutral-500">Ecossistema vivo: IA, automação e dados operando em produção.</p>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs text-emerald-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+          <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-xs text-amber-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(212,175,55,0.9)]" />
             All systems live
           </span>
         </div>

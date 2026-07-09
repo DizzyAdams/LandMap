@@ -44,7 +44,7 @@ O usado de fato (linhas atuais ~160): `linear-gradient(180deg,var(--text-strong)
 | `packages/ui/src/styles.css` `:root` | mirror | **não tem** `--surface`, `--accent`, `--accent-dim`, `--danger` |
 | `packages/ui/src/tokens.ts` | mirror JS (objetos aninhados) | `colors.semantic.success` duplica emerald; **sem** `--surface`/`--accent`/`--danger`; estrutura aninhada (`surface.1`, `text.muted`, `brand.emerald`) diverge do CSS flat |
 
-Paleta de marca (bioluminescente): `--emerald:#34d399`, `--emerald-bright:#6ee7b7`, `--cyan:#22d3ee`, `--violet:#a78bfa`.
+Paleta de marca (bioluminescente): `--emerald:#34d399`, `--emerald-bright:#6ee7b7`, `--cyan:#22d3ee`, `--violet:#a78bfa`. Camada Sovereign gold (capital/investidor): `--gold:#d4af37`, `--gold-soft:#e8c873`, `--gold-bright:#f4e2a1`, `--gold-deep:#a67c00` (glows `--glow-gold`/`--glow-sovereign`).
 > Nota de cor: `#34d399` = **emerald-400** do Tailwind, NÃO emerald-500 (`#10b981`).
 
 ### 3. Drift de token nos componentes `@landmap/ui` (✅ RESOLVIDO em Button/Progress)
@@ -55,7 +55,7 @@ Paleta de marca (bioluminescente): `--emerald:#34d399`, `--emerald-bright:#6ee7b
 
 ## Fontes (Geist)
 - `[locale]/layout.tsx` seta `className={`${GeistSans.variable} ${GeistMono.variable}`}` no `<html>` → define `--font-geist-sans`/`--font-geist-mono`. `globals.css` consome essas vars (corpo + `.font-mono`).
-- `apps/web/src/app/layout.tsx` (root) usa `Inter` (`next/font/google`) e **não** define as vars Geist. Como o `<html>` renderizado vem do `[locale]/layout`, as vars Geist ficam ativas. Há um `<html>` duplicado conhecido entre root e `[locale]` layout — cuidado ao mexer.
+- `apps/web/src/app/layout.tsx` (root) usa `Inter` (`next/font/google`) e **não** define as vars Geist. Como o `<html>` renderizado vem do `[locale]/layout`, as vars Geist ficam ativas. ✅ **RESOLVIDO**: o `<html>` duplicado entre root e `[locale]` (causa do React #423 / `HierarchyRequestError` em hidratação, detectado pelo `.bugprobe`) foi corrigido — o html/body agora é só do root `app/layout.tsx`.
 
 ## Classes utilitárias custom (raw CSS, funcionam sem Tailwind)
 Usadas no app (ex.: `[locale]/layout.tsx` usa `.aurora`, `.grain`): `.surface`, `.glass`, `.grid-bg`, `.aurora`, `.grain`, `.text-gradient`, `.text-aurora`, `.glow-emerald`, `.glow-dual`, `.hairline`, `.orb-float`, `.ring-spin`, `.marquee-track`. Todas são seletores CSS puros — não dependem do pipeline Tailwind.

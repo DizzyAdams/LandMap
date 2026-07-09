@@ -31,6 +31,11 @@ export const colors = {
     emeraldBright: '#6ee7b7',
     cyan: '#22d3ee',
     violet: '#a78bfa',
+    /** Sovereign champagne gold — the capital / investor accent. */
+    gold: '#d4af37',
+    goldSoft: '#e8c873',
+    goldBright: '#f4e2a1',
+    goldDeep: '#a67c00',
   },
   /** Semantic status colors. */
   semantic: {
@@ -56,6 +61,10 @@ export const shadows = {
     '0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25)',
   glowDual:
     '0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32)',
+  glowGold:
+    '0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38)',
+  glowSovereign:
+    '0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28)',
 } as const;
 
 /** Legacy export name kept stable for `@landmap/ui` consumers. */

@@ -1,10 +1,22 @@
-// Pass-through root layout. The document (<html>/<body>) is owned by
-// app/[locale]/layout.tsx, which handles fonts, i18n, nav/footer and the
-// brand background. Returning children keeps a single document in the tree.
-export default function RootLayout({
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { getLocale } from 'next-intl/server';
+
+export const dynamic = 'force-dynamic';
+
+// Root layout is the single owner of the <html>/<body> document shell.
+// The locale-aware shell (nav, footer, brand background, i18n providers)
+// lives in app/[locale]/layout.tsx. Keeping <html>/<body> here — and only
+// here — avoids the duplicated/malformed document that breaks hydration.
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return children;
+  const locale = await getLocale();
+  return (
+    <html lang={locale} className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={GeistSans.className}>{children}</body>
+    </html>
+  );
 }

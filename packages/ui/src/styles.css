@@ -19,6 +19,12 @@
   --cyan: #22d3ee;
   --violet: #a78bfa;
 
+  /* ── Sovereign gold (capital / investor accent — Gulf & sovereign-fund feel) ── */
+  --gold: #d4af37;
+  --gold-soft: #e8c873;
+  --gold-bright: #f4e2a1;
+  --gold-deep: #a67c00;
+
   --accent: #ffffff;
   --accent-dim: #e5e5e5;
   --danger: #ff4d4d;
@@ -30,4 +36,7 @@
 
   --glow-emerald: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25);
   --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
+  /* ── Sovereign gold glows ── */
+  --glow-gold: 0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38);
+  --glow-sovereign: 0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28);
 }

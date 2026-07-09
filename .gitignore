@@ -47,3 +47,7 @@ apps/web/1000
 deploy_*.log
 validate*.log
 
+# ─── Bug-probe / debug dumps (Playwright probe de produção) ───
+.bugprobe/
+probe_html.txt
+
