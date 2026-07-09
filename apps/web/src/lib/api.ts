@@ -322,4 +322,90 @@ export function ragQuery(query: string) {
     body: JSON.stringify({ query }),
   });
 }
+/* ─── Worldwide geolocation API (open, MIT) ─── */
+
+export type GeoFeature = {
+  id: string;
+  label: string;
+  type: 'country' | 'state' | 'city' | 'neighborhood';
+  name: string;
+  countryCode?: string;
+  state?: string;
+  city?: string;
+  neighborhood?: string;
+  lat: number;
+  lng: number;
+  /** [west, south, east, north] */
+  bbox?: [number, number, number, number];
+  population?: number;
+  pricePerM2?: number;
+  yoy?: number;
+  zoning?: string;
+  schools?: number;
+};
+
+export type GeocodeResult = { query: string; features: GeoFeature[] };
+
+export type ReverseResult = {
+  id: string;
+  label: string;
+  country?: string;
+  state?: string;
+  city?: string;
+  neighborhood?: string;
+  lat: number;
+  lng: number;
+  pricePerM2?: number;
+  yoy?: number;
+  zoning?: string;
+  schools?: number;
+};
+
+export type AutocompleteSuggestion = {
+  id: string;
+  label: string;
+  type: 'country' | 'state' | 'city' | 'neighborhood';
+  countryCode?: string;
+  state?: string;
+  city?: string;
+  lat: number;
+  lng: number;
+};
+
+export type Boundary = {
+  id: string;
+  label: string;
+  level: number;
+  lat: number;
+  lng: number;
+  bbox?: [number, number, number, number];
+};
+
+/** GET /geo/geocode?q= — forward geocoding (worldwide). */
+export function geoGeocode(q: string) {
+  return apiFetch<GeocodeResult>(`/geo/geocode?q=${encodeURIComponent(q)}`);
+}
+
+/** GET /geo/reverse?lat=&lng= — reverse geocoding + real-estate context. */
+export function geoReverse(lat: number, lng: number) {
+  return apiFetch<ReverseResult>(`/geo/reverse?lat=${lat}&lng=${lng}`);
+}
+
+/** GET /geo/autocomplete?q= — type-ahead suggestions. */
+export function geoAutocomplete(q: string, limit = 6) {
+  return apiFetch<AutocompleteSuggestion[]>(
+    `/geo/autocomplete?q=${encodeURIComponent(q)}&limit=${limit}`,
+  );
+}
+
+/** GET /geo/boundaries — admin boundaries (for region/bbox filtering). */
+export function geoBoundaries(opts: { level?: number; country?: string; q?: string } = {}) {
+  const params = new URLSearchParams();
+  if (opts.level != null) params.set('level', String(opts.level));
+  if (opts.country) params.set('country', opts.country);
+  if (opts.q) params.set('q', opts.q);
+  const qs = params.toString();
+  return apiFetch<Boundary[]>(`/geo/boundaries${qs ? `?${qs}` : ''}`);
+}
+
 

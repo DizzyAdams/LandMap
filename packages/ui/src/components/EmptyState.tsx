@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React, { forwardRef } from 'react';
 import { cn } from '../lib/index';
 
 export interface EmptyStateProps {
@@ -8,11 +8,12 @@ export interface EmptyStateProps {
   children?: React.ReactNode;
 }
 
-export function EmptyState({ title, description, className, children }: EmptyStateProps) {
-  return (
+export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
+  ({ title, description, className, children }, ref) => (
     <div
+      ref={ref}
       className={cn(
-        'rounded-xl border border-dashed border-white/10 p-10 text-center',
+        'rounded-xl border border-dashed border-white/10 bg-white/[0.02] p-10 text-center',
         className,
       )}
     >
@@ -20,5 +21,7 @@ export function EmptyState({ title, description, className, children }: EmptySta
       {description && <p className="mt-1 text-xs text-neutral-500">{description}</p>}
       {children}
     </div>
-  );
-}
+  ),
+);
+
+EmptyState.displayName = 'EmptyState';

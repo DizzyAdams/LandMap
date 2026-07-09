@@ -14,7 +14,9 @@ export function ShareMenu({ url, title, text, className = '' }: ShareMenuProps) 
   const [copied, setCopied] = useState(false);
 
   const shareUrl = url || (typeof window !== 'undefined' ? window.location.href : '');
-  const shareTitle = title || document.title;
+  // Guard `document` — this client component is still server-rendered (SSR),
+  // where `document` is undefined.
+  const shareTitle = title || (typeof document !== 'undefined' ? document.title : '');
   const shareText = text || shareTitle;
 
   const handleNativeShare = useCallback(async () => {

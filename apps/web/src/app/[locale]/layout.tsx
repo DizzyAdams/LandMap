@@ -1,4 +1,5 @@
-import { Inter } from 'next/font/google';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
 import { getMessages } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
@@ -8,10 +9,9 @@ import { ScrollToTop } from '../../components/ScrollToTop';
 import { Cursor } from '../../components/Cursor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import '@landmap/ui/styles.css';
+import '../../app/globals.css';
 
 export const dynamic = 'force-dynamic';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export function generateStaticParams() {
   return ['pt-BR', 'en-US', 'es-ES'].map((locale) => ({ locale }));
@@ -85,8 +85,8 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={resolvedLocale}>
-      <body className={inter.className}>
+    <html lang={resolvedLocale} className={`${GeistSans.variable} ${GeistMono.variable}`}>
+      <body className={GeistSans.className}>
         <NextIntlClientProvider messages={messages} locale={resolvedLocale}>
           <a
             href="#main-content"
@@ -100,7 +100,7 @@ export default async function RootLayout({
                 ':focus-visible{outline:2px solid rgba(52,211,153,0.7);outline-offset:2px;border-radius:6px;}',
             }}
           />
-          <div className="relative min-h-screen text-neutral-50 antialiased">
+          <div className="relative min-h-[100dvh] text-neutral-50 antialiased">
             <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
               <div className="absolute inset-0 bg-[#050505]" />
               <div className="absolute inset-0 aurora" />

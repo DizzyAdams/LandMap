@@ -37,6 +37,11 @@ export const colors = {
     success: '#34d399',
     danger: '#ff4d4d',
   },
+  /** Neutral white accents (mirrors --accent / --accent-dim in globals.css). */
+  accent: '#ffffff',
+  accentDim: '#e5e5e5',
+  /** Back-compat alias of surface-1 (mirrors --surface in globals.css). */
+  surfaceAlias: '#0a0a0a',
 } as const;
 
 export const radii = {

@@ -1,6 +1,6 @@
 import { Hono } from 'hono';
 import type { Env } from '../../index.js';
-import { ingestDocuments, retrieve, type Chunk } from '@landmap/llm/rag.js';
+import { inMemoryIndex, retrieve, type Chunk } from '@landmap/llm/rag.js';
 
 export function createLLMRagRouter() {
   const router = new Hono<Env>();
@@ -11,7 +11,7 @@ export function createLLMRagRouter() {
       return c.json({ error: 'Body must be a non-empty array of { path, title, text }' }, 400);
     }
 
-    const chunks = ingestDocuments();
+    const chunks = inMemoryIndex();
     const added: Chunk[] = body.map((d, i) => ({
       id: String(d.path || d.title || `doc_${chunks.length + i}`),
       path: d.path,
@@ -34,7 +34,7 @@ export function createLLMRagRouter() {
     }
 
     const top = typeof body.top === 'number' ? body.top : 3;
-    const chunks = ingestDocuments();
+    const chunks = inMemoryIndex();
     const results = retrieve(body.query, chunks, top);
     return c.json({ query: body.query, top, results: results.map((r) => ({ id: r.chunk.id, text: r.chunk.text, score: r.score })) });
   });

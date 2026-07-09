@@ -1,6 +1,7 @@
 :root {
   /* LandMap "fora do comum" dark-premium tokens (mirrors apps/web globals.css) */
   --bg: #050505;
+  --surface: #0a0a0a;          /* surface-1 alias (back-compat) */
   --surface-1: #0a0a0a;
   --surface-2: #0f0f0f;
   --surface-3: #141414;

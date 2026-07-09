@@ -1,13 +1,15 @@
+'use client';
+
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { Logo } from '../../../components/Logo';
 import { localeHref } from '../../../lib/locale';
 
-export default async function OfflinePage({
-  params,
-}: {
-  params: Promise<{ locale?: string }>;
-}) {
-  const { locale } = await params;
+// Client component: the reload button needs an onClick handler, which is
+// only valid inside a Client Component boundary.
+export default function OfflinePage() {
+  const params = useParams();
+  const locale = (params.locale as string) || 'pt-BR';
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-neutral-50">

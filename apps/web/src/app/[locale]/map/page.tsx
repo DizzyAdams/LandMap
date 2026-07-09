@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { searchProperties, geoAutocomplete, geoReverse, type AutocompleteSuggestion, type GeoFeature, type ReverseResult } from '../../../lib/api';
 
 type Property = {
   id: string;
@@ -43,16 +44,52 @@ export default function MapPage() {
   const params = useParams();
   const locale = (params.locale as string) || 'pt-BR';
 
+  const [suggestions, setSuggestions] = useState<AutocompleteSuggestion[]>([]);
+  const [activeIdx, setActiveIdx] = useState(-1);
+  const [reverse, setReverse] = useState<ReverseResult | null>(null);
+  const flyToRef = useRef<((lat: number, lng: number) => void) | null>(null);
+
+  // Debounced worldwide geo-autocomplete (open, MIT API)
+  useEffect(() => {
+    const q = query.trim();
+    if (!q) {
+      setSuggestions([]);
+      return;
+    }
+    const t = setTimeout(() => {
+      geoAutocomplete(q)
+        .then(setSuggestions)
+        .catch(() => setSuggestions([]));
+    }, 250);
+    return () => clearTimeout(t);
+  }, [query]);
+
+  function selectSuggestion(s: AutocompleteSuggestion) {
+    setQuery(s.label);
+    setSuggestions([]);
+    setActiveIdx(-1);
+    flyToRef.current?.(s.lat, s.lng);
+  }
+
+  async function handleMapClick(lat: number, lng: number) {
+    try {
+      setReverse(await geoReverse(lat, lng));
+    } catch {
+      setReverse(null);
+    }
+  }
+
   useEffect(() => {
     let active = true;
     setLoading(true);
-    const base = new URL('/markdowns', 'http://localhost:4000');
-    if (query.trim()) base.searchParams.set('q', query.trim());
-    fetch(base.toString(), { cache: 'no-store' })
-      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+    // Use the shared API client (honors NEXT_PUBLIC_LANDMAP_API_BASE) instead of a
+    // hardcoded origin so the map works in every environment.
+    searchProperties({ q: query.trim() || undefined })
       .then((data) => {
         if (!active) return;
-        setItems((data?.items ?? []).filter((item: Property) => item.latitude && item.longitude));
+        setItems(
+          (data?.items ?? []).filter((item) => item.latitude != null && item.longitude != null),
+        );
       })
       .catch(() => {
         if (!active) return;
@@ -93,14 +130,50 @@ export default function MapPage() {
         <Reveal delay={0.1} className="mt-8">
           <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 space-y-4">
           {/* Search input */}
-          <input
-            ref={inputRef}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Filtrar por cidade ou bairro"
-            aria-label="Filtrar por cidade ou bairro"
-            className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-2.5 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-neutral-500"
-          />
+          <div className="relative">
+            <input
+              ref={inputRef}
+              role="combobox"
+              aria-expanded={suggestions.length > 0}
+              aria-controls="geo-suggestions"
+              aria-autocomplete="list"
+              aria-activedescendant={activeIdx >= 0 ? `geo-opt-${activeIdx}` : undefined}
+              autoComplete="off"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'ArrowDown') { e.preventDefault(); setActiveIdx((i) => Math.min(suggestions.length - 1, i + 1)); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); setActiveIdx((i) => Math.max(0, i - 1)); }
+                else if (e.key === 'Enter' && activeIdx >= 0 && suggestions[activeIdx]) { e.preventDefault(); selectSuggestion(suggestions[activeIdx]); }
+                else if (e.key === 'Escape') { setSuggestions([]); setActiveIdx(-1); }
+              }}
+              placeholder="Buscar cidade, estado ou país…"
+              aria-label="Buscar localização no mundo todo"
+              className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-2.5 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-emerald-400"
+            />
+            {suggestions.length > 0 && (
+              <ul
+                id="geo-suggestions"
+                role="listbox"
+                aria-label="Sugestões de localização"
+                className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900/95 shadow-xl backdrop-blur"
+              >
+                {suggestions.map((s, i) => (
+                  <li
+                    key={s.id}
+                    id={`geo-opt-${i}`}
+                    role="option"
+                    aria-selected={i === activeIdx}
+                    onMouseEnter={() => setActiveIdx(i)}
+                    onClick={() => selectSuggestion(s)}
+                    className={`cursor-pointer px-4 py-2.5 text-sm transition ${i === activeIdx ? 'bg-emerald-950/40 text-white' : 'text-neutral-300 hover:text-white'}`}
+                  >
+                    {s.label}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
 
           {/* Radius slider */}
           <div className="flex items-center gap-4">
@@ -183,6 +256,30 @@ export default function MapPage() {
               Comercial
             </span>
           </div>
+
+          {reverse && (
+            <div className="rounded-lg border border-emerald-900/60 bg-emerald-950/20 p-3 text-sm text-neutral-200">
+              <p className="font-medium text-emerald-300">Local selecionado</p>
+              <p className="mt-1">{reverse.label}</p>
+              {reverse.pricePerM2 != null && (
+                <p className="mt-1 text-neutral-400">
+                  Preço/m²:{' '}
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                    maximumFractionDigits: 0,
+                  }).format(reverse.pricePerM2)}
+                  {reverse.yoy != null && ` · ${reverse.yoy > 0 ? '+' : ''}${reverse.yoy}% a.a.`}
+                </p>
+              )}
+              {reverse.zoning && (
+                <p className="mt-1 text-neutral-400">
+                  Zona: {reverse.zoning}
+                  {reverse.schools != null && ` · Escolas: ${reverse.schools}`}
+                </p>
+              )}
+            </div>
+          )}
           </div>
         </Reveal>
       </section>
@@ -194,6 +291,8 @@ export default function MapPage() {
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
           locale={locale}
+          onMapClick={handleMapClick}
+          flyToRef={flyToRef}
         />
       </section>
 
@@ -213,12 +312,16 @@ function MapView({
   sidebarOpen,
   setSidebarOpen,
   locale,
+  onMapClick,
+  flyToRef,
 }: {
   items: Property[];
   loading: boolean;
   sidebarOpen: boolean;
   setSidebarOpen: (v: boolean) => void;
   locale: string;
+  onMapClick?: (lat: number, lng: number) => void;
+  flyToRef?: { current: ((lat: number, lng: number) => void) | null };
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<any>(null);
@@ -246,6 +349,18 @@ function MapView({
     }).addTo(map);
 
     mapInstance.current = map;
+
+    // Expose a flyTo so the parent combobox can recenter the map.
+    if (flyToRef) {
+      flyToRef.current = (lat: number, lng: number) => {
+        map.flyTo([lat, lng], 13, { duration: 0.8 });
+      };
+    }
+
+    // Reverse-geocode on click (real-estate context panel in the parent).
+    if (onMapClick) {
+      map.on('click', (e: any) => onMapClick(e.latlng.lat, e.latlng.lng));
+    }
 
     return () => {
       map.remove();

@@ -1,0 +1,32 @@
+[project]
+name = "landmap-models"
+version = "0.1.0"
+description = "Modeling: valuation & forecasting for LandMap"
+requires-python = ">=3.12"
+dependencies = [
+    "polars>=1.0",
+    "pandas>=2.2",
+    "pyarrow>=17.0",
+    "numpy>=1.26",
+    "scikit-learn>=1.5",
+    "statsmodels>=0.14",
+    "pydantic>=2.8",
+    "landmap-data",
+    "landmap-features",
+    # Heavyweight upgrades (best-in-class) — uncomment to enable:
+    # "xgboost>=2.0",
+    # "lightgbm>=4.4",
+    # "statsforecast>=1.7",
+    # "prophet>=1.1",
+]
+
+[tool.uv.sources]
+landmap-data = { workspace = true }
+landmap-features = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/landmap_models"]

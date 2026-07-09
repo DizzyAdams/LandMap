@@ -51,7 +51,7 @@ export function applyTaskMutation(store: SalesStore, task: SalesTask): void {
       lastActivityAt: new Date().toISOString(),
     });
   }
-  if (task.dealId && task.createDeal) {
+  if (task.createDeal) {
     const lead = task.leadId ? store.getLead(task.leadId) : undefined;
     store.addDeal({
       id: `deal-${Date.now()}-${Math.floor(Math.random() * 1e4)}`,

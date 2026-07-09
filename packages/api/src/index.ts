@@ -14,6 +14,7 @@ import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
 import { createSalesRouter } from './routes/sales.js';
 import allPropertiesData from './data/properties.json'
+import { createGeoRouter, createGeoSource } from '@landmap/geo';
 import { OpenDesignClient } from '@landmap/integrations';
 
 export type Env = {
@@ -373,6 +374,7 @@ app.route('/langflow', createLangflowRouter());
 app.route('/rag', createRagRouter());
 
 /* ─── Autonomous Sales Agent routes ─── */
+app.route('/geo', createGeoRouter(createGeoSource()));
 app.route('/sales', createSalesRouter());
 
 

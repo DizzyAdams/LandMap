@@ -39,3 +39,11 @@ coverage/
 
 # ─── Stray debug dumps ───
 apps/web/1000
+
+# ─── Local deploy / process temp artifacts (created by helper scripts) ───
+*.pid
+*.err
+*.out
+deploy_*.log
+validate*.log
+

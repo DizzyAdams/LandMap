@@ -29,8 +29,10 @@ const statusConfig: Record<ServiceStatus, { color: string; label: string }> = {
 };
 
 export default function StatusPage() {
+  // Initialize with an empty check; the real timestamp is set after mount
+  // (client-only) to avoid an SSR/CSR hydration mismatch on `new Date()`.
   const [services, setServices] = useState<Service[]>(() =>
-    SERVICES.map((s) => ({ ...s, lastCheck: new Date().toISOString() }))
+    SERVICES.map((s) => ({ ...s, lastCheck: '' }))
   );
 
   // Honest "live check": we only refresh the timestamp. Status reflects the
@@ -102,7 +104,9 @@ export default function StatusPage() {
                   <span className={`text-xs font-medium ${cfg.color}`}>{cfg.label}</span>
                   <span className="text-xs text-neutral-400 font-mono">{service.latency}</span>
                   <span className="text-[11px] text-neutral-500">
-                    {new Date(service.lastCheck).toLocaleTimeString('pt-BR')}
+                    {service.lastCheck
+                      ? new Date(service.lastCheck).toLocaleTimeString('pt-BR')
+                      : '—'}
                   </span>
                 </div>
               </SpotlightCard>

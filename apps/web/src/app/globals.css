@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+/* Include UI package sources so shared component utilities/classes are generated */
+@source '../../../packages/ui/src/**/*.{ts,tsx}';
 
 :root {
   /* ── Canvas ── */
@@ -46,6 +47,12 @@ html,
 body {
   background: var(--bg);
   color: var(--text);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+}
+
+/* Geist Mono for numeric / data-dense surfaces (dashboards, stats, prices). */
+.font-mono {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 .input {
@@ -56,12 +63,14 @@ body {
   @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition;
 }
 
+/* NOTE: Tailwind v4 `@apply` cannot reference custom classes, so `.btn` is inlined
+   into the variants below instead of `@apply btn` (which would error at build). */
 .btn-primary {
-  @apply btn bg-white text-neutral-900 hover:bg-neutral-200;
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition bg-white text-neutral-900 hover:bg-neutral-200;
 }
 
 .btn-ghost {
-  @apply btn border border-neutral-800 text-neutral-200 hover:border-neutral-500 hover:text-white;
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition border border-neutral-800 text-neutral-200 hover:border-neutral-500 hover:text-white;
 }
 
 .badge {
@@ -108,13 +117,6 @@ body {
   box-shadow: var(--glow-emerald);
 }
 
-.text-gradient {
-  background: linear-gradient(180deg, #ffffff 0%, #a3a3a3 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
 .hairline {
   border-color: var(--border);
 }
@@ -156,10 +158,26 @@ body {
   }
 }
 
-/* Dual-tone signature gradient for headlines / accents (overrides the
-   earlier monochrome gradient so existing .text-gradient gets the new look). */
+/* Restrained monochrome gradient — the calm default for section headings.
+   Keeps a hint of dimensionality without the "AI gradient slop" tell. */
 .text-gradient {
-  background: linear-gradient(100deg, var(--text-strong) 0%, var(--emerald-bright) 28%, var(--emerald) 52%, var(--cyan) 100%);
+  background: linear-gradient(180deg, var(--text-strong) 0%, #c9c9c9 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Signature bioluminescent gradient — reserved for the hero H1 only,
+   the single "surreal" moment where a full multi-tone wash earns its place. */
+.text-aurora {
+  background: linear-gradient(
+    100deg,
+    var(--text-strong) 0%,
+    var(--emerald-bright) 26%,
+    var(--emerald) 50%,
+    var(--cyan) 78%,
+    #7dd3fc 100%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
@@ -167,6 +185,25 @@ body {
 
 .glow-dual {
   box-shadow: var(--glow-dual);
+}
+
+/* ─── Surreal ornament motion (pure transform/opacity, GPU-friendly) ─── */
+@keyframes orb-float {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(4%, -5%, 0) scale(1.07); }
+  100% { transform: translate3d(0, 0, 0) scale(1); }
+}
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.orb-float {
+  animation: orb-float 16s ease-in-out infinite;
+  will-change: transform;
+}
+.ring-spin {
+  animation: ring-spin 42s linear infinite;
+  will-change: transform;
 }
 
 /* Accessible, on-brand focus rings */
@@ -187,5 +224,7 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
   .aurora { animation: none; }
+  .orb-float { animation: none; }
+  .ring-spin { animation: none; }
 }
 

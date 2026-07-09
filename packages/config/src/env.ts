@@ -3,6 +3,10 @@ export const env = {
   llmProvider: process.env.LANDMAP_LLM_PROVIDER ?? 'openrouter',
   appEnv: process.env.NODE_ENV ?? 'development',
   appUrl: process.env.LANDMAP_APP_URL ?? process.env.NEXT_PUBLIC_LANDMAP_APP_URL ?? 'http://localhost:3000',
-  cacheTtlMs: Number(process.env.LANDMAP_CACHE_TTL_MS) || 300_000,
+  cacheTtlMs: (() => {
+    const raw = process.env.LANDMAP_CACHE_TTL_MS;
+    const parsed = raw == null ? NaN : Number(raw);
+    return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 300_000;
+  })(),
   llmModel: process.env.LANDMAP_LLM_MODEL ?? 'gpt-4o',
 };

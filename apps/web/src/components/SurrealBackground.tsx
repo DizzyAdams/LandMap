@@ -7,7 +7,11 @@ import { useEffect, useRef } from 'react';
  * connected by emerald filaments, with a soft breathing radial wash.
  * Respects prefers-reduced-motion and pauses when the tab is hidden.
  */
-export function SurrealBackground() {
+export function SurrealBackground({
+  className,
+}: {
+  className?: string;
+} = {}) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -128,7 +132,10 @@ export function SurrealBackground() {
     <canvas
       ref={canvasRef}
       aria-hidden
-      className="pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-70"
+      className={
+        className ??
+        'pointer-events-none fixed inset-0 -z-10 h-full w-full opacity-70'
+      }
     />
   );
 }

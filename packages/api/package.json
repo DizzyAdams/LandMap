@@ -14,6 +14,7 @@
   "dependencies": {
     "@landmap/config": "workspace:*",
     "@landmap/db": "workspace:*",
+    "@landmap/geo": "workspace:*",
     "@landmap/llm": "workspace:*",
     "@landmap/integrations": "workspace:*",
     "@landmap/sales": "workspace:*",

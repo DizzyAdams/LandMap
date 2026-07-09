@@ -9,10 +9,12 @@ export function ContactForm() {
   const [mensagem, setMensagem] = useState('');
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setError(null);
 
     const payload = { nome, email, telefone, mensagem };
 
@@ -23,18 +25,18 @@ export function ContactForm() {
         body: JSON.stringify(payload),
       });
 
-      if (!res.ok) throw new Error('Erro ao enviar');
-    } catch {
-      // Fallback: log to console
-      console.log('Contact form submission:', payload);
+      if (!res.ok) throw new Error('Erro ao enviar a mensagem.');
+      setSent(true);
+      setNome('');
+      setEmail('');
+      setTelefone('');
+      setMensagem('');
+    } catch (err) {
+      // Graceful fallback: surface the failure instead of faking success.
+      setError(err instanceof Error ? err.message : 'Erro ao enviar a mensagem.');
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
-    setSent(true);
-    setNome('');
-    setEmail('');
-    setTelefone('');
-    setMensagem('');
   };
 
   return (
@@ -52,7 +54,16 @@ export function ContactForm() {
           </button>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-3">
+        <>
+          {error && (
+            <div
+              role="alert"
+              className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-center text-sm text-red-200"
+            >
+              {error}
+            </div>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-3">
           <input
             required
             aria-label="Nome"
@@ -96,6 +107,7 @@ export function ContactForm() {
             {loading ? 'Enviando...' : 'Enviar'}
           </button>
         </form>
+        </>
       )}
     </div>
   );

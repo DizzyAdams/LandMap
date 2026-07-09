@@ -33,3 +33,19 @@ export type PriceHistory = {
 export type DbSchema = {
   properties: Property[];
 };
+
+/* ---- Query layer (pool-injectable, SQL-injection safe) ---- */
+export {
+  mapPropertyRow,
+  getPropertyById,
+  listProperties,
+  insertProperty,
+  updateProperty,
+  softDeleteProperty,
+} from './query.js';
+export type {
+  PgPoolLike,
+  NewProperty,
+  ListPropertiesOptions,
+} from './query.js';
+

@@ -4,6 +4,7 @@ import { searchProperties } from '../../lib/api';
 import { Reveal, Stagger, ScrollProgress } from '../../components/Motion';
 import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
+import { SurrealBackground } from '../../components/SurrealBackground';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,15 +20,23 @@ export default async function LocaleHomePage() {
   } catch {}
 
   return (
-    <main className="relative min-h-screen text-neutral-50">
+    <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      {/* Ambient glow */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[40rem] bg-[radial-gradient(40rem_30rem_at_50%_-10%,rgba(52,211,153,0.10),transparent_70%)]" />
-
-      {/* Surreal layer: bioluminescent aurora + film grain */}
+      {/* Surreal ambient stage — constellation + aurora + grain + localized glow */}
+      <SurrealBackground className="pointer-events-none absolute inset-0 -z-20 h-full w-full opacity-60" />
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[70rem] aurora opacity-70" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(48rem_36rem_at_16%_-10%,rgba(52,211,153,0.14),transparent_70%)]" />
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grain opacity-[0.05] mix-blend-overlay" />
+
+      {/* Asymmetric orbiting ornament (desktop only) */}
+      <div aria-hidden className="pointer-events-none absolute right-[-7rem] top-28 -z-10 hidden md:block">
+        <div className="ring-spin relative h-80 w-80 rounded-full border border-emerald-400/15">
+          <div className="absolute inset-10 rounded-full border border-cyan-400/10" />
+          <div className="absolute inset-[5.5rem] rounded-full border border-emerald-400/10" />
+          <div className="orb-float absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_32%_30%,rgba(110,231,183,0.55),rgba(34,211,238,0.14)_58%,transparent_72%)] blur-2xl" />
+        </div>
+      </div>
 
       {/* Hero */}
       <Reveal className="relative mx-auto max-w-6xl px-6 pt-32 pb-20">
@@ -36,7 +45,7 @@ export default async function LocaleHomePage() {
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             Inteligência Imobiliária
           </span>
-          <h1 className="mt-8 text-5xl font-semibold tracking-tight leading-tight text-gradient">
+          <h1 className="mt-8 text-5xl font-semibold tracking-tight leading-[1.04] text-aurora md:text-7xl">
             Dados que transformam<br />o mercado imobiliário
           </h1>
           <p className="mt-4 text-base text-neutral-400 max-w-lg">
