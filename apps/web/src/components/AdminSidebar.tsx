@@ -31,6 +31,7 @@ export function AdminSidebar() {
       <div className="flex h-14 items-center border-b border-neutral-800 px-4">
         <button
           onClick={() => setCollapsed((v) => !v)}
+          aria-label={collapsed ? 'Expandir barra lateral' : 'Recolher barra lateral'}
           className="rounded-lg p-1.5 text-neutral-500 transition hover:bg-neutral-800 hover:text-neutral-300"
           title={collapsed ? 'Expandir' : 'Recolher'}
         >

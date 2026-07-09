@@ -9,7 +9,6 @@ export function Logo({ className = '' }: { className?: string }) {
       className={className}
       fill="none"
       aria-hidden
-      role="img"
       style={{ filter: 'drop-shadow(0 0 6px rgba(52,211,153,0.45))' }}
     >
       <defs>

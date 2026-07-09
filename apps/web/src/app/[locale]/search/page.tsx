@@ -3,9 +3,10 @@ import Link from 'next/link';
 import React from 'react';
 import { searchProperties, type SearchQuery, type Property } from '../../../lib/api';
 import { SearchKeyboardShortcuts } from '../../../components/SearchKeyboardShortcuts';
-import { Button, EmptyState } from '@landmap/ui';
-import { Reveal, Stagger } from '../../../components/Motion';
+import { EmptyState } from '@landmap/ui';
+import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { Filters } from './Filters';
 
 export const dynamic = 'force-dynamic';
 
@@ -138,45 +139,34 @@ export default async function SearchPage({
         </Reveal>
 
         <Reveal delay={0.1} className="mt-8">
-          <form className="grid grid-cols-1 gap-3 rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 md:grid-cols-3 lg:grid-cols-5">
-          <input name="q" defaultValue={sp.q} placeholder="Busca" aria-label="Busca" className="input" id="search-input" />
-          <select name="type" defaultValue={sp.type} aria-label="Tipo de imóvel" className="input">
-            <option value="">Tipo</option>
-            <option value="apartamento">Apartamento</option>
-            <option value="casa">Casa</option>
-            <option value="terreno">Terreno</option>
-            <option value="comercial">Comercial</option>
-          </select>
-          <select name="modality" defaultValue={sp.modality} aria-label="Modalidade" className="input">
-            <option value="">Modalidade</option>
-            <option value="venda">Venda</option>
-            <option value="aluguel">Aluguel</option>
-            <option value="lancamento">Lançamento</option>
-          </select>
-          <input name="city" defaultValue={sp.city} placeholder="Cidade" aria-label="Cidade" className="input" />
-          <input name="state" defaultValue={sp.state} placeholder="UF" aria-label="UF" className="input" />
-          <input name="minPrice" defaultValue={sp.minPrice} type="number" placeholder="Preço mín." aria-label="Preço mínimo" className="input" />
-          <input name="maxPrice" defaultValue={sp.maxPrice} type="number" placeholder="Preço máx." aria-label="Preço máximo" className="input" />
-          <div className="lg:col-span-5 flex items-center justify-between">
-            <p className="text-xs text-neutral-500">
-              {sp.q ? `Filtro ativo: ${sp.q}` : 'Use filtros para refinar.'}
-            </p>
-            <Button type="submit">Aplicar filtros</Button>
-          </div>
-        </form>
+          <Filters
+            locale={locale}
+            defaults={{
+              q: sp.q,
+              type: sp.type,
+              modality: sp.modality,
+              city: sp.city,
+              state: sp.state,
+              minPrice: sp.minPrice,
+              maxPrice: sp.maxPrice,
+            }}
+          />
         </Reveal>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-24">
         {error ? (
-          <div className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200">
+          <div
+            role="alert"
+            className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200"
+          >
             {error}
           </div>
         ) : (
           <>
             {/* Sort + count bar */}
             <div className="mb-4 flex items-center justify-between text-xs text-neutral-500">
-              <span>
+              <span aria-live="polite">
                 {sorted.length} resultado{sorted.length === 1 ? '' : 's'}
               </span>
               <div className="flex items-center gap-2">
@@ -203,49 +193,52 @@ export default async function SearchPage({
               </div>
             </div>
 
-            <Stagger className="grid gap-3">
-              {pageItems.length === 0 && (
-                <EmptyState
-                  title="Nenhum imóvel encontrado"
-                  description="Ajuste tipologia, modalidade ou cidade para ver mais opções."
-                />
-              )}
-              {pageItems.map((item) => {
-                const pricePerM2 = item.areaM2 > 0 ? Math.round(item.price / item.areaM2) : 0;
-                return (
-                  <SpotlightCard key={item.id}>
-                    <Link
-                      href={`/${locale}/property/${item.id}`}
-                      className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
-                    >
-                    <div className="flex items-start justify-between">
-                      <div>
-                        <p className="text-sm text-neutral-300">{item.title}</p>
-                        <p className="mt-1 text-xs text-neutral-500">
-                          {item.city}, {item.state} · {item.areaM2} m²
-                          {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
-                        </p>
-                      </div>
-                      <span className="text-xs text-neutral-400">{item.modality}</span>
-                    </div>
-                    <div className="mt-4 flex items-center justify-between">
-                      <span className="text-sm font-medium">
-                        {formatBRL(item.price)}
-                      </span>
-                      <span className="flex items-center gap-2">
-                        {pricePerM2 > 0 && (
-                          <span className="text-xs text-neutral-500">
-                            {formatBRL(pricePerM2)}/m²
-                          </span>
-                        )}
-                        <span className="text-xs text-neutral-400 capitalize">{item.type}</span>
-                      </span>
-                    </div>
-                    </Link>
-                  </SpotlightCard>
-                );
-              })}
-            </Stagger>
+            {pageItems.length === 0 ? (
+              <EmptyState
+                title="Nenhum imóvel encontrado"
+                description="Ajuste tipologia, modalidade ou cidade para ver mais opções."
+              />
+            ) : (
+              <ul role="list" className="grid gap-3">
+                {pageItems.map((item) => {
+                  const pricePerM2 = item.areaM2 > 0 ? Math.round(item.price / item.areaM2) : 0;
+                  return (
+                    <li key={item.id}>
+                      <SpotlightCard>
+                        <Link
+                          href={`/${locale}/property/${item.id}`}
+                          className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+                        >
+                          <div className="flex items-start justify-between">
+                            <div>
+                              <p className="text-sm text-neutral-300">{item.title}</p>
+                              <p className="mt-1 text-xs text-neutral-500">
+                                {item.city}, {item.state} · {item.areaM2} m²
+                                {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
+                              </p>
+                            </div>
+                            <span className="text-xs text-neutral-400">{item.modality}</span>
+                          </div>
+                          <div className="mt-4 flex items-center justify-between">
+                            <span className="text-sm font-medium">
+                              {formatBRL(item.price)}
+                            </span>
+                            <span className="flex items-center gap-2">
+                              {pricePerM2 > 0 && (
+                                <span className="text-xs text-neutral-500">
+                                  {formatBRL(pricePerM2)}/m²
+                                </span>
+                              )}
+                              <span className="text-xs text-neutral-400 capitalize">{item.type}</span>
+                            </span>
+                          </div>
+                        </Link>
+                      </SpotlightCard>
+                    </li>
+                  );
+                })}
+              </ul>
+            )}
 
             {/* Pagination */}
             {totalPages > 1 && (

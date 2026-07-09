@@ -181,25 +181,27 @@ async function SimilarProperties({
           Outras opções em {city} com preço próximo.
         </p>
       </Reveal>
-      <Stagger className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <ul role="list" className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {similar.map((item) => (
-          <SpotlightCard key={item.id}>
-            <Link
-              href={`/${locale}/property/${item.id}`}
-              className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
-            >
-            <p className="text-sm text-neutral-300">{item.title}</p>
-            <p className="mt-1 text-xs text-neutral-500">
-              {item.city}, {item.state} · {item.areaM2} m²
-              {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
-            </p>
-            <p className="mt-3 text-sm font-medium text-neutral-100">
-              {formatBRL(item.price)}
-            </p>
-          </Link>
-          </SpotlightCard>
+          <li key={item.id}>
+            <SpotlightCard>
+              <Link
+                href={`/${locale}/property/${item.id}`}
+                className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+              >
+                <p className="text-sm text-neutral-300">{item.title}</p>
+                <p className="mt-1 text-xs text-neutral-500">
+                  {item.city}, {item.state} · {item.areaM2} m²
+                  {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
+                </p>
+                <p className="mt-3 text-sm font-medium text-neutral-100">
+                  {formatBRL(item.price)}
+                </p>
+              </Link>
+            </SpotlightCard>
+          </li>
         ))}
-      </Stagger>
+      </ul>
     </section>
   );
 }

@@ -3,8 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { Button, Card, EmptyState } from '@landmap/ui';
-import { Reveal, Stagger } from '../../../components/Motion';
+import { Button, EmptyState } from '@landmap/ui';
+import { Reveal } from '../../../components/Motion';
+import { SpotlightCard } from '../../../components/SpotlightCard';
 
 interface Favorite {
   id: string;
@@ -58,7 +59,7 @@ export default function FavoritesPage() {
           <h1 className="text-2xl font-semibold tracking-tight text-gradient">
             Favoritos
           </h1>
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 text-sm text-neutral-400" aria-live="polite">
             {favorites.length} imóve{favorites.length === 1 ? 'l' : 'is'} salvo
            {favorites.length === 1 ? '' : 's'}
           </p>
@@ -74,33 +75,35 @@ export default function FavoritesPage() {
             </Link>
           </EmptyState>
         ) : (
-          <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul role="list" className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {favorites.map((fav) => (
-              <Card key={fav.id} variant="interactive">
-                <Link href={`/${locale}/property/${fav.id}`} className="block">
-                  <h3 className="text-sm font-medium text-neutral-50">
-                    {fav.title}
-                  </h3>
-                  <p className="mt-1 text-xs text-neutral-400">
-                    {fav.city}, {fav.state}
-                  </p>
-                  <p className="mt-2 text-sm font-medium text-neutral-200">
-                    {new Intl.NumberFormat('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL',
-                      maximumFractionDigits: 0,
-                    }).format(fav.price)}
-                  </p>
-                </Link>
-                <button
-                  onClick={() => removeFavorite(fav.id)}
-                  className="mt-3 text-xs text-red-400 transition hover:text-red-300"
-                >
-                  Remover
-                </button>
-              </Card>
+              <li key={fav.id}>
+                <SpotlightCard>
+                  <Link href={`/${locale}/property/${fav.id}`} className="block">
+                    <h3 className="text-sm font-medium text-neutral-50">
+                      {fav.title}
+                    </h3>
+                    <p className="mt-1 text-xs text-neutral-400">
+                      {fav.city}, {fav.state}
+                    </p>
+                    <p className="mt-2 text-sm font-medium text-neutral-200">
+                      {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                        maximumFractionDigits: 0,
+                      }).format(fav.price)}
+                    </p>
+                  </Link>
+                  <button
+                    onClick={() => removeFavorite(fav.id)}
+                    className="mt-3 text-xs text-red-400 transition hover:text-red-300"
+                  >
+                    Remover
+                  </button>
+                </SpotlightCard>
+              </li>
             ))}
-          </Stagger>
+          </ul>
         )}
       </div>
     </main>

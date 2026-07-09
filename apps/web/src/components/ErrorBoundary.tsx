@@ -37,7 +37,7 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div className="flex min-h-[40vh] items-center justify-center bg-[#050505] px-6">
+        <div role="alert" className="flex min-h-[40vh] items-center justify-center bg-[#050505] px-6">
           <div className="max-w-md text-center">
             <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-red-500/30 bg-red-500/10">
               <svg
@@ -46,6 +46,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
                 stroke="currentColor"
+                aria-hidden
               >
                 <path
                   strokeLinecap="round"
@@ -66,6 +67,7 @@ export class ErrorBoundary extends Component<Props, State> {
               </p>
             )}
             <button
+              type="button"
               onClick={this.handleRetry}
               className="mt-6 rounded-lg border border-neutral-700 bg-neutral-900 px-5 py-2 text-xs font-medium text-neutral-300 transition hover:border-neutral-500 hover:text-white"
             >

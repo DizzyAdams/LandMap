@@ -14,15 +14,19 @@ export function ScrollToTop() {
   }, []);
 
   function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   }
 
   if (!visible) return null;
 
   return (
     <button
+      type="button"
       onClick={scrollToTop}
-      aria-label="Scroll to top"
+      aria-label="Voltar ao topo"
       className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-neutral-300 shadow-lg transition hover:bg-neutral-700 hover:text-white"
     >
       <svg

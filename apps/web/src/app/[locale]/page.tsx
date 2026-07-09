@@ -89,28 +89,30 @@ export default async function LocaleHomePage() {
               Ver todos
             </Link>
           </div>
-          <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          <ul role="list" className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {featured.map((item) => (
-              <SpotlightCard key={item.id} className="p-5">
-                <Link
-                  href={`./property/${item.id}`}
-                  className="group block h-full"
-                >
-                  <div className="flex items-start justify-between">
-                    <p className="text-sm text-neutral-300 transition group-hover:text-white">{item.title}</p>
-                    <span className="shrink-0 ml-2 text-xs text-neutral-500">{item.modality}</span>
-                  </div>
-                  <p className="mt-2 text-xs text-neutral-500">
-                    {item.city}, {item.state} · {item.areaM2} m²
-                    {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
-                  </p>
-                  <p className="mt-3 text-sm font-medium">
-                    {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(item.price)}
-                  </p>
-                </Link>
-              </SpotlightCard>
+              <li key={item.id}>
+                <SpotlightCard className="p-5">
+                  <Link
+                    href={`./property/${item.id}`}
+                    className="group block h-full"
+                  >
+                    <div className="flex items-start justify-between">
+                      <p className="text-sm text-neutral-300 transition group-hover:text-white">{item.title}</p>
+                      <span className="shrink-0 ml-2 text-xs text-neutral-500">{item.modality}</span>
+                    </div>
+                    <p className="mt-2 text-xs text-neutral-500">
+                      {item.city}, {item.state} · {item.areaM2} m²
+                      {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
+                    </p>
+                    <p className="mt-3 text-sm font-medium">
+                      {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(item.price)}
+                    </p>
+                  </Link>
+                </SpotlightCard>
+              </li>
             ))}
-          </Stagger>
+          </ul>
         </Reveal>
       )}
 

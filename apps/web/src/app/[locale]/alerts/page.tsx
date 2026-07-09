@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { createAlert, deleteAlert, getAlerts, clearAlerts } from '../../../lib/alerts';
 import type { AlertFilter } from '../../../lib/alerts';
 import { localeHref } from '../../../lib/locale';
+import { EmptyState } from '@landmap/ui';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                             */
@@ -128,7 +129,9 @@ export default function AlertsPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Label */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">Nome do alerta *</label>
+              <label className="block mb-1 text-xs text-neutral-500">
+                Nome do alerta <span aria-hidden="true">*</span>
+              </label>
               <input
                 name="label"
                 value={form.label}
@@ -229,7 +232,7 @@ export default function AlertsPage() {
         {/* Alert list */}
         <section className="mt-10">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-neutral-500" aria-live="polite">
               {alerts.length} alerta{alerts.length !== 1 ? 's' : ''} salvo{alerts.length !== 1 ? 's' : ''}
             </p>
             {alerts.length > 0 && (
@@ -243,12 +246,10 @@ export default function AlertsPage() {
           </div>
 
           {alerts.length === 0 ? (
-            <div className="rounded-xl border border-neutral-800 bg-neutral-900/20 p-10 text-center">
-              <p className="text-sm text-neutral-500">Nenhum alerta salvo ainda.</p>
-              <p className="mt-1 text-xs text-neutral-600">
-                Use o formulário acima para criar o primeiro.
-              </p>
-            </div>
+            <EmptyState
+              title="Nenhum alerta salvo ainda"
+              description="Use o formulário acima para criar o primeiro."
+            />
           ) : (
             <div className="grid gap-3">
               {alerts.map((alert) => (

@@ -175,7 +175,13 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         </select>
       </div>
 
-      <div className="flex-1 space-y-4 overflow-y-auto rounded-xl border border-neutral-800 bg-neutral-900/30 p-5">
+      <div
+        role="log"
+        aria-live="polite"
+        aria-relevant="additions"
+        aria-label="Histórico da conversa"
+        className="flex-1 space-y-4 overflow-y-auto rounded-xl border border-neutral-800 bg-neutral-900/30 p-5"
+      >
         {messages.length === 0 && !loading && (
           <div className="flex h-full items-center justify-center">
             <p className="text-sm text-neutral-500">
@@ -184,28 +190,32 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
           </div>
         )}
 
-        {messages.map((msg, i) => (
-          <div
-            key={i}
-            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
-            <div
-              className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                msg.role === 'user'
-                  ? 'bg-neutral-700 text-neutral-50'
-                  : 'border border-neutral-700 bg-neutral-800/60 text-neutral-200'
-              }`}
-            >
-              {msg.content || (
-                <span className="inline-flex gap-0.5 text-neutral-400">
-                  <span className="animate-pulse">.</span>
-                  <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>.</span>
-                  <span className="animate-pulse" style={{ animationDelay: '0.4s' }}>.</span>
-                </span>
-              )}
-            </div>
-          </div>
-        ))}
+        {messages.length > 0 && (
+          <ul role="list" className="space-y-4">
+            {messages.map((msg, i) => (
+              <li
+                key={i}
+                className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div
+                  className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
+                    msg.role === 'user'
+                      ? 'bg-neutral-700 text-neutral-50'
+                      : 'border border-neutral-700 bg-neutral-800/60 text-neutral-200'
+                  }`}
+                >
+                  {msg.content || (
+                    <span className="inline-flex gap-0.5 text-neutral-400" aria-hidden>
+                      <span className="animate-pulse">.</span>
+                      <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>.</span>
+                      <span className="animate-pulse" style={{ animationDelay: '0.4s' }}>.</span>
+                    </span>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
 
         {loading && (
           <div className="flex justify-start">

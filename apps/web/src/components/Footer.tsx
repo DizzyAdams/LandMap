@@ -9,7 +9,7 @@ export function Footer() {
   const locale = useActiveLocale();
 
   return (
-    <footer className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-neutral-500">
+    <footer aria-label="Rodapé do LandMap" className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-neutral-500">
       <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
       <div className="pt-12">
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row">
@@ -23,7 +23,7 @@ export function Footer() {
           </p>
         </div>
 
-        <nav className="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-3">
+        <nav aria-label="Navegação do rodapé" className="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-3">
           <Link href={localeHref('/', locale)} className="transition hover:text-neutral-300">Início</Link>
           <Link href={localeHref('/search', locale)} className="transition hover:text-neutral-300">Buscar</Link>
           <Link href={localeHref('/map', locale)} className="transition hover:text-neutral-300">Mapa</Link>

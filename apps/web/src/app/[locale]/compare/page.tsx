@@ -76,13 +76,15 @@ export default async function ComparePage({
         )}
 
         {properties.length > 0 && (
-          <Reveal className="mt-6 overflow-x-auto">
+          <Reveal className="mt-6">
+            <div role="region" aria-label="Comparação de imóveis" className="overflow-x-auto">
             <table className="w-full border-collapse text-sm">
+              <caption className="sr-only">Comparação lado a lado de imóveis</caption>
               <thead>
                 <tr className="border-b border-white/10 text-left text-xs text-neutral-400">
-                  <th className="py-3 pr-4">Atributo</th>
+                  <th scope="col" className="py-3 pr-4">Atributo</th>
                   {properties.map((p) => (
-                    <th key={p.id} className="py-3 px-4 font-medium text-neutral-200">
+                    <th key={p.id} scope="col" className="py-3 px-4 font-medium text-neutral-200">
                       {p.title}
                     </th>
                   ))}
@@ -100,7 +102,7 @@ export default async function ComparePage({
                   { label: 'Disponível', get: (p: Property) => p.available ? 'Sim' : 'Não' },
                 ].map((row) => (
                   <tr key={row.label} className="border-b border-white/5">
-                    <td className="py-3 pr-4 text-xs text-neutral-500">{row.label}</td>
+                    <th scope="row" className="py-3 pr-4 text-left text-xs font-normal text-neutral-500">{row.label}</th>
                     {properties.map((p) => (
                       <td key={p.id} className="py-3 px-4">
                         {row.get(p)}
@@ -110,6 +112,7 @@ export default async function ComparePage({
                 ))}
               </tbody>
             </table>
+            </div>
           </Reveal>
         )}
       </div>

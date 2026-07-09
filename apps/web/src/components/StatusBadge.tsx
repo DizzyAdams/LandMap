@@ -27,6 +27,7 @@ export function StatusBadge({
 }) {
   return (
     <span
+      role="status"
       className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colorMap[status] ?? 'border-neutral-800 text-neutral-400'}`}
     >
       {label ?? labelMap[status] ?? status}

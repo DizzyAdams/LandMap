@@ -55,6 +55,7 @@ export function ContactForm() {
         <form onSubmit={handleSubmit} className="space-y-3">
           <input
             required
+            aria-label="Nome"
             placeholder="Nome"
             value={nome}
             onChange={(e) => setNome(e.target.value)}
@@ -63,6 +64,7 @@ export function ContactForm() {
           <input
             required
             type="email"
+            aria-label="E-mail"
             placeholder="E-mail"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -71,6 +73,7 @@ export function ContactForm() {
           <input
             required
             type="tel"
+            aria-label="Telefone"
             placeholder="Telefone"
             value={telefone}
             onChange={(e) => setTelefone(e.target.value)}
@@ -79,6 +82,7 @@ export function ContactForm() {
           <textarea
             required
             rows={3}
+            aria-label="Mensagem"
             placeholder="Mensagem"
             value={mensagem}
             onChange={(e) => setMensagem(e.target.value)}

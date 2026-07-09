@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { EmptyState } from '@landmap/ui';
-import { Reveal, Stagger } from '../../../components/Motion';
+import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 
 type Property = {
@@ -311,14 +311,30 @@ function MapView({
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <p className="sr-only" aria-live="polite">
+        {loading
+          ? 'Carregando imóveis no mapa…'
+          : `${items.length} imóvel${items.length === 1 ? '' : 'eis'} exibido${items.length === 1 ? '' : 's'} no mapa.`}
+      </p>
       <div className="lg:col-span-2 w-full">
         <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-1">
           <div
             ref={mapRef}
+            role="region"
+            aria-label="Mapa de imóveis"
             className="relative h-[360px] w-full sm:h-[480px] lg:h-[520px] overflow-hidden rounded-lg"
             style={{ zIndex: 0 }}
           >
-            {items.length === 0 && !loading && (
+            {loading && (
+              <div className="absolute inset-0 z-[1] flex items-center justify-center bg-neutral-950/60">
+                <span
+                  className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-700 border-t-emerald-400"
+                  aria-hidden="true"
+                />
+                <span className="sr-only">Carregando imóveis no mapa…</span>
+              </div>
+            )}
+            {!loading && items.length === 0 && (
               <div className="absolute inset-0 flex items-center justify-center p-6">
                 <EmptyState
                   title="Sem pontos para este filtro"
@@ -343,32 +359,34 @@ function MapView({
 
       {/* Sidebar with collapse on mobile */}
       <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block space-y-3`}>
-        <p className="text-xs text-neutral-500">
+        <p className="text-xs text-neutral-500" aria-live="polite">
           {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
         </p>
-        <Stagger className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
+        <ul role="list" className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
           {items.map((item) => (
-            <SpotlightCard key={`${item.latitude}-${item.longitude}-${item.id}`}>
-            <Link
-                href={`/${locale}/property/${item.id}`}
-                className="block rounded-xl p-4 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
-              >
-              <div className="flex items-start gap-2">
-                <span
-                  className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-                  style={{ backgroundColor: getMarkerColor(item.type) }}
-                />
-                <div className="min-w-0 flex-1">
-                  <p className="text-sm text-neutral-300 truncate">{item.title}</p>
-                  <p className="mt-1 text-xs text-neutral-500">
-                    {item.city}, {item.state} · {item.areaM2} m²
-                  </p>
-                </div>
-              </div>
-            </Link>
-            </SpotlightCard>
+            <li key={`${item.latitude}-${item.longitude}-${item.id}`}>
+              <SpotlightCard>
+                <Link
+                  href={`/${locale}/property/${item.id}`}
+                  className="block rounded-xl p-4 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+                >
+                  <div className="flex items-start gap-2">
+                    <span
+                      className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full"
+                      style={{ backgroundColor: getMarkerColor(item.type) }}
+                    />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm text-neutral-300 truncate">{item.title}</p>
+                      <p className="mt-1 text-xs text-neutral-500">
+                        {item.city}, {item.state} · {item.areaM2} m²
+                      </p>
+                    </div>
+                  </div>
+                </Link>
+              </SpotlightCard>
+            </li>
           ))}
-        </Stagger>
+        </ul>
       </div>
     </div>
   );
