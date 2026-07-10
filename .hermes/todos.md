@@ -62,7 +62,7 @@
 - [ ] paginas-404-vercel. Rotas de pagina /pt-BR, /pt-BR/search, etc. retornam 404 tanto no deploy NOVO (landmap-c4ayv6kqz) quanto no ANTIGO (landmap-dizzys) — APIs 200 em ambos. Estado de plataforma/routing, NAO do codigo (redesign so cosmético + build verde). Revalidar no browser/apos propagacao; se persistir, checar middleware de locale + vercel.json (framework nextjs). (aguarda propagacao/plataforma)
 
 - [x] design-audit-swarm. Refatoração agent-swarm (design-audit-sv-2026.md): 4 novos componentes (MobileBottomNav, Stepper, NotificationCenter, AnimatedNumber) criados + exportados no ui/index.ts; MobileBottomNav plugado no layout (md:hidden) + pb compensado; NotificationCenter na Navbar (desktop); foco unificado em emerald (layout + global); variante Button `gold`; limpeza de marca (emerald-500/teal-300 -> emerald-400/cyan-400) + contraste A1 (neutral-500/600 -> neutral-400) nos DS; EmptyState (web) com icone ReactNode + acao; AnimatedNumber nos stats do LiveDashboard; Skeleton/L1 via loading.tsx das rotas. typecheck+lint+test verdes (299). (concluido)
-- [ ] design-swarm-commit. Stage + commit do swarm de design no main (4 componentes + integracao + limpeza de marca). (pendente: executar commit)
+- [x] design-swarm-commit. Stage + commit do swarm de design no main (4 componentes + integracao + limpeza de marca) -> commit 975170d. (concluido)
 - [ ] sales-stepper. (Opcional/P2) Integrar `Stepper` no funil de vendas em /sales para dar progresso visual (componente ja criado + exportado). (pendente)
 - [ ] deploy-design. (Opcional) `vercel deploy --prod` apos commit para validar o swarm em producao (Linux; build local Windows falha so por geist/font ESM, irrelevante no deploy). (pendente)
 
