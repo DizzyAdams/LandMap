@@ -1,0 +1,152 @@
+{
+  "name": "LandMap Enrich Leads",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Cron (1h)",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/sales/state",
+        "method": "GET"
+      },
+      "id": "state",
+      "name": "Get Sales State",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.score }}",
+              "value2": "",
+              "operation": "empty"
+            }
+          ]
+        }
+      },
+      "id": "filter",
+      "name": "Filter Unenriched",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/analyze",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { lead: $json } }}"
+      },
+      "id": "analyze",
+      "name": "Enrich (llm agents)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        850,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const l = $input.first().json;\nreturn [{ json: { id: l.id, score: l.score, tier: l.tier, signals: l.signals } }];"
+      },
+      "id": "patch",
+      "name": "Build Patch",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        1050,
+        220
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/sales/cycle",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": {
+          "autonomy": "copilot"
+        }
+      },
+      "id": "cycle",
+      "name": "Run Cycle (creates review task)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1250,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Cron (1h)": {
+      "main": [
+        [
+          "Get Sales State"
+        ]
+      ]
+    },
+    "Get Sales State": {
+      "main": [
+        [
+          "Filter Unenriched"
+        ]
+      ]
+    },
+    "Filter Unenriched": {
+      "main": [
+        [
+          "Enrich (llm agents)"
+        ],
+        []
+      ]
+    },
+    "Enrich (llm agents)": {
+      "main": [
+        [
+          "Build Patch"
+        ]
+      ]
+    },
+    "Build Patch": {
+      "main": [
+        [
+          "Run Cycle (creates review task)"
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "tags": [
+    "enrichment",
+    "leads"
+  ]
+}

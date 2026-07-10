@@ -11,7 +11,10 @@
       "name": "Cron (15 min)",
       "type": "n8n-nodes-base.cron",
       "typeVersion": 1,
-      "position": [250, 300]
+      "position": [
+        250,
+        300
+      ]
     },
     {
       "parameters": {
@@ -21,7 +24,10 @@
       "id": "sync",
       "name": "Run twenty_sync",
       "type": "n8n-nodes-base.executeCommand",
-      "position": [450, 300]
+      "position": [
+        450,
+        300
+      ]
     },
     {
       "parameters": {
@@ -38,7 +44,28 @@
       "id": "check",
       "name": "Check Exit Code",
       "type": "n8n-nodes-base.if",
-      "position": [650, 300]
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/sales/cycle",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": {
+          "autonomy": "copilot"
+        }
+      },
+      "id": "cycle",
+      "name": "Push Closed Won → CRM",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        850,
+        220
+      ]
     },
     {
       "parameters": {
@@ -47,7 +74,10 @@
       "id": "ok",
       "name": "Log Success",
       "type": "n8n-nodes-base.noOp",
-      "position": [850, 220]
+      "position": [
+        1050,
+        220
+      ]
     },
     {
       "parameters": {
@@ -56,20 +86,42 @@
       "id": "fail",
       "name": "Log Failure",
       "type": "n8n-nodes-base.noOp",
-      "position": [850, 400]
+      "position": [
+        1050,
+        400
+      ]
     }
   ],
   "connections": {
     "Cron (15 min)": {
-      "main": [["Run twenty_sync"]]
+      "main": [
+        [
+          "Run twenty_sync"
+        ]
+      ]
     },
     "Run twenty_sync": {
-      "main": [["Check Exit Code"]]
+      "main": [
+        [
+          "Check Exit Code"
+        ]
+      ]
     },
     "Check Exit Code": {
       "main": [
-        ["Log Success"],
-        ["Log Failure"]
+        [
+          "Push Closed Won → CRM"
+        ],
+        [
+          "Log Failure"
+        ]
+      ]
+    },
+    "Push Closed Won → CRM": {
+      "main": [
+        [
+          "Log Success"
+        ]
       ]
     }
   },
@@ -78,6 +130,9 @@
     "executionOrder": "v1"
   },
   "staticData": null,
-  "tags": ["sync", "twenty"],
-  "triggerCount": 0
+  "triggerCount": 0,
+  "tags": [
+    "sync",
+    "twenty"
+  ]
 }

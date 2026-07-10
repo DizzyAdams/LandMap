@@ -87,6 +87,11 @@ export function createRoster(): SalesAgent[] {
     ['closer', 'Fechadora', 'Agenda visitas, envia propostas e conduz a negociação.'],
     ['account_manager', 'Sucesso', 'Cuida do pós-venda, handoff e sincroniza o CRM.'],
     ['forecaster', 'Previsora', 'Recalcula probabilidade e prevê receita do pipeline.'],
+    ['seo_agent', 'SEOria', 'Gera landing pages + schema.org para o topo de funil.'],
+    ['lead_enricher', 'Enriquecedora', 'Enriquece leads (PII/validação/match) com HITL.'],
+    ['market_intel', 'Analista de Mercado', 'Monitora preços/bairros e emite alertas.'],
+    ['onboarding', 'Recepcionista', 'Recebe novos usuários e credita XP inicial.'],
+    ['negotiator', 'Negociadora', 'Assistente de compra/venda (contraproposta).'],
   ];
   return base.map(([role, name, description]) => ({
     id: `agent-${role}`,
@@ -418,6 +423,343 @@ export const forecaster: AgentDef = {
   },
 };
 
+/** True when a human-approval task of `kind` already waits for `refId`. */
+function hasPending(
+  store: SalesStore,
+  kind: SalesTask['kind'],
+  refId: string | undefined,
+  by: 'lead' | 'deal' = 'deal',
+): boolean {
+  return store
+    .pendingTasks()
+    .some((t) => t.kind === kind && (by === 'deal' ? t.dealId === refId : t.leadId === refId));
+}
+
+/* ─── SEO Agent (conteúdo + schema) ─── */
+
+/**
+ * Gera landing pages + schema.org para o topo de funil a partir do imóvel em
+ * destaque (maior valor aberto). Emite um rascunho de copy (via `ctx.compose`
+ * quando disponível) e o JSON-LD correspondente; a publicação fica como
+ * `SalesTask{kind:'seo_publish'}` pendente em copilot.
+ *
+ * O schema espelha a saída de `buildPropertyListingPageSchema` (@landmap/seo)
+ * para manter o engine `packages/sales` autocontido (o pacote seo ainda não tem
+ * dist buildado). Basta trocar pela chamada real quando o build existir.
+ */
+export const seoAgent: AgentDef = {
+  id: 'agent-seo_agent',
+  role: 'seo_agent',
+  name: 'SEOria',
+  description: 'Gera landing pages + schema.org (FAQ/HowTo/PropertyListing) para o topo de funil.',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const featured = [...store.deals].sort((a, b) => b.amount - a.amount)[0];
+    if (!featured) return effects;
+    // Idempotente: não re-emite se já há revisão de SEO pendente para o deal.
+    if (hasPending(store, 'seo_publish', featured.id, 'deal')) return effects;
+
+    const lead = store.getLead(featured.leadId);
+    const composed = ctx.compose?.(
+      `Escreva uma landing page SEO em pt-BR para: ${featured.title}`,
+    );
+    const copy =
+      typeof composed === 'string' && composed.trim()
+        ? composed
+        : `Landing gerada para ${featured.title}.`;
+    const slug = encodeURIComponent(featured.id);
+    const schema = {
+      '@context': 'https://schema.org',
+      '@type': 'PropertyListingPage',
+      name: featured.title,
+      description: copy.slice(0, 160),
+      url: `https://landmap.com.br/imovel/${slug}`,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: lead?.city ?? 'Curitiba',
+        addressRegion: lead?.state ?? 'PR',
+        addressCountry: 'BR',
+      },
+      offers: { '@type': 'Offer', priceCurrency: 'BRL', price: featured.amount },
+    };
+
+    const event: AgentEvent = {
+      id: uid('evt'),
+      at: ctx.now(),
+      agentId: this.id,
+      kind: 'note',
+      title: `Rascunho SEO: ${featured.title}`,
+      detail: `schema=${schema['@type']} · ${copy.length} chars`,
+      dealId: featured.id,
+      level: 'info',
+    };
+    const task: SalesTask = {
+      id: uid('task'),
+      kind: 'seo_publish',
+      agentId: this.id,
+      dealId: featured.id,
+      title: `Publicar landing: ${featured.title}`,
+      detail: copy,
+      draft: JSON.stringify(schema),
+      status: 'pending', // applyEffectsUnderAutonomy decide aprovar/em pending
+      createdAt: ctx.now(),
+      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+      // Mutação concreta (marca nota, não publica nem altera stage) aplicada ao aprovar.
+      effect: {
+        type: 'updateDeal',
+        id: featured.id,
+        patch: { notes: `SEO: ${featured.title} (rascunho pendente de publicação)` },
+      },
+    };
+    effects.push({ type: 'event', event }, { type: 'task', task });
+    return effects;
+  },
+};
+
+/* ─── Lead Enricher (PII/validação/match com HITL) ─── */
+
+/**
+ * Enriquece leads ainda sem score: sugere match de imóvel e confiança
+ * localmente (determinístico). Em copilot vira `SalesTask{kind:'enrich'}`
+ * pendente — a validação de PII externa fica sob revisão humana (LGPD).
+ */
+export const leadEnricher: AgentDef = {
+  id: 'agent-lead_enricher',
+  role: 'lead_enricher',
+  name: 'Enriquecedora',
+  description: 'Enriquece leads (PII/validação/match) com HITL.',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const targets = store.leads.filter(
+      (l) =>
+        l.score === undefined &&
+        !l.signals.includes('enriquecido') &&
+        !hasPending(store, 'enrich', l.id, 'lead'),
+    );
+    for (const lead of targets.slice(0, 3)) {
+      const match = pick(INTERESTS, ctx.rng);
+      const confidence = Number((0.6 + ctx.rng() * 0.35).toFixed(2));
+      const patch: Partial<Lead> = {
+        signals: [...lead.signals, `enriquecido: match ${match} (${Math.round(confidence * 100)}%)`],
+      };
+      const event: AgentEvent = {
+        id: uid('evt'),
+        at: ctx.now(),
+        agentId: this.id,
+        kind: 'note',
+        title: `Lead enriquecido: ${lead.name}`,
+        detail: `Match: ${match} · confiança ${Math.round(confidence * 100)}%`,
+        leadId: lead.id,
+        level: 'info',
+      };
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'enrich',
+        agentId: this.id,
+        leadId: lead.id,
+        title: `Enriquecer lead: ${lead.name}`,
+        detail: `Match de imóvel sugerido: ${match}. Confiança ${Math.round(
+          confidence * 100,
+        )}%. Validação de PII externa requer revisão humana (LGPD).`,
+        channel: 'email',
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+        effect: { type: 'updateLead', id: lead.id, patch },
+      };
+      effects.push({ type: 'event', event }, { type: 'task', task });
+    }
+    return effects;
+  },
+};
+
+/* ─── Market Intel (alertas de preço/demanda) ─── */
+
+/**
+ * Vigia a concentração de demanda por cidade (proxy determinístico de
+ * "alta em bairro/preço") e emite `SalesTask{kind:'alert'}` quando um centro
+ * de demanda se destaca. Em autopilot aplica o patch de nota; em copilot fica
+ * pendente para o humano decidir notificar o prospector.
+ */
+export const marketIntel: AgentDef = {
+  id: 'agent-market_intel',
+  role: 'market_intel',
+  name: 'Analista de Mercado',
+  description: 'Monitora preços/bairros e emite alertas.',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const byCity = new Map<string, number>();
+    for (const l of store.leads) {
+      if (l.city) byCity.set(l.city, (byCity.get(l.city) ?? 0) + 1);
+    }
+    let topCity = '';
+    let topCount = 0;
+    for (const [city, count] of byCity) {
+      if (count > topCount) {
+        topCount = count;
+        topCity = city;
+      }
+    }
+    if (!topCity || topCount < 2) return effects;
+    if (hasPending(store, 'alert', undefined)) return effects;
+
+    const answerBox = {
+      '@context': 'https://schema.org',
+      '@type': 'AnswerBox',
+      question: 'Onde está a maior demanda no LandMap agora?',
+      answer: `${topCity} lidera com ${topCount} leads ativos.`,
+    };
+    const event: AgentEvent = {
+      id: uid('evt'),
+      at: ctx.now(),
+      agentId: this.id,
+      kind: 'note',
+      title: `Alerta de mercado: ${topCity} (${topCount})`,
+      detail: 'Concentração de demanda acima do limiar.',
+      level: 'warn',
+    };
+    const task: SalesTask = {
+      id: uid('task'),
+      kind: 'alert',
+      agentId: this.id,
+      title: `Alerta de mercado: ${topCity}`,
+      detail: `Concentração de demanda em ${topCity} (${topCount} leads). Considerar varredura de preços/bairro.`,
+      draft: JSON.stringify(answerBox),
+      status: 'pending',
+      createdAt: ctx.now(),
+      dueAt: new Date(Date.now() + 1000 * 60 * 60 * 12).toISOString(),
+    };
+    effects.push({ type: 'event', event }, { type: 'task', task });
+    return effects;
+  },
+};
+
+/* ─── Onboarding (recebe novos usuários) ─── */
+
+const ONBOARD_XP = 50; // espelha award inicial da engine @landmap/gamification
+
+/**
+ * Recebe "novos usuários" (leads recém-capturados, sem engajamento) e prepara
+ * boas-vindas + crédito de XP inicial. O crédito real de XP ocorre na engine
+ * @landmap/gamification (fora do SalesStore); aqui emitimos a `SalesTask
+ * {kind:'onboard'}` e marcamos o lead como recepcionado ao aprovar.
+ */
+export const onboarding: AgentDef = {
+  id: 'agent-onboarding',
+  role: 'onboarding',
+  name: 'Recepcionista',
+  description: 'Recebe novos usuários e credita XP inicial.',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const newcomers = store.leads.filter(
+      (l) =>
+        l.engagementCount === 0 &&
+        !l.signals.includes('onboarding: boas-vindas') &&
+        !hasPending(store, 'onboard', l.id, 'lead'),
+    );
+    for (const lead of newcomers.slice(0, 3)) {
+      const patch: Partial<Lead> = {
+        signals: [...lead.signals, 'onboarding: boas-vindas'],
+        engagementCount: 1,
+      };
+      const event: AgentEvent = {
+        id: uid('evt'),
+        at: ctx.now(),
+        agentId: this.id,
+        kind: 'note',
+        title: `Onboarding iniciado: ${lead.name}`,
+        detail: `Boas-vindas + ${ONBOARD_XP} XP iniciais.`,
+        leadId: lead.id,
+        level: 'success',
+      };
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'onboard',
+        agentId: this.id,
+        leadId: lead.id,
+        title: `Onboarding: ${lead.name}`,
+        detail: `Enviar boas-vindas e creditar ${ONBOARD_XP} XP iniciais (engine @landmap/gamification).`,
+        channel: 'email',
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+        effect: { type: 'updateLead', id: lead.id, patch },
+      };
+      effects.push({ type: 'event', event }, { type: 'task', task });
+    }
+    return effects;
+  },
+};
+
+/* ─── Negotiator (compra/venda — só prepara) ─── */
+
+/**
+ * Assistente de negociação: para deals em `proposal`/`negotiation`, prepara uma
+ * contraproposta (desconto/ajuste) e a submete como `SalesTask{kind:'negotiate'}`.
+ * NUNCA fecha sozinho: o patch altera apenas `notes`/`nextAction`, nunca o
+ * `stage` para `closed_won` (exclusivo de closer/account_manager).
+ */
+export const negotiator: AgentDef = {
+  id: 'agent-negotiator',
+  role: 'negotiator',
+  name: 'Negociadora',
+  description: 'Assistente de compra/venda (contraproposta).',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const fmt = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits: 0,
+    });
+    const open = store
+      .openDeals()
+      .filter(
+        (d) =>
+          (d.stage === 'proposal' || d.stage === 'negotiation') &&
+          !hasPending(store, 'negotiate', d.id, 'deal'),
+      );
+    for (const deal of open.slice(0, 2)) {
+      const lead = store.getLead(deal.leadId);
+      const counter = Math.round(deal.amount * (0.92 + ctx.rng() * 0.05));
+      const deltaPct = Math.round((counter / deal.amount - 1) * 100);
+      const draft = `Contraproposta para ${deal.title}: ${fmt.format(counter)} (${deltaPct}% vs. pedido).${lead ? ` Condicionada à aprovação de financiamento de ${lead.name}.` : ''}`;
+      const event: AgentEvent = {
+        id: uid('evt'),
+        at: ctx.now(),
+        agentId: this.id,
+        kind: 'note',
+        title: `Contraproposta preparada: ${deal.title}`,
+        detail: draft,
+        dealId: deal.id,
+        level: 'info',
+      };
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'negotiate',
+        agentId: this.id,
+        dealId: deal.id,
+        leadId: deal.leadId,
+        title: `Negociar: ${deal.title}`,
+        detail: draft,
+        channel: 'email',
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: new Date(Date.now() + 1000 * 60 * 60 * 24).toISOString(),
+        effect: {
+          type: 'updateDeal',
+          id: deal.id,
+          patch: {
+            notes: `Negociação: contraproposta ${fmt.format(counter)} pendente de aprovação.`,
+            nextAction: 'Revisar contraproposta com o cliente',
+          },
+        },
+      };
+      effects.push({ type: 'event', event }, { type: 'task', task });
+    }
+    return effects;
+  },
+};
+
 /** Ordered roster of specialised agents used by the orchestrator. */
 export const AGENTS: AgentDef[] = [
   prospector,
@@ -426,5 +768,10 @@ export const AGENTS: AgentDef[] = [
   closer,
   accountManager,
   forecaster,
+  seoAgent,
+  leadEnricher,
+  marketIntel,
+  onboarding,
+  negotiator,
 ];
 

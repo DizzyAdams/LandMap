@@ -76,7 +76,7 @@ importers:
         version: 6.6.0
       '@testing-library/react':
         specifier: 16.0.0
-        version: 16.0.0(@testing-library/dom@10.4.1)(@types/react@18.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 16.0.0(@testing-library/dom@10.4.1)(@types/react-dom@18.3.0)(@types/react@18.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/node':
         specifier: 22.0.0
         version: 22.0.0
@@ -119,6 +119,9 @@ importers:
       '@landmap/integrations':
         specifier: workspace:*
         version: link:../integrations
+      '@landmap/invest':
+        specifier: workspace:*
+        version: link:../invest
       '@landmap/llm':
         specifier: workspace:*
         version: link:../llm
@@ -160,6 +163,31 @@ importers:
         specifier: 5.5.4
         version: 5.5.4
 
+  packages/gamification:
+    dependencies:
+      '@landmap/ui':
+        specifier: workspace:*
+        version: link:../ui
+    devDependencies:
+      '@types/react':
+        specifier: 18.3.0
+        version: 18.3.0
+      '@types/react-dom':
+        specifier: 18.3.0
+        version: 18.3.0
+      react:
+        specifier: 18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: 18.3.1
+        version: 18.3.1(react@18.3.1)
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+      vitest:
+        specifier: ^2.1.0
+        version: 2.1.0(@types/node@22.0.0)(jsdom@25.0.0)(lightningcss@1.32.0)
+
   packages/geo:
     dependencies:
       hono:
@@ -181,6 +209,15 @@ importers:
       typescript:
         specifier: 5.5.4
         version: 5.5.4
+
+  packages/invest:
+    devDependencies:
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
+      vitest:
+        specifier: ^2.1.0
+        version: 2.1.0(@types/node@22.0.0)(jsdom@25.0.0)(lightningcss@1.32.0)
 
   packages/llm:
     dependencies:
@@ -266,6 +303,12 @@ importers:
         specifier: 2.6.0
         version: 2.6.0
     devDependencies:
+      '@testing-library/dom':
+        specifier: ^10.4.1
+        version: 10.4.1
+      '@testing-library/react':
+        specifier: 16.0.0
+        version: 16.0.0(@testing-library/dom@10.4.1)(@types/react-dom@18.3.0)(@types/react@18.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@types/react':
         specifier: 18.3.0
         version: 18.3.0
@@ -1683,6 +1726,9 @@ packages:
 
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
+
+  '@types/react-dom@18.3.0':
+    resolution: {integrity: sha512-EhwApuTmMBmXuFOikhQLIBUn6uFg81SwLMOAUgodJF14SOBOCMdU04gDoYi0WOJJHD144TL32z4yDqCW3dnkQg==}
 
   '@types/react@18.3.0':
     resolution: {integrity: sha512-DiUcKjzE6soLyln8NNZmyhcQjVv+WsUIFSqetMN0p8927OztKT4VTfFTqsbAi5oAGIcgOmOajlfBqyptDDjZRw==}
@@ -5103,7 +5149,7 @@ snapshots:
       lodash: 4.18.1
       redent: 3.0.0
 
-  '@testing-library/react@16.0.0(@testing-library/dom@10.4.1)(@types/react@18.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@testing-library/react@16.0.0(@testing-library/dom@10.4.1)(@types/react-dom@18.3.0)(@types/react@18.3.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@babel/runtime': 7.29.7
       '@testing-library/dom': 10.4.1
@@ -5111,6 +5157,7 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.0
+      '@types/react-dom': 18.3.0
 
   '@tokenizer/inflate@0.4.1':
     dependencies:
@@ -5158,6 +5205,10 @@ snapshots:
       undici-types: 6.11.1
 
   '@types/prop-types@15.7.15': {}
+
+  '@types/react-dom@18.3.0':
+    dependencies:
+      '@types/react': 18.3.0
 
   '@types/react@18.3.0':
     dependencies:

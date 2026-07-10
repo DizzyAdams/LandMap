@@ -8,6 +8,34 @@ import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 import { searchProperties, geoAutocomplete, geoReverse, type AutocompleteSuggestion, type GeoFeature, type ReverseResult } from '../../../lib/api';
 
+const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
+
+type HeatPoint = {
+  lat: number;
+  lng: number;
+  weight: number;
+  neighborhood?: string;
+  avgPrice?: number;
+};
+
+/** Interpola emerald → cyan → violet conforme o peso (0–1). */
+function weightColor(w: number): string {
+  const t = Math.max(0, Math.min(1, w));
+  const emerald = [52, 211, 153];
+  const cyan = [34, 211, 238];
+  const violet = [167, 139, 250];
+  const lerp = (a: number, b: number, k: number) => Math.round(a + (b - a) * k);
+  let rgb: [number, number, number];
+  if (t < 0.5) {
+    const k = t / 0.5;
+    rgb = [lerp(emerald[0], cyan[0], k), lerp(emerald[1], cyan[1], k), lerp(emerald[2], cyan[2], k)];
+  } else {
+    const k = (t - 0.5) / 0.5;
+    rgb = [lerp(cyan[0], violet[0], k), lerp(cyan[1], violet[1], k), lerp(cyan[2], violet[2], k)];
+  }
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
+
 type Property = {
   id: string;
   title: string;
@@ -48,6 +76,36 @@ export default function MapPage() {
   const [activeIdx, setActiveIdx] = useState(-1);
   const [reverse, setReverse] = useState<ReverseResult | null>(null);
   const flyToRef = useRef<((lat: number, lng: number) => void) | null>(null);
+
+  /* ─── Heatmap de preço (toggle) ─── */
+  const [heatCity, setHeatCity] = useState('Curitiba');
+  const [heat, setHeat] = useState<HeatPoint[]>([]);
+  const [showHeat, setShowHeat] = useState(false);
+  const [heatLoading, setHeatLoading] = useState(false);
+
+  useEffect(() => {
+    if (!showHeat) return;
+    let active = true;
+    setHeatLoading(true);
+    fetch(`${API_BASE}/market/heatmap?city=${encodeURIComponent(heatCity)}`, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.json() : { points: [] }))
+      .then((d: { points?: HeatPoint[] }) => {
+        if (active) setHeat(d.points ?? []);
+      })
+      .catch(() => {
+        if (active) setHeat([]);
+      })
+      .finally(() => {
+        if (active) setHeatLoading(false);
+      });
+    return () => {
+      active = false;
+    };
+  }, [showHeat, heatCity]);
+
+  function toggleHeat() {
+    setShowHeat((v) => !v);
+  }
 
   // Debounced worldwide geo-autocomplete (open, MIT API)
   useEffect(() => {
@@ -257,6 +315,27 @@ export default function MapPage() {
             </span>
           </div>
 
+          {/* Heatmap de preço */}
+          <div className="flex flex-wrap items-center gap-3 border-t border-neutral-800 pt-4">
+            <span className="text-xs text-neutral-500">Heatmap de preço:</span>
+            <input
+              value={heatCity}
+              onChange={(e) => setHeatCity(e.target.value)}
+              aria-label="Cidade do heatmap"
+              placeholder="Cidade"
+              className="w-40 rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-1.5 text-sm text-neutral-50 outline-none transition focus:border-emerald-400"
+            />
+            <button
+              type="button"
+              onClick={toggleHeat}
+              aria-pressed={showHeat}
+              className={showHeat ? 'btn btn-primary' : 'btn btn-ghost'}
+            >
+              {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
+            </button>
+            {heatLoading && <span className="text-xs text-neutral-500">Carregando…</span>}
+          </div>
+
           {reverse && (
             <div className="rounded-lg border border-emerald-900/60 bg-emerald-950/20 p-3 text-sm text-neutral-200">
               <p className="font-medium text-emerald-300">Local selecionado</p>
@@ -293,6 +372,8 @@ export default function MapPage() {
           locale={locale}
           onMapClick={handleMapClick}
           flyToRef={flyToRef}
+          heat={heat}
+          showHeat={showHeat}
         />
       </section>
 
@@ -314,6 +395,8 @@ function MapView({
   locale,
   onMapClick,
   flyToRef,
+  heat,
+  showHeat,
 }: {
   items: Property[];
   loading: boolean;
@@ -322,10 +405,13 @@ function MapView({
   locale: string;
   onMapClick?: (lat: number, lng: number) => void;
   flyToRef?: { current: ((lat: number, lng: number) => void) | null };
+  heat: HeatPoint[];
+  showHeat: boolean;
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
+  const heatRef = useRef<any[]>([]);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -423,6 +509,39 @@ function MapView({
       map.fitBounds(bounds, { padding: [30, 30], maxZoom: 14 });
     }
   }, [items]);
+
+  // Render heatmap de preço (CircleMarkers coloridos por peso)
+  useEffect(() => {
+    const map = mapInstance.current;
+    if (!map) return;
+    const L = (window as any).L;
+    if (!L) return;
+
+    heatRef.current.forEach((m) => map.removeLayer(m));
+    heatRef.current = [];
+
+    if (!showHeat || heat.length === 0) return;
+
+    heat.forEach((p) => {
+      const color = weightColor(p.weight);
+      const marker = L.circleMarker([p.lat, p.lng], {
+        radius: 6 + p.weight * 18,
+        fillColor: color,
+        color,
+        weight: 1,
+        fillOpacity: 0.45,
+      }).addTo(map).bindPopup(
+        `<strong>${p.neighborhood ?? 'Região'}</strong><br/>` +
+          `Preço médio: ${new Intl.NumberFormat('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+            maximumFractionDigits: 0,
+          }).format(p.avgPrice ?? 0)}<br/>` +
+          `Densidade: ${Math.round((p.weight ?? 0) * 100)}%`,
+      );
+      heatRef.current.push(marker);
+    });
+  }, [heat, showHeat]);
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">

@@ -1,0 +1,188 @@
+{
+  "name": "deal-spotting",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "minutes", "triggerAtMinute": 0 },
+            { "field": "minutes", "triggerAtMinute": 30 }
+          ]
+        }
+      },
+      "id": "1",
+      "name": "Agendar (30min)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 320]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://api.landmap.dev/invest/opportunities?city=Curitiba",
+        "sendHeaders": false,
+        "options": {}
+      },
+      "id": "2",
+      "name": "Buscar Oportunidades",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [480, 320]
+    },
+    {
+      "parameters": {
+        "operation": "splitOut",
+        "fieldToSplitOut": "items"
+      },
+      "id": "3",
+      "name": "Split Out Items",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 1,
+      "position": [710, 320]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "typeValidation": "strict" },
+          "conditions": [
+            {
+              "leftValue": "={{ $json.score.score }}",
+              "rightValue": 65,
+              "operator": { "type": "number", "operation": "gte" }
+            }
+          ]
+        }
+      },
+      "id": "4",
+      "name": "Filtrar Score Alto",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [940, 320]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true },
+          "conditions": [
+            {
+              "leftValue": "={{ $env.NOTIFY_VIA_TWENTY }}",
+              "rightValue": "true",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ]
+        }
+      },
+      "id": "5",
+      "name": "Decidir Canal",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [1170, 320]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://twenty.landmap.dev/opportunities",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Authorization", "value": "Bearer {{$env.TWENTY_API_KEY}}" },
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"name\": \"Oportunidade {{$json.stat.name}} ({{$json.score.grade}})\",\n  \"amount\": {{$json.stat.avgPrice}},\n  \"stage\": \"captured\",\n  \"city\": \"{{$json.stat.city}}\",\n  \"state\": \"{{$json.stat.state}}\",\n  \"score\": {{$json.score.score}},\n  \"grade\": \"{{$json.score.grade}}\",\n  \"yieldPct\": {{$json.score.yieldPct}},\n  \"appreciationPct\": {{$json.score.appreciationPct}}\n}"
+      },
+      "id": "6",
+      "name": "Criar Oportunidade Twenty",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1440, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.landmap.dev/sales/cycle",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "Content-Type", "value": "application/json" }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "json",
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"autonomy\": \"copilot\"\n}"
+      },
+      "id": "7",
+      "name": "Notificar Sales Cockpit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1440, 440]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "a", "name": "bairro", "type": "string", "value": "={{ $json.stat.name }}" },
+            { "id": "b", "name": "score", "type": "number", "value": "={{ $json.score.score }}" },
+            { "id": "c", "name": "canal", "type": "string", "value": "={{ $env.NOTIFY_VIA_TWENTY }}" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8",
+      "name": "Resumo",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [1700, 320]
+    },
+    {
+      "parameters": {
+        "content": "deal-spotting\n\nConsome GET /invest/opportunities (agente I6) e notifica via Twenty ou /sales.\n\nContrato de entrada (items[]):\n  { stat: NeighborhoodStat, score: OpportunityScore }\n\nFiltro: score.score >= 65 (nota B+).\nEnv vars: NOTIFY_VIA_TWENTY / TWENTY_API_KEY.\n\nTrue -> Twenty (cria oportunidade).\nFalse -> POST /sales/cycle (roda investment_advisor no cockpit).\n",
+        "height": 260,
+        "width": 380,
+        "color": 3
+      },
+      "id": "9",
+      "name": "Anotações",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [250, 120]
+    }
+  ],
+  "connections": {
+    "Agendar (30min)": {
+      "main": [ [ { "node": "Buscar Oportunidades", "type": "main", "index": 0 } ] ]
+    },
+    "Buscar Oportunidades": {
+      "main": [ [ { "node": "Split Out Items", "type": "main", "index": 0 } ] ]
+    },
+    "Split Out Items": {
+      "main": [ [ { "node": "Filtrar Score Alto", "type": "main", "index": 0 } ] ]
+    },
+    "Filtrar Score Alto": {
+      "main": [ [ { "node": "Decidir Canal", "type": "main", "index": 0 } ] ]
+    },
+    "Decidir Canal": {
+      "main": [
+        [ { "node": "Criar Oportunidade Twenty", "type": "main", "index": 0 } ],
+        [ { "node": "Notificar Sales Cockpit", "type": "main", "index": 0 } ]
+      ]
+    },
+    "Criar Oportunidade Twenty": {
+      "main": [ [ { "node": "Resumo", "type": "main", "index": 0 } ] ]
+    },
+    "Notificar Sales Cockpit": {
+      "main": [ [ { "node": "Resumo", "type": "main", "index": 0 } ] ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "war-room-10-deal-spotting",
+  "meta": { "instanceId": "landmap-war-room" },
+  "id": "landmap-deal-spotting",
+  "tags": [ "war-room", "investment-advisor", "deal-spotting" ]
+}
+

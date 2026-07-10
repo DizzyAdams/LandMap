@@ -1,0 +1,138 @@
+{
+  "name": "LandMap Ingest Properties",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "landmap-ingest-property",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const b = $input.first().json.body || {};\nif (!b || !b.address) throw new Error('body.address é obrigatório');\nconst rec = { source: b.source || 'ingest', rawData: b, ingestedAt: new Date().toISOString(), status: 'pending' };\nreturn [{ json: rec }];"
+      },
+      "id": "validate",
+      "name": "Validate & Transform",
+      "type": "n8n-nodes-base.code",
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/properties",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.rawData }}"
+      },
+      "id": "api",
+      "name": "Create Property (API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "cd /workspace/LandMap && python3 scripts/ingest.py",
+        "shell": "sh"
+      },
+      "id": "rag",
+      "name": "Index in RAG (llm)",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/sales/cycle",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": {
+          "autonomy": "copilot"
+        }
+      },
+      "id": "cycle",
+      "name": "Run Sales Cycle",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1050,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "content": "={{ JSON.stringify($json) }}"
+      },
+      "id": "respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "position": [
+        1250,
+        220
+      ]
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          "Validate & Transform"
+        ]
+      ]
+    },
+    "Validate & Transform": {
+      "main": [
+        [
+          "Create Property (API)"
+        ]
+      ]
+    },
+    "Create Property (API)": {
+      "main": [
+        [
+          "Index in RAG (llm)"
+        ]
+      ]
+    },
+    "Index in RAG (llm)": {
+      "main": [
+        [
+          "Run Sales Cycle"
+        ]
+      ]
+    },
+    "Run Sales Cycle": {
+      "main": [
+        [
+          "Respond to Webhook"
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "tags": [
+    "ingestion",
+    "properties"
+  ]
+}

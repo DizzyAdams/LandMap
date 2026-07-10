@@ -96,7 +96,12 @@ export type TaskKind =
   | 'proposal'
   | 'handoff'
   | 'review'
-  | 'forecast';
+  | 'forecast'
+  | 'seo_publish'
+  | 'enrich'
+  | 'alert'
+  | 'onboard'
+  | 'negotiate';
 
 export type TaskStatus = 'pending' | 'approved' | 'rejected' | 'done';
 
@@ -128,7 +133,12 @@ export type AgentRole =
   | 'outreacher'
   | 'closer'
   | 'account_manager'
-  | 'forecaster';
+  | 'forecaster'
+  | 'seo_agent'
+  | 'lead_enricher'
+  | 'market_intel'
+  | 'onboarding'
+  | 'negotiator';
 
 export interface SalesAgent {
   id: string;

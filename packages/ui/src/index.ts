@@ -24,3 +24,24 @@ export { Sparkline } from './components/Sparkline';
 export type { SparklineProps } from './components/Sparkline';
 export { EmptyState } from './components/EmptyState';
 export type { EmptyStateProps } from './components/EmptyState';
+export { Tooltip } from './components/Tooltip';
+export type { TooltipProps, TooltipSide } from './components/Tooltip';
+export { Accordion } from './components/Accordion';
+export type { AccordionProps, AccordionItemData } from './components/Accordion';
+export { ToastProvider, useToast } from './components/Toast';
+export type { ToastOptions, ToastItem, ToastVariant } from './components/Toast';
+export { Skeleton } from './components/Skeleton';
+export type { SkeletonProps } from './components/Skeleton';
+export { Drawer } from './components/Drawer';
+export type { DrawerProps } from './components/Drawer';
+export { StatPill } from './components/StatPill';
+export type { StatPillProps } from './components/StatPill';
+
+export { CommandPalette } from './components/CommandPalette';
+export type { CommandPaletteProps, CommandGroup, CommandItem } from './components/CommandPalette';
+export { OnboardingTour } from './components/OnboardingTour';
+export type { OnboardingTourProps, TourStep } from './components/OnboardingTour';
+
+export { MetricStat } from './components/MetricStat';
+export type { MetricStatProps, MetricTone, MetricThreshold } from './components/MetricStat';
+

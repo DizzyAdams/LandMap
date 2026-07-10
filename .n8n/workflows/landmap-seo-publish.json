@@ -1,0 +1,125 @@
+{
+  "name": "LandMap SEO Publish",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 7
+            }
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Cron (7d)",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        250,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/stats",
+        "method": "GET"
+      },
+      "id": "stats",
+      "name": "Get Top Properties",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        450,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/seo/generate",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { property: $json, types: ['PropertyListingPage','FAQPage','HowTo'] } }}"
+      },
+      "id": "gen",
+      "name": "Generate Copy + Schema (seo+llm)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        650,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "command": "mkdir -p /data/landmap/landings && echo '{{ $json.schema }}' > /data/landmap/landings/{{ $json.slug }}.json",
+        "shell": "sh"
+      },
+      "id": "write",
+      "name": "Write Landing Draft",
+      "type": "n8n-nodes-base.executeCommand",
+      "position": [
+        850,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:4000/sales/cycle",
+        "method": "POST",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": {
+          "autonomy": "copilot"
+        }
+      },
+      "id": "cycle",
+      "name": "Run Cycle (SEO review task)",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        1050,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Cron (7d)": {
+      "main": [
+        [
+          "Get Top Properties"
+        ]
+      ]
+    },
+    "Get Top Properties": {
+      "main": [
+        [
+          "Generate Copy + Schema (seo+llm)"
+        ]
+      ]
+    },
+    "Generate Copy + Schema (seo+llm)": {
+      "main": [
+        [
+          "Write Landing Draft"
+        ]
+      ]
+    },
+    "Write Landing Draft": {
+      "main": [
+        [
+          "Run Cycle (SEO review task)"
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "triggerCount": 0,
+  "tags": [
+    "seo",
+    "content"
+  ]
+}

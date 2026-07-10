@@ -96,6 +96,11 @@ const TASK_LABEL: Record<TaskKind, string> = {
   handoff: 'Handoff',
   review: 'Revisão',
   forecast: 'Previsão',
+  seo_publish: 'SEO',
+  enrich: 'Enriquecer',
+  alert: 'Alerta',
+  onboard: 'Onboarding',
+  negotiate: 'Negociar',
 };
 
 const AUTONOMY_OPTIONS: { value: AutonomyLevel; label: string }[] = [

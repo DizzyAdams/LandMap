@@ -7,6 +7,8 @@ import type { Property } from '@landmap/db';
 import { createAdminRouter } from './admin.js';
 import { createNeighborhoodsRouter } from './neighborhoods.js';
 import { createMarketRouter } from './market.js';
+import { marketApp } from './routes/market.js';
+import { investApp } from './routes/invest.js';
 import { createEmbeddingsRouter } from './routes/embeddings.js';
 import { createInsightsRouter } from './routes/insights.js';
 import { createSearchSuggestionsRouter } from './routes/search-suggestions.js';
@@ -353,6 +355,42 @@ app.get('/stats', async (c) => {
 });
 
 /* ─── Admin routes ─── */
+/**
+ * POST /seo/generate — gera o JSON-LD (PropertyListingPage) + slug para a
+ * landing de um imóvel. Usado pelo workflow n8n `landmap-seo-publish`.
+ * Auto-contido (espelha `buildPropertyListingPageSchema` de @landmap/seo)
+ * para não acoplar a API ao build do pacote seo.
+ */
+app.post('/seo/generate', async (c) => {
+  const body = (await c.req.json().catch(() => ({}))) as {
+    property?: { id?: string; title?: string; city?: string; state?: string; price?: number };
+    types?: string[];
+  };
+  const p = body.property ?? {};
+  const title = p.title ?? 'Imóvel';
+  const slug = (p.id ?? title)
+    .toString()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'PropertyListingPage',
+    name: title,
+    url: `https://landmap.com.br/imovel/${slug}`,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: p.city ?? 'Curitiba',
+      addressRegion: p.state ?? 'PR',
+      addressCountry: 'BR',
+    },
+    offers: { '@type': 'Offer', priceCurrency: 'BRL', price: p.price ?? 0 },
+  };
+  return c.json({ schema, slug });
+});
+
 app.route('/admin', createAdminRouter(allProperties as any, () => String(nextId++)));
 
 /* ─── Neighborhoods routes ─── */
@@ -360,6 +398,11 @@ app.route('/neighborhoods', createNeighborhoodsRouter());
 
 /* ─── Market routes ─── */
 app.route('/market', createMarketRouter());
+
+/* ─── Market intelligence (neighborhoods / price-trend / heatmap) ─── */
+/* Investment intelligence: /invest/analyze, /invest/opportunities, /invest/score */
+app.route('/invest', investApp);
+app.route('/market', marketApp);
 
 /* ─── Embeddings routes ─── */
 app.route('/embeddings', createEmbeddingsRouter());

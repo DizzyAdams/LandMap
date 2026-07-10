@@ -27,7 +27,7 @@ describe('LandMap autonomous sales engine', () => {
     expect(s.deals.length).toBe(6);
     expect(s.analytics.funnel.length).toBe(8);
     expect(s.analytics.totals.pipelineValue).toBeGreaterThan(0);
-    expect(s.agents.length).toBe(6);
+    expect(s.agents.length).toBe(11);
   });
 
   it('autopilot cycle advances the pipeline and logs events', async () => {
