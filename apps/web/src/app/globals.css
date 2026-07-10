@@ -49,6 +49,15 @@
   --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
   --glow-gold: 0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38);
   --glow-sovereign: 0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28);
+
+  /* ── Fonts ──
+     Loaded via a Google Fonts <link> in src/app/layout.tsx (see note there).
+     We define the variables here instead of using next/font because next/font
+     (and the `geist` package it wraps) crashes on Windows + Node 24 with
+     ERR_UNSUPPORTED_ESM_URL_SCHEME. This keeps the same variable names the
+     rest of the CSS (body / .font-mono) already consumes. */
+  --font-geist-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 html,
