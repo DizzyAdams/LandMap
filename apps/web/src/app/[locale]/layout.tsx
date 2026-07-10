@@ -1,4 +1,4 @@
-import { getMessages } from 'next-intl/server';
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { Navbar } from '../../components/Navbar';
@@ -79,6 +79,11 @@ export default async function RootLayout({
   const { locale } = await params;
   const allowed = ['pt-BR', 'en-US', 'es-ES'];
   const resolvedLocale = allowed.includes((locale as string) || '') ? (locale as string) : 'pt-BR';
+
+  // Make the locale available to next-intl's request scope (getLocale/getMessages)
+  // and to the root layout that renders <html lang>. Required because the root
+  // layout is not under [locale] and cannot derive the locale from the segment.
+  unstable_setRequestLocale(resolvedLocale);
 
   if (!resolvedLocale) {
     notFound();
