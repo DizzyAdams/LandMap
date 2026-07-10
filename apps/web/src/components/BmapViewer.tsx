@@ -555,6 +555,24 @@ export default function BmapViewer() {
             value={Math.round(animArea * 100) / 100}
             suffix={` ${t('km2')}`}
           />
+          {layer === '3d' && (
+            <div className="pointer-events-auto rounded-xl border border-neutral-800 bg-neutral-950/80 px-3 py-2 backdrop-blur-md">
+              <div className="mb-1 text-[10px] uppercase tracking-wider text-neutral-400">
+                {t('layers.d3')} · altura
+              </div>
+              <div
+                className="h-2 w-28 rounded-full"
+                style={{
+                  background:
+                    'linear-gradient(90deg,#0f766e,#34d399,#22d3ee,#a78bfa)',
+                }}
+              />
+              <div className="mt-1 flex w-28 justify-between text-[10px] text-neutral-400">
+                <span>0m</span>
+                <span>120m+</span>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -573,6 +591,17 @@ export default function BmapViewer() {
         aria-label={t('title')}
         className="h-[60vh] min-h-[420px] w-full sm:h-[68vh]"
         style={{ zIndex: 0 }}
+      />
+
+      {/* Cinematic vignette for depth — sits above the map, never blocks input. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0"
+        style={{
+          zIndex: 1,
+          background:
+            'radial-gradient(125% 125% at 50% 28%, transparent 52%, rgba(0,0,0,0.55) 100%)',
+        }}
       />
 
       {loading && (
