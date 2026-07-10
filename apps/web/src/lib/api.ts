@@ -1,5 +1,3 @@
-import { headers } from 'next/headers';
-
 export const LANDMAP_API_BASE =
   process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
@@ -18,10 +16,17 @@ export function apiUrl(path: string): string {
   if (base.startsWith('http')) return `${base}${path}`;
   if (typeof window !== 'undefined') return `${base}${path}`;
 
-  // Server-side: relative URLs are invalid for Node fetch. Derive the real
-  // origin from the incoming request host (verified working on Vercel) and
-  // fall back to the deploy URL / site URL / localhost.
+  // Server-side: relative URLs are invalid for Node fetch. Resolve a reachable
+  // origin from (in order): the deploy URL, the request host, the canonical
+  // site URL, then localhost. VERCEL_URL is always set on Vercel.
+  const vercel = process.env.VERCEL_URL;
+  if (vercel) return `https://${vercel}${base}${path}`;
+
   try {
+    // Dynamic require keeps `next/headers` out of the static import graph
+    // (a static import was breaking webpack). Guarded so it's non-fatal.
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const { headers } = require('next/headers') as typeof import('next/headers');
     const h = headers();
     const host = h.get('x-forwarded-host') || h.get('host');
     if (host) {
@@ -29,13 +34,10 @@ export function apiUrl(path: string): string {
       return `${proto}://${host}${base}${path}`;
     }
   } catch {
-    /* not in a request scope (e.g. route handler without headers) */
+    /* not in a request scope */
   }
 
-  const origin =
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    'http://localhost:3000';
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   return `${origin}${base}${path}`;
 }
 
