@@ -13,14 +13,21 @@ export function Cursor() {
   const auraRef = useRef<HTMLDivElement>(null);
   const [enabled, setEnabled] = useState(false);
 
+  // Step 1: decide whether the custom cursor should render at all. This only
+  // flips state; the animation is wired up in a separate effect below so it can
+  // run *after* the refs are actually mounted.
   useEffect(() => {
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (!canHover || reduced) return;
-    setEnabled(true);
+    if (canHover && !reduced) setEnabled(true);
+  }, []);
 
-    const dot = dotRef.current!;
-    const aura = auraRef.current!;
+  // Step 2: run the pointer-follow animation only once enabled (refs mounted).
+  useEffect(() => {
+    if (!enabled) return;
+    const dot = dotRef.current;
+    const aura = auraRef.current;
+    if (!dot || !aura) return;
     let raf = 0;
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
@@ -49,7 +56,7 @@ export function Cursor() {
       window.removeEventListener('pointermove', onMove);
       cancelAnimationFrame(raf);
     };
-  }, []);
+  }, [enabled]);
 
   if (!enabled) return null;
 
