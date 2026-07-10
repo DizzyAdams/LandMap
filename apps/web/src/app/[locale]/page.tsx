@@ -47,7 +47,7 @@ export default async function LocaleHomePage() {
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <Link
             href="./search"
-            className="group inline-flex h-11 items-center gap-2 rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 shadow-[0_8px_40px_-12px_rgba(255,255,255,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-neutral-100 hover:shadow-[0_12px_50px_-12px_rgba(52,211,153,0.45)]"
+            className="sheen group inline-flex h-11 items-center gap-2 rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 shadow-[0_8px_40px_-12px_rgba(255,255,255,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-neutral-100 hover:shadow-[0_12px_50px_-12px_rgba(52,211,153,0.45)]"
           >
             Explorar imóveis
             <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
@@ -77,8 +77,9 @@ export default async function LocaleHomePage() {
             <p className="eyebrow">Destaque no cadastro</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-tight">Imóveis em destaque</h2>
           </div>
-          <Link href="./search" className="shrink-0 text-sm text-neutral-400 transition hover:text-white">
-            Ver todos →
+          <Link href="./search" className="group shrink-0 text-sm text-neutral-400 transition hover:text-white">
+            <span className="link-underline">Ver todos</span>
+            <span aria-hidden className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </Link>
         </div>
 

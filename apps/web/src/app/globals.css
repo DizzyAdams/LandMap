@@ -336,3 +336,103 @@ body {
 }
 
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   Fluid motion kit — premium, restrained, and fully `prefers-reduced-motion`
+   aware. Adds life without the "aimless drift" the editorial system avoids:
+   every animation is slow, low-amplitude and tied to a real focal point.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Animated champagne shimmer for the hero gold word. */
+.text-gradient-gold {
+  background-size: 200% auto;
+  animation: sheen-text 6s ease-in-out infinite;
+}
+/* Animated bioluminescent shimmer for the hero aurora word. */
+.text-aurora {
+  background-size: 200% auto;
+  animation: sheen-text 7s ease-in-out infinite;
+}
+@keyframes sheen-text {
+  0%   { background-position: 0% center; }
+  50%  { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+/* Gentle float for accent chips / focal glyphs. */
+.animate-float {
+  animation: float-soft 6s ease-in-out infinite;
+}
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+/* Sheen sweep — a light glint that crosses a primary surface on hover. */
+.sheen {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.sheen::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: translateX(-120%) skewX(-18deg);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.sheen:hover::after {
+  transform: translateX(120%) skewX(-18deg);
+}
+
+/* Fluid, springy micro-lift for interactive cards / links. */
+.lift {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease;
+  will-change: transform;
+}
+.lift:hover {
+  transform: translateY(-4px);
+}
+
+/* Soft pulse for "live" status dots (slower, calmer than Tailwind's ping). */
+.pulse-live {
+  animation: pulse-live 2.4s ease-in-out infinite;
+}
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
+  50%      { opacity: 0.7; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+}
+
+/* Underline that grows from the left on hover — for editorial links. */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.link-underline:hover {
+  background-size: 100% 1px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .text-gradient-gold,
+  .text-aurora,
+  .animate-float,
+  .pulse-live { animation: none; }
+  .sheen::after,
+  .lift,
+  .link-underline { transition: none; }
+  .lift:hover { transform: none; }
+}
+
+
