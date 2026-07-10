@@ -6,7 +6,7 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-10 (branch `main`, head `f6d5600`).
+Última atualização: 2026-07-10 (branch `main`, head `4d3de56`).
 
 ---
 
@@ -19,7 +19,7 @@ Stack mono-repo pnpm. Licença MIT.
 - Repo: `origin` = https://github.com/DizzyAdams/LandMap.git — branch `main`.
 - Commits em **pt-BR** são o padrão do projeto (ok manter).
 - Produção (Vercel): https://landmap-dizzys-projects-d5a44b36.vercel.app
-  (alias `landmap.us.kg` atribuído; SSL async). Deploy via `vercel deploy --prod`.
+  (deploy atual: `landmap-eso2p38hx`, READY via `vercel deploy --prod`; alias `landmap.us.kg` atribuído; SSL async). Deploy via `vercel deploy --prod`.
 
 ---
 
