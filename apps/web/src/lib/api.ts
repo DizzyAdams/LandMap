@@ -16,26 +16,11 @@ export function apiUrl(path: string): string {
   if (base.startsWith('http')) return `${base}${path}`;
   if (typeof window !== 'undefined') return `${base}${path}`;
 
-  // Server-side: relative URLs are invalid for Node fetch. Resolve a reachable
-  // origin from (in order): the deploy URL, the request host, the canonical
-  // site URL, then localhost. VERCEL_URL is always set on Vercel.
+  // Server-side: relative URLs are invalid for Node fetch. VERCEL_URL is always
+  // set on Vercel and points at the current deployment, so a self-fetch to
+  // `/api/...` is reachable regardless of custom-domain DNS propagation.
   const vercel = process.env.VERCEL_URL;
   if (vercel) return `https://${vercel}${base}${path}`;
-
-  try {
-    // Dynamic require keeps `next/headers` out of the static import graph
-    // (a static import was breaking webpack). Guarded so it's non-fatal.
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const { headers } = require('next/headers') as typeof import('next/headers');
-    const h = headers();
-    const host = h.get('x-forwarded-host') || h.get('host');
-    if (host) {
-      const proto = h.get('x-forwarded-proto') || 'https';
-      return `${proto}://${host}${base}${path}`;
-    }
-  } catch {
-    /* not in a request scope */
-  }
 
   const origin = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
   return `${origin}${base}${path}`;
