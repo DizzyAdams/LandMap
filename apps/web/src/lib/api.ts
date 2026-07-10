@@ -1,6 +1,27 @@
 export const LANDMAP_API_BASE =
   process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
+/**
+ * Resolve an absolute URL for an API path.
+ *
+ * The default base (`/api`) is relative, which is fine in the browser but
+ * THROWS in React Server Components (Node `fetch` cannot parse a relative URL
+ * with no origin). That silently emptied the entire catalog in production —
+ * every server-rendered page (home, search, property) caught the error and
+ * showed "no properties". On the server we prepend the deployment's own origin
+ * (`VERCEL_URL`), which is always reachable regardless of custom-domain DNS.
+ */
+export function apiUrl(path: string): string {
+  const base = LANDMAP_API_BASE;
+  if (base.startsWith('http')) return `${base}${path}`;
+  if (typeof window !== 'undefined') return `${base}${path}`;
+  const origin =
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    'http://localhost:3000';
+  return `${origin}${base}${path}`;
+}
+
 export type Property = {
   id: string;
   title: string;
@@ -86,7 +107,7 @@ export type RecommendationsResponse = {
 };
 
 async function apiFetch<T>(path: string, init?: RequestInit) {
-  const res = await fetch(`${LANDMAP_API_BASE}${path}`, {
+  const res = await fetch(apiUrl(path), {
     ...init,
     headers: {
       'content-type': 'application/json',
@@ -117,10 +138,8 @@ export function searchProperties(query: SearchQuery) {
 }
 
 export function getProperty(id: string) {
-  const url = new URL(`${LANDMAP_API_BASE}/markdowns`);
-  url.searchParams.set('q', '');
-  return apiFetch<{ items: Property[] }>(`${url.pathname}?${url.searchParams.toString()}`).then(
-    (data) => data.items.find((item) => item.id === id) as Property | undefined
+  return apiFetch<{ items: Property[] }>(`/markdowns?q=`).then(
+    (data) => data.items.find((item) => item.id === id) as Property | undefined,
   );
 }
 
