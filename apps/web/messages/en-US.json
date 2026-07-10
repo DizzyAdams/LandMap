@@ -239,5 +239,73 @@
     "sortBy": "Sort by",
     "itemsPerPage": "Items per page",
     "of": "of"
+  },
+  "world": {
+    "title": "3D World",
+    "subtitle": "Draw a box, get the city in 3D. Real terrain, buildings and streets at 1:1 scale from open data (OpenStreetMap).",
+    "searchPlaceholder": "Search a city (e.g. São Paulo)",
+    "build": "Build 3D world",
+    "building": "Building world…",
+    "size": "Box size",
+    "spin": "Spin",
+    "stop": "Stop",
+    "day": "Day",
+    "night": "Night",
+    "km": "km",
+    "km2": "km²",
+    "buildings": "buildings rebuilt",
+    "roads": "km of streets",
+    "trees": "trees placed",
+    "area": "km² mapped",
+    "source": "Data: OpenStreetMap (ODbL) · terrain AWS Terrain · © CARTO",
+    "fallback": "Overpass unavailable — world generated procedurally.",
+    "loadingMap": "Loading 3D engine…",
+    "mapError": "Could not load the 3D map.",
+    "hint": "Search a city, adjust the box size and click “Build 3D world”, or click the map directly to rebuild any spot in 3D.",
+    "backHome": "Back to Home",
+    "investor": {
+      "title": "Fund opportunities",
+      "fundReady": "Fund-ready assets",
+      "avgCap": "Avg cap rate",
+      "totalTicket": "Est. total ticket",
+      "export": "Export JSON",
+      "copied": "Copied!",
+      "score": "Score",
+      "capRate": "Cap rate",
+      "roi": "ROI p.a.",
+      "ticket": "Ticket",
+      "priceM2": "Price/m²",
+      "badge": "Fund-ready"
+    },
+    "energy": {
+      "title": "Renewable energy",
+      "totalMwp": "Potential MWp",
+      "co2": "tCO₂/yr avoided",
+      "score": "Renewable score",
+      "topSolar": "Top solar roofs",
+      "roof": "Roof",
+      "kwp": "kWp"
+    },
+    "thermal": {
+      "title": "Thermal zoning",
+      "avg": "Avg heat",
+      "green": "Green cooling",
+      "hottest": "Hottest zones",
+      "heat": "Heat",
+      "buildings": "Buildings",
+      "legendCool": "Cool",
+      "legendHot": "Hot"
+    },
+    "live": {
+      "label": "Live",
+      "priceM2": "Price/m²",
+      "roi": "ROI p.a."
+    },
+    "layers": {
+      "d3": "3D",
+      "investor": "Investor",
+      "solar": "Solar",
+      "thermal": "Thermal"
+    }
   }
 }

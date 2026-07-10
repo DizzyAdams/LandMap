@@ -239,5 +239,73 @@
     "sortBy": "Ordenar por",
     "itemsPerPage": "Elementos por página",
     "of": "de"
+  },
+  "world": {
+    "title": "Mundo 3D",
+    "subtitle": "Dibuja una caja, obtén la ciudad en 3D. Terreno, edificios y calles reales a escala 1:1 desde datos abiertos (OpenStreetMap).",
+    "searchPlaceholder": "Busca una ciudad (ej: São Paulo)",
+    "build": "Construir mundo 3D",
+    "building": "Construyendo mundo…",
+    "size": "Tamaño de la caja",
+    "spin": "Girar",
+    "stop": "Parar",
+    "day": "Día",
+    "night": "Noche",
+    "km": "km",
+    "km2": "km²",
+    "buildings": "edificios reconstruidos",
+    "roads": "km de calles",
+    "trees": "árboles colocados",
+    "area": "km² mapeados",
+    "source": "Datos: OpenStreetMap (ODbL) · terreno AWS Terrain · © CARTO",
+    "fallback": "Overpass no disponible — mundo generado proceduralmente.",
+    "loadingMap": "Cargando motor 3D…",
+    "mapError": "No se pudo cargar el mapa 3D.",
+    "hint": "Busca una ciudad, ajusta el tamaño de la caja y haz clic en “Construir mundo 3D”, o haz clic directo en el mapa para reconstruir cualquier punto en 3D.",
+    "backHome": "Volver al Inicio",
+    "investor": {
+      "title": "Oportunidades para fondos",
+      "fundReady": "Activos fund-ready",
+      "avgCap": "Cap rate medio",
+      "totalTicket": "Ticket total estimado",
+      "export": "Exportar JSON",
+      "copied": "¡Copiado!",
+      "score": "Puntuación",
+      "capRate": "Cap rate",
+      "roi": "ROI a.a.",
+      "ticket": "Ticket",
+      "priceM2": "Precio/m²",
+      "badge": "Fund-ready"
+    },
+    "energy": {
+      "title": "Energía renovable",
+      "totalMwp": "MWp potenciales",
+      "co2": "tCO₂/año evitadas",
+      "score": "Puntuación renovable",
+      "topSolar": "Mayores tejados solares",
+      "roof": "Cubierta",
+      "kwp": "kWp"
+    },
+    "thermal": {
+      "title": "Zonificación térmica",
+      "avg": "Calor medio",
+      "green": "Enfriamiento verde",
+      "hottest": "Zonas más calientes",
+      "heat": "Calor",
+      "buildings": "Edificios",
+      "legendCool": "Fresco",
+      "legendHot": "Caliente"
+    },
+    "live": {
+      "label": "En vivo",
+      "priceM2": "Precio/m²",
+      "roi": "ROI a.a."
+    },
+    "layers": {
+      "d3": "3D",
+      "investor": "Inversor",
+      "solar": "Solar",
+      "thermal": "Térmico"
+    }
   }
 }

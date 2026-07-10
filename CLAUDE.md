@@ -2,7 +2,8 @@
 
 > Esta memória é lida automaticamente no início de cada sessão. Mantenha-a atualizada
 > para evitar redescobrir problemas já conhecidos. Detalhes profundos ficam em
-> `docs/design-system-audit.md` e `ARCHITECTURE.md`.
+> `docs/design-system-audit.md`, `ARCHITECTURE.md` e no **`MEMORY.md`** (memória mestra
+> do projeto: estado vivo, WIP, débitos técnicos e próximos passos — leia junto).
 
 ## Stack & estrutura
 - **Monorepo pnpm** (`packageManager: pnpm@9.6.0`, `node >= 20`). Workspace: `apps/*`, `packages/*`.
@@ -63,4 +64,9 @@ Usadas no app (ex.: `[locale]/layout.tsx` usa `.aurora`, `.grain`): `.surface`, 
 ## Convenções
 - Componentes em `packages/ui/src/components` exportam via `packages/ui/src/index.ts`. Usam `cn()` (clsx+tailwind-merge) de `../lib`.
 - Commits em pt-BR ok. Repo: `origin` = https://github.com/DizzyAdams/LandMap.git (branch `main`).
+## Status atual (resumo — ver `MEMORY.md` para detalhes)
+- App web: 19 rotas + APIs, build/typecheck/lint/testes verdes. Dataset 1.500 imóveis + 1.500 markdowns (10 cidades).
+- **WIP "Mundo 3D" (bmap.io-style):** código completo em `apps/web/src/{lib/bmap.ts, components/BmapViewer|InvestorPanel|EnergyPanel|LivePulse.tsx, app/[locale]/world/page.tsx}` + namespace `world` em `apps/web/messages/*` + link na `Navbar`. Typecheck do web OK. **Ainda não commitada.**
+- **Removido (2026-07-10):** `apps/web/src/messages/` — pasta duplicada com JSON **corrompido** (não era lida pelo `i18n.ts`, que usa `../messages`). As mensagens vivem em `apps/web/messages/*`.
+- DNS de `landmap.com.br` / `landmap.us.kg` / `getlandmap.app` ainda pendente no registrador (bloqueio externo). Produção live em `landmap-dizzys-projects-d5a44b36.vercel.app`.
 - Antes de "ligar" o Tailwind v4, resolva os itens 1 e 2 acima, senão o build quebra.
