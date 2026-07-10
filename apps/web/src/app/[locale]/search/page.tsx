@@ -6,6 +6,7 @@ import { SearchKeyboardShortcuts } from '../../../components/SearchKeyboardShort
 import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { PropertyThumb } from '../../../components/PropertyThumb';
 import { Filters } from './Filters';
 import { formatBRL } from '../../../lib/format';
 
@@ -207,13 +208,16 @@ export default async function SearchPage({
                           href={`/${locale}/property/${item.id}`}
                           className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
                         >
-                          <div className="flex items-start justify-between">
-                            <div>
-                              <p className="text-sm text-neutral-300">{item.title}</p>
-                              <p className="mt-1 text-xs text-neutral-400">
-                                {item.city}, {item.state} · {item.areaM2} m²
-                                {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
-                              </p>
+                          <div className="flex items-start justify-between gap-4">
+                            <div className="flex items-start gap-4">
+                              <PropertyThumb seed={item.id} className="h-16 w-12 shrink-0 border border-neutral-800" />
+                              <div>
+                                <p className="text-sm text-neutral-300">{item.title}</p>
+                                <p className="mt-1 text-xs text-neutral-400">
+                                  {item.city}, {item.state} · {item.areaM2} m²
+                                  {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
+                                </p>
+                              </div>
                             </div>
                             <span className="text-xs text-neutral-400">{item.modality}</span>
                           </div>

@@ -5,6 +5,8 @@ import { formatBRL } from '../../lib/format';
 import { Reveal, Stagger, ScrollProgress } from '../../components/Motion';
 import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
+import { HeroTerritory } from '../../components/HeroTerritory';
+import { PropertyThumb } from '../../components/PropertyThumb';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,7 +32,8 @@ export default async function LocaleHomePage() {
         style={{ background: 'radial-gradient(48rem 30rem at 50% -12%, rgba(52,211,153,0.10), transparent 70%)' }}
       />
 
-      <section className="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:pt-28">
+      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 pb-20 pt-20 sm:pt-28 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+        <div>
         <div className="h-px w-16 rule-gold" />
         <p className="eyebrow-gold mt-5">Inteligência imobiliária aberta</p>
 
@@ -67,6 +70,9 @@ export default async function LocaleHomePage() {
             Dados vivos · 10 cidades
           </span>
         </div>
+        </div>
+
+        <HeroTerritory className="mx-auto aspect-square w-full max-w-sm animate-float lg:max-w-none" />
       </section>
 
       <Marquee />
@@ -100,8 +106,9 @@ export default async function LocaleHomePage() {
                 {featured.map((p) => (
                   <tr key={p.id} className="group transition hover:bg-white/[0.03]">
                     <td className="border-b border-neutral-900 px-3 py-3">
-                      <Link href={`./property/${p.id}`} className="font-medium text-neutral-100 transition group-hover:text-white">
-                        {p.title}
+                      <Link href={`./property/${p.id}`} className="flex items-center gap-3 font-medium text-neutral-100 transition group-hover:text-white">
+                        <PropertyThumb seed={p.id} className="h-11 w-9 shrink-0 border border-neutral-800" />
+                        <span className="link-underline">{p.title}</span>
                       </Link>
                     </td>
                     <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-neutral-400">{p.city}/{p.state}</td>
