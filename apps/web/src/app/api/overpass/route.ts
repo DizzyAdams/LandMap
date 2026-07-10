@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
+export const maxDuration = 30;
 
 /**
  * Server-side Overpass proxy for the 3D World viewer.
@@ -57,19 +58,28 @@ export async function POST(request: Request) {
   }
 
   const body = 'data=' + encodeURIComponent(buildQuery(bbox));
+  const diag: string[] = [];
 
   for (const endpoint of ENDPOINTS) {
     const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 25000);
+    const timer = setTimeout(() => controller.abort(), 20000);
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
         body,
-        headers: { 'content-type': 'application/x-www-form-urlencoded' },
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded',
+          // Some Overpass mirrors reject requests without a UA / referer.
+          'user-agent': 'LandMap/1.0 (+https://landmapv1.vercel.app)',
+          accept: 'application/json',
+        },
         signal: controller.signal,
       });
       clearTimeout(timer);
-      if (!res.ok) continue;
+      if (!res.ok) {
+        diag.push(`${endpoint} -> HTTP ${res.status}`);
+        continue;
+      }
       const json = await res.json();
       return NextResponse.json(json, {
         headers: {
@@ -77,14 +87,14 @@ export async function POST(request: Request) {
           'Cache-Control': 'public, s-maxage=86400, stale-while-revalidate=604800',
         },
       });
-    } catch {
+    } catch (err) {
       clearTimeout(timer);
-      // try next endpoint
+      diag.push(`${endpoint} -> ${(err as Error)?.name || 'error'}: ${(err as Error)?.message || ''}`);
     }
   }
 
   return NextResponse.json(
-    { error: 'All Overpass endpoints are unavailable.' },
+    { error: 'All Overpass endpoints are unavailable.', diag },
     { status: 502 },
   );
 }
