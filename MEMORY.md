@@ -120,6 +120,13 @@ build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arqu
    - **ÚNICA ação pendente (registrador, EXTERNA):** trocar o NS de CADA domínio para
      `ns1.vercel-dns.com` / `ns2.vercel-dns.com`. Só assim os registros acima são servidos e
      o domínio resolve para o site. Após propagação (~minutos), a Vercel valida e emite SSL.
+   - **Automação do NS (verificada 2026-07-10):** NÃO há credenciais de registrador
+     neste ambiente (repo/env/perfil) — só as do Vercel. Alterar NS (ou registros DNS) em
+     qualquer registrador **exige autenticação naquele registrador**; não existe API gratuita
+     de terceiro que contorne essa barra de segurança. Portanto o NS só é virado por:
+     (a) ação manual (~1 min) no painel de cada registrador; ou (b) API do próprio registrador
+     com o token/certificado do usuário (ex.: certificado de acesso GRATUITO do Registro.br
+     para a API de DNS de .br). Pronto para rodar assim que o usuário fornecer o token.
    - App já 100% funcional via URL de produção do Vercel enquanto isso.
 
 2. **Tailwind v4 não processa CSS (⚠️).** `tailwindcss@4.0.0` instalado, mas sem
