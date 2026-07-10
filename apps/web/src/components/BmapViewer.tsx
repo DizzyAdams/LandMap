@@ -535,6 +535,25 @@ export default function BmapViewer() {
               roi={analysis.investment.topByScore[0].roiProxy}
             />
           )}
+          {source && (
+            <span
+              className={
+                source === 'overpass'
+                  ? 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/[0.08] px-3 py-1 text-[11px] font-medium text-emerald-200 backdrop-blur-md'
+                  : 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/[0.08] px-3 py-1 text-[11px] font-medium text-amber-200 backdrop-blur-md'
+              }
+              title={source === 'overpass' ? 'Geometria real do OpenStreetMap' : 'Modelo procedural (OSM indisponível)'}
+            >
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  source === 'overpass'
+                    ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]'
+                    : 'bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.9)]'
+                }`}
+              />
+              {source === 'overpass' ? 'Dados reais · OSM' : 'Modelo gerado'}
+            </span>
+          )}
           <Stat label={t('buildings')} value={Math.round(animBuildings)} />
           <Stat
             label={t('roads')}
