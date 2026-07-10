@@ -32,7 +32,7 @@ Stack mono-repo pnpm. Licença MIT.
 | Sales cockpit (6 agentes) | ✅ feature completa + commit `975170d` |
 | Redesign "Sovereign Cadastre" | ✅ commit `8f9c073` (removeu AI-slop) |
 | 404 de routing/locale | ✅ RESOLVIDO commit `71da3f0` (middleware p/ `src/`) |
-| **Feature "Mundo 3D" (WIP)** | 🟡 **não commitada** — código pronto, typecheck OK |
+| **Feature "Mundo 3D" (bmap.io-style)** | ✅ **commitada** (`af050d7`) + design elevado (`70df4c2`) + **deployado** (landmap-p6k76hgks) |
 | **DNS dos domínios** | 🔴 **bloqueio externo** no registrador (ver §6) |
 | Tailwind v4 | ⚠️ instalado mas **não processa CSS** (ver `CLAUDE.md`) |
 
@@ -81,8 +81,10 @@ APIs em `apps/web/src/app/api/`: `contact`, `[...route]` (catch-all p/ Hono),
 
 ## 5. WIP ATUAL — Feature "Mundo 3D" (bmap.io-style)
 
-**Estado:** código completo e **typecheck do web passa** (`tsc --noEmit` sem erros).
-Ainda **NÃO commitada**. Arquivos envolvidos:
+**Estado:** ✅ **commitada** (`af050d7`), com design elevado (`70df4c2`: legenda de altura + vinheta
+cinematográfica) e **deployada em produção** (deploy `landmap-p6k76hgks`, alias `landmap.us.kg`).
+Validação: typecheck mono-repo OK, lint OK (warning pré-existente em `map/page.tsx`), testes 299/299 OK,
+build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arquivos envolvidos:
 
 | Arquivo | Papel |
 |---------|-------|
@@ -161,7 +163,8 @@ Ledger de tarefas: `.hermes/todos.md`.
 
 **Fontes de dados:** OpenStreetMap (ODbL) via Overpass; terreno AWS Terrain Tiles; © CARTO.
 
-**Próximo passo recomendado:** commitar esta feature (ex.: `feat(web): mundo 3D bmap.io-style — viewer MapLibre + painéis invest/energia/thermal`) e, se desejado, `vercel deploy --prod`.
+**Próximo passo recomendado:** nada pendente — feature completa, commitada e em produção.
+Para re-deploy: `vercel deploy --prod` (build remoto Linux; o `geist` quebra apenas no build LOCAL Windows).
 
 - **`@landmap/scraper`** — ingestão Apify/cheerio no pipeline LLM.
 - **`@landmap/seo`** — geradores schema.org + coverage CLI + AEO.
