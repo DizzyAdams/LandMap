@@ -1,3 +1,5 @@
+import { headers } from 'next/headers';
+
 export const LANDMAP_API_BASE =
   process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
@@ -15,6 +17,21 @@ export function apiUrl(path: string): string {
   const base = LANDMAP_API_BASE;
   if (base.startsWith('http')) return `${base}${path}`;
   if (typeof window !== 'undefined') return `${base}${path}`;
+
+  // Server-side: relative URLs are invalid for Node fetch. Derive the real
+  // origin from the incoming request host (verified working on Vercel) and
+  // fall back to the deploy URL / site URL / localhost.
+  try {
+    const h = headers();
+    const host = h.get('x-forwarded-host') || h.get('host');
+    if (host) {
+      const proto = h.get('x-forwarded-proto') || 'https';
+      return `${proto}://${host}${base}${path}`;
+    }
+  } catch {
+    /* not in a request scope (e.g. route handler without headers) */
+  }
+
   const origin =
     (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : '') ||
     process.env.NEXT_PUBLIC_SITE_URL ||
