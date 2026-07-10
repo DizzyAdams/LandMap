@@ -28,7 +28,10 @@ export async function generateMetadata({
   const messages = await getMessages();
   const title = (messages.landmap as any)?.title || 'LandMap';
   const description = (messages.landmap as any)?.tagline || 'Inteligência imobiliária aberta.';
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // Canonical production origin. Falling back to localhost (the old default)
+  // silently shipped `og:url`/`og:image`/canonical pointing at localhost:3000
+  // in production, breaking every social preview and canonical tag.
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmap.com.br';
 
   return {
     title,

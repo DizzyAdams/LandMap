@@ -71,30 +71,13 @@ def generate_sitemap(properties: list[dict[str, Any]]) -> str:
         changefreq = ET.SubElement(url, "changefreq")
         changefreq.text = "weekly"
 
-    # Pretty-print
-    rough_string = ET.tostring(urlset, encoding="unicode")
-    # Add XML declaration and indent
-    lines = ['<?xml version="1.0" encoding="UTF-8"?>']
-    stack = [0]
-    indent = "  "
-    # Simple indentation
-    level = 0
-    for line in rough_string.split("><"):
-        if line.startswith("/"):
-            level -= 1
-        prefix = indent * level
-        if not line.startswith("<") and not line.startswith("/"):
-            line = "<" + line + ">"
-        elif line.startswith("/") and not line.endswith(">"):
-            line = "</" + line + ">"
-        elif not line.endswith(">"):
-            line = "<" + line + ">"
-
-        lines.append(prefix + line)
-        if not line.startswith("</") and not line.endswith("/>"):
-            level += 1
-
-    return "\n".join(lines)
+    # Pretty-print using the stdlib indenter (valid XML, no manual string
+    # surgery). The previous hand-rolled indentation split on "><" and
+    # re-added brackets, which corrupted the output into invalid XML
+    # (`<<urlset>` / `<//url>`), breaking search-engine parsing entirely.
+    ET.indent(urlset, space="  ")
+    body = ET.tostring(urlset, encoding="unicode")
+    return '<?xml version="1.0" encoding="UTF-8"?>\n' + body
 
 
 def main() -> int:
