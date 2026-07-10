@@ -19,6 +19,7 @@ const PLANS = [
     ],
     limits: '50 imóveis/mês',
     cta: 'Começar Grátis',
+    href: 'search',
     highlight: false,
   },
   {
@@ -36,6 +37,7 @@ const PLANS = [
     ],
     limits: '500 imóveis',
     cta: 'Assinar',
+    href: 'sales',
     highlight: true,
   },
   {
@@ -55,6 +57,7 @@ const PLANS = [
     ],
     limits: 'Ilimitado',
     cta: 'Falar com Vendas',
+    href: 'sales',
     highlight: false,
   },
 ];
@@ -123,14 +126,15 @@ export default function PricingPage() {
               </ul>
 
               <Link
-                href={plan.highlight ? `/${locale}/register` : `/${locale}/register?plan=free`}
-                className={`mt-6 flex w-full items-center justify-center rounded-lg py-2.5 text-xs font-semibold transition ${
+                href={`/${locale}/${plan.href}`}
+                className={`group mt-6 flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-semibold transition-all duration-300 ${
                   plan.highlight
                     ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-[#050505] shadow-[0_0_0_1px_rgba(52,211,153,0.15),0_8px_30px_-12px_rgba(34,211,238,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(52,211,153,0.45),0_14px_44px_-12px_rgba(34,211,238,0.65)]'
                     : 'border border-emerald-400/30 text-emerald-200 hover:border-emerald-400/60 hover:text-emerald-100 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_12px_48px_-12px_rgba(34,211,238,0.35)]'
                 }`}
               >
                 {plan.cta}
+                <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
               </Link>
             </SpotlightCard>
           ))}

@@ -6,9 +6,16 @@ import { cn } from '../lib/index';
 // `hero` keeps an explicit, opt-in high-contrast white for rare cases (never the default).
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: 'primary' | 'gold' | 'ghost' | 'outline' | 'hero';
+  size?: 'sm' | 'md' | 'lg';
 };
 
-export const Button = ({ variant = 'primary', className, ...props }: ButtonProps) => {
+const sizes: Record<NonNullable<ButtonProps['size']>, string> = {
+  sm: 'h-8 px-3 text-xs gap-1.5',
+  md: 'h-10 px-4 text-sm gap-2',
+  lg: 'h-11 px-6 text-sm gap-2',
+};
+
+export const Button = ({ variant = 'primary', size = 'md', className, ...props }: ButtonProps) => {
   const styles = {
     // Bioluminescent primary action: emerald->cyan gradient, near-black text, dual-glow lift on hover
     primary:
@@ -25,7 +32,11 @@ export const Button = ({ variant = 'primary', className, ...props }: ButtonProps
   return (
     <button
       className={cn(
-        'rounded-lg px-4 py-2 text-sm font-semibold transition disabled:opacity-50 disabled:pointer-events-none',
+        'inline-flex items-center justify-center rounded-lg font-semibold transition-[transform,box-shadow,background-color,opacity] duration-300',
+        'outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]',
+        'disabled:opacity-50 disabled:pointer-events-none',
+        'motion-reduce:transition-none motion-reduce:hover:translate-y-0',
+        sizes[size],
         styles,
         className,
       )}
