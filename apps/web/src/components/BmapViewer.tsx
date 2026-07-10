@@ -110,18 +110,10 @@ function buildStyle(night: boolean): any {
           'fill-opacity': 0.55,
         },
       },
-      {
-        id: 'sky',
-        type: 'sky',
-        paint: {
-          'sky-color': '#0b1020',
-          'sky-horizon-blend': 0.6,
-          'horizon-color': '#1b2540',
-          'horizon-fog-blend': 0.6,
-          'fog-color': '#0b1020',
-          'fog-ground-blend': 0.5,
-        },
-      },
+      // NOTE: MapLibre GL v4 does NOT support a `sky` layer type (that's a
+      // Mapbox GL / MapLibre v5 feature). Including it made the whole style fail
+      // validation ("layers[3].type: ... 'sky' found") and broke the 3D world.
+      // Atmosphere/depth is provided by the cinematic vignette overlay instead.
     ],
   };
 }
