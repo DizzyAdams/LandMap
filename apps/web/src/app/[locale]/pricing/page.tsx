@@ -87,7 +87,7 @@ export default function PricingPage() {
           <h1 className="mt-6 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
             Planos e Preços
           </h1>
-          <p className="mt-3 text-sm text-neutral-500">
+          <p className="mt-3 text-sm text-neutral-400">
             Escolha o plano ideal para o seu negócio
           </p>
         </Reveal>
@@ -109,9 +109,9 @@ export default function PricingPage() {
               <h3 className="text-sm font-medium text-neutral-50">{plan.name}</h3>
               <div className="mt-3 flex items-baseline gap-1">
                 <span className="text-3xl font-semibold text-neutral-50">{plan.price}</span>
-                <span className="text-xs text-neutral-500">{plan.period}</span>
+                <span className="text-xs text-neutral-400">{plan.period}</span>
               </div>
-              <p className="mt-2 text-xs text-neutral-500">{plan.description}</p>
+              <p className="mt-2 text-xs text-neutral-400">{plan.description}</p>
 
               <ul className="mt-6 space-y-3">
                 {plan.features.map((feat) => (
@@ -137,7 +137,7 @@ export default function PricingPage() {
         </Stagger>
 
         {/* Honest trust signal */}
-        <Reveal className="mt-8 text-center text-xs text-neutral-500">
+        <Reveal className="mt-8 text-center text-xs text-neutral-400">
           Todos os planos incluem acesso à base de dados abertos do LandMap. Cancele a qualquer
           momento, sem multa.
         </Reveal>
@@ -164,7 +164,7 @@ export default function PricingPage() {
                     className="border-b border-neutral-800/50 transition hover:bg-neutral-900/20"
                   >
                     <td className="px-4 py-3 text-xs text-neutral-300">{row.label}</td>
-                    <td className="px-4 py-3 text-center text-xs text-neutral-500">{row.free}</td>
+                    <td className="px-4 py-3 text-center text-xs text-neutral-400">{row.free}</td>
                     <td className="px-4 py-3 text-center text-xs text-neutral-400">{row.pro}</td>
                     <td className="px-4 py-3 text-center text-xs text-neutral-400">{row.enterprise}</td>
                   </tr>
@@ -181,7 +181,7 @@ export default function PricingPage() {
 function Th({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <th
-      className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-500 ${className ?? ''}`}
+      className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-400 ${className ?? ''}`}
     >
       {children}
     </th>

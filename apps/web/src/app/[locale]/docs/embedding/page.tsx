@@ -23,7 +23,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
     <div className="min-h-screen bg-[#050505]">
       <div className="mx-auto max-w-4xl px-6 py-20">
         {/* Breadcrumb */}
-        <nav className="mb-8 flex items-center gap-2 text-xs text-neutral-500">
+        <nav className="mb-8 flex items-center gap-2 text-xs text-neutral-400">
           <a href={`/${locale}/docs`} className="transition hover:text-neutral-300">Docs</a>
           <span>/</span>
           <span className="text-neutral-300">Embeddings</span>
@@ -32,7 +32,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
         <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
           Embeddings & Busca Semântica
         </h1>
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-sm text-neutral-400">
           O LandMap utiliza embeddings vetoriais para permitir buscas por similaridade semântica,
           indo além da correspondência textual exata.
         </p>
@@ -44,21 +44,21 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
             <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 text-sm font-bold">1</div>
               <h3 className="mt-3 text-sm font-medium text-neutral-200">Tokenização</h3>
-              <p className="mt-1 text-xs text-neutral-500">
+              <p className="mt-1 text-xs text-neutral-400">
                 Cada imóvel é tokenizado a partir de seus atributos (título, cidade, tipo, tags).
               </p>
             </div>
             <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 text-sm font-bold">2</div>
               <h3 className="mt-3 text-sm font-medium text-neutral-200">Vetorização</h3>
-              <p className="mt-1 text-xs text-neutral-500">
+              <p className="mt-1 text-xs text-neutral-400">
                 Os tokens são convertidos em vetores numéricos (embeddings) de alta dimensão.
               </p>
             </div>
             <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/10 text-purple-400 text-sm font-bold">3</div>
               <h3 className="mt-3 text-sm font-medium text-neutral-200">Similaridade</h3>
-              <p className="mt-1 text-xs text-neutral-500">
+              <p className="mt-1 text-xs text-neutral-400">
                 A busca calcula similaridade por cosseno entre o vetor da consulta e os vetores indexados.
               </p>
             </div>
@@ -77,7 +77,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
               <h3 className="text-sm font-medium text-neutral-300">Parâmetros</h3>
               <table className="mt-2 w-full text-xs">
                 <thead>
-                  <tr className="border-b border-neutral-800 text-neutral-500">
+                  <tr className="border-b border-neutral-800 text-neutral-400">
                     <th className="py-2 text-left font-medium">Parâmetro</th>
                     <th className="py-2 text-left font-medium">Tipo</th>
                     <th className="py-2 text-left font-medium">Obrigatório</th>
@@ -87,14 +87,14 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
                 <tbody className="text-neutral-300">
                   <tr className="border-b border-neutral-800/50">
                     <td className="py-2 font-mono">q</td>
-                    <td className="py-2 text-neutral-500">string</td>
-                    <td className="py-2 text-neutral-500">Sim</td>
+                    <td className="py-2 text-neutral-400">string</td>
+                    <td className="py-2 text-neutral-400">Sim</td>
                     <td className="py-2">Texto da consulta em linguagem natural</td>
                   </tr>
                   <tr className="border-b border-neutral-800/50">
                     <td className="py-2 font-mono">limit</td>
-                    <td className="py-2 text-neutral-500">number</td>
-                    <td className="py-2 text-neutral-500">Não</td>
+                    <td className="py-2 text-neutral-400">number</td>
+                    <td className="py-2 text-neutral-400">Não</td>
                     <td className="py-2">Máximo de resultados (default: 5)</td>
                   </tr>
                 </tbody>
@@ -139,7 +139,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
             ].map((item) => (
               <div key={item.title} className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
                 <h3 className="text-sm font-medium text-neutral-200">{item.title}</h3>
-                <p className="mt-1 text-xs text-neutral-500">{item.desc}</p>
+                <p className="mt-1 text-xs text-neutral-400">{item.desc}</p>
               </div>
             ))}
           </div>

@@ -68,19 +68,19 @@ export default function StudioPage() {
         <div className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 lg:grid-cols-2">
           <Reveal className="rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-500/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
             <h2 className="text-lg font-medium">Laboratório de Workflows</h2>
-            <p className="mt-1 text-sm text-neutral-500">Selecione um fluxo e execute passo a passo.</p>
+            <p className="mt-1 text-sm text-neutral-400">Selecione um fluxo e execute passo a passo.</p>
 
             <Stagger className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
               {workflows.map((w) => (
                 <button key={w.id} onClick={() => setSelected(w.id)}
                   className={`rounded-xl border px-3 py-3 text-left text-sm transition ${selected === w.id ? 'border-emerald-400/60 bg-emerald-400/10 text-white' : 'border-neutral-800 bg-neutral-900/40 text-neutral-300 hover:border-neutral-600'}`}>
                   <span className="block font-medium">{w.name}</span>
-                  <span className="mt-1 block text-xs text-neutral-500">{w.description}</span>
+                  <span className="mt-1 block text-xs text-neutral-400">{w.description}</span>
                 </button>
               ))}
             </Stagger>
 
-            <label className="mt-5 block text-xs uppercase tracking-wide text-neutral-500">Entrada (JSON)</label>
+            <label className="mt-5 block text-xs uppercase tracking-wide text-neutral-400">Entrada (JSON)</label>
             <textarea value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} rows={9}
               className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 p-3 font-mono text-xs text-neutral-200 outline-none transition focus:border-emerald-400/50" />
 
@@ -150,11 +150,11 @@ function RagChat() {
   return (
     <Reveal delay={0.1} className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-500/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
       <h2 className="text-lg font-medium">Chat RAG</h2>
-      <p className="mt-1 text-sm text-neutral-500">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
+      <p className="mt-1 text-sm text-neutral-400">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
 
       <div className="mt-4 flex-1 space-y-3 overflow-y-auto rounded-xl border border-neutral-800 bg-neutral-950 p-4">
         {chat.length === 0 && !chatLoading && (
-          <p className="text-sm text-neutral-500">Ex: &quot;Quais bairros de Curitiba têm melhor custo-benefício?&quot;</p>
+          <p className="text-sm text-neutral-400">Ex: &quot;Quais bairros de Curitiba têm melhor custo-benefício?&quot;</p>
         )}
         {chat.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>

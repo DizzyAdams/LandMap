@@ -62,7 +62,7 @@ export class ErrorBoundary extends Component<Props, State> {
               Ocorreu um erro inesperado ao carregar esta seção.
             </p>
             {this.state.error && (
-              <p className="mt-2 max-h-20 overflow-auto text-[11px] text-neutral-600 font-mono">
+              <p className="mt-2 max-h-20 overflow-auto text-[11px] text-neutral-400 font-mono">
                 {this.state.error.message}
               </p>
             )}

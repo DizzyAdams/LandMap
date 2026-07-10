@@ -117,25 +117,25 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
             <h1 className="mt-5 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
               Documentação da API
             </h1>
-            <p className="mt-2 text-sm text-neutral-500">
+            <p className="mt-2 text-sm text-neutral-400">
               Referência completa dos endpoints REST do LandMap
             </p>
           </div>
-          <p className="text-xs text-neutral-500">Base URL: <code className="text-neutral-400">http://localhost:4000</code></p>
+          <p className="text-xs text-neutral-400">Base URL: <code className="text-neutral-400">http://localhost:4000</code></p>
         </Reveal>
 
         {/* Auth + Rate limit card */}
         <Stagger className="mt-8 grid gap-4 sm:grid-cols-2">
           <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-neutral-50">Autenticação</h2>
-            <p className="mt-2 text-xs text-neutral-500">
+            <p className="mt-2 text-xs text-neutral-400">
               Endpoints marcados com <span className="text-amber-400">🔒 Auth</span> exigem o header{' '}
               <code className="text-neutral-400">Authorization: Bearer seu_token</code>.
             </p>
           </SpotlightCard>
           <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-neutral-50">Rate Limiting</h2>
-            <p className="mt-2 text-xs text-neutral-500">
+            <p className="mt-2 text-xs text-neutral-400">
               Gratuito: <span className="text-neutral-300">100 req/min</span>
               {' · '}Profissional: <span className="text-neutral-300">1.000 req/min</span>
               {' · '}Enterprise: <span className="text-neutral-300">Sob consulta</span>
@@ -163,9 +163,9 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                     {ep.auth && (
                       <span className="text-[10px] text-amber-500 uppercase tracking-wide">🔒 Auth</span>
                     )}
-                    <span className="ml-auto text-xs text-neutral-500">{ep.desc}</span>
+                    <span className="ml-auto text-xs text-neutral-400">{ep.desc}</span>
                     <svg
-                      className="h-4 w-4 shrink-0 text-neutral-500 transition group-open:rotate-180"
+                      className="h-4 w-4 shrink-0 text-neutral-400 transition group-open:rotate-180"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"

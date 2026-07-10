@@ -63,7 +63,7 @@ export function ShortcutsHelp() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Fechar"
-                className="rounded-md px-2 py-1 text-neutral-500 transition hover:bg-white/5 hover:text-white"
+                className="rounded-md px-2 py-1 text-neutral-400 transition hover:bg-white/5 hover:text-white"
               >
                 ✕
               </button>

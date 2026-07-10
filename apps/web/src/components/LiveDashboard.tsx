@@ -142,7 +142,7 @@ export function LiveDashboard() {
           </div>
           <div className="text-right">
             <Pulse on={live} />
-            <p className="mt-1 text-[11px] text-neutral-500">{updatedAt || '—'}</p>
+            <p className="mt-1 text-[11px] text-neutral-400">{updatedAt || '—'}</p>
           </div>
         </div>
 
@@ -162,7 +162,7 @@ export function LiveDashboard() {
         {kpi && (
           <section className="mt-10 rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6">
             <h2 className="text-sm font-medium text-neutral-300">Réguas de investimento</h2>
-            <p className="mt-1 text-xs text-neutral-500">
+            <p className="mt-1 text-xs text-neutral-400">
               Diferentes lentes analíticas sobre o mesmo mercado: crescimento, risco e probabilidade.
             </p>
             <div className="mt-6 flex flex-wrap justify-around gap-6">
@@ -187,7 +187,7 @@ export function LiveDashboard() {
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-neutral-300">Pulsar de cidades</h2>
             {topCity.city !== '-' && (
-              <span className="text-xs text-neutral-500">
+              <span className="text-xs text-neutral-400">
                 maior inventário: <span className="text-emerald-300">{topCity.city}/{topCity.state}</span>
               </span>
             )}
@@ -212,7 +212,7 @@ export function LiveDashboard() {
                 </div>
               );
             })}
-            {cities.length === 0 && <p className="text-xs text-neutral-500">Aguardando dados do stream…</p>}
+            {cities.length === 0 && <p className="text-xs text-neutral-400">Aguardando dados do stream…</p>}
           </div>
         </section>
       </div>
@@ -239,7 +239,7 @@ function StatCard({
       <p className="text-2xl font-semibold tabular-nums">
         <Counter value={value} format={format} />
       </p>
-      <p className="mt-1 text-xs text-neutral-500">{label}</p>
+      <p className="mt-1 text-xs text-neutral-400">{label}</p>
     </motion.div>
   );
 }

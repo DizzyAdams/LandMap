@@ -8,6 +8,8 @@ import { WhatsNewBanner } from '../../components/WhatsNewBanner';
 import { ShortcutsHelp } from '../../components/ShortcutsHelp';
 import { Cursor } from '../../components/Cursor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
+import { ToastProvider } from '@landmap/ui';
+import { CommandPaletteHost } from '../../components/CommandPaletteHost';
 import '@landmap/ui/styles.css';
 import '../../app/globals.css';
 
@@ -108,11 +110,14 @@ export default async function RootLayout({
         <Cursor />
         <Navbar />
         <div id="main-content" tabIndex={-1}>
-          <ErrorBoundary>{children}</ErrorBoundary>
+          <ToastProvider>
+            <ErrorBoundary>{children}</ErrorBoundary>
+          </ToastProvider>
         </div>
         <Footer />
         <ScrollToTop />
         <ShortcutsHelp />
+        <CommandPaletteHost />
       </div>
     </NextIntlClientProvider>
   );

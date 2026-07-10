@@ -193,7 +193,7 @@ export default function SalesCockpitPage() {
               {pending.length} pendente{pending.length === 1 ? '' : 's'}
             </Badge>
           </div>
-          <p className="mt-1 text-sm text-neutral-500">
+          <p className="mt-1 text-sm text-neutral-400">
             No modo Copilot, as ações dos agentes aguardam sua aprovação. No Autopilot, são
             executadas automaticamente.
           </p>
@@ -235,14 +235,14 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
           <div key={stage} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
             <div className="flex items-center justify-between">
               <span className={`text-xs font-medium ${STAGE_COLOR[stage]}`}>{STAGE_LABEL[stage]}</span>
-              <span className="text-[11px] text-neutral-500">{deals.length}</span>
+              <span className="text-[11px] text-neutral-400">{deals.length}</span>
             </div>
-            <p className="mt-1 text-[11px] text-neutral-500">{BRL(value)}</p>
+            <p className="mt-1 text-[11px] text-neutral-400">{BRL(value)}</p>
             <div className="mt-3 space-y-2">
               {deals.map((d) => (
                 <DealCard key={d.id} deal={d} agentName={agentName[d.ownerAgent] ?? d.ownerAgent} />
               ))}
-              {deals.length === 0 && <p className="py-4 text-center text-[11px] text-neutral-500">—</p>}
+              {deals.length === 0 && <p className="py-4 text-center text-[11px] text-neutral-400">—</p>}
             </div>
           </div>
         );
@@ -257,13 +257,13 @@ function DealCard({ deal, agentName }: { deal: Deal; agentName: string }) {
       <p className="text-xs font-medium leading-tight text-neutral-100">{deal.title}</p>
       <p className="mt-1 text-sm font-semibold tabular-nums">{BRL(deal.amount)}</p>
       <div className="mt-2">
-        <div className="mb-1 flex items-center justify-between text-[10px] text-neutral-500">
+        <div className="mb-1 flex items-center justify-between text-[10px] text-neutral-400">
           <span>{Math.round(deal.probability * 100)}% chance</span>
           <span>{agentName}</span>
         </div>
         <Progress value={deal.probability * 100} />
       </div>
-      {deal.nextAction && <p className="mt-2 text-[11px] text-neutral-500">→ {deal.nextAction}</p>}
+      {deal.nextAction && <p className="mt-2 text-[11px] text-neutral-400">→ {deal.nextAction}</p>}
     </div>
   );
 }
@@ -287,12 +287,12 @@ function AgentsView({ state }: { state: SalesState }) {
             </Badge>
           </div>
           <p className="mt-3 text-xs text-neutral-400">{a.description}</p>
-          <div className="mt-4 flex items-center justify-between text-[11px] text-neutral-500">
+          <div className="mt-4 flex items-center justify-between text-[11px] text-neutral-400">
             <span>{a.actionsToday} ações hoje</span>
             <span>{a.successToday} sucessos</span>
           </div>
           {a.lastActionAt && (
-            <p className="mt-1 text-[10px] text-neutral-500">
+            <p className="mt-1 text-[10px] text-neutral-400">
               última ação: {new Date(a.lastActionAt).toLocaleTimeString('pt-BR')}
             </p>
           )}
@@ -316,11 +316,11 @@ function ActivityView({ events }: { events: AgentEvent[] }) {
         >
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-neutral-100">{e.title}</p>
-            <span className="shrink-0 text-[10px] text-neutral-500">
+            <span className="shrink-0 text-[10px] text-neutral-400">
               {new Date(e.at).toLocaleTimeString('pt-BR')}
             </span>
           </div>
-          {e.detail && <p className="mt-1 text-xs text-neutral-500">{e.detail}</p>}
+          {e.detail && <p className="mt-1 text-xs text-neutral-400">{e.detail}</p>}
         </div>
       ))}
     </div>
@@ -335,7 +335,7 @@ function ChannelsView({ state }: { state: SalesState }) {
         <div key={c.channel} className="rounded-xl border border-white/10 bg-white/[0.03] p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-neutral-100">{CHANNEL_LABEL[c.channel]}</span>
-            <span className="text-xs text-neutral-500">
+            <span className="text-xs text-neutral-400">
               {c.sent} envios · {c.replies} respostas · {Math.round(c.replyRate * 100)}% CTR
             </span>
           </div>
@@ -375,15 +375,15 @@ function ForecastView({ state }: { state: SalesState }) {
       <div className="rounded-xl border border-emerald-800/40 bg-emerald-950/20 p-5">
         <h3 className="text-sm font-medium text-emerald-200">Previsão de receita</h3>
         <p className="mt-3 text-3xl font-semibold tabular-nums text-gradient">{BRL(forecast.expectedValue)}</p>
-        <p className="mt-1 text-xs text-neutral-500">{forecast.period}</p>
+        <p className="mt-1 text-xs text-neutral-400">{forecast.period}</p>
         <div className="mt-4">
-          <div className="mb-1 flex items-center justify-between text-[11px] text-neutral-500">
+          <div className="mb-1 flex items-center justify-between text-[11px] text-neutral-400">
             <span>Confiança do modelo</span>
             <span>{Math.round(forecast.confidence * 100)}%</span>
           </div>
           <Progress value={forecast.confidence * 100} />
         </div>
-        <p className="mt-4 text-xs text-neutral-500">
+        <p className="mt-4 text-xs text-neutral-400">
           Pipeline ponderado de {BRL(analytics.totals.weightedPipeline)} considerando a
           probabilidade de fechamento de cada negócio.
         </p>
@@ -408,9 +408,9 @@ function TaskCard({
       <div className="flex flex-wrap items-center gap-3">
         <Badge variant="info">{TASK_LABEL[task.kind]}</Badge>
         <span className="text-sm font-medium text-neutral-100">{task.title}</span>
-        <span className="text-[11px] text-neutral-500">por {agentName}</span>
+        <span className="text-[11px] text-neutral-400">por {agentName}</span>
         {task.channel && (
-          <span className="text-[11px] text-neutral-500">· {CHANNEL_LABEL[task.channel]}</span>
+          <span className="text-[11px] text-neutral-400">· {CHANNEL_LABEL[task.channel]}</span>
         )}
         <div className="ml-auto flex items-center gap-2">
           <Button variant="ghost" onClick={onReject}>
@@ -425,7 +425,7 @@ function TaskCard({
         </p>
       )}
       {!task.draft && task.detail && (
-        <p className="mt-2 text-xs text-neutral-500">{task.detail}</p>
+        <p className="mt-2 text-xs text-neutral-400">{task.detail}</p>
       )}
     </div>
   );

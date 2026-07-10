@@ -46,7 +46,7 @@ export default function CalculatorPage() {
 
         <div className="mt-8 space-y-4 rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
           <label className="block">
-            <span className="text-xs text-neutral-500">Preço do imóvel</span>
+            <span className="text-xs text-neutral-400">Preço do imóvel</span>
             <input
               type="number"
               value={preco}
@@ -55,7 +55,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-neutral-500">Entrada (%)</span>
+            <span className="text-xs text-neutral-400">Entrada (%)</span>
             <input
               type="number"
               value={entradaPct}
@@ -66,7 +66,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-neutral-500">Taxa de juros anual (%)</span>
+            <span className="text-xs text-neutral-400">Taxa de juros anual (%)</span>
             <input
               type="number"
               value={taxaAnual}
@@ -76,7 +76,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-neutral-500">Prazo (meses)</span>
+            <span className="text-xs text-neutral-400">Prazo (meses)</span>
             <input
               type="number"
               value={prazo}
@@ -95,15 +95,15 @@ export default function CalculatorPage() {
           <>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
-                <p className="text-xs text-neutral-500">Parcela mensal</p>
+                <p className="text-xs text-neutral-400">Parcela mensal</p>
                 <p className="mt-1 text-xl font-medium text-emerald-300">{fmt(result.parcela)}</p>
               </div>
               <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
-                <p className="text-xs text-neutral-500">Total de juros</p>
+                <p className="text-xs text-neutral-400">Total de juros</p>
                 <p className="mt-1 text-xl font-medium text-neutral-100">{fmt(result.totalJuros)}</p>
               </div>
             </div>
-            <p className="mt-4 text-xs text-neutral-500">
+            <p className="mt-4 text-xs text-neutral-400">
               Simulação de referência. Taxas, prazos e encargos são exemplos — confirme as
               condições com seu banco.
             </p>

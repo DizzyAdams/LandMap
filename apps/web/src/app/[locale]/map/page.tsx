@@ -235,7 +235,7 @@ export default function MapPage() {
 
           {/* Radius slider */}
           <div className="flex items-center gap-4">
-            <label className="text-xs text-neutral-500 w-28">Raio de busca:</label>
+            <label className="text-xs text-neutral-400 w-28">Raio de busca:</label>
             <input
               type="range"
               min={5}
@@ -252,7 +252,7 @@ export default function MapPage() {
           {/* Price range */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex items-center gap-3">
-              <label className="text-xs text-neutral-500">Preço mín.:</label>
+              <label className="text-xs text-neutral-400">Preço mín.:</label>
               <input
                 type="range"
                 min={0}
@@ -273,7 +273,7 @@ export default function MapPage() {
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <label className="text-xs text-neutral-500">Preço máx.:</label>
+              <label className="text-xs text-neutral-400">Preço máx.:</label>
               <input
                 type="range"
                 min={0}
@@ -317,7 +317,7 @@ export default function MapPage() {
 
           {/* Heatmap de preço */}
           <div className="flex flex-wrap items-center gap-3 border-t border-neutral-800 pt-4">
-            <span className="text-xs text-neutral-500">Heatmap de preço:</span>
+            <span className="text-xs text-neutral-400">Heatmap de preço:</span>
             <input
               value={heatCity}
               onChange={(e) => setHeatCity(e.target.value)}
@@ -333,7 +333,7 @@ export default function MapPage() {
             >
               {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
             </button>
-            {heatLoading && <span className="text-xs text-neutral-500">Carregando…</span>}
+            {heatLoading && <span className="text-xs text-neutral-400">Carregando…</span>}
           </div>
 
           {reverse && (
@@ -593,7 +593,7 @@ function MapView({
 
       {/* Sidebar with collapse on mobile */}
       <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block space-y-3`}>
-        <p className="text-xs text-neutral-500" aria-live="polite">
+        <p className="text-xs text-neutral-400" aria-live="polite">
           {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
         </p>
         <ul role="list" className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
@@ -611,7 +611,7 @@ function MapView({
                     />
                     <div className="min-w-0 flex-1">
                       <p className="text-sm text-neutral-300 truncate">{item.title}</p>
-                      <p className="mt-1 text-xs text-neutral-500">
+                      <p className="mt-1 text-xs text-neutral-400">
                         {item.city}, {item.state} · {item.areaM2} m²
                       </p>
                     </div>

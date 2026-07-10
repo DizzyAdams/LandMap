@@ -57,7 +57,7 @@ export default function AdminAnalyticsPage() {
   }
 
   if (!stats) {
-    return <p className="text-sm text-neutral-500">Erro ao carregar dados.</p>;
+    return <p className="text-sm text-neutral-400">Erro ao carregar dados.</p>;
   }
 
   const typeEntries = Object.entries(stats.byType);
@@ -80,7 +80,7 @@ export default function AdminAnalyticsPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Analytics</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         Dados e distribuição dos imóveis
       </p>
 
@@ -128,7 +128,7 @@ export default function AdminAnalyticsPage() {
 
       {/* Type stats detail */}
       <div className="mt-8">
-        <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-500">
+        <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-400">
             Detalhamento por Tipo
           </h3>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -139,7 +139,7 @@ export default function AdminAnalyticsPage() {
             >
               <p className="text-xs text-neutral-400">{typeLabels[t.type] ?? t.type}</p>
               <p className="mt-1 text-lg font-semibold text-neutral-50">{t.count}</p>
-              <p className="mt-1 text-[11px] text-neutral-600">
+              <p className="mt-1 text-[11px] text-neutral-400">
                 {formatBRL(t.avgPrice)} · {t.avgAreaM2} m²
               </p>
             </div>

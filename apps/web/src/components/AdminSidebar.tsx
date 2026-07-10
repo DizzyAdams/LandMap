@@ -32,7 +32,7 @@ export function AdminSidebar() {
         <button
           onClick={() => setCollapsed((v) => !v)}
           aria-label={collapsed ? 'Expandir barra lateral' : 'Recolher barra lateral'}
-          className="rounded-lg p-1.5 text-neutral-500 transition hover:bg-neutral-800 hover:text-neutral-300"
+          className="rounded-lg p-1.5 text-neutral-400 transition hover:bg-neutral-800 hover:text-neutral-300"
           title={collapsed ? 'Expandir' : 'Recolher'}
         >
           {collapsed ? '▶' : '◀'}
@@ -72,7 +72,7 @@ export function AdminSidebar() {
         <div className="border-t border-neutral-800 p-3">
           <Link
             href={`/${locale}`}
-            className="block rounded-lg px-3 py-2 text-[11px] text-neutral-600 transition hover:bg-neutral-800 hover:text-neutral-400"
+            className="block rounded-lg px-3 py-2 text-[11px] text-neutral-400 transition hover:bg-neutral-800 hover:text-neutral-400"
           >
             ← Voltar ao site
           </Link>

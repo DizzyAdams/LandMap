@@ -9,7 +9,7 @@ export function Footer() {
   const locale = useActiveLocale();
 
   return (
-    <footer aria-label="Rodapé do LandMap" className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-neutral-500">
+    <footer aria-label="Rodapé do LandMap" className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-neutral-400">
       <div className="h-px w-full bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent" />
       <div className="pt-12">
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row">
@@ -35,7 +35,7 @@ export function Footer() {
 
       <div className="mt-10 flex items-center justify-between border-t hairline pt-6">
         <p>© {year} LandMap. Open real estate intelligence.</p>
-        <p className="text-neutral-600">Free AI · MiniMax via Puter</p>
+        <p className="text-neutral-400">Free AI · MiniMax via Puter</p>
       </div>
       </div>
     </footer>

@@ -52,7 +52,7 @@ export default function AdminAuditPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Auditoria</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         Registro de eventos do sistema
       </p>
 
@@ -64,7 +64,7 @@ export default function AdminAuditPage() {
           >
             {/* Time */}
             <div className="w-32 shrink-0">
-              <p className="text-xs text-neutral-500 font-mono">
+              <p className="text-xs text-neutral-400 font-mono">
                 {new Date(event.date).toLocaleString('pt-BR')}
               </p>
             </div>
@@ -75,12 +75,12 @@ export default function AdminAuditPage() {
             </span>
 
             {/* User */}
-            <span className="shrink-0 text-[11px] text-neutral-500 font-mono">
+            <span className="shrink-0 text-[11px] text-neutral-400 font-mono">
               {event.user}
             </span>
 
             {/* Details */}
-            <p className="text-xs text-neutral-600 truncate">{event.details}</p>
+            <p className="text-xs text-neutral-400 truncate">{event.details}</p>
           </div>
         ))}
       </div>

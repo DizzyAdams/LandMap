@@ -20,7 +20,7 @@ export default function Error({
       <Logo className="h-10 w-10" />
       <span className="mt-8 text-8xl font-bold tracking-tight text-gradient">500</span>
       <h1 className="mt-2 text-xl font-medium text-neutral-100">Algo deu errado</h1>
-      <p className="mt-2 max-w-md text-center text-sm text-neutral-500">
+      <p className="mt-2 max-w-md text-center text-sm text-neutral-400">
         Ocorreu um erro inesperado. Nossa equipe foi notificada e estamos trabalhando
         para resolver o problema.
       </p>

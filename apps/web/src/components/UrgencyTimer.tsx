@@ -40,7 +40,7 @@ export function UrgencyTimer({ expiresInMinutes = 1440 }: UrgencyTimerProps) {
       }`}
     >
       <svg
-        className={`h-3.5 w-3.5 ${isExpired || isUrgent ? 'text-red-400' : 'text-neutral-500'}`}
+        className={`h-3.5 w-3.5 ${isExpired || isUrgent ? 'text-red-400' : 'text-neutral-400'}`}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

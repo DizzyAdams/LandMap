@@ -48,7 +48,7 @@ export function ContactForm() {
           Mensagem enviada com sucesso! Entraremos em contato.
           <button
             onClick={() => setSent(false)}
-            className="ml-2 text-xs text-neutral-500 underline underline-offset-2 hover:text-white"
+            className="ml-2 text-xs text-neutral-400 underline underline-offset-2 hover:text-white"
           >
             Nova mensagem
           </button>

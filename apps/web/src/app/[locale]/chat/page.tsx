@@ -184,7 +184,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
       >
         {messages.length === 0 && !loading && (
           <div className="flex h-full items-center justify-center">
-            <p className="text-sm text-neutral-500">
+            <p className="text-sm text-neutral-400">
               Digite uma pergunta para começar. Ex: &quot;Apartamentos em Curitiba até R$ 500 mil&quot;
             </p>
           </div>

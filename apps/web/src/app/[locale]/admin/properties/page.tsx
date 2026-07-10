@@ -132,7 +132,7 @@ export default function AdminPropertiesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-lg font-medium text-neutral-50">Imóveis</h2>
-          <p className="mt-1 text-xs text-neutral-500">
+          <p className="mt-1 text-xs text-neutral-400">
             {properties.length} imóvel(is) cadastrado(s)
           </p>
         </div>
@@ -196,7 +196,7 @@ export default function AdminPropertiesPage() {
             ))}
             {properties.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-sm text-neutral-600">
+                <td colSpan={6} className="px-4 py-10 text-center text-sm text-neutral-400">
                   Nenhum imóvel encontrado.
                 </td>
               </tr>
@@ -213,7 +213,7 @@ export default function AdminPropertiesPage() {
             className="w-full max-w-lg rounded-xl border border-neutral-800 bg-neutral-900 p-6 shadow-2xl"
           >
             <h3 className="text-sm font-medium text-neutral-50">Editar Imóvel</h3>
-            <p className="mt-1 text-[11px] text-neutral-500">ID: {editId}</p>
+            <p className="mt-1 text-[11px] text-neutral-400">ID: {editId}</p>
 
             <div className="mt-5 space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -329,7 +329,7 @@ export default function AdminPropertiesPage() {
 
 function Th({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <th className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-500 ${className ?? ''}`}>
+    <th className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-400 ${className ?? ''}`}>
       {children}
     </th>
   );
@@ -338,7 +338,7 @@ function Th({ children, className }: { children: React.ReactNode; className?: st
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] text-neutral-500">{label}</span>
+      <span className="mb-1 block text-[11px] text-neutral-400">{label}</span>
       {children}
     </label>
   );

@@ -12,7 +12,7 @@ export default function NotFound() {
       <Logo className="h-10 w-10" />
       <span className="mt-8 text-8xl font-bold tracking-tight text-gradient">404</span>
       <h1 className="mt-2 text-xl font-medium text-neutral-100">Página não encontrada</h1>
-      <p className="mt-2 max-w-md text-center text-sm text-neutral-500">
+      <p className="mt-2 max-w-md text-center text-sm text-neutral-400">
         O conteúdo que você procura não existe ou foi movido para outro endereço.
       </p>
       <Link

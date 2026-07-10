@@ -49,14 +49,14 @@ export default function AdminWebhooksPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Webhooks</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         Configurar URLs de callback para eventos do LandMap
       </p>
 
       <div className="mt-8 max-w-lg space-y-5">
         {/* URL input */}
         <label className="block">
-          <span className="mb-1 block text-[11px] text-neutral-500">URL do Webhook</span>
+          <span className="mb-1 block text-[11px] text-neutral-400">URL do Webhook</span>
           <input
             type="url"
             value={config.url}
@@ -71,7 +71,7 @@ export default function AdminWebhooksPage() {
 
         {/* Events */}
         <div>
-          <p className="mb-2 text-[11px] text-neutral-500">Eventos</p>
+          <p className="mb-2 text-[11px] text-neutral-400">Eventos</p>
           <div className="space-y-2">
             {AVAILABLE_EVENTS.map((event) => (
               <label
@@ -99,7 +99,7 @@ export default function AdminWebhooksPage() {
         </button>
 
         {config.url && (
-          <p className="text-xs text-neutral-600">
+          <p className="text-xs text-neutral-400">
             Webhook configurado para: <span className="text-neutral-400">{config.url}</span>
             <br />
             Eventos: {config.events.length > 0 ? config.events.join(', ') : 'nenhum'}

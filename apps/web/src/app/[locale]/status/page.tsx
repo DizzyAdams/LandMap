@@ -74,7 +74,7 @@ export default function StatusPage() {
           <h1 className="mt-6 text-2xl font-semibold tracking-tight text-gradient">
             Status dos Serviços
           </h1>
-          <p className="mt-2 text-sm text-neutral-500">
+          <p className="mt-2 text-sm text-neutral-400">
             Monitoramento em tempo real
           </p>
         </Reveal>
@@ -103,7 +103,7 @@ export default function StatusPage() {
                 <div className="flex items-center gap-5">
                   <span className={`text-xs font-medium ${cfg.color}`}>{cfg.label}</span>
                   <span className="text-xs text-neutral-400 font-mono">{service.latency}</span>
-                  <span className="text-[11px] text-neutral-500">
+                  <span className="text-[11px] text-neutral-400">
                     {service.lastCheck
                       ? new Date(service.lastCheck).toLocaleTimeString('pt-BR')
                       : '—'}
@@ -114,7 +114,7 @@ export default function StatusPage() {
           })}
         </Stagger>
 
-        <p className="mt-8 text-center text-xs text-neutral-500">
+        <p className="mt-8 text-center text-xs text-neutral-400">
           Última verificação há poucos segundos · latências medidas em ambiente de demonstração
         </p>
       </div>

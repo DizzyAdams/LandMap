@@ -76,7 +76,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
         <Reveal>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs text-neutral-500">Imóvel</p>
+              <p className="text-xs text-neutral-400">Imóvel</p>
               <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
               <p className="mt-2 text-sm text-neutral-400">
                 {property.city}, {property.state} · {property.areaM2} m²
@@ -96,13 +96,13 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
 
         <Stagger className="mt-8 grid gap-3 sm:grid-cols-3">
           <Card variant="default" className="sm:col-span-2">
-            <p className="text-xs text-neutral-500">Valor</p>
+            <p className="text-xs text-neutral-400">Valor</p>
             <p className="mt-1 text-2xl font-medium">{priceText}</p>
-            <p className="mt-4 text-xs text-neutral-500">Disponibilidade</p>
+            <p className="mt-4 text-xs text-neutral-400">Disponibilidade</p>
             <p className="mt-1 text-sm text-neutral-300">{property.available ? 'Disponível' : 'Indisponível'}</p>
           </Card>
           <Card variant="default">
-            <p className="text-xs text-neutral-500">Localização</p>
+            <p className="text-xs text-neutral-400">Localização</p>
             <a
               className="mt-2 block text-sm text-neutral-300 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
               href={`https://www.google.com/maps/search/?api=1&q=${mapQuery}`}
@@ -188,7 +188,7 @@ async function SimilarProperties({
                 className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
               >
                 <p className="text-sm text-neutral-300">{item.title}</p>
-                <p className="mt-1 text-xs text-neutral-500">
+                <p className="mt-1 text-xs text-neutral-400">
                   {item.city}, {item.state} · {item.areaM2} m²
                   {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
                 </p>

@@ -71,13 +71,13 @@ export default function AdminLeadsPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Leads</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         {leads.length} leads simulados
       </p>
 
       {/* Filter */}
       <div className="mt-6 flex items-center gap-3">
-        <label className="text-[11px] text-neutral-500">Filtrar por estágio:</label>
+        <label className="text-[11px] text-neutral-400">Filtrar por estágio:</label>
         <select
           value={filterStage}
           onChange={(e) => setFilterStage(e.target.value)}
@@ -120,14 +120,14 @@ export default function AdminLeadsPage() {
                   <StageBadge stage={lead.stage} />
                 </td>
                 <td className="px-4 py-3 text-neutral-400 text-[13px]">{lead.propertyInterest}</td>
-                <td className="px-4 py-3 text-neutral-600 text-[13px]">
+                <td className="px-4 py-3 text-neutral-400 text-[13px]">
                   {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
                 </td>
               </tr>
             ))}
             {filtered.length === 0 && (
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-sm text-neutral-600">
+                <td colSpan={6} className="px-4 py-10 text-center text-sm text-neutral-400">
                   Nenhum lead encontrado.
                 </td>
               </tr>
@@ -143,7 +143,7 @@ export default function AdminLeadsPage() {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-500">
+    <th className="px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-400">
       {children}
     </th>
   );

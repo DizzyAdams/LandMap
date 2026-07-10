@@ -129,7 +129,7 @@ export default function AlertsPage() {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Label */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">
+              <label className="block mb-1 text-xs text-neutral-400">
                 Nome do alerta <span aria-hidden="true">*</span>
               </label>
               <input
@@ -144,7 +144,7 @@ export default function AlertsPage() {
 
             {/* City */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">Cidade</label>
+              <label className="block mb-1 text-xs text-neutral-400">Cidade</label>
               <input
                 name="city"
                 value={form.city}
@@ -156,7 +156,7 @@ export default function AlertsPage() {
 
             {/* Type */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">Tipo</label>
+              <label className="block mb-1 text-xs text-neutral-400">Tipo</label>
               <select
                 name="type"
                 value={form.type}
@@ -171,7 +171,7 @@ export default function AlertsPage() {
 
             {/* Modality */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">Modalidade</label>
+              <label className="block mb-1 text-xs text-neutral-400">Modalidade</label>
               <select
                 name="modality"
                 value={form.modality}
@@ -186,7 +186,7 @@ export default function AlertsPage() {
 
             {/* Max Price */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">Preço máx. (R$)</label>
+              <label className="block mb-1 text-xs text-neutral-400">Preço máx. (R$)</label>
               <input
                 name="maxPrice"
                 type="number"
@@ -199,7 +199,7 @@ export default function AlertsPage() {
 
             {/* Min Area */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-500">Área mín. (m²)</label>
+              <label className="block mb-1 text-xs text-neutral-400">Área mín. (m²)</label>
               <input
                 name="minArea"
                 type="number"
@@ -232,7 +232,7 @@ export default function AlertsPage() {
         {/* Alert list */}
         <section className="mt-10">
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-neutral-500" aria-live="polite">
+            <p className="text-sm text-neutral-400" aria-live="polite">
               {alerts.length} alerta{alerts.length !== 1 ? 's' : ''} salvo{alerts.length !== 1 ? 's' : ''}
             </p>
             {alerts.length > 0 && (
@@ -311,7 +311,7 @@ function AlertCard({
             </span>
           ))}
         </div>
-        <p className="mt-2 text-[11px] text-neutral-600">Criado em {createdDate}</p>
+        <p className="mt-2 text-[11px] text-neutral-400">Criado em {createdDate}</p>
       </div>
 
       <div className="ml-4 flex items-center gap-2 shrink-0">

@@ -232,46 +232,50 @@ body {
   );
 }
 
-/* Slowly rotating geometric mandala (Gulf / Islamic-geometry inspired).
-   Pure transform — GPU friendly, respects reduced motion below. */
-.mandala-spin {
-  animation: mandala-spin 90s linear infinite;
-  will-change: transform;
+/* ─── Editorial system — "Sovereign Cadastre" ───
+   Restraint is the signature. No aimless ambient motion (no drifting dust,
+   no endless mandala/orbit spin): confidence reads as stillness. Type, hairlines
+   and a single monospace data layer do the talking. */
+
+/* Small uppercase tracked label — the cadastral "section marker". */
+.eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
-@keyframes mandala-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.eyebrow-gold {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
 }
 
-/* Drifting gold dust — a field of faint champagne motes for the sovereign surreal. */
-.gold-dust {
-  background-image: radial-gradient(rgba(232, 200, 115, 0.5) 1px, transparent 1.4px);
-  background-size: 46px 46px;
-  animation: gold-drift 26s linear infinite;
-  opacity: 0.5;
-}
-@keyframes gold-drift {
-  from { background-position: 0 0; }
-  to { background-position: 46px 92px; }
+/* Monospace, tabular numerals for prices / metrics / coordinates. */
+.ledger-num {
+  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
 }
 
-/* ─── Surreal ornament motion (pure transform/opacity, GPU-friendly) ─── */
-@keyframes orb-float {
-  0% { transform: translate3d(0, 0, 0) scale(1); }
-  50% { transform: translate3d(4%, -5%, 0) scale(1.07); }
-  100% { transform: translate3d(0, 0, 0) scale(1); }
+/* Thin gold rule used to open/close editorial sections. */
+.rule-gold {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(212, 175, 55, 0.55),
+    transparent
+  );
 }
-@keyframes ring-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-.orb-float {
-  animation: orb-float 16s ease-in-out infinite;
-  will-change: transform;
-}
-.ring-spin {
-  animation: ring-spin 42s linear infinite;
-  will-change: transform;
+
+/* Precise hairline grid — the "cadastral plot" texture, static and intentional. */
+.cadastre-grid {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
 }
 
 /* Accessible, on-brand focus rings */
@@ -292,10 +296,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
   .aurora { animation: none; }
-  .orb-float { animation: none; }
-  .ring-spin { animation: none; }
-  .mandala-spin { animation: none; }
-  .gold-dust { animation: none; }
 }
 
 /* ─── Skeleton shimmer (loading placeholders) ─── */

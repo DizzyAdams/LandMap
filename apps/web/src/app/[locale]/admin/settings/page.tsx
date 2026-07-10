@@ -47,7 +47,7 @@ export default function AdminSettingsPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Configurações</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         Configurações gerais da plataforma
       </p>
 
@@ -101,7 +101,7 @@ export default function AdminSettingsPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] text-neutral-500">{label}</span>
+      <span className="mb-1 block text-[11px] text-neutral-400">{label}</span>
       {children}
     </label>
   );

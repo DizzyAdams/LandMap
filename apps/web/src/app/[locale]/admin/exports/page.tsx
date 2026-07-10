@@ -86,7 +86,7 @@ export default function AdminExportsPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Exportações</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         Exportar dados do LandMap
       </p>
 
@@ -134,7 +134,7 @@ function ExportCard({
       className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 text-left transition hover:border-neutral-600 hover:bg-neutral-900/60 disabled:opacity-50"
     >
       <p className="text-sm font-medium text-neutral-50">{loading ? 'Exportando...' : title}</p>
-      <p className="mt-2 text-xs text-neutral-500">{description}</p>
+      <p className="mt-2 text-xs text-neutral-400">{description}</p>
     </button>
   );
 }

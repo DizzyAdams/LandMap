@@ -163,7 +163,7 @@ export default async function SearchPage({
         ) : (
           <>
             {/* Sort + count bar */}
-            <div className="mb-4 flex items-center justify-between text-xs text-neutral-500">
+            <div className="mb-4 flex items-center justify-between text-xs text-neutral-400">
               <span aria-live="polite">
                 {sorted.length} resultado{sorted.length === 1 ? '' : 's'}
               </span>
@@ -210,7 +210,7 @@ export default async function SearchPage({
                           <div className="flex items-start justify-between">
                             <div>
                               <p className="text-sm text-neutral-300">{item.title}</p>
-                              <p className="mt-1 text-xs text-neutral-500">
+                              <p className="mt-1 text-xs text-neutral-400">
                                 {item.city}, {item.state} · {item.areaM2} m²
                                 {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
                               </p>
@@ -223,7 +223,7 @@ export default async function SearchPage({
                             </span>
                             <span className="flex items-center gap-2">
                               {pricePerM2 > 0 && (
-                                <span className="text-xs text-neutral-500">
+                                <span className="text-xs text-neutral-400">
                                   {formatBRL(pricePerM2)}/m²
                                 </span>
                               )}
@@ -251,7 +251,7 @@ export default async function SearchPage({
                   .map((p, idx, arr) => (
                     <span key={p} className="flex items-center gap-1">
                       {idx > 0 && arr[idx - 1] !== p - 1 && (
-                        <span className="px-1 text-neutral-500">...</span>
+                        <span className="px-1 text-neutral-400">...</span>
                       )}
                       {p === safePage ? (
                         <span className="rounded-md bg-neutral-800 px-3 py-1.5 text-white">{p}</span>

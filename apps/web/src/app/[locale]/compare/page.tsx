@@ -102,7 +102,7 @@ export default async function ComparePage({
                   { label: 'Disponível', get: (p: Property) => p.available ? 'Sim' : 'Não' },
                 ].map((row) => (
                   <tr key={row.label} className="border-b border-white/5">
-                    <th scope="row" className="py-3 pr-4 text-left text-xs font-normal text-neutral-500">{row.label}</th>
+                    <th scope="row" className="py-3 pr-4 text-left text-xs font-normal text-neutral-400">{row.label}</th>
                     {properties.map((p) => (
                       <td key={p.id} className="py-3 px-4">
                         {row.get(p)}

@@ -5,7 +5,6 @@ import { formatBRL } from '../../lib/format';
 import { Reveal, Stagger, ScrollProgress } from '../../components/Motion';
 import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
-import { SurrealBackground } from '../../components/SurrealBackground';
 
 export const dynamic = 'force-dynamic';
 
@@ -24,182 +23,134 @@ export default async function LocaleHomePage() {
     <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      {/* Surreal ambient stage — constellation + aurora + grain + sovereign gold */}
-      <SurrealBackground className="pointer-events-none absolute inset-0 -z-20 h-full w-full opacity-60" />
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 -z-20 h-[70rem] aurora opacity-70" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(48rem_36rem_at_16%_-10%,rgba(52,211,153,0.14),transparent_70%)]" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 grain opacity-[0.05] mix-blend-overlay" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 gold-dust opacity-40" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 cadastre-grid opacity-[0.35]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42rem]"
+        style={{ background: 'radial-gradient(48rem 30rem at 50% -12%, rgba(52,211,153,0.10), transparent 70%)' }}
+      />
 
-      {/* Sovereign gold mandala — slow rotating geometric focal point (Gulf / Islamic-geometry inspired) */}
-      <div aria-hidden className="pointer-events-none absolute left-1/2 top-24 -z-10 hidden -translate-x-1/2 md:block">
-        <div className="gold-aura absolute left-1/2 top-1/2 h-[34rem] w-[34rem] -translate-x-1/2 -translate-y-1/2 blur-2xl" />
-        <svg
-          className="mandala-spin relative h-[34rem] w-[34rem]"
-          viewBox="0 0 200 200"
-          fill="none"
-          style={{ color: 'rgba(212,175,55,0.30)' }}
-        >
-          <circle cx="100" cy="100" r="96" stroke="currentColor" strokeWidth="0.6" />
-          <circle cx="100" cy="100" r="74" stroke="currentColor" strokeWidth="0.5" strokeDasharray="2 4" />
-          <circle cx="100" cy="100" r="52" stroke="currentColor" strokeWidth="0.5" />
-          <g stroke="currentColor" strokeWidth="0.5">
-            <path d="M100 4 L100 196 M4 100 L196 100 M29 29 L171 171 M171 29 L29 171" />
-            <path d="M100 48 L152 100 L100 152 L48 100 Z" />
-            <path d="M100 48 L152 100 L100 152 L48 100 Z" transform="rotate(45 100 100)" />
-          </g>
-          <g stroke="currentColor" strokeWidth="0.4" opacity="0.7">
-            <path d="M100 24 L124 76 L176 100 L124 124 L100 176 L76 124 L24 100 L76 76 Z" />
-          </g>
-        </svg>
-      </div>
+      <section className="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:pt-28">
+        <div className="h-px w-16 rule-gold" />
+        <p className="eyebrow-gold mt-5">Inteligencia imobiliaria aberta</p>
 
-      {/* Asymmetric orbiting ornament (desktop only) */}
-      <div aria-hidden className="pointer-events-none absolute right-[-7rem] top-28 -z-10 hidden md:block">
-        <div className="ring-spin relative h-80 w-80 rounded-full border border-emerald-400/15">
-          <div className="absolute inset-10 rounded-full border border-amber-300/15" />
-          <div className="absolute inset-[5.5rem] rounded-full border border-emerald-400/10" />
-          <div className="orb-float absolute left-1/2 top-1/2 h-44 w-44 -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle_at_32%_30%,rgba(232,200,115,0.55),rgba(212,175,55,0.14)_58%,transparent_72%)] blur-2xl" />
-        </div>
-      </div>
+        <h1 className="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
+          Veja o territorio imobiliario como{' '}
+          <span className="text-gradient-gold">dados</span>.
+        </h1>
 
-      {/* Hero */}
-      <Reveal className="relative mx-auto max-w-6xl px-6 pt-32 pb-20">
-        <div className="max-w-2xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-amber-300/25 bg-amber-300/5 px-4 py-1 text-xs text-amber-200/90 tracking-wide uppercase">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(212,175,55,0.9)]" />
-            Inteligência Imobiliária Soberana
+        <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+          Busca por cidade e tipo, mapa interativo, chat com IA e calculo de
+          investimento. 1.500 imoveis em 10 cidades — sem custo e sem login.
+        </p>
+
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <Link href="./search" className="inline-flex h-11 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200">
+            Explorar imoveis
+          </Link>
+          <Link href="./map" className="inline-flex h-11 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-200 transition hover:border-neutral-500 hover:text-white">
+            Abrir o mapa
+          </Link>
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+            Dados vivos · 10 cidades
           </span>
-          <h1 className="mt-8 text-5xl font-semibold tracking-tight leading-[1.04] text-aurora md:text-7xl">
-            Dados que movem <span className="text-gradient-gold">capital</span><br />no mercado imobiliário
-          </h1>
-          <p className="mt-4 text-base text-neutral-400 max-w-lg">
-            1.500+ imóveis estruturados, busca inteligente, mapa interativo e análises RAG — com IA 100% gratuita e dados abertos.
-          </p>
-          <div className="mt-10 flex items-center gap-4">
-            <Link
-              href="./search"
-              className="glow-gold inline-flex h-11 items-center rounded-lg bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-600 px-6 text-sm font-semibold text-[#1a1206] transition hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(212,175,55,0.55),0_16px_54px_-12px_rgba(212,175,55,0.7)]"
-            >
-              Buscar imóveis
-            </Link>
-            <Link
-              href="./map"
-              className="inline-flex h-11 items-center rounded-lg border border-amber-300/25 px-6 text-sm font-medium text-amber-100/90 transition hover:border-amber-300/50 hover:text-white"
-            >
-              Explorar mapa
-            </Link>
-          </div>
         </div>
-      </Reveal>
+      </section>
 
       <Marquee />
 
-      {/* Quick stats */}
-      <Reveal delay={0.1} className="mx-auto max-w-6xl px-6 pb-16">
-        <Stagger className="grid gap-px overflow-hidden rounded-xl border border-neutral-800 bg-neutral-800 sm:grid-cols-3">
-          {[
-            { label: 'Imóveis catalogados', value: '1.500+' },
-            { label: 'Cidades mapeadas', value: '10' },
-            { label: 'Modalidades', value: 'Venda · Aluguel · Lançamento' },
-          ].map((stat) => (
-            <SpotlightCard key={stat.label} className="bg-[#050505] p-6">
-              <p className="text-2xl font-semibold">{stat.value}</p>
-              <p className="mt-1 text-xs text-neutral-500">{stat.label}</p>
-            </SpotlightCard>
-          ))}
-        </Stagger>
+      <Reveal className="mx-auto max-w-6xl px-6 py-20">
+        <div className="flex items-end justify-between gap-4">
+          <div>
+            <p className="eyebrow">Destaque no cadastro</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Imoveis em destaque</h2>
+          </div>
+          <Link href="./search" className="shrink-0 text-sm text-neutral-400 transition hover:text-white">
+            Ver todos →
+          </Link>
+        </div>
+
+        {featured.length > 0 ? (
+          <div className="mt-8 overflow-x-auto">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-neutral-400">
+                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Imovel</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Local</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Tipo</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Area</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Quartos</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Preco</th>
+                </tr>
+              </thead>
+              <tbody>
+                {featured.map((p) => (
+                  <tr key={p.id} className="group transition hover:bg-white/[0.03]">
+                    <td className="border-b border-neutral-900 px-3 py-3">
+                      <Link href={`./property/${p.id}`} className="font-medium text-neutral-100 transition group-hover:text-white">
+                        {p.title}
+                      </Link>
+                    </td>
+                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-neutral-400">{p.city}/{p.state}</td>
+                    <td className="border-b border-neutral-900 px-3 py-3 text-neutral-400">{p.type} · {p.modality}</td>
+                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-right text-neutral-300">{p.areaM2} m²</td>
+                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-right text-neutral-300">{p.bedrooms ?? '—'}</td>
+                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-right font-medium text-white">{formatBRL(p.price)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        ) : (
+          <p className="mt-8 text-sm text-neutral-400">Nenhum imovel encontrado no momento.</p>
+        )}
       </Reveal>
 
-      {/* Featured */}
-      {featured.length > 0 && (
-        <Reveal delay={0.2} className="mx-auto max-w-6xl px-6 pb-24">
-          <div className="flex items-end justify-between">
-            <div>
-              <h2 className="text-lg font-medium">Imóveis em destaque</h2>
-              <p className="mt-1 text-sm text-neutral-500">Explore alguns imóveis disponíveis.</p>
-            </div>
-            <Link href="./search" className="text-xs text-neutral-400 underline decoration-neutral-700 underline-offset-4 transition hover:text-white">
-              Ver todos
-            </Link>
-          </div>
-          <ul role="list" className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((item) => (
-              <li key={item.id}>
-                <SpotlightCard className="p-5">
-                  <Link
-                    href={`./property/${item.id}`}
-                    className="group block h-full"
-                  >
-                    <div className="flex items-start justify-between">
-                      <p className="text-sm text-neutral-300 transition group-hover:text-white">{item.title}</p>
-                      <span className="shrink-0 ml-2 text-xs text-neutral-500">{item.modality}</span>
-                    </div>
-                    <p className="mt-2 text-xs text-neutral-500">
-                      {item.city}, {item.state} · {item.areaM2} m²
-                      {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
-                    </p>
-                    <p className="mt-3 text-sm font-medium">
-                      {formatBRL(item.price)}
-                    </p>
-                  </Link>
-                </SpotlightCard>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
-      )}
-
-      {/* Agentes & Skills — todas online */}
       <Reveal delay={0.1} className="mx-auto max-w-6xl px-6 pb-24">
         <div className="flex items-end justify-between gap-4">
           <div>
-            <h2 className="text-lg font-medium">Agentes &amp; Skills — todas online</h2>
-            <p className="mt-1 text-sm text-neutral-500">Ecossistema vivo: IA, automação e dados operando em produção.</p>
+            <p className="eyebrow">Ecossistema operando</p>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Agentes &amp; Skills</h2>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-2 rounded-full border border-amber-300/30 bg-amber-300/10 px-3 py-1 text-xs text-amber-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(212,175,55,0.9)]" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
             All systems live
           </span>
         </div>
         <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { href: './sales', title: 'Agente de Vendas', desc: 'Esquadrão de 6 agentes: prospecção → fechamento.', tag: '6 agentes' },
-            { href: './chat', title: 'Chat RAG (IA grátis)', desc: 'Pergunte sobre imóveis. MiniMax via Puter.js.', tag: 'LLM' },
-            { href: './map', title: 'Mapa Interativo', desc: 'Leaflet com pins, clusters e geocodificação.', tag: 'Geo' },
-            { href: './compare', title: 'Comparador', desc: 'Diff de preço, área e quartos entre imóveis.', tag: 'Diff' },
-            { href: './studio', title: 'Studio (IA & Design)', desc: 'Geração de copy e variações de marca.', tag: 'GenAI' },
+            { href: './sales', title: 'Agente de Vendas', desc: 'Esquadrao de 11 agentes: prospeccao → fechamento.', tag: '11 agentes' },
+            { href: './chat', title: 'Chat RAG (IA gratis)', desc: 'Pergunte sobre imoveis. MiniMax via Puter.js.', tag: 'LLM' },
+            { href: './map', title: 'Mapa Interativo', desc: 'Leaflet com pins, clusters e geocodificacao.', tag: 'Geo' },
+            { href: './compare', title: 'Comparador', desc: 'Diff de preco, area e quartos entre imoveis.', tag: 'Diff' },
+            { href: './studio', title: 'Studio (IA & Design)', desc: 'Geracao de copy e variacoes de marca.', tag: 'GenAI' },
             { href: './favorites', title: 'Favoritos & Alertas', desc: 'Salve e receba alertas por filtro.', tag: 'Sync' },
-            { href: './status', title: 'Status & Live', desc: 'Telemetria ao vivo das skills e pipeline.', tag: 'Live' },
+            { href: './insights', title: 'Insights de Investimento', desc: 'Metricas PURAS: cap rate, cash-on-cash, IRR.', tag: 'Invest' },
             { href: './calculator', title: 'Calculadora', desc: 'Simule financiamento e ROI.', tag: 'Fin' },
           ].map((s) => (
-            <SpotlightCard key={s.href} className="p-5">
+            <SpotlightCard key={s.href} className="border border-neutral-800 p-5">
               <Link href={s.href} className="group block h-full">
                 <div className="flex items-center justify-between">
                   <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-                  <span className="rounded-md border border-neutral-800 px-2 py-0.5 text-[10px] uppercase tracking-wide text-neutral-500">{s.tag}</span>
+                  <span className="rounded-md border border-neutral-800 px-2 py-0.5 text-[10px] uppercase tracking-wide text-neutral-400">{s.tag}</span>
                 </div>
                 <p className="mt-3 text-sm font-medium text-neutral-100 transition group-hover:text-white">{s.title}</p>
-                <p className="mt-1 text-xs text-neutral-500">{s.desc}</p>
+                <p className="mt-1 text-xs text-neutral-400">{s.desc}</p>
               </Link>
             </SpotlightCard>
           ))}
         </Stagger>
       </Reveal>
 
-      {/* CTA */}
-      <Reveal className="border-t hairline">
-        <div className="mx-auto max-w-6xl px-6 py-16 text-center">
-          <h2 className="text-xl font-medium">Plataforma aberta de dados</h2>
-          <p className="mt-2 text-sm text-neutral-500 mx-auto max-w-md">
-            API REST, schema.org, RAG local, CRM — tudo open-source.
-          </p>
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <Link
-              href="./search"
-              className="inline-flex h-10 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition hover:border-neutral-500 hover:text-white"
-            >
-              Começar busca
+      <Reveal className="border-t border-neutral-800">
+        <div className="mx-auto max-w-6xl px-6 py-16">
+          <p className="eyebrow-gold">Plataforma aberta</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA — sem custo.</h2>
+          <p className="mt-2 max-w-md text-sm text-neutral-400">API REST, schema.org, RAG local, CRM — tudo open-source.</p>
+          <div className="mt-6">
+            <Link href="./search" className="inline-flex h-11 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition hover:border-neutral-500 hover:text-white">
+              Comecar busca
             </Link>
           </div>
         </div>

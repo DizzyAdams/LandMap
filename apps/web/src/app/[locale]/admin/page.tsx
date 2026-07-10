@@ -66,7 +66,7 @@ export default function AdminDashboardPage() {
   return (
     <div>
       <h2 className="text-lg font-medium text-neutral-50">Dashboard</h2>
-      <p className="mt-1 text-xs text-neutral-500">
+      <p className="mt-1 text-xs text-neutral-400">
         Resumo geral do LandMap
       </p>
 
@@ -88,11 +88,11 @@ export default function AdminDashboardPage() {
                 key={card.label}
                 className={`rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 border-l-4 ${card.color}`}
               >
-                <p className="text-xs text-neutral-500">{card.label}</p>
+                <p className="text-xs text-neutral-400">{card.label}</p>
                 <p className="mt-1 text-2xl font-semibold text-neutral-50">
                   {card.value}
                 </p>
-                <p className="mt-1 text-[11px] text-neutral-600">{card.sub}</p>
+                <p className="mt-1 text-[11px] text-neutral-400">{card.sub}</p>
               </div>
             ))}
           </div>
@@ -114,7 +114,7 @@ export default function AdminDashboardPage() {
                 key={item.label}
                 className="rounded-lg border border-neutral-800 bg-neutral-900/20 p-4"
               >
-                <p className="text-[11px] text-neutral-500">{item.label}</p>
+                <p className="text-[11px] text-neutral-400">{item.label}</p>
                 <p className="mt-1 text-sm font-medium text-neutral-50">{item.value}</p>
               </div>
             ))}

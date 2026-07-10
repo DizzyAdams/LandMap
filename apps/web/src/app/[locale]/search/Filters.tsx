@@ -29,7 +29,7 @@ export function Filters({ locale, defaults }: { locale: string; defaults: Filter
         >
           {open ? 'Ocultar filtros' : 'Filtros'}
         </button>
-        <span className="text-xs text-neutral-500">
+        <span className="text-xs text-neutral-400">
           {defaults.q ? `Filtro: ${defaults.q}` : 'Refine sua busca'}
         </span>
       </div>
@@ -99,12 +99,12 @@ export function Filters({ locale, defaults }: { locale: string; defaults: Filter
           className="input"
         />
         <div className="lg:col-span-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-neutral-500">
+          <p className="text-xs text-neutral-400">
             {defaults.q ? `Filtro ativo: ${defaults.q}` : 'Use filtros para refinar.'}
           </p>
           <div className="flex items-center gap-3">
             <span
-              className="hidden items-center gap-1 text-[11px] text-neutral-500 sm:inline-flex"
+              className="hidden items-center gap-1 text-[11px] text-neutral-400 sm:inline-flex"
               aria-hidden="true"
             >
               Pressione <kbd className="rounded border border-neutral-700 px-1">/</kbd> ou{' '}

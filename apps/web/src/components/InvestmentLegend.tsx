@@ -90,7 +90,7 @@ export function InvestmentLegend({
               style={{ backgroundColor: INVESTMENT_GRADE_COLORS[g] }}
             />
             <span className="font-mono font-semibold text-neutral-100">{g}</span>
-            <span className="text-neutral-500">
+            <span className="text-neutral-400">
               {GRADE_META[g].range}
               {showHints ? ` · ${GRADE_META[g].hint}` : ''}
             </span>

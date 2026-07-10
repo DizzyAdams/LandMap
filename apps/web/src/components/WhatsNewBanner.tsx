@@ -46,7 +46,7 @@ export function WhatsNewBanner() {
           type="button"
           onClick={dismiss}
           aria-label="Dispensar aviso de novidades"
-          className="shrink-0 rounded-md px-2 py-0.5 text-neutral-500 transition hover:bg-white/5 hover:text-white"
+          className="shrink-0 rounded-md px-2 py-0.5 text-neutral-400 transition hover:bg-white/5 hover:text-white"
         >
           Dispensar
         </button>

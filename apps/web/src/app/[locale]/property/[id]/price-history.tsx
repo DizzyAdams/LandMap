@@ -39,7 +39,7 @@ export function PriceHistory({ history }: PriceHistoryProps) {
 
   return (
     <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
-      <p className="mb-3 text-xs text-neutral-500">Histórico de preços</p>
+      <p className="mb-3 text-xs text-neutral-400">Histórico de preços</p>
       <svg
         viewBox={`0 0 ${W} ${H}`}
         className="w-full"
