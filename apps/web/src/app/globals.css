@@ -280,7 +280,7 @@ body {
 
 /* Accessible, on-brand focus rings */
 :focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--gold) 75%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--emerald) 70%, transparent);
   outline-offset: 2px;
   border-radius: 6px;
 }

@@ -4,7 +4,7 @@ import { cn } from './cn';
 // `default` is the bioluminescent primary action; `hero` keeps an explicit,
 // opt-in high-contrast white only for rare cases (never the default).
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'default' | 'outline' | 'ghost' | 'hero';
+  variant?: 'default' | 'outline' | 'ghost' | 'hero' | 'gold';
   size?: 'sm' | 'md' | 'lg';
 };
 
@@ -35,7 +35,7 @@ const disabledBase: React.CSSProperties = {
 
 // Bioluminescent emerald->cyan primary; neutral ghost/outline stay on-brand.
 const variantMap: Record<
-  'default' | 'outline' | 'ghost' | 'hero',
+  'default' | 'outline' | 'ghost' | 'hero' | 'gold',
   { base: React.CSSProperties; hover: React.CSSProperties }
 > = {
   default: {
@@ -62,6 +62,19 @@ const variantMap: Record<
   hero: {
     base: { backgroundColor: '#ffffff', color: '#050505' },
     hover: { backgroundColor: '#e5e5e5' },
+  },
+  // Sovereign champagne gold — premium investor / capital accent (on tokens).
+  gold: {
+    base: {
+      background: 'linear-gradient(90deg, var(--gold-soft) 0%, var(--gold) 55%, var(--gold-deep) 100%)',
+      color: '#050505',
+      boxShadow: 'var(--glow-gold)',
+    },
+    hover: {
+      background: 'linear-gradient(90deg, var(--gold-bright) 0%, var(--gold) 55%, var(--gold-deep) 100%)',
+      transform: 'translateY(-1px)',
+      boxShadow: 'var(--glow-sovereign)',
+    },
   },
 };
 

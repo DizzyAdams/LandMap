@@ -45,3 +45,11 @@ export type { OnboardingTourProps, TourStep } from './components/OnboardingTour'
 export { MetricStat } from './components/MetricStat';
 export type { MetricStatProps, MetricTone, MetricThreshold } from './components/MetricStat';
 
+/* Agent-swarm refactor — new components (Silicon Valley bar). */
+export { MobileBottomNav } from './components/MobileBottomNav';
+export { Stepper } from './components/Stepper';
+export type { Step, StepperProps } from './components/Stepper';
+export { NotificationCenter } from './components/NotificationCenter';
+export { AnimatedNumber } from './components/AnimatedNumber';
+export type { AnimatedNumberProps } from './components/AnimatedNumber';
+

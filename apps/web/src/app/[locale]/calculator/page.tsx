@@ -33,7 +33,7 @@ export default function CalculatorPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-neutral-50">
       <Reveal className="mx-auto max-w-2xl px-6 py-10">
-        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
+        <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
           Simulação de referência
         </span>
@@ -94,11 +94,11 @@ export default function CalculatorPage() {
         {result && (
           <>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
+              <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
                 <p className="text-xs text-neutral-400">Parcela mensal</p>
                 <p className="mt-1 text-xl font-medium text-emerald-300">{fmt(result.parcela)}</p>
               </div>
-              <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
+              <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
                 <p className="text-xs text-neutral-400">Total de juros</p>
                 <p className="mt-1 text-xl font-medium text-neutral-100">{fmt(result.totalJuros)}</p>
               </div>

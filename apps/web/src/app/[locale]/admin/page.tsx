@@ -40,13 +40,13 @@ export default function AdminDashboardPage() {
           label: 'Total de Imóveis',
           value: stats.totalProperties,
           sub: `${stats.totalAvailable} disponíveis · ${stats.totalSold} vendidos`,
-          color: 'border-l-emerald-500',
+          color: 'border-l-emerald-400',
         },
         {
           label: 'Leads',
           value: SIMULATED_LEADS,
           sub: 'exemplo · dados de demonstração',
-          color: 'border-l-emerald-500',
+          color: 'border-l-emerald-400',
         },
         {
           label: 'Visitas Simuladas',

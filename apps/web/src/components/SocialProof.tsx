@@ -27,7 +27,7 @@ export function SocialProof({ propertyId }: SocialProofProps) {
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/60 px-3 py-1.5 text-xs text-neutral-400">
       <svg
-        className="h-3.5 w-3.5 text-emerald-500"
+        className="h-3.5 w-3.5 text-emerald-400"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

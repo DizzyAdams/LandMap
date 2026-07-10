@@ -27,7 +27,7 @@ export function SpotlightCard({
     <div
       ref={ref}
       onPointerMove={onMove}
-      className={`spotlight-card group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.35)] ${className}`}
+      className={`spotlight-card group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 transition-all duration-300 hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.35)] ${className}`}
     >
       <div
         aria-hidden

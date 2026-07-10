@@ -94,7 +94,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
                   <span
                     aria-hidden
                     className={cn(
-                      'text-neutral-500 transition-transform duration-200',
+                      'text-neutral-400 transition-transform duration-200',
                       isOpen && 'rotate-180',
                     )}
                   >

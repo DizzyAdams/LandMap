@@ -74,7 +74,7 @@ function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: (id: strin
         type="button"
         onClick={() => onDismiss(item.id)}
         aria-label="Dismiss"
-        className="flex-none rounded-md p-1 text-neutral-500 outline-none transition hover:bg-white/10 hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+        className="flex-none rounded-md p-1 text-neutral-400 outline-none transition hover:bg-white/10 hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
           <path d="M6 6l12 12M18 6L6 18" />

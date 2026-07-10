@@ -11,6 +11,7 @@ import {
   Avatar,
   Tabs,
   EmptyState,
+  Stepper,
 } from '@landmap/ui';
 import { Reveal, Stagger } from '../../../components/Motion';
 import type {
@@ -75,7 +76,7 @@ const STAGE_COLOR: Record<PipelineStage, string> = {
 
 const LEVEL_COLOR: Record<EventLevel, string> = {
   info: 'border-l-sky-500/60',
-  success: 'border-l-emerald-500/60',
+  success: 'border-l-emerald-400/60',
   warn: 'border-l-amber-500/60',
   escalation: 'border-l-red-500/60',
 };
@@ -226,8 +227,23 @@ export default function SalesCockpitPage() {
 
 function PipelineView({ state, agentName }: { state: SalesState; agentName: Record<string, string> }) {
   const byStage = (stage: PipelineStage) => state.deals.filter((d) => d.stage === stage);
+
+  const current = (() => {
+    const present = STAGE_ORDER.filter((s) => state.deals.some((d) => d.stage === s));
+    if (present.length === 0) return 0;
+    return STAGE_ORDER.indexOf(present[present.length - 1]);
+  })();
+
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+    <>
+      <div className="surface mb-6 overflow-x-auto rounded-xl p-5">
+        <p className="eyebrow mb-4">Funil de vendas</p>
+        <Stepper
+          steps={STAGE_ORDER.map((s) => ({ id: s, label: STAGE_LABEL[s] }))}
+          current={current}
+        />
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {STAGE_ORDER.map((stage) => {
         const deals = byStage(stage);
         const value = deals.reduce((s, d) => s + d.amount, 0);
@@ -248,6 +264,7 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
         );
       })}
     </div>
+    </>
   );
 }
 
@@ -362,7 +379,7 @@ function ForecastView({ state }: { state: SalesState }) {
               <span className={`w-24 shrink-0 text-xs ${STAGE_COLOR[f.stage]}`}>{STAGE_LABEL[f.stage]}</span>
               <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-300"
+                  className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400"
                   style={{ width: `${(f.value / max) * 100}%` }}
                 />
               </div>

@@ -8,7 +8,7 @@ import { WhatsNewBanner } from '../../components/WhatsNewBanner';
 import { ShortcutsHelp } from '../../components/ShortcutsHelp';
 import { Cursor } from '../../components/Cursor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
-import { ToastProvider } from '@landmap/ui';
+import { ToastProvider, MobileBottomNav } from '@landmap/ui';
 import { CommandPaletteHost } from '../../components/CommandPaletteHost';
 import '@landmap/ui/styles.css';
 import '../../app/globals.css';
@@ -98,10 +98,10 @@ export default async function RootLayout({
       <style
         dangerouslySetInnerHTML={{
           __html:
-            ':focus-visible{outline:2px solid rgba(212,175,55,0.8);outline-offset:2px;border-radius:6px;}',
+            ':focus-visible{outline:2px solid rgba(52,211,153,0.8);outline-offset:2px;border-radius:6px;}',
         }}
       />
-      <div className="relative min-h-[100dvh] text-neutral-50 antialiased">
+      <div className="relative min-h-[100dvh] pb-[88px] text-neutral-50 antialiased md:pb-0">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[#050505]" />
           <div className="absolute inset-0 aurora" />
@@ -115,6 +115,7 @@ export default async function RootLayout({
           </ToastProvider>
         </div>
         <Footer />
+        <MobileBottomNav />
         <ScrollToTop />
         <ShortcutsHelp />
         <CommandPaletteHost />

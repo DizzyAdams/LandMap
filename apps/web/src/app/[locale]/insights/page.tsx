@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Sparkline, Stat } from '@landmap/ui';
+import { Sparkline, Stat, Skeleton } from '@landmap/ui';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
@@ -136,9 +136,14 @@ export default function InsightsPage() {
         </div>
 
         {loading && (
-          <p className="mt-10 text-sm text-neutral-400" aria-live="polite">
-            Carregando insights de {city}…
-          </p>
+          <div className="mt-10 space-y-6" aria-busy="true" aria-live="polite">
+            <Skeleton className="h-48 rounded-xl" />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <Skeleton key={i} className="h-40 rounded-xl" />
+              ))}
+            </div>
+          </div>
         )}
         {!loading && error && (
           <p className="mt-10 text-sm text-red-400">{error}</p>

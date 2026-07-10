@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { forwardRef, useRef, useState } from 'react';
 import { cn } from '../lib/index';
@@ -72,7 +72,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
                   'motion-reduce:transition-none',
                   selected
                     ? 'border-emerald-400 text-white'
-                    : 'border-transparent text-neutral-500 hover:text-neutral-300',
+                    : 'border-transparent text-neutral-400 hover:text-neutral-300',
                 )}
               >
                 {t.label}

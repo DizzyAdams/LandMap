@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Button } from '@landmap/ui';
+import { Button, NotificationCenter } from '@landmap/ui';
 import { Logo } from './Logo';
 
 const focusRing =
@@ -90,6 +90,8 @@ export function Navbar() {
         })}
 
         <span className="mx-1 h-4 w-px bg-white/10" aria-hidden />
+
+        <NotificationCenter />
 
         <span className="flex items-center gap-1">
           {locales.map((l) => (

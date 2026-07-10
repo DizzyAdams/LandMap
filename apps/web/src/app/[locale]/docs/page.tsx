@@ -110,7 +110,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
       <div className="mx-auto max-w-6xl px-6 py-20">
         <Reveal className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               Dados abertos
             </span>
@@ -151,7 +151,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
               {cat.endpoints.map((ep) => (
                 <details
                   key={`${ep.method}-${ep.path}`}
-                  className="group rounded-xl border border-neutral-800 bg-neutral-900/40 transition hover:border-emerald-500/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]"
+                  className="group rounded-xl border border-neutral-800 bg-neutral-900/40 transition hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]"
                 >
                   <summary className="flex cursor-pointer items-center gap-3 px-5 py-3.5">
                     <span

@@ -42,7 +42,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
           <h2 className="text-lg font-medium text-neutral-100">Como funciona</h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-3">
             <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500/10 text-emerald-400 text-sm font-bold">1</div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-400/10 text-emerald-400 text-sm font-bold">1</div>
               <h3 className="mt-3 text-sm font-medium text-neutral-200">Tokenização</h3>
               <p className="mt-1 text-xs text-neutral-400">
                 Cada imóvel é tokenizado a partir de seus atributos (título, cidade, tipo, tags).
@@ -70,7 +70,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
           <h2 className="text-lg font-medium text-neutral-100">Endpoint</h2>
           <div className="mt-4 rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
             <div className="flex items-center gap-3">
-              <span className="shrink-0 rounded-md bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-400">GET</span>
+              <span className="shrink-0 rounded-md bg-emerald-400/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-400">GET</span>
               <code className="text-xs text-neutral-300 font-mono">/api/embeddings/similar</code>
             </div>
             <div className="mt-4">

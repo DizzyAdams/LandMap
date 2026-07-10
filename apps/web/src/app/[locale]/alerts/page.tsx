@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { createAlert, deleteAlert, getAlerts, clearAlerts } from '../../../lib/alerts';
 import type { AlertFilter } from '../../../lib/alerts';
 import { localeHref } from '../../../lib/locale';
-import { EmptyState } from '@landmap/ui';
+import { EmptyState, Skeleton } from '@landmap/ui';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                             */
@@ -92,9 +92,14 @@ export default function AlertsPage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-screen bg-[#050505] px-6 py-10">
+      <main className="min-h-screen bg-[#050505] px-6 py-10" aria-busy="true">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">Alertas</h1>
+          <div className="mt-6 grid gap-3" aria-hidden>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <Skeleton key={i} className="h-20 rounded-xl" />
+            ))}
+          </div>
         </div>
       </main>
     );

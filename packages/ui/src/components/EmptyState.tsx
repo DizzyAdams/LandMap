@@ -1,4 +1,4 @@
-﻿import React, { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { cn } from '../lib/index';
 
 export interface EmptyStateProps {
@@ -18,7 +18,7 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
       )}
     >
       <p className="text-sm font-medium text-neutral-300">{title}</p>
-      {description && <p className="mt-1 text-xs text-neutral-500">{description}</p>}
+      {description && <p className="mt-1 text-xs text-neutral-400">{description}</p>}
       {children}
     </div>
   ),

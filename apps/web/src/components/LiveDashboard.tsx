@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { SurrealBackground } from './SurrealBackground';
+import { AnimatedNumber } from '@landmap/ui';
 import { getStats, getKpi, getCities, type StatsResponse, type KpiResponse, type CityAggregate } from '../lib/api';
 
 const BRLEmerald = (v: number) =>
@@ -203,7 +204,7 @@ export function LiveDashboard() {
                   </span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-neutral-800">
                     <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-emerald-500 to-teal-300"
+                      className="h-full rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400"
                       animate={{ width: `${pct}%` }}
                       transition={{ duration: 0.7, ease: 'easeOut' }}
                     />
@@ -237,7 +238,7 @@ function StatCard({
       className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5"
     >
       <p className="text-2xl font-semibold tabular-nums">
-        <Counter value={value} format={format} />
+        {format ? <Counter value={value} format={format} /> : <AnimatedNumber value={value} />}
       </p>
       <p className="mt-1 text-xs text-neutral-400">{label}</p>
     </motion.div>

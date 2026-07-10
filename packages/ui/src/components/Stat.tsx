@@ -1,4 +1,4 @@
-﻿import React, { forwardRef } from 'react';
+import React, { forwardRef } from 'react';
 import { cn } from '../lib/index';
 
 export interface StatProps {
@@ -21,7 +21,7 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
         className,
       )}
     >
-      <p className="text-xs text-neutral-500">{label}</p>
+      <p className="text-xs text-neutral-400">{label}</p>
       <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-50">{value}</p>
       {trend !== undefined && (
         <p
@@ -34,7 +34,7 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
           {Math.abs(trend)}%
         </p>
       )}
-      {hint && <p className="mt-1 text-[11px] text-neutral-600">{hint}</p>}
+      {hint && <p className="mt-1 text-[11px] text-neutral-400">{hint}</p>}
     </div>
   ),
 );

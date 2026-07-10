@@ -211,7 +211,7 @@ export function OnboardingTour({
           <button
             type="button"
             onClick={skip}
-            className="rounded-lg px-3 py-1.5 text-xs text-neutral-500 outline-none transition hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+            className="rounded-lg px-3 py-1.5 text-xs text-neutral-400 outline-none transition hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
           >
             Pular
           </button>

@@ -66,7 +66,7 @@ export default function StudioPage() {
         </Reveal>
 
         <div className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 lg:grid-cols-2">
-          <Reveal className="rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-500/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
+          <Reveal className="rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-400/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
             <h2 className="text-lg font-medium">Laboratório de Workflows</h2>
             <p className="mt-1 text-sm text-neutral-400">Selecione um fluxo e execute passo a passo.</p>
 
@@ -148,7 +148,7 @@ function RagChat() {
   }
 
   return (
-    <Reveal delay={0.1} className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-500/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
+    <Reveal delay={0.1} className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-400/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
       <h2 className="text-lg font-medium">Chat RAG</h2>
       <p className="mt-1 text-sm text-neutral-400">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
 

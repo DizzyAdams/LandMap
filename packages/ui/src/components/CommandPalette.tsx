@@ -168,7 +168,7 @@ export function CommandPalette({
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
-            className="shrink-0 text-neutral-500"
+            className="shrink-0 text-neutral-400"
             aria-hidden
           >
             <circle cx="11" cy="11" r="7" />
@@ -184,7 +184,7 @@ export function CommandPalette({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            className="h-12 w-full bg-transparent text-sm text-neutral-50 outline-none placeholder:text-neutral-500"
+            className="h-12 w-full bg-transparent text-sm text-neutral-50 outline-none placeholder:text-neutral-400"
           />
           <kbd className="hidden shrink-0 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-neutral-400 sm:block">
             ESC
@@ -200,13 +200,13 @@ export function CommandPalette({
           className="max-h-[min(56vh,420px)] overflow-y-auto p-2"
         >
           {flatItems.length === 0 && (
-            <p className="px-3 py-6 text-center text-sm text-neutral-500">
+            <p className="px-3 py-6 text-center text-sm text-neutral-400">
               Nenhum resultado para “{query}”.
             </p>
           )}
           {flat.map((group) => (
             <div key={group.heading} className="mb-1">
-              <p className="px-3 pb-1 pt-2 text-[10px] font-medium uppercase tracking-wider text-neutral-500">
+              <p className="px-3 pb-1 pt-2 text-[10px] font-medium uppercase tracking-wider text-neutral-400">
                 {group.heading}
               </p>
               {group.items.map((item) => {
@@ -240,7 +240,7 @@ export function CommandPalette({
                     )}
                     <span className="min-w-0 flex-1 truncate">{item.label}</span>
                     {item.hint && (
-                      <span className="shrink-0 font-mono text-[10px] text-neutral-500">{item.hint}</span>
+                      <span className="shrink-0 font-mono text-[10px] text-neutral-400">{item.hint}</span>
                     )}
                   </div>
                 );

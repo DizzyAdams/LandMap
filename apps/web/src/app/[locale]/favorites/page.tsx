@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { Button, EmptyState } from '@landmap/ui';
+import { Button, EmptyState, Skeleton } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 
@@ -42,11 +42,20 @@ export default function FavoritesPage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-screen grid-bg px-6 py-16">
+      <main className="min-h-screen grid-bg px-6 py-16" aria-busy="true">
         <div className="mx-auto max-w-6xl">
           <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
             Favoritos
           </h1>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div key={i} className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="mt-3 h-3 w-1/3" />
+                <Skeleton className="mt-4 h-4 w-1/2" />
+              </div>
+            ))}
+          </div>
         </div>
       </main>
     );

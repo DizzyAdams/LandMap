@@ -80,7 +80,7 @@ export default function PricingPage() {
       <div className="mx-auto max-w-6xl px-6 py-20">
         {/* Header */}
         <Reveal className="text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1 text-xs font-medium tracking-wide text-emerald-300">
+          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-xs font-medium tracking-wide text-emerald-300">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             Preços em reais (BRL) · Sem fidelidade
           </span>
@@ -102,7 +102,7 @@ export default function PricingPage() {
               }`}
             >
               {plan.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-500/20 to-cyan-400/20 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-emerald-200">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-emerald-400/40 bg-gradient-to-r from-emerald-400/20 to-cyan-400/20 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-emerald-200">
                   Mais Popular
                 </span>
               )}
@@ -126,8 +126,8 @@ export default function PricingPage() {
                 href={plan.highlight ? `/${locale}/register` : `/${locale}/register?plan=free`}
                 className={`mt-6 flex w-full items-center justify-center rounded-lg py-2.5 text-xs font-semibold transition ${
                   plan.highlight
-                    ? 'bg-gradient-to-r from-emerald-500 to-cyan-400 text-[#050505] shadow-[0_0_0_1px_rgba(52,211,153,0.15),0_8px_30px_-12px_rgba(34,211,238,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(52,211,153,0.45),0_14px_44px_-12px_rgba(34,211,238,0.65)]'
-                    : 'border border-emerald-500/30 text-emerald-200 hover:border-emerald-400/60 hover:text-emerald-100 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_12px_48px_-12px_rgba(34,211,238,0.35)]'
+                    ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-[#050505] shadow-[0_0_0_1px_rgba(52,211,153,0.15),0_8px_30px_-12px_rgba(34,211,238,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(52,211,153,0.45),0_14px_44px_-12px_rgba(34,211,238,0.65)]'
+                    : 'border border-emerald-400/30 text-emerald-200 hover:border-emerald-400/60 hover:text-emerald-100 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_12px_48px_-12px_rgba(34,211,238,0.35)]'
                 }`}
               >
                 {plan.cta}
