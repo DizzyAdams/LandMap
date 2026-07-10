@@ -32,27 +32,38 @@ export default async function LocaleHomePage() {
 
       <section className="mx-auto max-w-6xl px-6 pb-20 pt-20 sm:pt-28">
         <div className="h-px w-16 rule-gold" />
-        <p className="eyebrow-gold mt-5">Inteligencia imobiliaria aberta</p>
+        <p className="eyebrow-gold mt-5">Inteligência imobiliária aberta</p>
 
         <h1 className="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-          Veja o territorio imobiliario como{' '}
+          Veja o território imobiliário como{' '}
           <span className="text-gradient-gold">dados</span>.
         </h1>
 
         <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
-          Busca por cidade e tipo, mapa interativo, chat com IA e calculo de
-          investimento. 1.500 imoveis em 10 cidades — sem custo e sem login.
+          Busca por cidade e tipo, mapa interativo, chat com IA e cálculo de
+          investimento. 1.500 imóveis em 10 cidades — sem custo e sem login.
         </p>
 
         <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link href="./search" className="inline-flex h-11 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200">
-            Explorar imoveis
+          <Link
+            href="./search"
+            className="group inline-flex h-11 items-center gap-2 rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 shadow-[0_8px_40px_-12px_rgba(255,255,255,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-neutral-100 hover:shadow-[0_12px_50px_-12px_rgba(52,211,153,0.45)]"
+          >
+            Explorar imóveis
+            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </Link>
-          <Link href="./map" className="inline-flex h-11 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-200 transition hover:border-neutral-500 hover:text-white">
+          <Link
+            href="./map"
+            className="group inline-flex h-11 items-center gap-2 rounded-lg border border-neutral-800 px-5 text-sm text-neutral-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/50 hover:text-white"
+          >
             Abrir o mapa
+            <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
           </Link>
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+            </span>
             Dados vivos · 10 cidades
           </span>
         </div>
@@ -64,7 +75,7 @@ export default async function LocaleHomePage() {
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Destaque no cadastro</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Imoveis em destaque</h2>
+            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Imóveis em destaque</h2>
           </div>
           <Link href="./search" className="shrink-0 text-sm text-neutral-400 transition hover:text-white">
             Ver todos →
@@ -76,12 +87,12 @@ export default async function LocaleHomePage() {
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-neutral-400">
-                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Imovel</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Imóvel</th>
                   <th className="border-b border-neutral-800 px-3 py-3 font-medium">Local</th>
                   <th className="border-b border-neutral-800 px-3 py-3 font-medium">Tipo</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Area</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Área</th>
                   <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Quartos</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Preco</th>
+                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Preço</th>
                 </tr>
               </thead>
               <tbody>
@@ -103,7 +114,7 @@ export default async function LocaleHomePage() {
             </table>
           </div>
         ) : (
-          <p className="mt-8 text-sm text-neutral-400">Nenhum imovel encontrado no momento.</p>
+          <p className="mt-8 text-sm text-neutral-400">Nenhum imóvel encontrado no momento.</p>
         )}
       </Reveal>
 
@@ -120,16 +131,16 @@ export default async function LocaleHomePage() {
         </div>
         <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { href: './sales', title: 'Agente de Vendas', desc: 'Esquadrao de 11 agentes: prospeccao → fechamento.', tag: '11 agentes' },
-            { href: './chat', title: 'Chat RAG (IA gratis)', desc: 'Pergunte sobre imoveis. MiniMax via Puter.js.', tag: 'LLM' },
-            { href: './map', title: 'Mapa Interativo', desc: 'Leaflet com pins, clusters e geocodificacao.', tag: 'Geo' },
-            { href: './compare', title: 'Comparador', desc: 'Diff de preco, area e quartos entre imoveis.', tag: 'Diff' },
-            { href: './studio', title: 'Studio (IA & Design)', desc: 'Geracao de copy e variacoes de marca.', tag: 'GenAI' },
+            { href: './sales', title: 'Agente de Vendas', desc: 'Esquadrão de 11 agentes: prospecção → fechamento.', tag: '11 agentes' },
+            { href: './chat', title: 'Chat RAG (IA grátis)', desc: 'Pergunte sobre imóveis. MiniMax via Puter.js.', tag: 'LLM' },
+            { href: './map', title: 'Mapa Interativo', desc: 'Leaflet com pins, clusters e geocodificação.', tag: 'Geo' },
+            { href: './compare', title: 'Comparador', desc: 'Diff de preço, área e quartos entre imóveis.', tag: 'Diff' },
+            { href: './studio', title: 'Studio (IA & Design)', desc: 'Geração de copy e variações de marca.', tag: 'GenAI' },
             { href: './favorites', title: 'Favoritos & Alertas', desc: 'Salve e receba alertas por filtro.', tag: 'Sync' },
-            { href: './insights', title: 'Insights de Investimento', desc: 'Metricas PURAS: cap rate, cash-on-cash, IRR.', tag: 'Invest' },
+            { href: './insights', title: 'Insights de Investimento', desc: 'Métricas PURAS: cap rate, cash-on-cash, IRR.', tag: 'Invest' },
             { href: './calculator', title: 'Calculadora', desc: 'Simule financiamento e ROI.', tag: 'Fin' },
           ].map((s) => (
-            <SpotlightCard key={s.href} className="border border-neutral-800 p-5">
+            <SpotlightCard key={s.href} className="border border-neutral-800 p-5 hover:-translate-y-1">
               <Link href={s.href} className="group block h-full">
                 <div className="flex items-center justify-between">
                   <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
@@ -149,8 +160,12 @@ export default async function LocaleHomePage() {
           <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA — sem custo.</h2>
           <p className="mt-2 max-w-md text-sm text-neutral-400">API REST, schema.org, RAG local, CRM — tudo open-source.</p>
           <div className="mt-6">
-            <Link href="./search" className="inline-flex h-11 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition hover:border-neutral-500 hover:text-white">
-              Comecar busca
+            <Link
+              href="./search"
+              className="group inline-flex h-11 items-center gap-2 rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/50 hover:text-white"
+            >
+              Começar busca
+              <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">→</span>
             </Link>
           </div>
         </div>
