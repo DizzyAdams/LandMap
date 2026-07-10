@@ -126,6 +126,12 @@ build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arqu
    `<html>` duplicado (root vs `[locale]`) corrigido; 404 de locale resolvido movendo
    `middleware.ts` para `src/`.
 
+5. **Armadilha 404 de rota (já corrigida em `/live`):** o `[locale]/layout.tsx` e o
+   root `layout.tsx` usam `export const dynamic = 'force-dynamic'`. **Uma página filha
+   NÃO pode usar `force-static`** — o Next não registra a rota e ela retorna 404 silencioso.
+   Se uma página sob `[locale]` der 404 misterioso, remova o `force-static` (commit `62be925`).
+   Páginas sob `[locale]` podem usar `force-dynamic` (consistente) ou herdar do pai.
+
 ---
 
 ## 7. Como rodar / verificar
