@@ -71,3 +71,5 @@
 - [x] world-3d-commit. Feature Mundo 3D (bmap.io-style) completa e commitada (af050d7): lib/bmap.ts + BmapViewer/InvestorPanel/EnergyPanel/LivePulse + rota /world + i18n world + link Navbar. typecheck web verde. (concluido)
 - [x] cleanup-src-messages. Remove apps/web/src/messages (JSON corrompido/duplicado, nao lido pelo i18n.ts que usa ../messages). (concluido)
 - [x] world-3d-deploy. vercel deploy --prod (commits af050d7 + 70df4c2) -> landmap-p6k76hgks Ready (~1m build remoto Linux; geist OK no Linux). Alias landmap.us.kg (SSL async). Validacao: /api/health|stats|cities 200, /pt-BR e /pt-BR/world e /en-US/world 200. (concluido)
+- [x] domains-vercel-config. Todos os dominios (landmap.com.br/us.kg/getlandmap.app + www.*) atribuidos ao projeto landmap + registros DNS A/CNAME criados na Vercel (vercel dns add). Lado Vercel 100%. (concluido)
+- [ ] dominios-ns-registrador. ACAO EXTERNA (registrador): trocar NS de cada dominio para ns1.vercel-dns.com/ns2.vercel-dns.com para os registros A/CNAME entrarem em vigor e o dominio resolver. landmap.com.br->Registro.br; us.kg->nic.us.kg; app->registrar .app. (aguarda acao no registrador)

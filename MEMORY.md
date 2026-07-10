@@ -33,7 +33,7 @@ Stack mono-repo pnpm. Licença MIT.
 | Redesign "Sovereign Cadastre" | ✅ commit `8f9c073` (removeu AI-slop) |
 | 404 de routing/locale | ✅ RESOLVIDO commit `71da3f0` (middleware p/ `src/`) |
 | **Feature "Mundo 3D" (bmap.io-style)** | ✅ **commitada** (`af050d7`) + design elevado (`70df4c2`) + **deployado** (landmap-p6k76hgks) |
-| **DNS dos domínios** | 🔴 **bloqueio externo** no registrador (ver §6) |
+| **DNS dos domínios** | 🟡 **lado Vercel 100%** (apex+www atribuídos ao projeto + registros A/CNAME criados); **falta trocar NS no registrador** p/ `ns1/ns2.vercel-dns.com` (ver §6) |
 | Tailwind v4 | ⚠️ instalado mas **não processa CSS** (ver `CLAUDE.md`) |
 
 ---
@@ -100,13 +100,27 @@ build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arqu
 
 ## 6. Débitos técnicos / bloqueios conhecidos
 
-1. **DNS dos domínios (🔴 bloqueio EXTERNO no registrador).** Domínios registrados
-   e atribuídos no Vercel, mas o DNS não aponta:
-   - `landmap.com.br` → NS ainda `a.auto.dns.br` (Registro.br).
-   - `landmap.us.kg` e `getlandmap.app` → NS vazios.
-   - Correção no registrador: (a) A `76.76.21.21` (+ CNAME `www`→`cname.vercel-dns.com`),
-     ou (b) NS → `ns1.vercel-dns.com` + `ns2.vercel-dns.com`.
-   - App 100% funcional via URL de produção do Vercel enquanto isso. **Fora do alcance do deploy.**
+1. **DNS dos domínios (🟡 falta apontar no registrador — bloqueio EXTERNO).**
+   Lado Vercel 100% feito (2026-07-10): os 3 apex + 3 `www` estão **atribuídos ao projeto
+   `landmap`** (`vercel domains add <dominio> landmap`). A Vercel devolve esta config
+   obrigatória (verificada via `vercel domains inspect`):
+   - **A (apex):** `landmap.com.br` → `76.76.21.21`
+   - **A (apex):** `getlandmap.app` → `76.76.21.21`
+   - **A (apex):** `landmap.us.kg` → `76.76.21.21`
+   - **CNAME (www):** `www.landmap.com.br` → `cname.vercel-dns.com`
+   - **CNAME (www):** `www.landmap.us.kg` → `cname.vercel-dns.com`
+   - **CNAME (www):** `www.getlandmap.app` → `cname.vercel-dns.com`
+   - *Ou* (alternativa): trocar os NS de cada domínio para `ns1.vercel-dns.com` +
+     `ns2.vercel-dns.com` (delega tudo à Vercel, que auto-configura).
+   - **Estado atual dos NS (pré-DNS):** `landmap.com.br` → `a.auto.dns.br`/`b.auto.dns.br`
+     (Registro.br); `landmap.us.kg` e `getlandmap.app` → NS vazios.
+   - **Registros DNS (A/CNAME) JÁ criados na Vercel** via `vercel dns add` (2026-07-10) para
+     os 3 apex + 3 www (visíveis em `vercel dns ls`). Eles entram em vigor quando o NS do
+     domínio apontar para a Vercel.
+   - **ÚNICA ação pendente (registrador, EXTERNA):** trocar o NS de CADA domínio para
+     `ns1.vercel-dns.com` / `ns2.vercel-dns.com`. Só assim os registros acima são servidos e
+     o domínio resolve para o site. Após propagação (~minutos), a Vercel valida e emite SSL.
+   - App já 100% funcional via URL de produção do Vercel enquanto isso.
 
 2. **Tailwind v4 não processa CSS (⚠️).** `tailwindcss@4.0.0` instalado, mas sem
    pipeline PostCSS/`@import "tailwindcss"`. O app usa **classes utilitárias CSS puras**
