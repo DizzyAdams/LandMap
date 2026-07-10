@@ -225,28 +225,50 @@ export function proceduralWorld(bbox: BBox): WorldData {
  */
 export async function fetchWorld(
   bbox: BBox,
-  timeoutMs = 20000,
+  timeoutMs = 26000,
 ): Promise<WorldData> {
+  // Preferred path: our own server-side proxy (/api/overpass). The browser
+  // cannot hit the public Overpass endpoints directly (they lack CORS headers),
+  // so the proxy is what actually delivers REAL OpenStreetMap geometry. The
+  // direct-endpoint loop below is kept only as a best-effort fallback (e.g. when
+  // the viewer runs outside the app origin).
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch('/api/overpass', {
+      method: 'POST',
+      body: JSON.stringify({ bbox }),
+      headers: { 'content-type': 'application/json' },
+      signal: controller.signal,
+    });
+    clearTimeout(timer);
+    if (res.ok) {
+      const json = (await res.json()) as { elements?: OverpassElement[] };
+      const parsed = parseOverpass(json.elements ?? [], bbox);
+      if (parsed.buildingCount > 0) return parsed;
+    }
+  } catch {
+    clearTimeout(timer);
+  }
+
   const q = overpassQuery(bbox);
   for (const endpoint of OVERPASS_ENDPOINTS) {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    const c2 = new AbortController();
+    const t2 = setTimeout(() => c2.abort(), timeoutMs);
     try {
       const res = await fetch(endpoint, {
         method: 'POST',
         body: 'data=' + encodeURIComponent(q),
         headers: { 'content-type': 'application/x-www-form-urlencoded' },
-        signal: controller.signal,
+        signal: c2.signal,
       });
-      clearTimeout(timer);
+      clearTimeout(t2);
       if (!res.ok) continue;
       const json = (await res.json()) as { elements?: OverpassElement[] };
       const parsed = parseOverpass(json.elements ?? [], bbox);
       if (parsed.buildingCount > 0) return parsed;
-      // Sparse area — fall through to the next endpoint / procedural.
     } catch {
-      clearTimeout(timer);
-      // try next endpoint
+      clearTimeout(t2);
     }
   }
   return proceduralWorld(bbox);
