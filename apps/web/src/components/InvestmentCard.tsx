@@ -45,11 +45,11 @@ const pct = (frac: number) => `${(frac * 100).toFixed(1)}%`;
 
 // Grade A-F -> brand-accent treatment (matches the design-system token palette).
 const gradeStyle: Record<InvestmentGrade, React.CSSProperties> = {
-  A: { color: 'var(--emerald-bright)', borderColor: 'rgba(52,211,153,0.5)', background: 'rgba(52,211,153,0.14)' },
-  B: { color: 'var(--cyan)', borderColor: 'rgba(34,211,238,0.5)', background: 'rgba(34,211,238,0.14)' },
-  C: { color: 'var(--violet)', borderColor: 'rgba(167,139,250,0.5)', background: 'rgba(167,139,250,0.14)' },
-  D: { color: 'var(--gold-soft)', borderColor: 'rgba(212,175,55,0.5)', background: 'rgba(212,175,55,0.14)' },
-  F: { color: '#ff8a8a', borderColor: 'rgba(255,77,77,0.5)', background: 'rgba(255,77,77,0.14)' },
+  A: { color: 'var(--emerald-bright)', borderColor: 'color-mix(in srgb, var(--emerald) 50%, transparent)', background: 'var(--emerald-tint)' },
+  B: { color: 'var(--cyan)', borderColor: 'color-mix(in srgb, var(--cyan) 50%, transparent)', background: 'var(--cyan-tint)' },
+  C: { color: 'var(--violet)', borderColor: 'color-mix(in srgb, var(--violet) 50%, transparent)', background: 'var(--violet-tint)' },
+  D: { color: 'var(--gold-soft)', borderColor: 'color-mix(in srgb, var(--gold) 50%, transparent)', background: 'var(--gold-tint)' },
+  F: { color: '#ff8a8a', borderColor: 'color-mix(in srgb, var(--danger) 50%, transparent)', background: 'color-mix(in srgb, var(--danger) 14%, transparent)' },
 };
 
 /*
@@ -70,8 +70,8 @@ export function InvestmentCard({ title, subtitle, price, result, href, className
         flexDirection: 'column',
         gap: 14,
         padding: 18,
-        borderRadius: 'var(--radius-lg, 16px)',
-        border: '1px solid var(--border, rgba(255,255,255,0.08))',
+        borderRadius: 'var(--radius-lg)',
+        border: '1px solid var(--border)',
       }}
     >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
@@ -117,7 +117,7 @@ export function InvestmentCard({ title, subtitle, price, result, href, className
 
   if (href) {
     return (
-      <a href={href} style={{ textDecoration: 'none', display: 'block' }} className="motion-reduce:transition-none">
+      <a href={href} style={{ textDecoration: 'none', display: 'block' }} className="motion-reduce:transition-none focus-visible:shadow-[var(--ring)] outline-none">
         {body}
       </a>
     );

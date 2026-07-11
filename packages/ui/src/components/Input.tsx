@@ -14,7 +14,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
-          <label htmlFor={inputId} className="text-xs font-medium text-neutral-400">
+          <label htmlFor={inputId} className="text-xs font-medium text-[var(--muted)]">
             {label}
           </label>
         )}
@@ -25,17 +25,17 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           aria-invalid={error ? true : undefined}
           aria-describedby={errorId}
           className={cn(
-            'w-full rounded-lg border bg-white/5 px-3 py-2 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition',
-            'focus:border-emerald-400/60 focus:bg-white/[0.07] focus-visible:ring-2 focus-visible:ring-emerald-400/60',
-            'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-white/[0.02]',
+            'w-full rounded-[var(--radius-md)] border bg-[var(--surface-2)] px-3 py-2 text-sm text-[var(--text-strong)] placeholder:text-[var(--muted-2)] outline-none transition',
+            'focus:border-[var(--emerald)] focus:bg-[var(--surface-3)] focus-visible:shadow-[var(--ring)]',
+            'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-[var(--surface-inset)]',
             'motion-reduce:transition-none',
-            error ? 'border-red-500/60' : 'border-white/10',
+            error ? 'border-[color:color-mix(in_srgb,var(--danger)_60%,transparent)]' : 'border-[var(--border)]',
             className,
           )}
           {...props}
         />
         {error && (
-          <p id={errorId} className="text-xs text-red-400">
+          <p id={errorId} className="text-xs text-[var(--danger)]">
             {error}
           </p>
         )}

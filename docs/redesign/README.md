@@ -14,10 +14,10 @@ está bloqueado neste ambiente. Apenas o agente de marketing chegou a gravar alg
 | Agente | Dono de | Estado | O que foi feito |
 |---|---|---|---|
 | 1 · Foundation/Tokens | `tokens.ts`, `styles.css`, `globals.css` | ✅ feito | Nova scale de tokens + utilitários de layout (`.container-x`, `.section`, `.page-header`, type scale, elevation, tints) |
-| 2 · Core Components | `packages/ui/src/components/*` | 🟡 parcial | Polido `InvestmentCard` (hover-lift/glow/AA) + `Stat` (AA + elevação); demais já on-brand |
+| 2 · Core Components | `packages/ui/src/components/*` | ✅ feito | `Button`/`Card` tokenizados (`--surface-2`/`--border`/`--radius-md`, foco unificado `--ring`); `buttonVariants` exportado p/ links; demais on-brand |
 | 3 · Shell/Nav | `Navbar`, `Footer`, `Logo`, `layout`s + primitivos | ✅ feito | `Container`/`Section`/`PageHeader` criados; `Navbar`/`Footer` alinhados a 1200px |
 | 4 · Home/Marketing | home, pricing, insights, studio, docs, status, offline | ✅ feito | Home com `SkylineCanvas` + alinhada; todas as telas alinhadas em largura (1200px) |
-| 5 · Discovery | search, map, property, compare, favorites, alerts | 🟡 parcial | `search`/`compare` com `PageHeader`+`container-x`; `property/[id]`/`alerts`(conteúdo)/`favorites` alinhados; `map` alinhado em largura |
+| 5 · Discovery | search, map, property, compare, favorites, alerts | ✅ feito | `InvestmentCard`/`InvestmentLegend`/`PropertyThumb` tokenizados (tints/`--border`/`--surface-2`/foco `--ring`); home CTAs → `buttonVariants`; `AtlasLanding` (v2) completado (antes não exportava o componente, quebrando `v2/page.tsx`) |
 | 6 · Dashboards | calculator, live, world, sales, chat, admin/* | ✅ feito | `calculator`/`docs/embedding` alinhados a 1200px; `chat` intencionalmente mais estreito (UX); `admin/*` no sidebar layout (coluna restrita) |
 | 7 · Motion/A11y | web motion components, Storybook, audit | ✅ feito | Audit doc (`MOTION-A11Y.md`); gaps A3/A4/T1 resolvidos; `SpotlightCard` com `focus-within`; Storybook entregue (`apps/web/stories/**` + `.storybook`) |
 

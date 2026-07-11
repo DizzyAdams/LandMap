@@ -19,10 +19,11 @@
 - `pnpm docs` → Storybook (porta 6006). `pnpm db:migrate|seed|generate` → DB.
 - `pnpm markdown:build` → scripts/build_markdowns.py.
 
-## ⚠️ AVISO IMPORTANTE — Tailwind v4 ainda NÃO está processando CSS
-- `tailwindcss@4.0.0` está em `devDependencies`, mas **não há** `tailwind.config`, `postcss.config` nem `@import "tailwindcss"` no `globals.css`.
-- `apps/web/src/app/globals.css` ainda usa a sintaxe **v3** (`@tailwind base/components/utilities`). Em v4 isso é `@import "tailwindcss";`.
-- Consequência: utilitários Tailwind e `@apply` **não estão sendo compilados** ainda. Ao ligar o pipeline (PostCSS + `@tailwindcss/postcss` / `@import`), os seguintes pontos QUEBRAM o build — corrija-os ANTES:
+## ✅ Tailwind v4 ATIVO (pipeline de produção — corrigido em 2026-07-11)
+- `tailwindcss@4.0.0` + `@tailwindcss/postcss` em `apps/web/postcss.config.mjs`; `apps/web/src/app/globals.css` usa `@import "tailwindcss";` e `@source '../../../../packages/ui/src/**/*.{ts,tsx}'` para gerar as classes dos componentes do `@landmap/ui`.
+- Utilitários Tailwind e tokens CSS **estão sendo compilados**. Regra v4 que permanece: **NUNCA** use `@apply` com uma classe custom (só utilities / `@utility`).
+- Ao adicionar classes Tailwind em componentes de `packages/ui`, elas são escaneadas via o `@source` acima — valide com `pnpm build` / `next build`.
+- Tokens unificados adicionados nesta sessão: `--ring` (anel de foco emerald, reutilizado por `Button`/`Card`), tints (`--emerald-tint` etc.) e `--border-subtle` também espelhados em `globals.css :root`. `buttonVariants()` exportado por `@landmap/ui` p/ estilizar `<Link>` como botão.
 
 ### 1. `@apply` com classe custom não-registrada (ERA BLOQUEADOR no v4 — ✅ RESOLVIDO)
 `globals.css` (linhas ~61-71): `.btn-primary`/`.btn-ghost` usavam `@apply btn` (classe custom) → erro em v4.
@@ -68,5 +69,5 @@ Usadas no app (ex.: `[locale]/layout.tsx` usa `.aurora`, `.grain`): `.surface`, 
 - App web: 19 rotas + APIs, build/typecheck/lint/testes verdes. Dataset 1.500 imóveis + 1.500 markdowns (10 cidades).
 - **"Mundo 3D" (bmap.io-style):** ✅ completo, commitado (`af050d7`) + design elevado (`70df4c2`) + **deployado** (landmap-p6k76hgks / alias landmap.us.kg). Código em `apps/web/src/{lib/bmap.ts, components/BmapViewer|InvestorPanel|EnergyPanel|LivePulse.tsx, app/[locale]/world/page.tsx}` + i18n `world` + link na `Navbar`.
 - **Removido (2026-07-10):** `apps/web/src/messages/` — pasta duplicada com JSON **corrompido** (não era lida pelo `i18n.ts`, que usa `../messages`). As mensagens vivem em `apps/web/messages/*`.
-- DNS: lado Vercel 100% (apex+www de `landmap.com.br`/`landmap.us.kg`/`getlandmap.app` atribuídos ao projeto + registros A 76.76.21.21 / www CNAME cname.vercel-dns.com criados via `vercel dns add`). **Falta apenas trocar o NS no registrador** para `ns1/ns2.vercel-dns.com` (ação externa). Produção live em `landmap-dizzys-projects-d5a44b36.vercel.app` (deploy atual `landmap-eso2p38hx`).
+- DNS: lado Vercel 100% (apex+www de `landmap.com.br`/`landmap.us.kg`/`getlandmap.app` atribuídos ao projeto + registros A 76.76.21.21 / www CNAME cname.vercel-dns.com criados via `vercel dns add`). **Falta apenas trocar o NS no registrador** para `ns1/ns2.vercel-dns.com` (ação externa). Produção live em **`landmapprod.vercel.app`** (projeto `landmapprod`, deploy `landmapprod-2mmvzq3no`, READY).
 - Antes de "ligar" o Tailwind v4, resolva os itens 1 e 2 acima, senão o build quebra.

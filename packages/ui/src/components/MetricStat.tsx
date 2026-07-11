@@ -34,12 +34,12 @@ export interface MetricStatProps extends React.HTMLAttributes<HTMLDivElement> {
 // pipeline is turned on. Colors reference the brand CSS vars (with rgba
 // fallbacks) already defined in packages/ui/src/styles.css and globals.css.
 const toneStyle: Record<MetricTone, React.CSSProperties> = {
-  emerald: { color: 'var(--emerald-bright)', borderColor: 'rgba(52,211,153,0.35)', background: 'rgba(52,211,153,0.08)' },
-  cyan: { color: 'var(--cyan)', borderColor: 'rgba(34,211,238,0.35)', background: 'rgba(34,211,238,0.08)' },
-  violet: { color: 'var(--violet)', borderColor: 'rgba(167,139,250,0.35)', background: 'rgba(167,139,250,0.08)' },
-  gold: { color: 'var(--gold-soft)', borderColor: 'rgba(212,175,55,0.35)', background: 'rgba(212,175,55,0.08)' },
-  neutral: { color: 'var(--muted)', borderColor: 'rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.04)' },
-  danger: { color: '#ff8a8a', borderColor: 'rgba(255,77,77,0.35)', background: 'rgba(255,77,77,0.08)' },
+  emerald: { color: 'var(--emerald-bright)', borderColor: 'color-mix(in srgb, var(--emerald) 35%, transparent)', background: 'color-mix(in srgb, var(--emerald) 8%, transparent)' },
+  cyan: { color: 'var(--cyan)', borderColor: 'color-mix(in srgb, var(--cyan) 35%, transparent)', background: 'color-mix(in srgb, var(--cyan) 8%, transparent)' },
+  violet: { color: 'var(--violet)', borderColor: 'color-mix(in srgb, var(--violet) 35%, transparent)', background: 'color-mix(in srgb, var(--violet) 8%, transparent)' },
+  gold: { color: 'var(--gold-soft)', borderColor: 'color-mix(in srgb, var(--gold) 35%, transparent)', background: 'color-mix(in srgb, var(--gold) 8%, transparent)' },
+  neutral: { color: 'var(--muted)', borderColor: 'color-mix(in srgb, var(--accent) 12%, transparent)', background: 'color-mix(in srgb, var(--accent) 4%, transparent)' },
+  danger: { color: 'var(--danger)', borderColor: 'color-mix(in srgb, var(--danger) 35%, transparent)', background: 'color-mix(in srgb, var(--danger) 8%, transparent)' },
 };
 
 function resolveTone(props: Pick<MetricStatProps, 'tone' | 'thresholds' | 'numeric'>): MetricTone {

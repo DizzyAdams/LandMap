@@ -31,11 +31,11 @@ export interface CommandPaletteProps {
 }
 
 const toneMark: Record<NonNullable<CommandItem['tone']>, string> = {
-  emerald: 'text-emerald-300',
-  cyan: 'text-cyan-300',
-  violet: 'text-violet-300',
+  emerald: 'text-[var(--emerald-bright)]',
+  cyan: 'text-[var(--cyan)]',
+  violet: 'text-[var(--violet)]',
   gold: 'text-[var(--gold-soft)]',
-  neutral: 'text-neutral-400',
+  neutral: 'text-[var(--muted)]',
 };
 
 /**
@@ -154,12 +154,12 @@ export function CommandPalette({
       />
       <div
         className={cn(
-          'surface relative z-10 w-full max-w-xl overflow-hidden rounded-2xl border border-white/10 shadow-[var(--glow-dual)]',
+          'surface relative z-10 w-full max-w-xl overflow-hidden rounded-[var(--radius-lg)] border-[var(--border)] shadow-[var(--glow-dual)]',
           'motion-reduce:transition-none',
         )}
       >
         {/* Search field */}
-        <div className="flex items-center gap-3 border-b border-white/10 px-4">
+        <div className="flex items-center gap-3 border-b border-[var(--border)] px-4">
           <svg
             width="18"
             height="18"
@@ -168,7 +168,7 @@ export function CommandPalette({
             stroke="currentColor"
             strokeWidth="2"
             strokeLinecap="round"
-            className="shrink-0 text-neutral-400"
+            className="shrink-0 text-[var(--muted)]"
             aria-hidden
           >
             <circle cx="11" cy="11" r="7" />
@@ -184,9 +184,9 @@ export function CommandPalette({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
-            className="h-12 w-full bg-transparent text-sm text-neutral-50 outline-none placeholder:text-neutral-400"
+            className="h-12 w-full bg-transparent text-sm text-[var(--text-strong)] outline-none placeholder:text-[var(--muted)]"
           />
-          <kbd className="hidden shrink-0 rounded border border-white/10 bg-white/5 px-1.5 py-0.5 font-mono text-[10px] text-neutral-400 sm:block">
+          <kbd className="hidden shrink-0 rounded border border-[var(--border)] bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[10px] text-[var(--muted)] sm:block">
             ESC
           </kbd>
         </div>
@@ -200,13 +200,13 @@ export function CommandPalette({
           className="max-h-[min(56vh,420px)] overflow-y-auto p-2"
         >
           {flatItems.length === 0 && (
-            <p className="px-3 py-6 text-center text-sm text-neutral-400">
+            <p className="px-3 py-6 text-center text-sm text-[var(--muted)]">
               Nenhum resultado para “{query}”.
             </p>
           )}
           {flat.map((group) => (
             <div key={group.heading} className="mb-1">
-              <p className="px-3 pb-1 pt-2 text-[10px] font-medium uppercase tracking-wider text-neutral-400">
+              <p className="px-3 pb-1 pt-2 text-[10px] font-medium uppercase tracking-wider text-[var(--muted)]">
                 {group.heading}
               </p>
               {group.items.map((item) => {
@@ -225,7 +225,7 @@ export function CommandPalette({
                     className={cn(
                       'flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2 text-sm transition',
                       'motion-reduce:transition-none',
-                      isActive ? 'bg-white/[0.07] text-neutral-50' : 'text-neutral-300',
+                      isActive ? 'bg-[var(--surface-3)] text-[var(--text-strong)]' : 'text-[var(--text)]',
                     )}
                   >
                     {item.icon ? (
@@ -235,12 +235,12 @@ export function CommandPalette({
                     ) : (
                       <span
                         aria-hidden
-                        className={cn('h-1.5 w-1.5 rounded-full', isActive ? 'bg-emerald-400' : 'bg-neutral-600')}
+                        className={cn('h-1.5 w-1.5 rounded-full', isActive ? 'bg-[var(--emerald)]' : 'bg-[var(--border-strong-2)]')}
                       />
                     )}
                     <span className="min-w-0 flex-1 truncate">{item.label}</span>
                     {item.hint && (
-                      <span className="shrink-0 font-mono text-[10px] text-neutral-400">{item.hint}</span>
+                      <span className="shrink-0 font-mono text-[10px] text-[var(--muted)]">{item.hint}</span>
                     )}
                   </div>
                 );

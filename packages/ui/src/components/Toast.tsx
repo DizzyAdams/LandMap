@@ -27,18 +27,18 @@ interface ToastContextValue {
 const ToastContext = createContext<ToastContextValue | null>(null);
 
 const accent: Record<ToastVariant, string> = {
-  default: 'border-emerald-400/30 shadow-[var(--glow-emerald)]',
-  success: 'border-emerald-400/40 shadow-[var(--glow-emerald)]',
+  default: 'border-[var(--emerald-tint)] shadow-[var(--glow-emerald)]',
+  success: 'border-[var(--emerald-tint)] shadow-[var(--glow-emerald)]',
   error:
-    'border-red-400/40 shadow-[0_0_0_1px_rgba(255,77,77,0.2),0_8px_40px_-12px_rgba(255,77,77,0.3)]',
-  info: 'border-cyan-400/40 shadow-[0_0_0_1px_rgba(34,211,238,0.2),0_8px_40px_-12px_rgba(34,211,238,0.3)]',
+    'border-[color:color-mix(in_srgb,var(--danger)_40%,transparent)] shadow-[0_0_0_1px_rgba(255,77,77,0.2),0_8px_40px_-12px_rgba(255,77,77,0.3)]',
+  info: 'border-[color:color-mix(in_srgb,var(--cyan)_40%,transparent)] shadow-[0_0_0_1px_rgba(34,211,238,0.2),0_8px_40px_-12px_rgba(34,211,238,0.3)]',
 };
 
 const dotColor: Record<ToastVariant, string> = {
-  default: 'bg-emerald-400',
-  success: 'bg-emerald-400',
-  error: 'bg-red-400',
-  info: 'bg-cyan-400',
+  default: 'bg-[var(--emerald)]',
+  success: 'bg-[var(--emerald)]',
+  error: 'bg-[var(--danger)]',
+  info: 'bg-[var(--cyan)]',
 };
 
 function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: (id: string) => void }) {
@@ -58,7 +58,7 @@ function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: (id: strin
       role="status"
       aria-live="polite"
       className={cn(
-        'pointer-events-auto flex items-start gap-3 rounded-xl border bg-white/[0.06] px-4 py-3 text-sm text-neutral-100 backdrop-blur-md',
+        'pointer-events-auto flex items-start gap-3 rounded-[var(--radius-md)] border bg-[var(--surface-3)] px-4 py-3 text-sm text-[var(--text)] backdrop-blur-md',
         accent[item.variant],
       )}
     >
@@ -67,14 +67,14 @@ function ToastCard({ item, onDismiss }: { item: ToastItem; onDismiss: (id: strin
         className={cn('mt-1.5 h-2 w-2 flex-none rounded-full', dotColor[item.variant])}
       />
       <div className="min-w-0 flex-1">
-        {item.title && <p className="font-semibold text-neutral-50">{item.title}</p>}
-        {item.description && <p className="mt-0.5 text-neutral-400">{item.description}</p>}
+        {item.title && <p className="font-semibold text-[var(--text-strong)]">{item.title}</p>}
+        {item.description && <p className="mt-0.5 text-[var(--muted)]">{item.description}</p>}
       </div>
       <button
         type="button"
         onClick={() => onDismiss(item.id)}
         aria-label="Dismiss"
-        className="flex-none rounded-md p-1 text-neutral-400 outline-none transition hover:bg-white/10 hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+        className="flex-none rounded-md p-1 text-[var(--muted)] outline-none transition hover:bg-[var(--surface-2)] hover:text-[var(--accent-dim)] focus-visible:shadow-[var(--ring)]"
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
           <path d="M6 6l12 12M18 6L6 18" />

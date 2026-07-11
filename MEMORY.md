@@ -6,7 +6,7 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-11 (branch `main`, head `7458948`).
+Última atualização: 2026-07-11 (branch `main`, head `10c61eb`).
 
 ---
 
@@ -18,8 +18,9 @@ Stack mono-repo pnpm. Licença MIT.
 
 - Repo: `origin` = https://github.com/DizzyAdams/LandMap.git — branch `main`.
 - Commits em **pt-BR** são o padrão do projeto (ok manter).
-- Produção (Vercel): https://landmap-dizzys-projects-d5a44b36.vercel.app
-  (deploy atual: `landmap-eso2p38hx`, READY via `vercel deploy --prod`; alias `landmap.us.kg` atribuído; SSL async). Deploy via `vercel deploy --prod`.
+- Produção (Vercel): projeto **`landmapprod`** (projectId `prj_yGGRzfAXO3nfp96QwuvdA1jWARkt`), escopo `dizzys-projects-d5a44b36`.
+  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-2mmvzq3no`, status `READY`).
+  Outros aliases ativos: `landmap.us.kg`, `getlandmap.app`, `landmap.com.br` (+ www). Deploy via `vercel deploy --prod` (build remoto; `NEXT_PUBLIC_SITE_URL` em `vercel.json`).
 
 ---
 
@@ -34,7 +35,7 @@ Stack mono-repo pnpm. Licença MIT.
 | 404 de routing/locale | ✅ RESOLVIDO commit `71da3f0` (middleware p/ `src/`) |
 | **Feature "Mundo 3D" (bmap.io-style)** | ✅ **commitada** (`af050d7`) + design elevado (`70df4c2`) + **deployado** (landmap-p6k76hgks) |
 | **DNS dos domínios** | 🟡 **lado Vercel 100%** (apex+www atribuídos ao projeto + registros A/CNAME criados); **falta trocar NS no registrador** p/ `ns1/ns2.vercel-dns.com` (ver §6) |
-| Tailwind v4 | ⚠️ instalado mas **não processa CSS** (ver `CLAUDE.md`) |
+| Tailwind v4 | ✅ ativo (PostCSS + `@import "tailwindcss"` + `@source` p/ `@landmap/ui`); `--ring`/tints adicionados; `buttonVariants` exportado |
 
 ---
 

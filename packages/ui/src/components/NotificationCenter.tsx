@@ -110,11 +110,11 @@ export function NotificationCenter() {
         aria-label={`Notificações${unread ? `, ${unread} não lidas` : ''}`}
         aria-expanded={open}
         aria-haspopup="dialog"
-        className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800 text-neutral-300 transition hover:border-neutral-500 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+        className="relative inline-flex h-10 w-10 items-center justify-center rounded-lg border border-[var(--border-strong)] text-[var(--text)] transition hover:border-[var(--border-strong-2)] hover:text-[var(--text-strong)] focus-visible:outline-none focus-visible:shadow-[var(--ring)]"
       >
         <BellIcon />
         {unread > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-1 text-[10px] font-semibold text-[#050505]">
+          <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-1 text-[10px] font-semibold text-[var(--bg)]">
             {unread > 9 ? '9+' : unread}
           </span>
         )}
@@ -132,14 +132,14 @@ export function NotificationCenter() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute right-0 top-full z-50 mt-2 w-80 rounded-xl border border-neutral-800 bg-[#0a0a0a]/95 p-3 shadow-[var(--glow-emerald)] backdrop-blur-md focus-visible:outline-none"
+            className="absolute right-0 top-full z-50 mt-2 w-80 rounded-[var(--radius-md)] border border-[var(--border-strong)] bg-[var(--surface-1)]/95 p-3 shadow-[var(--glow-emerald)] backdrop-blur-md focus-visible:outline-none"
           >
             <div className="mb-2 flex items-center justify-between px-1">
-              <p className="text-xs font-semibold uppercase tracking-wide text-neutral-300">Novos matches</p>
-              <span className="text-[11px] text-neutral-400">{items.length}</span>
+              <p className="text-xs font-semibold uppercase tracking-wide text-[var(--text)]">Novos matches</p>
+              <span className="text-[11px] text-[var(--muted)]">{items.length}</span>
             </div>
             {items.length === 0 ? (
-              <p className="px-1 py-6 text-center text-sm text-neutral-400">
+              <p className="px-1 py-6 text-center text-sm text-[var(--muted)]">
                 Nenhum alerta ainda. Salve imóveis e filtros para receber matches.
               </p>
             ) : (
@@ -147,18 +147,18 @@ export function NotificationCenter() {
                 {items.map((it) => (
                   <li
                     key={it.id}
-                    className="flex items-start gap-2 rounded-lg border border-neutral-800 px-3 py-2"
+                    className="flex items-start gap-2 rounded-[var(--radius-md)] border border-[var(--border-strong)] px-3 py-2"
                   >
                     <span
                       className={cn(
                         'mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full',
-                        it.unread ? 'bg-emerald-400' : 'bg-neutral-600',
+                        it.unread ? 'bg-[var(--emerald)]' : 'bg-[var(--border-strong-2)]',
                       )}
                       aria-hidden
                     />
                     <div className="min-w-0">
-                      <p className="truncate text-sm text-neutral-100">{it.title}</p>
-                      <p className="truncate text-[11px] text-neutral-400">{it.description}</p>
+                      <p className="truncate text-sm text-[var(--text)]">{it.title}</p>
+                      <p className="truncate text-[11px] text-[var(--muted)]">{it.description}</p>
                     </div>
                   </li>
                 ))}

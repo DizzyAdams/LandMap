@@ -49,7 +49,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         <div
           role="tablist"
           onKeyDown={onKeyDown}
-          className="flex gap-1 overflow-x-auto border-b border-white/10"
+          className="flex gap-1 overflow-x-auto border-b border-[var(--border)]"
         >
           {tabs.map((t, i) => {
             const selected = current === t.id;
@@ -68,11 +68,11 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
                 onClick={() => setActive(t.id)}
                 className={cn(
                   'whitespace-nowrap rounded-t px-3 py-2 text-sm outline-none transition',
-                  'border-b-2 -mb-px focus-visible:ring-2 focus-visible:ring-emerald-400/60',
+                  'border-b-2 -mb-px focus-visible:shadow-[var(--ring)]',
                   'motion-reduce:transition-none',
                   selected
-                    ? 'border-emerald-400 text-white'
-                    : 'border-transparent text-neutral-400 hover:text-neutral-300',
+                    ? 'border-[var(--emerald)] text-[var(--text-strong)]'
+                    : 'border-transparent text-[var(--muted)] hover:text-[var(--text)]',
                 )}
               >
                 {t.label}
@@ -85,7 +85,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
           role="tabpanel"
           aria-labelledby={`tab-${current}`}
           tabIndex={0}
-          className="pt-5 outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/60 rounded"
+          className="pt-5 outline-none focus-visible:shadow-[var(--ring)] rounded"
         >
           {children(current)}
         </div>

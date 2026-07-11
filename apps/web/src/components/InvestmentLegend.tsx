@@ -72,12 +72,12 @@ export function InvestmentLegend({
   return (
     <div
       className={cn(
-        'rounded-xl border border-neutral-800 bg-neutral-900/40 p-3 text-xs text-neutral-300',
+        'rounded-[var(--radius-md)] border border-[var(--border)] bg-[color-mix(in_srgb,var(--surface-3)_40%,transparent)] p-3 text-xs text-[var(--muted)]',
         className,
       )}
       aria-label={title}
     >
-      <p className="mb-2 font-medium text-neutral-200">{title}</p>
+      <p className="mb-2 font-medium text-[var(--text-strong)]">{title}</p>
       <ul
         className={cn('flex gap-3', compact ? 'flex-row flex-wrap' : 'flex-col')}
         role="list"
@@ -86,11 +86,11 @@ export function InvestmentLegend({
           <li key={g} className="flex items-center gap-2">
             <span
               aria-hidden
-              className="inline-block h-3 w-3 shrink-0 rounded-full ring-1 ring-white/20"
+              className="inline-block h-3 w-3 shrink-0 rounded-full ring-1 ring-[var(--border-subtle)]"
               style={{ backgroundColor: INVESTMENT_GRADE_COLORS[g] }}
             />
-            <span className="font-mono font-semibold text-neutral-100">{g}</span>
-            <span className="text-neutral-400">
+            <span className="font-mono font-semibold text-[var(--text-strong)]">{g}</span>
+            <span className="text-[var(--muted)]">
               {GRADE_META[g].range}
               {showHints ? ` · ${GRADE_META[g].hint}` : ''}
             </span>

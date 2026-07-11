@@ -45,7 +45,7 @@ function SegmentedInner<T extends string>(
       role="radiogroup"
       aria-label={ariaLabel}
       onKeyDown={onKeyDown}
-      className={cn('inline-flex rounded-lg border border-white/10 bg-white/5 p-1', className)}
+      className={cn('inline-flex rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface-2)] p-1', className)}
     >
       {options.map((o, i) => {
         const selected = value === o.value;
@@ -62,11 +62,11 @@ function SegmentedInner<T extends string>(
             onClick={() => onChange(o.value)}
             className={cn(
               'rounded-md px-3 py-1.5 text-xs font-medium outline-none transition',
-              'focus-visible:ring-2 focus-visible:ring-emerald-400/60',
+              'focus-visible:shadow-[var(--ring)]',
               'motion-reduce:transition-none',
               selected
-                ? 'bg-white text-neutral-900 shadow-sm'
-                : 'text-neutral-400 hover:text-white',
+                ? 'bg-[var(--emerald-tint)] text-[var(--emerald-bright)]'
+                : 'text-[var(--muted)] hover:text-[var(--text-strong)]',
             )}
           >
             {o.label}

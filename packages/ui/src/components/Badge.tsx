@@ -6,11 +6,11 @@ export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
 };
 
 const variants: Record<NonNullable<BadgeProps['variant']>, string> = {
-  default: 'bg-white/10 text-neutral-200 border-white/10',
-  success: 'bg-emerald-400/10 text-emerald-300 border-emerald-400/30',
-  warning: 'bg-amber-400/10 text-amber-300 border-amber-400/30',
-  danger: 'bg-red-400/10 text-red-300 border-red-400/30',
-  info: 'bg-cyan-400/10 text-cyan-300 border-cyan-400/30',
+  default: 'bg-[var(--surface-3)] text-[var(--accent-dim)] border-[var(--border)]',
+  success: 'bg-[var(--emerald-tint)] text-[var(--emerald-bright)] border-[var(--emerald-tint)]',
+  warning: 'bg-[var(--gold-tint)] text-[var(--gold-soft)] border-[var(--gold-tint)]',
+  danger: 'bg-[color:color-mix(in_srgb,var(--danger)_10%,transparent)] text-[var(--danger)] border-[color:color-mix(in_srgb,var(--danger)_30%,transparent)]',
+  info: 'bg-[var(--cyan-tint)] text-[var(--cyan)] border-[var(--cyan-tint)]',
 };
 
 export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(

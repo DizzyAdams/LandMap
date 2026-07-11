@@ -74,7 +74,7 @@ export const Tooltip = forwardRef<HTMLSpanElement, TooltipProps>(
             role="tooltip"
             id={id}
             className={cn(
-              'pointer-events-none absolute z-50 max-w-xs rounded-lg border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs leading-snug text-neutral-200 shadow-[var(--glow-emerald)] backdrop-blur-md',
+              'pointer-events-none absolute z-50 max-w-xs rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface-2)] px-2.5 py-1.5 text-xs leading-snug text-[var(--accent-dim)] shadow-[var(--glow-emerald)] backdrop-blur-md',
               'motion-reduce:transition-none',
               sideClasses[side],
             )}

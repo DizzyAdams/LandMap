@@ -3,7 +3,7 @@ import './styles.css';
 export { cn } from './cn';
 export { config } from './tokens';
 export type { ButtonProps } from './button';
-export { Button } from './button';
+export { Button, buttonVariants } from './button';
 export { Card } from './components/Card';
 export type { CardProps } from './components/Card';
 export { Badge } from './components/Badge';

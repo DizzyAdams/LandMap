@@ -7,6 +7,7 @@ import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
 import { CountUp } from '../../components/CountUp';
 import { PropertyThumb } from '../../components/PropertyThumb';
+import { buttonVariants, cn } from '@landmap/ui';
 
 const TERMINAL_ROWS = [
   { city: 'São Paulo', price: 'R$ 1,2M', delta: 4.2 },
@@ -44,7 +45,7 @@ export default async function LocaleHomePage() {
     <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 pb-24 pt-24 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <section className="mx-auto grid max-w-[1200px] grid-cols-1 gap-14 px-6 lg:px-24 pb-24 pt-24 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <span className="kicker">Inteligência imobiliária aberta</span>
 
@@ -61,19 +62,19 @@ export default async function LocaleHomePage() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="./search"
-              className="group inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-neutral-900 transition-colors duration-200 hover:bg-neutral-100"
+              className={cn(buttonVariants({ variant: 'default' }), 'group h-12 px-6')}
             >
               Explorar imóveis
               <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
             </Link>
             <Link
               href="./map"
-              className="group inline-flex h-12 items-center gap-2 rounded-xl border border-neutral-800 px-6 text-sm font-medium text-neutral-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/50 hover:text-white"
+              className={cn(buttonVariants({ variant: 'outline' }), 'group h-12 px-6')}
             >
               Abrir o mapa
               <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
             </Link>
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-[var(--emerald-tint)] px-3 py-1 text-xs text-emerald-200">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
@@ -96,7 +97,7 @@ export default async function LocaleHomePage() {
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
                 <span className="font-mono text-xs text-neutral-400">landmap · live feed</span>
               </div>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-2.5 py-1 text-[10px] uppercase tracking-wide text-emerald-200">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-[var(--emerald-tint)] px-2.5 py-1 text-[10px] uppercase tracking-wide text-emerald-200">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> live
               </span>
             </div>
@@ -133,11 +134,11 @@ export default async function LocaleHomePage() {
 
       <Marquee />
 
-      <Reveal className="mx-auto max-w-6xl px-6 py-20">
+      <Reveal className="mx-auto max-w-[1200px] px-6 lg:px-24 py-20">
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Destaque no cadastro</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Imóveis em destaque</h2>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight">Imóveis em destaque</h2>
           </div>
           <Link href="./search" className="group shrink-0 text-sm text-neutral-400 transition hover:text-white">
             <span className="link-underline">Ver todos</span>
@@ -182,11 +183,11 @@ export default async function LocaleHomePage() {
         )}
       </Reveal>
 
-      <Reveal delay={0.1} className="mx-auto max-w-6xl px-6 pb-24">
+      <Reveal delay={0.1} className="mx-auto max-w-[1200px] px-6 lg:px-24 pb-24">
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Ecossistema operando</p>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight">Agentes &amp; Skills</h2>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight">Agentes &amp; Skills</h2>
           </div>
           <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
@@ -219,14 +220,14 @@ export default async function LocaleHomePage() {
       </Reveal>
 
       <Reveal className="border-t border-neutral-800">
-        <div className="mx-auto max-w-6xl px-6 py-16">
+        <div className="mx-auto max-w-[1200px] px-6 lg:px-24 py-16">
           <p className="eyebrow-gold">Plataforma aberta</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA - sem custo.</h2>
+          <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA - sem custo.</h2>
           <p className="mt-2 max-w-md text-sm text-neutral-400">API REST, schema.org, RAG local, CRM - tudo open-source.</p>
           <div className="mt-6">
             <Link
               href="./search"
-              className="group inline-flex h-11 items-center gap-2 rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/50 hover:text-white"
+              className={cn(buttonVariants({ variant: 'outline' }), 'group h-12 px-6')}
             >
               Começar busca
               <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">→</span>

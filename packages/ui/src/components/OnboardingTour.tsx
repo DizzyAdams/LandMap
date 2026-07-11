@@ -175,7 +175,7 @@ export function OnboardingTour({
       {rect && (
         <div
           aria-hidden
-          className="pointer-events-none absolute rounded-xl ring-2 ring-emerald-400/70 transition-all duration-300 motion-reduce:transition-none"
+          className="pointer-events-none absolute rounded-[var(--radius-md)] ring-2 ring-[var(--emerald)] transition-all duration-300 motion-reduce:transition-none"
           style={{
             top: rect.top - 6,
             left: rect.left - 6,
@@ -191,15 +191,15 @@ export function OnboardingTour({
         tabIndex={-1}
         style={{ ...cardStyle, width: CARD_W }}
         className={cn(
-          'surface absolute rounded-2xl border border-white/10 p-5 shadow-[var(--glow-emerald)] outline-none',
+          'surface absolute rounded-[var(--radius-lg)] border border-[var(--border)] p-5 shadow-[var(--glow-emerald)] outline-none',
           'motion-reduce:transition-none',
         )}
       >
-        <p className="text-[10px] font-medium uppercase tracking-wider text-emerald-300">
+        <p className="text-[10px] font-medium uppercase tracking-wider text-[var(--emerald-bright)]">
           Passo {current + 1} de {steps.length}
         </p>
-        <h2 className="mt-1.5 text-base font-semibold text-neutral-50">{step.title}</h2>
-        <p id={descId} className="mt-1.5 text-sm leading-relaxed text-neutral-400">
+        <h2 className="mt-1.5 text-base font-semibold text-[var(--text-strong)]">{step.title}</h2>
+        <p id={descId} className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">
           {step.description}
         </p>
 
@@ -211,7 +211,7 @@ export function OnboardingTour({
           <button
             type="button"
             onClick={skip}
-            className="rounded-lg px-3 py-1.5 text-xs text-neutral-400 outline-none transition hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+            className="rounded-lg px-3 py-1.5 text-xs text-[var(--muted)] outline-none transition hover:text-[var(--accent-dim)] focus-visible:shadow-[var(--ring)]"
           >
             Pular
           </button>
@@ -220,7 +220,7 @@ export function OnboardingTour({
               <button
                 type="button"
                 onClick={prev}
-                className="rounded-lg border border-white/10 px-3 py-1.5 text-xs text-neutral-200 outline-none transition hover:border-white/20 hover:bg-white/5 focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+                className="rounded-lg border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--accent-dim)] outline-none transition hover:border-[var(--border-strong)] hover:bg-[var(--surface-2)] focus-visible:shadow-[var(--ring)]"
               >
                 Voltar
               </button>
@@ -228,7 +228,7 @@ export function OnboardingTour({
             <button
               type="button"
               onClick={next}
-              className="rounded-lg bg-gradient-to-r from-emerald-400 to-cyan-400 px-4 py-1.5 text-xs font-semibold text-[#050505] outline-none transition hover:-translate-y-px focus-visible:ring-2 focus-visible:ring-emerald-400/60"
+              className="rounded-lg bg-gradient-to-r from-emerald-400 to-cyan-400 px-4 py-1.5 text-xs font-semibold text-[var(--bg)] outline-none transition hover:-translate-y-px focus-visible:shadow-[var(--ring)]"
             >
               {isLast ? 'Concluir' : 'Próximo'}
             </button>

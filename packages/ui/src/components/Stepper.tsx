@@ -62,18 +62,18 @@ export function Stepper({
 
         const circle = cn(
           'grid h-8 w-8 shrink-0 place-items-center rounded-full border text-xs font-semibold transition-colors motion-reduce:transition-none',
-          state === 'done' && 'border-emerald-400/40 bg-emerald-400/10 text-emerald-300',
+          state === 'done' && 'border-[var(--emerald-tint)] bg-[var(--emerald-tint)] text-[var(--emerald-bright)]',
           state === 'active' &&
-            'border-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 text-[#050505] shadow-[var(--glow-emerald)]',
-          state === 'upcoming' && 'bg-white/5 border-white/10 text-neutral-400',
+            'border-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 text-[var(--bg)] shadow-[var(--glow-emerald)]',
+          state === 'upcoming' && 'bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted)]',
         );
 
         const labelEl = (
           <span className={cn('flex flex-col', vertical ? 'ml-3' : 'mt-2 text-center')}>
-            <span className={cn('text-xs font-medium', state === 'active' ? 'text-white' : 'text-neutral-400')}>
+            <span className={cn('text-xs font-medium', state === 'active' ? 'text-[var(--text-strong)]' : 'text-[var(--muted)]')}>
               {step.label}
             </span>
-            {step.description && <span className="text-[11px] text-neutral-400">{step.description}</span>}
+            {step.description && <span className="text-[11px] text-[var(--muted)]">{step.description}</span>}
           </span>
         );
 
@@ -107,7 +107,7 @@ export function Stepper({
                 onStepClick?.(i);
               }
             }}
-            className="flex cursor-pointer items-center rounded-md outline-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]"
+            className="flex cursor-pointer items-center rounded-md outline-none focus-visible:outline-none focus-visible:shadow-[var(--ring)]"
           >
             {inner}
           </div>
@@ -122,7 +122,7 @@ export function Stepper({
             aria-hidden
             className={cn(
               vertical ? 'ml-4 my-2 h-6 w-px' : 'mx-2 h-px flex-1',
-              i < current ? 'bg-gradient-to-r from-emerald-400 to-cyan-400' : 'bg-neutral-800',
+              i < current ? 'bg-gradient-to-r from-emerald-400 to-cyan-400' : 'bg-[var(--border-strong)]',
             )}
           />
         );

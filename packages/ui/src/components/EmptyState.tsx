@@ -13,12 +13,12 @@ export const EmptyState = forwardRef<HTMLDivElement, EmptyStateProps>(
     <div
       ref={ref}
       className={cn(
-        'rounded-xl border border-dashed border-white/10 bg-white/[0.02] p-10 text-center',
+        'rounded-[var(--radius-md)] border border-dashed border-[var(--border)] bg-[var(--surface-inset)] p-10 text-center',
         className,
       )}
     >
-      <p className="text-sm font-medium text-neutral-300">{title}</p>
-      {description && <p className="mt-1 text-xs text-neutral-400">{description}</p>}
+      <p className="text-sm font-medium text-[var(--text)]">{title}</p>
+      {description && <p className="mt-1 text-xs text-[var(--muted)]">{description}</p>}
       {children}
     </div>
   ),

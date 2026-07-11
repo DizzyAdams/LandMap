@@ -69,7 +69,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
           return (
             <div
               key={item.id}
-              className="overflow-hidden rounded-lg border border-white/10 bg-white/[0.03]"
+              className="overflow-hidden rounded-[var(--radius-md)] border-[var(--border)] bg-[var(--surface-2)]"
             >
               <h3 className="m-0">
                 <button
@@ -84,8 +84,8 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
                   onClick={() => toggle(item.id)}
                   onKeyDown={(e) => onHeaderKeyDown(e, index)}
                   className={cn(
-                    'flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-medium text-neutral-100 outline-none transition',
-                    'focus-visible:ring-2 focus-visible:ring-emerald-400/60',
+                    'flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-medium text-[var(--text)] outline-none transition',
+                    'focus-visible:shadow-[var(--ring)]',
                     'motion-reduce:transition-none',
                     item.disabled && 'cursor-not-allowed opacity-50',
                   )}
@@ -94,7 +94,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
                   <span
                     aria-hidden
                     className={cn(
-                      'text-neutral-400 transition-transform duration-200',
+                      'text-[var(--muted)] transition-transform duration-200',
                       isOpen && 'rotate-180',
                     )}
                   >
@@ -112,7 +112,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
                 )}
               >
                 <div className="overflow-hidden">
-                  <div className="px-4 pb-4 pt-1 text-sm leading-relaxed text-neutral-400">
+                  <div className="px-4 pb-4 pt-1 text-sm leading-relaxed text-[var(--muted)]">
                     {item.content}
                   </div>
                 </div>

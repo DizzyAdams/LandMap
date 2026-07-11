@@ -10,11 +10,11 @@ export interface StatPillProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const tones: Record<NonNullable<StatPillProps['tone']>, string> = {
-  emerald: 'border-emerald-400/30 bg-emerald-400/10 text-emerald-200',
-  cyan: 'border-cyan-400/30 bg-cyan-400/10 text-cyan-200',
-  violet: 'border-violet-400/30 bg-violet-400/10 text-violet-200',
-  gold: 'border-[#d4af37]/40 bg-[#d4af37]/10 text-[var(--gold-soft)]',
-  neutral: 'border-white/10 bg-white/5 text-neutral-200',
+  emerald: 'border-[var(--emerald-tint)] bg-[var(--emerald-tint)] text-[var(--emerald-bright)]',
+  cyan: 'border-[var(--cyan-tint)] bg-[var(--cyan-tint)] text-[var(--cyan)]',
+  violet: 'border-[var(--violet-tint)] bg-[var(--violet-tint)] text-[var(--violet)]',
+  gold: 'border-[var(--gold-tint)] bg-[var(--gold-tint)] text-[var(--gold-soft)]',
+  neutral: 'border-[var(--border)] bg-[var(--surface-3)] text-[var(--accent-dim)]',
 };
 
 /** Compact, highlighted metric pill that reuses the brand accent tokens. */
@@ -35,13 +35,13 @@ export const StatPill = forwardRef<HTMLSpanElement, StatPillProps>(
           {icon}
         </span>
       ) : null}
-      {label ? <span className="text-neutral-400">{label}</span> : null}
-      <span className="font-semibold tabular-nums text-neutral-50">{value}</span>
+      {label ? <span className="text-[var(--muted)]">{label}</span> : null}
+      <span className="font-semibold tabular-nums text-[var(--text-strong)]">{value}</span>
       {trend !== undefined && (
         <span
           className={cn(
             'inline-flex items-center gap-0.5 tabular-nums',
-            trend >= 0 ? 'text-emerald-300' : 'text-red-300',
+            trend >= 0 ? 'text-[var(--emerald-bright)]' : 'text-[var(--danger)]',
           )}
         >
           <span aria-hidden>{trend >= 0 ? '▲' : '▼'}</span>

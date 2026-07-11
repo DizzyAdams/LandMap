@@ -13,7 +13,7 @@ const base: React.CSSProperties = {
   alignItems: 'center',
   justifyContent: 'center',
   whiteSpace: 'nowrap',
-  borderRadius: 6,
+  borderRadius: 'var(--radius-md)',
   fontWeight: 500,
   transition:
     'background-color 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease, box-shadow 0.2s ease, transform 0.15s ease',
@@ -25,7 +25,7 @@ const base: React.CSSProperties = {
 
 const focusBase: React.CSSProperties = {
   outline: 'none',
-  boxShadow: '0 0 0 1px var(--emerald), 0 0 0 3px rgba(52,211,153,0.25)',
+  boxShadow: 'var(--ring)',
 };
 
 const disabledBase: React.CSSProperties = {
@@ -52,16 +52,16 @@ const variantMap: Record<
   },
   outline: {
     base: { backgroundColor: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text)' },
-    hover: { backgroundColor: 'rgba(255,255,255,0.06)', borderColor: '#737373', color: '#ffffff' },
+    hover: { backgroundColor: 'var(--surface-2)', borderColor: 'var(--muted-2)', color: 'var(--text-strong)' },
   },
   ghost: {
     base: { backgroundColor: 'transparent', color: 'var(--muted)' },
-    hover: { backgroundColor: 'rgba(255,255,255,0.06)', color: '#ffffff' },
+    hover: { backgroundColor: 'var(--surface-2)', color: 'var(--text-strong)' },
   },
   // Explicit, rarely-used high-contrast white. Never the default.
   hero: {
-    base: { backgroundColor: '#ffffff', color: '#050505' },
-    hover: { backgroundColor: '#e5e5e5' },
+    base: { backgroundColor: 'var(--text-strong)', color: 'var(--bg)' },
+    hover: { backgroundColor: 'var(--accent-dim)' },
   },
   // Sovereign champagne gold — premium investor / capital accent (on tokens).
   gold: {
@@ -126,4 +126,40 @@ export function Button({
       {...props}
     />
   );
+}
+
+/**
+ * Class-based variant helper (shadcn pattern) so non-button elements — e.g.
+ * `<Link className={cn(buttonVariants({ variant: 'default' }), 'h-12 px-6')}>` —
+ * can share the Button's exact visual treatment. Mirrors the inline-style
+ * `variantMap`/`sizeMap` above 1:1 and consumes the same design tokens.
+ */
+export function buttonVariants({
+  variant = 'default',
+  size = 'md',
+  className,
+}: {
+  variant?: ButtonProps['variant'];
+  size?: ButtonProps['size'];
+  className?: string;
+} = {}) {
+  const base =
+    'inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-md)] font-medium outline-none transition-[background-color,border-color,color,box-shadow,transform,opacity] focus-visible:shadow-[var(--ring)] disabled:opacity-50 disabled:pointer-events-none';
+  const sizes: Record<NonNullable<ButtonProps['size']>, string> = {
+    sm: 'h-9 px-3 text-sm',
+    md: 'h-10 px-4 text-sm',
+    lg: 'h-11 px-5 text-base',
+  };
+  const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
+    default:
+      'bg-[linear-gradient(90deg,var(--emerald),var(--cyan))] text-[var(--bg)] shadow-[var(--glow-emerald)] hover:bg-[linear-gradient(90deg,var(--emerald-bright),var(--cyan))] hover:-translate-y-px hover:shadow-[var(--glow-dual)]',
+    outline:
+      'bg-transparent border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--surface-2)] hover:border-[var(--muted-2)] hover:text-[var(--text-strong)]',
+    ghost:
+      'bg-transparent text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text-strong)]',
+    hero: 'bg-[var(--text-strong)] text-[var(--bg)] hover:bg-[var(--accent-dim)]',
+    gold:
+      'bg-[linear-gradient(90deg,var(--gold-soft),var(--gold)_55%,var(--gold-deep))] text-[var(--bg)] shadow-[var(--glow-gold)] hover:bg-[linear-gradient(90deg,var(--gold-bright),var(--gold)_55%,var(--gold-deep))] hover:-translate-y-px hover:shadow-[var(--glow-sovereign)]',
+  };
+  return cn(base, sizes[size], variants[variant], className);
 }

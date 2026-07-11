@@ -15,9 +15,9 @@ const sizeMap = {
 };
 
 const toneMap = {
-  running: 'bg-emerald-400/20 text-emerald-300',
-  paused: 'bg-amber-400/20 text-amber-300',
-  idle: 'bg-white/10 text-neutral-300',
+  running: 'bg-[color:color-mix(in_srgb,var(--emerald)_20%,transparent)] text-[var(--emerald-bright)]',
+  paused: 'bg-[color:color-mix(in_srgb,var(--gold)_20%,transparent)] text-[var(--gold-soft)]',
+  idle: 'bg-[var(--surface-3)] text-[var(--text)]',
 };
 
 /** Initials avatar with a status tint. */

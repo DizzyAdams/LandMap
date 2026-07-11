@@ -17,7 +17,7 @@ export const Skeleton = forwardRef<HTMLDivElement, SkeletonProps>(
     <div
       ref={ref}
       aria-hidden
-      className={cn('skeleton bg-white/5', variants[variant], className)}
+      className={cn('skeleton', variants[variant], className)}
       {...props}
     />
   ),

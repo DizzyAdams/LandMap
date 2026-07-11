@@ -97,7 +97,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Navegação principal (mobile)"
-      className="fixed inset-x-0 bottom-0 z-50 flex items-stretch border-t border-neutral-800 bg-[#050505]/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 flex items-stretch border-t border-[var(--border-strong)] bg-[var(--bg)]/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
     >
       {ITEMS.map((item) => {
         const active = isActive(item.href);
@@ -108,9 +108,9 @@ export function MobileBottomNav() {
             aria-current={active ? 'page' : undefined}
             className={cn(
               'flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 outline-none transition-colors',
-              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/70 focus-visible:ring-offset-2 focus-visible:ring-offset-[#050505]',
+              'focus-visible:outline-none focus-visible:shadow-[var(--ring)]',
               'motion-reduce:transition-none',
-              active ? 'text-emerald-300' : 'text-neutral-400 hover:text-neutral-200',
+              active ? 'text-[var(--emerald-bright)]' : 'text-[var(--muted)] hover:text-[var(--accent-dim)]',
             )}
           >
             {item.icon}
