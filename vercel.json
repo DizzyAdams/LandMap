@@ -5,6 +5,6 @@
   "buildCommand": "pnpm -r --filter './packages/*' run build && cd apps/web && pnpm run build",
   "outputDirectory": "apps/web/.next",
   "env": {
-    "NEXT_PUBLIC_SITE_URL": "https://mapa.vercel.app"
+    "NEXT_PUBLIC_SITE_URL": "https://landmap.us.kg"
   }
 }
