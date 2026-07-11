@@ -15,8 +15,8 @@ export default function OfflinePage() {
     <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-neutral-50">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[#050505]" />
-        <div className="absolute inset-0 aurora" />
-        <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+        <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
+
       </div>
       <div className="max-w-md text-center">
         <Logo className="mx-auto h-10 w-10" />

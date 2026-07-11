@@ -55,8 +55,8 @@ export default function StatusPage() {
     <div className="relative min-h-screen">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[#050505]" />
-        <div className="absolute inset-0 aurora" />
-        <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+        <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
+
       </div>
       <div className="mx-auto max-w-3xl px-6 py-20">
         {/* Overall status */}

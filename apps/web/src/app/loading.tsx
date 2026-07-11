@@ -5,8 +5,8 @@ export default function RootLoading() {
     <div className="relative flex min-h-screen flex-col">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[#050505]" />
-        <div className="absolute inset-0 aurora" />
-        <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+        <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
+
       </div>
 
       {/* Skeleton header */}
