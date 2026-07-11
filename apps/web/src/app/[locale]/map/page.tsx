@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -454,6 +454,10 @@ function MapView({
       map.remove();
       mapInstance.current = null;
     };
+    // Map is initialized exactly once on mount. flyToRef is a stable ref and
+    // onMapClick is read at event time via the closure; re-running this effect
+    // would tear down and recreate the Leaflet instance on every render.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Update markers when items change
