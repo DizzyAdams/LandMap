@@ -1,0 +1,27 @@
+{
+  "name": "LandMap · Sales Agent (Trajectory)",
+  "description": "Sequência esperada de agentes no esquadrão autônomo de vendas (prospector → qualifier → outreacher → closer → account_manager → forecaster). Avalia se o orquestrador executa o caminho correto por cenário e modo de autonomia.",
+  "data_type": "kv",
+  "examples": [
+    {
+      "inputs": { "scenario": "Lead novo entrou pelo formulário do site", "autonomy": "autopilot" },
+      "outputs": { "expected_trajectory": ["prospector", "qualifier", "outreacher"] }
+    },
+    {
+      "inputs": { "scenario": "Lead qualificado respondeu com interesse em visita", "autonomy": "autopilot" },
+      "outputs": { "expected_trajectory": ["qualifier", "outreacher", "closer"] }
+    },
+    {
+      "inputs": { "scenario": "Negócio fechado — iniciar pós-venda e sincronizar CRM", "autonomy": "autopilot" },
+      "outputs": { "expected_trajectory": ["closer", "account_manager", "forecaster"] }
+    },
+    {
+      "inputs": { "scenario": "Recalcular probabilidade e receita do pipeline no fim do dia", "autonomy": "copilot" },
+      "outputs": { "expected_trajectory": ["forecaster"] }
+    },
+    {
+      "inputs": { "scenario": "Ciclo completo de aquisição a forecast", "autonomy": "autopilot" },
+      "outputs": { "expected_trajectory": ["prospector", "qualifier", "outreacher", "closer", "account_manager", "forecaster"] }
+    }
+  ]
+}

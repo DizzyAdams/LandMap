@@ -1,0 +1,39 @@
+{
+  "name": "LandMap · Valuation (Realtime)",
+  "description": "Avaliação numérica do endpoint /value/realtime (prior numpy-ts). Cada exemplo define uma banda de preço esperada (±3%) derivada do modelo calibrado. Alinha o engine deployado com o refinador PyTorch treinado offline.",
+  "data_type": "kv",
+  "examples": [
+    {
+      "inputs": { "areaM2": 300, "type": "terreno", "basePpm2": 4200 },
+      "outputs": { "expectedMin": 850000, "expectedMax": 905000, "expectedPpm2": 2923.96, "note": "Terreno médio Curitiba — baseline de produção." }
+    },
+    {
+      "inputs": { "areaM2": 500, "type": "comercial", "basePpm2": 8000 },
+      "outputs": { "expectedMin": 4370000, "expectedMax": 4640000, "expectedPpm2": 9010.6, "note": "Comercial (type_mult 1.15)." }
+    },
+    {
+      "inputs": { "areaM2": 120, "type": "apartamento", "basePpm2": 6000 },
+      "outputs": { "expectedMin": 714000, "expectedMax": 758000, "expectedPpm2": 6133.5, "note": "Apartamento compacto (área < ref → bônus)." }
+    },
+    {
+      "inputs": { "areaM2": 1000, "type": "terreno", "basePpm2": 4000 },
+      "outputs": { "expectedMin": 2610000, "expectedMax": 2770000, "expectedPpm2": 2685.9, "note": "Lote grande (penalidade de área)." }
+    },
+    {
+      "inputs": { "areaM2": 250, "type": "casa", "basePpm2": 5000 },
+      "outputs": { "expectedMin": 1150000, "expectedMax": 1225000, "expectedPpm2": 4750, "note": "Casa na área de referência (area_eff = 1)." }
+    },
+    {
+      "inputs": { "areaM2": 800, "type": "comercial", "basePpm2": 7000 },
+      "outputs": { "expectedMin": 6100000, "expectedMax": 6480000, "expectedPpm2": 7861, "note": "Comercial grande — checa escala linear com a área." }
+    },
+    {
+      "inputs": { "areaM2": 60, "type": "apartamento", "basePpm2": 9000 },
+      "outputs": { "expectedMin": 547000, "expectedMax": 581000, "expectedPpm2": 9393.7, "note": "Studio premium — bônus de área pequena." }
+    },
+    {
+      "inputs": { "areaM2": 450, "type": "terreno", "basePpm2": 3500 },
+      "outputs": { "expectedMin": 1075000, "expectedMax": 1140000, "expectedPpm2": 2436, "note": "Terreno intermediário." }
+    }
+  ]
+}

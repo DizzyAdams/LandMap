@@ -1,0 +1,27 @@
+{
+  "name": "LandMap · Final Response (Market Q&A)",
+  "description": "Perguntas de usuário final sobre o catálogo/mercado com a resposta esperada. Avalia o comportamento ponta-a-ponta do assistente (analyze/chat) sobre imóveis.",
+  "data_type": "kv",
+  "examples": [
+    {
+      "inputs": { "query": "Quais são as cidades em destaque na plataforma?" },
+      "outputs": { "response": "Curitiba, Rio de Janeiro, São Paulo, Porto Alegre, Florianópolis, Joinville, Londrina e Balneário Camboriú." }
+    },
+    {
+      "inputs": { "query": "Qual página mostra a inteligência de terrenos?" },
+      "outputs": { "response": "A rota /terrenos apresenta KPIs, tendência de preço/m², aproveitamento do lote, rankings por bairro e os melhores lotes, além do simulador de valor ao vivo." }
+    },
+    {
+      "inputs": { "query": "O simulador de valor é em tempo real?" },
+      "outputs": { "response": "Sim — o endpoint /value/realtime responde em microssegundos (engine numpy-ts) e a UI mostra o valor com selo de latência." }
+    },
+    {
+      "inputs": { "query": "Como funciona o chat sobre imóveis?" },
+      "outputs": { "response": "É um chat com RAG que responde perguntas usando os documentos de mercado; roda gratuitamente via MiniMax (Puter.js) no cliente." }
+    },
+    {
+      "inputs": { "query": "A plataforma tem agente de vendas?" },
+      "outputs": { "response": "Sim — um esquadrão autônomo de 6 agentes (prospector, qualifier, outreacher, closer, account_manager, forecaster) com modos Off/Copilot/Autopilot, acessível no Sales Cockpit em /sales." }
+    }
+  ]
+}

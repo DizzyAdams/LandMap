@@ -1,0 +1,47 @@
+{
+  "name": "LandMap · RAG (Retrieval Q&A)",
+  "description": "Perguntas de domínio imobiliário sobre o corpus data/landmap/*.md. Avalia a qualidade de recuperação (retrieve) e a fundamentação da resposta com citações.",
+  "data_type": "kv",
+  "examples": [
+    {
+      "inputs": { "question": "Como o preço por m² de terrenos varia por cidade?" },
+      "outputs": {
+        "answer": "O preço por m² de terrenos varia conforme cidade, zona e infraestrutura; capitais e balneários valorizados (ex.: Balneário Camboriú, Florianópolis) tendem a ter m² mais alto que cidades do interior.",
+        "expected_topics": ["preço por m²", "cidade", "terreno", "valorização"],
+        "cited_sources_min": 1
+      }
+    },
+    {
+      "inputs": { "question": "O que considerar no potencial de aproveitamento de um lote?" },
+      "outputs": {
+        "answer": "Tamanho do terreno, loteamento/zoneamento, documentação regular e topografia influenciam o quanto do lote é útil para construção.",
+        "expected_topics": ["aproveitamento", "loteamento", "documentação", "zoneamento"],
+        "cited_sources_min": 1
+      }
+    },
+    {
+      "inputs": { "question": "Como interpretar a valorização (YoY) de um imóvel?" },
+      "outputs": {
+        "answer": "A valorização ano-a-ano compara o preço atual com o de 12 meses atrás; valores positivos indicam apreciação e ajudam a estimar tendência, mas devem ser lidos junto da volatilidade.",
+        "expected_topics": ["valorização", "yoy", "tendência", "volatilidade"],
+        "cited_sources_min": 1
+      }
+    },
+    {
+      "inputs": { "question": "Qual a diferença entre modalidade venda, aluguel e lançamento?" },
+      "outputs": {
+        "answer": "Venda é transação de propriedade; aluguel é locação recorrente; lançamento é imóvel novo/em construção, geralmente com prêmio de preço.",
+        "expected_topics": ["venda", "aluguel", "lançamento"],
+        "cited_sources_min": 1
+      }
+    },
+    {
+      "inputs": { "question": "Como comparar dois terrenos de forma objetiva?" },
+      "outputs": {
+        "answer": "Compare preço, preço/m², área, valorização histórica e características (documentação, infraestrutura), normalizando pelo m² para uma base justa.",
+        "expected_topics": ["comparar", "preço/m²", "área", "valorização"],
+        "cited_sources_min": 1
+      }
+    }
+  ]
+}

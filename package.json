@@ -20,6 +20,9 @@
     "docs": "pnpm --filter @landmap/web run storybook",
     "test": "vitest run",
     "test:watch": "vitest",
+    "evals:valuation": "node evals/run-valuation.mjs",
+    "evals:upload": "node evals/upload.mjs",
+    "evals:upload:dry": "node evals/upload.mjs --dry-run",
     "dev": "pnpm --filter @landmap/web dev",
     "dev:api": "pnpm --filter @landmap/api dev",
     "vercel-build": "pnpm -r --filter './packages/*' run build && cd apps/web && npx next build && cd .. && rm -rf .next && cp -r apps/web/.next .next"
