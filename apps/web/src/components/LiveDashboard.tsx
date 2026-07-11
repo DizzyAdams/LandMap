@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { SurrealBackground } from './SurrealBackground';
+
 import { AnimatedNumber } from '@landmap/ui';
 import { getStats, getKpi, getCities, type StatsResponse, type KpiResponse, type CityAggregate } from '../lib/api';
 
@@ -126,7 +126,7 @@ export function LiveDashboard() {
 
   return (
     <main className="relative min-h-screen bg-[#050505] text-neutral-50">
-      <SurrealBackground />
+
       <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-24">
         <div className="flex items-end justify-between">
           <div>

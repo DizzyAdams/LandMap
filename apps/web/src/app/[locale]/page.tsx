@@ -5,7 +5,6 @@ import { formatBRL } from '../../lib/format';
 import { Reveal, Stagger, ScrollProgress } from '../../components/Motion';
 import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
-import { HeroAurora } from '../../components/HeroAurora';
 import { CountUp } from '../../components/CountUp';
 import { PropertyThumb } from '../../components/PropertyThumb';
 
@@ -45,24 +44,13 @@ export default async function LocaleHomePage() {
     <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      {/* living cadastral field · bioluminescent aurora · floating orbs · vignette */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 cadastre-grid opacity-[0.16]" />
-      <HeroAurora className="absolute inset-0 -z-10 h-full w-full opacity-90" />
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <span className="orb orb--emerald h-72 w-72 left-[-8%] top-[14%]" />
-        <span className="orb orb--cyan h-64 w-64 right-[-6%] top-[22%]" />
-        <span className="orb orb--gold h-56 w-56 left-[16%] bottom-[8%]" />
-        <span className="orb orb--violet h-60 w-60 right-[12%] bottom-[10%]" />
-      </div>
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 vignette" />
-
       <section className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 pb-24 pt-24 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <span className="kicker">Inteligência imobiliária aberta</span>
 
           <h1 className="text-display text-balance mt-5 text-white">
             Veja o território imobiliário como{' '}
-            <span className="text-surreal text-bloom">dados</span>.
+            <span className="text-emerald-300">dados</span>.
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
@@ -73,7 +61,7 @@ export default async function LocaleHomePage() {
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="./search"
-              className="sheen cta-glow group inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-neutral-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-neutral-100"
+              className="group inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-neutral-900 transition-colors duration-200 hover:bg-neutral-100"
             >
               Explorar imóveis
               <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
@@ -102,7 +90,7 @@ export default async function LocaleHomePage() {
         </div>
 
         <div className="relative">
-          <div className="terminal gradient-border relative overflow-hidden p-5">
+          <div className="terminal relative overflow-hidden border border-neutral-800 p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />

@@ -6,11 +6,9 @@ import { Footer } from '../../components/Footer';
 import { ScrollToTop } from '../../components/ScrollToTop';
 import { WhatsNewBanner } from '../../components/WhatsNewBanner';
 import { ShortcutsHelp } from '../../components/ShortcutsHelp';
-import { Cursor } from '../../components/Cursor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ToastProvider, MobileBottomNav } from '@landmap/ui';
 import { CommandPaletteHost } from '../../components/CommandPaletteHost';
-import { SurrealBackground } from '../../components/SurrealBackground';
 import '@landmap/ui/styles.css';
 import '../../app/globals.css';
 
@@ -110,20 +108,11 @@ export default async function RootLayout({
         }}
       />
       <div className="relative min-h-[100dvh] pb-[88px] text-neutral-50 antialiased md:pb-0">
-        {/* Surreal living canvas - a breathing bioluminescent field behind every page */}
-        <SurrealBackground />
+        {/* Clean static backdrop — one quiet cadastral grid on solid ink */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[#050505]" />
-          <div className="absolute inset-0 mesh-bg" />
-          <div className="absolute inset-0 aurora" />
-          <div className="absolute inset-0 aurora-intense opacity-70" />
-          <div className="absolute inset-0 leak" />
-          <div className="absolute inset-0 cadastre-fade opacity-30" />
-          <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
-          <div className="absolute inset-0 vignette" />
-          <div className="absolute inset-0 depth" />
+          <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
         </div>
-        <Cursor />
         <Navbar />
         <div id="main-content" tabIndex={-1}>
           <ToastProvider>

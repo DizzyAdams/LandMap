@@ -7,7 +7,6 @@ import { motion } from 'framer-motion';
 import { Sparkline, Stat, Skeleton, Badge, EmptyState } from '@landmap/ui';
 import { GlowPanel } from '../../../components/GlowPanel';
 import { SpotlightCard } from '../../../components/SpotlightCard';
-import { SurrealBackground } from '../../../components/SurrealBackground';
 import { RealtimeValuator } from '../../../components/RealtimeValuator';
 import { getTerrain, type TerrainResponse } from '../../../lib/api';
 import { FEATURED_CITIES } from '../../../lib/constants';
@@ -139,7 +138,6 @@ export default function TerrenosPage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden text-neutral-50">
-      <SurrealBackground />
       <section className="mx-auto max-w-6xl px-6 py-16">
         {/* Header */}
         <div className="flex flex-wrap items-end justify-between gap-4">
