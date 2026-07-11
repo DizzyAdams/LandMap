@@ -345,6 +345,87 @@ export function ragQuery(query: string) {
     body: JSON.stringify({ query }),
   });
 }
+/* ─── Terrenos (terrain intelligence) ─── */
+
+export type TerrainPlot = {
+  id: string;
+  title: string;
+  city: string;
+  state: string;
+  neighborhood: string;
+  price: number;
+  areaM2: number;
+  pricePerM2: number;
+  modality: string;
+  available: boolean;
+  latitude?: number;
+  longitude?: number;
+  tags: string[];
+  appreciationPct: number;
+  buildScore: number;
+  score: number;
+  reasons: string[];
+};
+
+export type TerrainKpis = {
+  total: number;
+  available: number;
+  avgPrice: number;
+  avgPriceM2: number;
+  medianPriceM2: number;
+  minPriceM2: number;
+  maxPriceM2: number;
+  avgAreaM2: number;
+  totalAreaM2: number;
+  avgAppreciationPct: number;
+  avgBuildScore: number;
+};
+
+export type TerrainResponse = {
+  city: string;
+  total: number;
+  kpis: TerrainKpis | null;
+  trend: { month: string; avgPriceM2: number }[];
+  byNeighborhood: { name: string; count: number; avgPriceM2: number; avgAreaM2: number }[];
+  byTag: { tag: string; count: number }[];
+  plots: TerrainPlot[];
+};
+
+/** GET /market/terrain?city= — dashboard completo de terrenos. */
+export function getTerrain(city: string) {
+  return apiFetch<TerrainResponse>(`/market/terrain?city=${encodeURIComponent(city)}`);
+}
+
+/* ─── Real-time valuation (numpy-ts prior, sub-ms) ─── */
+
+export type RealtimeValuation = {
+  predictedPrice: number;
+  pricePerM2: number;
+  engine: string;
+  latencyUs: number;
+};
+
+/** GET /value/realtime — estimativa de valor ao vivo, com telemetria de latência. */
+export function valueRealtime(input: {
+  areaM2: number;
+  type?: string;
+  bedrooms?: number;
+  basePpm2?: number | null;
+  yoyPct?: number;
+  volatility?: number;
+  isLaunch?: boolean;
+}) {
+  const p = new URLSearchParams();
+  p.set('areaM2', String(input.areaM2));
+  if (input.type) p.set('type', input.type);
+  if (input.bedrooms != null) p.set('bedrooms', String(input.bedrooms));
+  if (input.basePpm2 != null) p.set('basePpm2', String(input.basePpm2));
+  if (input.yoyPct != null) p.set('yoyPct', String(input.yoyPct));
+  if (input.volatility != null) p.set('volatility', String(input.volatility));
+  if (input.isLaunch != null) p.set('isLaunch', String(input.isLaunch));
+  return apiFetch<RealtimeValuation>(`/value/realtime?${p.toString()}`);
+}
+
 /* ─── Worldwide geolocation API (open, MIT) ─── */
 
 export type GeoFeature = {

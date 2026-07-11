@@ -47,3 +47,45 @@ class ForecastResponse(BaseModel):
 
     city: str
     forecasts: list[ForecastPoint]
+
+
+# ── Real-time valuation (numpy + optional PyTorch, µs-latency) ──────────────
+class RealtimeValueRequest(BaseModel):
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    area_m2: float
+    type: str = "apartamento"
+    bedrooms: int = 0
+    base_ppm2: float | None = None
+    yoy_pct: float = 0.0
+    volatility: float = 0.0
+    is_launch: bool = False
+    engine: str = "auto"  # "auto" | "numpy" | "torch"
+
+
+class RealtimeValueResponse(BaseModel):
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    predicted_price: float
+    price_per_m2: float
+    engine: str
+    latency_us: float
+    refiner_multiplier: float
+
+
+class RealtimeBatchRequest(BaseModel):
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    items: list[RealtimeValueRequest]
+    engine: str = "auto"
+
+
+class RealtimeBatchResponse(BaseModel):
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    items: list[RealtimeValueResponse]
+    count: int
+    total_latency_us: float
+    avg_latency_us: float
+    engine: str
+    torch_available: bool

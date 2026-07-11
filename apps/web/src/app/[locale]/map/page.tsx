@@ -69,6 +69,8 @@ export default function MapPage() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5_000_000);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [typeFilter, setTypeFilter] = useState<'todos' | 'apartamento' | 'casa' | 'terreno' | 'comercial'>('todos');
+
   const inputRef = useRef<HTMLInputElement | null>(null);
   const params = useParams();
   const locale = (params.locale as string) || 'pt-BR';
@@ -166,7 +168,10 @@ export default function MapPage() {
 
   // Filter by price range
   const filteredItems = items.filter(
-    (item) => item.price >= minPrice && item.price <= maxPrice,
+    (item) =>
+      item.price >= minPrice &&
+      item.price <= maxPrice &&
+      (typeFilter === 'todos' || item.type === typeFilter),
   );
 
   return (
@@ -295,6 +300,22 @@ export default function MapPage() {
                 }).format(maxPrice)}
               </span>
             </div>
+          </div>
+
+          {/* Type filter */}
+          <div className="flex flex-wrap items-center gap-2 border-t border-neutral-800 pt-4">
+            <span className="text-xs text-neutral-400">Tipo de imóvel:</span>
+            {(['todos', 'apartamento', 'casa', 'terreno', 'comercial'] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTypeFilter(t)}
+                aria-pressed={typeFilter === t}
+                className={`btn ${typeFilter === t ? 'btn-primary' : 'btn-ghost'} !px-3 !py-1 !text-xs capitalize`}
+              >
+                {t === 'terreno' ? '🏞️ Terreno' : t}
+              </button>
+            ))}
           </div>
 
           {/* Legend */}

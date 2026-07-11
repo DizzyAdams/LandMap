@@ -76,3 +76,72 @@ describe('market intelligence routes', () => {
   });
 });
 
+describe('terrain intelligence route (/market/terrain)', () => {
+  it('retorna KPIs, tendência, rankings e melhores lotes', async () => {
+    const res = await app.request('/market/terrain?city=Curitiba');
+    expect(res.status).toBe(200);
+    const data = await res.json();
+
+    expect(data.city).toBe('Curitiba');
+    expect(data.total).toBeGreaterThanOrEqual(1);
+
+    // KPIs coerentes
+    expect(data.kpis).toBeTruthy();
+    expect(data.kpis.avgPriceM2).toBeGreaterThan(0);
+    expect(data.kpis.minPriceM2).toBeLessThanOrEqual(data.kpis.maxPriceM2);
+    expect(data.kpis.available).toBeLessThanOrEqual(data.kpis.total);
+    expect(data.kpis.avgBuildScore).toBeGreaterThanOrEqual(0);
+    expect(data.kpis.avgBuildScore).toBeLessThanOrEqual(100);
+
+    // Tendência de 12 meses, ancorada no valor atual
+    expect(Array.isArray(data.trend)).toBe(true);
+    expect(data.trend.length).toBe(12);
+    expect(data.trend[11].avgPriceM2).toBe(data.kpis.avgPriceM2);
+
+    // Rankings
+    expect(Array.isArray(data.byNeighborhood)).toBe(true);
+    expect(Array.isArray(data.byTag)).toBe(true);
+
+    // Melhores lotes com score válido e motivos
+    expect(Array.isArray(data.plots)).toBe(true);
+    expect(data.plots.length).toBeGreaterThanOrEqual(1);
+    const plot = data.plots[0];
+    expect(plot.pricePerM2).toBeGreaterThan(0);
+    expect(plot.score).toBeGreaterThanOrEqual(0);
+    expect(plot.score).toBeLessThanOrEqual(100);
+    expect(plot.buildScore).toBeGreaterThanOrEqual(0);
+    expect(plot.buildScore).toBeLessThanOrEqual(100);
+    expect(Array.isArray(plot.reasons)).toBe(true);
+    expect(plot.reasons.length).toBeGreaterThanOrEqual(1);
+
+    // Ranqueado por score desc
+    for (let i = 1; i < data.plots.length; i++) {
+      expect(data.plots[i - 1].score).toBeGreaterThanOrEqual(data.plots[i].score);
+    }
+  });
+
+  it('só considera imóveis do tipo terreno', async () => {
+    const res = await app.request('/market/terrain?city=Curitiba');
+    const data = await res.json();
+    // pricePerM2 = price/areaM2 sempre finito e positivo (areaM2 > 0 garantido)
+    for (const p of data.plots) {
+      expect(Number.isFinite(p.pricePerM2)).toBe(true);
+      expect(p.areaM2).toBeGreaterThan(0);
+    }
+  });
+
+  it('cidade sem terrenos retorna total 0 e kpis null', async () => {
+    const res = await app.request('/market/terrain?city=CidadeInexistenteXYZ');
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.total).toBe(0);
+    expect(data.kpis).toBeNull();
+    expect(data.plots).toEqual([]);
+  });
+
+  it('sem "city" retorna 400', async () => {
+    const res = await app.request('/market/terrain');
+    expect(res.status).toBe(400);
+  });
+});
+

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from contextlib import asynccontextmanager
+
 import polars as pl
 from fastapi import FastAPI, HTTPException
 
@@ -9,20 +11,93 @@ from landmap_data.datasets import load_price_history
 from landmap_models.forecast import CityForecaster
 
 from .model_store import get_valuation_model
+from .realtime import get_realtime_valuator
 from .schema import (
     ForecastPoint,
     ForecastRequest,
     ForecastResponse,
+    RealtimeBatchRequest,
+    RealtimeBatchResponse,
+    RealtimeValueRequest,
+    RealtimeValueResponse,
     ValueRequest,
     ValueResponse,
 )
 
-app = FastAPI(title="LandMap Valuation Service", version="0.1.0")
+@asynccontextmanager
+async def lifespan(_: FastAPI):
+    # Build + warm the real-time valuator so the first request pays no cold cost.
+    get_realtime_valuator()
+    yield
+
+
+app = FastAPI(title="LandMap Valuation Service", version="0.1.0", lifespan=lifespan)
 
 
 @app.get("/health")
 def health() -> dict:
-    return {"status": "ok"}
+    rt = get_realtime_valuator()
+    return {"status": "ok", "torchAvailable": rt.torch_available}
+
+
+@app.post("/value/realtime", response_model=RealtimeValueResponse)
+def value_realtime(req: RealtimeValueRequest) -> RealtimeValueResponse:
+    """Single valuation on the numpy/torch hot path — µs latency, warmed model."""
+    v = get_realtime_valuator().value(
+        area_m2=req.area_m2,
+        type_=req.type,
+        is_launch=req.is_launch,
+        yoy_pct=req.yoy_pct,
+        volatility=req.volatility,
+        bedrooms=req.bedrooms,
+        base_ppm2=req.base_ppm2,
+        engine=req.engine,
+    )
+    return RealtimeValueResponse(
+        predicted_price=v.predicted_price,
+        price_per_m2=v.price_per_m2,
+        engine=v.engine,
+        latency_us=v.latency_us,
+        refiner_multiplier=v.refiner_multiplier,
+    )
+
+
+@app.post("/value/realtime/batch", response_model=RealtimeBatchResponse)
+def value_realtime_batch(req: RealtimeBatchRequest) -> RealtimeBatchResponse:
+    """Vectorised batch valuation for throughput dashboards / real-time feeds."""
+    rt = get_realtime_valuator()
+    rows = [
+        {
+            "area_m2": it.area_m2,
+            "type_": it.type,
+            "is_launch": it.is_launch,
+            "yoy_pct": it.yoy_pct,
+            "volatility": it.volatility,
+            "bedrooms": it.bedrooms,
+            "base_ppm2": it.base_ppm2,
+        }
+        for it in req.items
+    ]
+    results = rt.value_batch(rows, engine=req.engine)
+    items = [
+        RealtimeValueResponse(
+            predicted_price=v.predicted_price,
+            price_per_m2=v.price_per_m2,
+            engine=v.engine,
+            latency_us=v.latency_us,
+            refiner_multiplier=v.refiner_multiplier,
+        )
+        for v in results
+    ]
+    total = sum(v.latency_us for v in results)
+    return RealtimeBatchResponse(
+        items=items,
+        count=len(items),
+        total_latency_us=round(total, 2),
+        avg_latency_us=round(total / len(items), 2) if items else 0.0,
+        engine=req.engine,
+        torch_available=rt.torch_available,
+    )
 
 
 @app.post("/value", response_model=ValueResponse)

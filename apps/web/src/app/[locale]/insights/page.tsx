@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Sparkline, Stat, Skeleton } from '@landmap/ui';
+import { Sparkline, Stat, Skeleton, EmptyState } from '@landmap/ui';
 import { GlowPanel } from '../../../components/GlowPanel';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
@@ -50,6 +50,8 @@ export default function InsightsPage() {
   const [trend, setTrend] = useState<PriceTrendResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
+
 
   useEffect(() => {
     let active = true;
@@ -81,7 +83,7 @@ export default function InsightsPage() {
     return () => {
       active = false;
     };
-  }, [city]);
+  }, [city, reloadKey]);
 
   const series = trend?.monthly.map((m) => m.avgPrice) ?? [];
   const minAvg = series.length ? Math.min(...series) : 0;
@@ -121,7 +123,7 @@ export default function InsightsPage() {
           </form>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-2">
+        <div role="group" aria-label="Escolher cidade" className="mt-4 flex flex-wrap gap-2">
           {CITIES.map((c) => (
             <button
               key={c}
@@ -130,12 +132,23 @@ export default function InsightsPage() {
                 setCity(c);
                 setInput(c);
               }}
+              aria-pressed={c === city}
               className={c === city ? 'btn btn-primary' : 'btn btn-ghost'}
             >
               {c}
             </button>
           ))}
         </div>
+        {/* Status para leitores de tela */}
+        <p className="sr-only" aria-live="polite">
+          {loading
+            ? `Carregando insights de ${city}…`
+            : error
+              ? `Erro: ${error}`
+              : `${neighborhoods.length} bairro${neighborhoods.length === 1 ? '' : 's'} em ${city}.`}
+        </p>
+
+
 
         {loading && (
           <div className="mt-10 space-y-6" aria-busy="true" aria-live="polite">
@@ -148,7 +161,19 @@ export default function InsightsPage() {
           </div>
         )}
         {!loading && error && (
-          <p className="mt-10 text-sm text-red-400">{error}</p>
+          <EmptyState
+            className="mt-10"
+            title="Não foi possível carregar os insights"
+            description={error}
+          >
+            <button
+              type="button"
+              onClick={() => setReloadKey((k) => k + 1)}
+              className="btn btn-primary cta-glow mt-4"
+            >
+              Tentar de novo
+            </button>
+          </EmptyState>
         )}
 
         {!loading && trend && (

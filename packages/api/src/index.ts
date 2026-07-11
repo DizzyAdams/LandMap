@@ -9,6 +9,7 @@ import { createNeighborhoodsRouter } from './neighborhoods.js';
 import { createMarketRouter } from './market.js';
 import { marketApp } from './routes/market.js';
 import { investApp } from './routes/invest.js';
+import { valuationApp } from './routes/valuation.js';
 import { createEmbeddingsRouter } from './routes/embeddings.js';
 import { createInsightsRouter } from './routes/insights.js';
 import { createSearchSuggestionsRouter } from './routes/search-suggestions.js';
@@ -404,6 +405,7 @@ app.route('/market', createMarketRouter());
 /* Investment intelligence: /invest/analyze, /invest/opportunities, /invest/score */
 app.route('/invest', investApp);
 app.route('/market', marketApp);
+app.route('/value', valuationApp);
 
 /* â”€â”€â”€ Embeddings routes â”€â”€â”€ */
 app.route('/embeddings', createEmbeddingsRouter());

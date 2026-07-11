@@ -17,6 +17,7 @@ const locales = [
 
 const links = [
   { href: 'search', labelKey: 'Buscar' },
+  { href: 'terrenos', labelKey: 'Terrenos' },
   { href: 'map', labelKey: 'Mapa' },
   { href: 'world', labelKey: 'Mundo 3D' },
   { href: 'studio', labelKey: 'Studio' },
