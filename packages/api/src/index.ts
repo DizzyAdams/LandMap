@@ -1,4 +1,4 @@
-import { Hono } from 'hono';
+﻿import { Hono } from 'hono';
 import { z } from 'zod';
 import { handle } from 'hono/vercel';
 import type { AnalyzeInput, AnalyzeResult, LlmMessage } from '@landmap/llm';
@@ -15,9 +15,10 @@ import { createSearchSuggestionsRouter } from './routes/search-suggestions.js';
 import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
 import { createSalesRouter } from './routes/sales.js';
+import { createIntegrationsRouter } from './routes/integrations.js';
 import allPropertiesData from './data/properties.json'
 import { createGeoRouter, createGeoSource } from '@landmap/geo';
-import { OpenDesignClient } from '@landmap/integrations';
+
 
 export type Env = {
   Bindings: {
@@ -27,19 +28,19 @@ export type Env = {
 
 const app = new Hono<Env>();
 
-/* ─── Request logging middleware ─── */
+/* â”€â”€â”€ Request logging middleware â”€â”€â”€ */
 app.use('*', async (c, next) => {
   const start = Date.now();
   const method = c.req.method;
   const path = c.req.path;
   await next();
   const elapsed = Date.now() - start;
-  console.log(`[${new Date().toISOString()}] ${method} ${path} → ${c.res.status} (${elapsed}ms)`);
+  console.log(`[${new Date().toISOString()}] ${method} ${path} â†’ ${c.res.status} (${elapsed}ms)`);
 });
 
 app.get('/health', (c) => c.json({ status: 'ok', env: c.env ? 'bound' : 'missing' }));
 
-// Uniform error responses — never leak raw stack traces; Zod input errors -> 400.
+// Uniform error responses â€” never leak raw stack traces; Zod input errors -> 400.
 app.onError((err, c) => {
   console.error('[api error]', err);
   if (err instanceof z.ZodError) {
@@ -146,7 +147,7 @@ app.post('/analyze', async (c) => {
   const body = analyzeInputSchema.parse(await c.req.json()) as AnalyzeInput;
 
   const systemPrompt =
-    'Você é um assistente especializado em imóveis brasileiros. Responda em português de forma objetiva e mencionar cidade, estado, tipo, modalidade, área, preço e quartos quando disponíveis.';
+    'VocÃª Ã© um assistente especializado em imÃ³veis brasileiros. Responda em portuguÃªs de forma objetiva e mencionar cidade, estado, tipo, modalidade, Ã¡rea, preÃ§o e quartos quando disponÃ­veis.';
 
   const messages: LlmMessage[] = [
     { role: 'system', content: systemPrompt },
@@ -169,13 +170,13 @@ app.post('/analyze', async (c) => {
 
   const answer =
     filtered.length === 0
-      ? 'No momento não há imóveis que correspondam exatamente a esses filtros. Você pode ampliar a cidade, estado ou modalidade.'
+      ? 'No momento nÃ£o hÃ¡ imÃ³veis que correspondam exatamente a esses filtros. VocÃª pode ampliar a cidade, estado ou modalidade.'
       : filtered
           .slice(0, 3)
           .map((item) => {
             const location = `${item.city}/${item.state}`;
             const bedrooms = item.bedrooms ? `, ${item.bedrooms} quarto(s)` : '';
-            const area = `${item.areaM2}m²`;
+            const area = `${item.areaM2}mÂ²`;
             const price = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(item.price);
             return `${item.title} (${item.type}, ${item.modality}) em ${location}: ${area}, ${price}${bedrooms}.`;
           })
@@ -189,7 +190,7 @@ app.post('/analyze', async (c) => {
   return c.json(result);
 });
 
-/** GET /favorites?ids=1,2,3 — returns properties matching the given IDs */
+/** GET /favorites?ids=1,2,3 â€” returns properties matching the given IDs */
 app.get('/favorites', async (c) => {
   const raw = c.req.query('ids');
   if (!raw) {
@@ -205,7 +206,7 @@ app.get('/favorites', async (c) => {
   return c.json({ items, total: items.length });
 });
 
-/** GET /compare?ids=1,2 — returns a diff/comparison between 2+ properties */
+/** GET /compare?ids=1,2 â€” returns a diff/comparison between 2+ properties */
 app.get('/compare', async (c) => {
   const raw = c.req.query('ids');
   if (!raw) {
@@ -248,7 +249,7 @@ app.get('/compare', async (c) => {
   });
 });
 
-/** POST /properties — cria nova propriedade */
+/** POST /properties â€” cria nova propriedade */
 app.post('/properties', async (c) => {
   const body = await c.req.json<Partial<PropertyRecord>>();
   const now_ = new Date().toISOString();
@@ -278,7 +279,7 @@ app.post('/properties', async (c) => {
   return c.json(property, 201);
 });
 
-/** PUT /properties/:id — atualiza propriedade existente */
+/** PUT /properties/:id â€” atualiza propriedade existente */
 app.put('/properties/:id', async (c) => {
   const id = c.req.param('id');
   const body = await c.req.json<Partial<PropertyRecord>>();
@@ -296,7 +297,7 @@ app.put('/properties/:id', async (c) => {
   return c.json(allProperties[idx]);
 });
 
-/** DELETE /properties/:id — soft delete (set available=false) */
+/** DELETE /properties/:id â€” soft delete (set available=false) */
 app.delete('/properties/:id', async (c) => {
   const id = c.req.param('id');
   const idx = allProperties.findIndex((p) => p.id === id);
@@ -313,7 +314,7 @@ app.delete('/properties/:id', async (c) => {
   return c.json({ ok: true, id });
 });
 
-/** GET /cities — agregação por cidade */
+/** GET /cities â€” agregaÃ§Ã£o por cidade */
 app.get('/cities', async (c) => {
   const map = new Map<string, { city: string; state: string; count: number; totalPrice: number }>();
   for (const p of allProperties) {
@@ -335,7 +336,7 @@ app.get('/cities', async (c) => {
   return c.json({ items: cities, total: cities.length });
 });
 
-/** GET /stats — estatísticas gerais */
+/** GET /stats â€” estatÃ­sticas gerais */
 app.get('/stats', async (c) => {
   const totalProperties = allProperties.length;
   const citiesSet = new Set(allProperties.map((p) => `${p.city}|${p.state}`));
@@ -354,12 +355,12 @@ app.get('/stats', async (c) => {
   return c.json({ totalProperties, totalCities, avgPrice, byType, byModality });
 });
 
-/* ─── Admin routes ─── */
+/* â”€â”€â”€ Admin routes â”€â”€â”€ */
 /**
- * POST /seo/generate — gera o JSON-LD (PropertyListingPage) + slug para a
- * landing de um imóvel. Usado pelo workflow n8n `landmap-seo-publish`.
+ * POST /seo/generate â€” gera o JSON-LD (PropertyListingPage) + slug para a
+ * landing de um imÃ³vel. Usado pelo workflow n8n `landmap-seo-publish`.
  * Auto-contido (espelha `buildPropertyListingPageSchema` de @landmap/seo)
- * para não acoplar a API ao build do pacote seo.
+ * para nÃ£o acoplar a API ao build do pacote seo.
  */
 app.post('/seo/generate', async (c) => {
   const body = (await c.req.json().catch(() => ({}))) as {
@@ -367,19 +368,19 @@ app.post('/seo/generate', async (c) => {
     types?: string[];
   };
   const p = body.property ?? {};
-  const title = p.title ?? 'Imóvel';
+  const title = p.title ?? 'ImÃ³vel';
   const slug = (p.id ?? title)
     .toString()
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-+|-+$/g, '');
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'PropertyListingPage',
     name: title,
-    url: `https://landmap.com.br/imovel/${slug}`,
+    url: `https://landmapprod.vercel.app/imovel/${slug}`,
     address: {
       '@type': 'PostalAddress',
       addressLocality: p.city ?? 'Curitiba',
@@ -393,21 +394,21 @@ app.post('/seo/generate', async (c) => {
 
 app.route('/admin', createAdminRouter(allProperties as any, () => String(nextId++)));
 
-/* ─── Neighborhoods routes ─── */
+/* â”€â”€â”€ Neighborhoods routes â”€â”€â”€ */
 app.route('/neighborhoods', createNeighborhoodsRouter());
 
-/* ─── Market routes ─── */
+/* â”€â”€â”€ Market routes â”€â”€â”€ */
 app.route('/market', createMarketRouter());
 
-/* ─── Market intelligence (neighborhoods / price-trend / heatmap) ─── */
+/* â”€â”€â”€ Market intelligence (neighborhoods / price-trend / heatmap) â”€â”€â”€ */
 /* Investment intelligence: /invest/analyze, /invest/opportunities, /invest/score */
 app.route('/invest', investApp);
 app.route('/market', marketApp);
 
-/* ─── Embeddings routes ─── */
+/* â”€â”€â”€ Embeddings routes â”€â”€â”€ */
 app.route('/embeddings', createEmbeddingsRouter());
 
-/* ─── Insights routes ─── */
+/* â”€â”€â”€ Insights routes â”€â”€â”€ */
 app.route('/insights', createInsightsRouter());
 
 /* ?* LangFlow-style workflow routes ?* */
@@ -416,15 +417,18 @@ app.route('/langflow', createLangflowRouter());
 /* ?* RAG chat routes ?* */
 app.route('/rag', createRagRouter());
 
-/* ─── Autonomous Sales Agent routes ─── */
+/* â”€â”€â”€ Autonomous Sales Agent routes â”€â”€â”€ */
 app.route('/geo', createGeoRouter(createGeoSource()));
 app.route('/sales', createSalesRouter());
 
+/* â”€â”€â”€ Integrations hub (WABA + CRIE + OpenDesign + registry) â”€â”€â”€ */
+app.route('/integrations', createIntegrationsRouter());
 
-/* ─── Search suggestions routes ─── */
+
+/* â”€â”€â”€ Search suggestions routes â”€â”€â”€ */
 app.route('/', createSearchSuggestionsRouter());
 
-/* ─── POST /properties/bulk — bulk insert ─── */
+/* â”€â”€â”€ POST /properties/bulk â€” bulk insert â”€â”€â”€ */
 app.post('/properties/bulk', async (c) => {
   const body = await c.req.json<Array<Partial<PropertyRecord>>>();
   if (!Array.isArray(body) || body.length === 0) {
@@ -462,7 +466,7 @@ app.post('/properties/bulk', async (c) => {
   return c.json({ items: created, total: created.length }, 201);
 });
 
-/* ─── GET /properties/recommendations/:id — 3 similar properties ─── */
+/* â”€â”€â”€ GET /properties/recommendations/:id â€” 3 similar properties â”€â”€â”€ */
 app.get('/properties/recommendations/:id', async (c) => {
   const id = c.req.param('id');
   const property = allProperties.find((p) => p.id === id);
@@ -498,7 +502,7 @@ app.get('/properties/recommendations/:id', async (c) => {
   });
 });
 
-/* ─── KPI + investment rulers ─── */
+/* â”€â”€â”€ KPI + investment rulers â”€â”€â”€ */
 app.get('/kpi', (c) => {
   const kpis = computeMarketKpis(allProperties as unknown as Property[]);
   const rulers = applyRulers(kpis);
@@ -507,24 +511,6 @@ app.get('/kpi', (c) => {
     rulers,
     generatedAt: new Date().toISOString(),
   });
-});
-
-/* ─── Integrations: OpenDesign feed (mock until configured) ─── */
-app.get('/integrations/opendesign/feed', async (c) => {
-  const client = new OpenDesignClient();
-  try {
-    const feed = await client.getDesignFeed({ limit: 8 });
-    return c.json({
-      configured: client.configured,
-      feed,
-      generatedAt: new Date().toISOString(),
-    });
-  } catch (e) {
-    return c.json(
-      { configured: client.configured, error: (e as Error).message, feed: [] },
-      200,
-    );
-  }
 });
 
 export default app;

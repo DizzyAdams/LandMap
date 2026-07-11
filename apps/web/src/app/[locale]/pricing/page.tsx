@@ -4,6 +4,7 @@ import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { Reveal, Stagger } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 const PLANS = [
   {
@@ -83,11 +84,12 @@ export default function PricingPage() {
       <div className="mx-auto max-w-6xl px-6 py-20">
         {/* Header */}
         <Reveal className="text-center">
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-xs font-medium tracking-wide text-emerald-300">
+          <span className="chip">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             Preços em reais (BRL) · Sem fidelidade
           </span>
-          <h1 className="mt-6 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
+          <span className="kicker mt-6">Planos LandMap</span>
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
             Planos e Preços
           </h1>
           <p className="mt-3 text-sm text-neutral-400">
@@ -128,6 +130,8 @@ export default function PricingPage() {
               <Link
                 href={`/${locale}/${plan.href}`}
                 className={`group mt-6 flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-semibold transition-all duration-300 ${
+                  plan.highlight ? 'cta-glow ' : ''
+                }${
                   plan.highlight
                     ? 'bg-gradient-to-r from-emerald-400 to-cyan-400 text-[#050505] shadow-[0_0_0_1px_rgba(52,211,153,0.15),0_8px_30px_-12px_rgba(34,211,238,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(52,211,153,0.45),0_14px_44px_-12px_rgba(34,211,238,0.65)]'
                     : 'border border-emerald-400/30 text-emerald-200 hover:border-emerald-400/60 hover:text-emerald-100 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_12px_48px_-12px_rgba(34,211,238,0.35)]'
@@ -151,7 +155,7 @@ export default function PricingPage() {
           <h2 className="text-center text-lg font-medium text-neutral-50">
             Comparação de Planos
           </h2>
-          <div className="mt-6 overflow-x-auto rounded-xl border border-neutral-800">
+          <GlowPanel className="mt-6 overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="border-b border-neutral-800 bg-neutral-900/60">
                 <tr>
@@ -175,7 +179,7 @@ export default function PricingPage() {
                 ))}
               </tbody>
             </table>
-          </div>
+          </GlowPanel>
         </Reveal>
       </div>
     </div>

@@ -53,7 +53,7 @@ export function XpBar({ xp, level, tier, landcoins, className }: XpBarProps) {
 
       <Progress value={pct} barClassName={`bg-gradient-to-r ${tierBar[effectiveTier]}`} />
 
-      <div className="mt-1.5 flex justify-between text-[11px] tabular-nums text-neutral-500">
+      <div className="mt-1.5 flex justify-between text-[11px] tabular-nums text-neutral-400">
         <span>{info.xpIntoLevel} XP no nível</span>
         <span>faltam {info.xpForNext} XP</span>
       </div>

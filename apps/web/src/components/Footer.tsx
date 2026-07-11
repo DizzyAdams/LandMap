@@ -19,7 +19,7 @@ export function Footer() {
             <span>LandMap</span>
           </div>
           <p className="mt-3 leading-relaxed">
-            Plataforma aberta de inteligência imobiliária. Dados, busca, mapa e IA — sem custo.
+            Inteligência imobiliária soberana e aberta. Dados, busca, mapa e IA — sem custo e sem login.
           </p>
         </div>
 
@@ -34,7 +34,7 @@ export function Footer() {
       </div>
 
       <div className="mt-10 flex items-center justify-between border-t hairline pt-6">
-        <p>© {year} LandMap. Open real estate intelligence.</p>
+        <p>© {year} LandMap — Sovereign Intelligence.</p>
         <p className="text-neutral-400">Free AI · MiniMax via Puter</p>
       </div>
       </div>

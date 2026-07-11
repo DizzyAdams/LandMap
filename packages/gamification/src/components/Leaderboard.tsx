@@ -28,7 +28,7 @@ export function Leaderboard({
         <h3 className="text-sm font-semibold text-neutral-100">
           {title ?? (scope === 'city' ? 'Ranking da cidade' : 'Ranking global')}
         </h3>
-        <span className="text-xs text-neutral-500">{entries.length} jogadores</span>
+        <span className="text-xs text-neutral-400">{entries.length} jogadores</span>
       </div>
 
       <ol className="flex flex-col gap-1.5">
@@ -56,7 +56,7 @@ export function Leaderboard({
                   </span>
                 ) : null}
               </p>
-              <p className="truncate text-[11px] text-neutral-500">{e.city}</p>
+              <p className="truncate text-[11px] text-neutral-400">{e.city}</p>
             </div>
             <StatPill tone={e.tier === 'sovereign' || e.tier === 'gold' ? 'gold' : 'emerald'} value={e.xp} />
           </li>

@@ -21,7 +21,8 @@ export default function OfflinePage() {
       <div className="max-w-md text-center">
         <Logo className="mx-auto h-10 w-10" />
 
-        <h1 className="mt-6 text-2xl font-semibold tracking-tight text-gradient">
+        <span className="kicker mt-6">Conexão</span>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
           Sem conexão
         </h1>
         <p className="mt-2 text-sm text-neutral-400">
@@ -32,7 +33,7 @@ export default function OfflinePage() {
         <div className="mt-8 flex items-center justify-center gap-3">
           <button
             onClick={() => window.location.reload()}
-            className="glow-emerald inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
+            className="cta-glow glow-emerald inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
           >
             Recarregar
           </button>

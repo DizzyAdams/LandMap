@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 export default function AdminExportsPage() {
   const [exporting, setExporting] = useState<'properties' | 'leads' | 'report' | null>(null);
@@ -85,12 +86,14 @@ export default function AdminExportsPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-neutral-50">Exportações</h2>
+      <span className="kicker">Dados & relatórios</span>
+      <h2 className="mt-2 text-lg font-medium text-neutral-50">Exportações</h2>
       <p className="mt-1 text-xs text-neutral-400">
         Exportar dados do LandMap
       </p>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-3">
+      <GlowPanel className="mt-8 p-6">
+      <div className="grid gap-4 sm:grid-cols-3">
         <ExportCard
           title="Properties (CSV)"
           description="Exportar todos os imóveis cadastrados"
@@ -110,6 +113,7 @@ export default function AdminExportsPage() {
           loading={exporting === 'report'}
         />
       </div>
+      </GlowPanel>
     </div>
   );
 }
@@ -131,7 +135,7 @@ function ExportCard({
     <button
       onClick={onClick}
       disabled={loading}
-      className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 text-left transition hover:border-neutral-600 hover:bg-neutral-900/60 disabled:opacity-50"
+      className="cta-glow rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 text-left transition hover:border-neutral-600 hover:bg-neutral-900/60 disabled:opacity-50"
     >
       <p className="text-sm font-medium text-neutral-50">{loading ? 'Exportando...' : title}</p>
       <p className="mt-2 text-xs text-neutral-400">{description}</p>

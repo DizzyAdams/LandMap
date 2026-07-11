@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { GlowPanel } from '../../../components/GlowPanel';
 import { searchProperties, geoAutocomplete, geoReverse, type AutocompleteSuggestion, type GeoFeature, type ReverseResult } from '../../../lib/api';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
@@ -174,6 +175,7 @@ export default function MapPage() {
         <Reveal>
           <div className="flex items-end justify-between">
             <div>
+              <div className="mb-3"><span className="kicker">Inteligência Geoespacial</span></div>
               <h1 className="text-3xl font-semibold tracking-tight text-gradient">Mapa mundial</h1>
               <p className="mt-2 text-sm text-neutral-400">
                 Navegue por localizações disponíveis ou refine por cidade.
@@ -186,7 +188,7 @@ export default function MapPage() {
         </Reveal>
 
         <Reveal delay={0.1} className="mt-8">
-          <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 space-y-4">
+          <GlowPanel className="p-4 space-y-4">
           {/* Search input */}
           <div className="relative">
             <input
@@ -329,7 +331,7 @@ export default function MapPage() {
               type="button"
               onClick={toggleHeat}
               aria-pressed={showHeat}
-              className={showHeat ? 'btn btn-primary' : 'btn btn-ghost'}
+              className={`btn ${showHeat ? 'btn-primary' : 'btn-ghost'} cta-glow`}
             >
               {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
             </button>
@@ -359,7 +361,7 @@ export default function MapPage() {
               )}
             </div>
           )}
-          </div>
+          </GlowPanel>
         </Reveal>
       </section>
 
@@ -551,7 +553,7 @@ function MapView({
           : `${items.length} imóvel${items.length === 1 ? '' : 'eis'} exibido${items.length === 1 ? '' : 's'} no mapa.`}
       </p>
       <div className="lg:col-span-2 w-full">
-        <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-1">
+        <GlowPanel className="p-1">
           <div
             ref={mapRef}
             role="region"
@@ -578,7 +580,7 @@ function MapView({
               </div>
             )}
           </div>
-        </div>
+        </GlowPanel>
       </div>
 
       {/* Mobile toggle */}

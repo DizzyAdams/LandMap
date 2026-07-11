@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { LANDMAP_API_BASE, type Property } from '../../../lib/api';
 import { EmptyState, Button } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -53,7 +54,10 @@ export default async function ComparePage({
           ← Voltar para busca
         </Link>
 
-        <h1 className="mt-4 text-2xl font-semibold tracking-tight text-gradient">
+        <div className="mt-4">
+          <span className="kicker">Análise Comparativa</span>
+        </div>
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-gradient">
           Comparar imóveis
         </h1>
 
@@ -63,7 +67,7 @@ export default async function ComparePage({
             description="Adicione IDs na URL para comparar, por exemplo ?ids=1,2,3."
           >
             <Link href={`/${locale}/search`}>
-              <Button className="mt-4">Buscar imóveis</Button>
+              <Button className="mt-4 cta-glow">Buscar imóveis</Button>
             </Link>
           </EmptyState>
         )}
@@ -77,7 +81,7 @@ export default async function ComparePage({
 
         {properties.length > 0 && (
           <Reveal className="mt-6">
-            <div role="region" aria-label="Comparação de imóveis" className="overflow-x-auto">
+            <GlowPanel className="overflow-x-auto p-2">
             <table className="w-full border-collapse text-sm">
               <caption className="sr-only">Comparação lado a lado de imóveis</caption>
               <thead>
@@ -112,7 +116,7 @@ export default async function ComparePage({
                 ))}
               </tbody>
             </table>
-            </div>
+            </GlowPanel>
           </Reveal>
         )}
       </div>

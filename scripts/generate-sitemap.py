@@ -13,7 +13,7 @@ PROPERTIES_FILE = os.path.join("data", "seeds", "properties.json")
 OUTPUT_DIR = os.path.join("apps", "web", "public")
 OUTPUT_FILE = os.path.join(OUTPUT_DIR, "sitemap.xml")
 
-BASE_URL = "https://landmap.com.br"
+BASE_URL = "https://landmapprod.vercel.app"
 
 
 def load_properties() -> list[dict[str, Any]]:

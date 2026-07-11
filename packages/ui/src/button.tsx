@@ -115,7 +115,8 @@ export function Button({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onFocus={(e) => {
-        setFocused(true);
+        // Only show the focus ring for keyboard focus, not pointer focus.
+        if (e.currentTarget.matches(':focus-visible')) setFocused(true);
         onFocus?.(e);
       }}
       onBlur={(e) => {

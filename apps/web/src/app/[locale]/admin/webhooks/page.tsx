@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 type WebhookConfig = {
   url: string;
@@ -48,12 +49,14 @@ export default function AdminWebhooksPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-neutral-50">Webhooks</h2>
+      <span className="kicker">Integrações</span>
+      <h2 className="mt-2 text-lg font-medium text-neutral-50">Webhooks</h2>
       <p className="mt-1 text-xs text-neutral-400">
         Configurar URLs de callback para eventos do LandMap
       </p>
 
-      <div className="mt-8 max-w-lg space-y-5">
+      <GlowPanel className="mt-8 p-6 max-w-lg">
+      <div className="space-y-5">
         {/* URL input */}
         <label className="block">
           <span className="mb-1 block text-[11px] text-neutral-400">URL do Webhook</span>
@@ -93,7 +96,7 @@ export default function AdminWebhooksPage() {
         {/* Save */}
         <button
           onClick={handleSave}
-          className="rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200"
+          className="cta-glow rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200"
         >
           {saved ? '✓ Salvo' : 'Salvar Configuração'}
         </button>
@@ -106,6 +109,7 @@ export default function AdminWebhooksPage() {
           </p>
         )}
       </div>
+      </GlowPanel>
     </div>
   );
 }

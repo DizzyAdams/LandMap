@@ -21,5 +21,5 @@ Monorepo pnpm + Next.js + Hono API para inteligência imobiliária com 1.500 mar
 
 ## Features
 - i18n: pt-BR, en-US, es-ES
-- API endpoints: /health, /markdowns, /search
+- API endpoints: /health, /markdowns, /search, /integrations (OpenDesign + WABA + CRIE + ViaCEP + IBGE + Leilão + Câmbio + CNPJ + Bacen + Geo + Twenty + registry)
 - Open: MIT + CONTRIBUTING.md + CI

@@ -435,4 +435,172 @@ body {
   .lift:hover { transform: none; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   LandMap 3.0 — "Surreal Intelligence" layer
+   Elevated palette intensity + reusable surreal surfaces. Every animation is
+   gated behind `prefers-reduced-motion` (see the block at the very bottom).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Rotating conic angle for the sovereign rim (progressive enhancement). */
+@property --angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+/* Cinematic edge vignette — depth without noise. */
+.vignette {
+  background: radial-gradient(120% 100% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* Stronger, multi-stop aurora for the global canvas (layered under content). */
+.aurora-intense {
+  background:
+    radial-gradient(52rem 38rem at 10% -12%, rgba(34, 211, 238, 0.26), transparent 60%),
+    radial-gradient(48rem 36rem at 92% -8%, rgba(167, 139, 250, 0.20), transparent 58%),
+    radial-gradient(62rem 44rem at 80% 4%, rgba(212, 175, 55, 0.22), transparent 60%),
+    radial-gradient(74rem 52rem at 50% 130%, rgba(52, 211, 153, 0.30), transparent 60%);
+  filter: blur(14px);
+  animation: aurora-drift 24s ease-in-out infinite alternate;
+}
+
+/* Premium glass — stronger, saturated blur for the sticky nav. */
+.glass-strong {
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px -24px rgba(0, 0, 0, 0.9);
+}
+
+/* Glass terminal surface — base for data / live-feed panels. */
+.terminal {
+  background: color-mix(in srgb, var(--surface-2) 66%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elevation-2);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+/* Animated sovereign rim — a slow conic sweep in brand hues. */
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle),
+    rgba(52, 211, 153, 0.0),
+    rgba(52, 211, 153, 0.9),
+    rgba(34, 211, 238, 0.7),
+    rgba(167, 139, 250, 0.6),
+    rgba(212, 175, 55, 0.8),
+    rgba(52, 211, 153, 0.0)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rim-spin 8s linear infinite;
+  pointer-events: none;
+}
+@keyframes rim-spin {
+  to { --angle: 360deg; }
+}
+
+/* Hover-lift glass card. */
+.panel {
+  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--elevation-2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+}
+.panel:hover {
+  transform: translateY(-4px);
+  border-color: rgba(52, 211, 153, 0.35);
+  box-shadow: var(--glow-emerald);
+}
+
+/* Soft emerald halo wrapper. */
+.surface-glow { box-shadow: var(--glow-emerald); }
+
+/* Gold gradient hairline divider. */
+.divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
+}
+
+/* Live/data chip. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  background: rgba(52, 211, 153, 0.06);
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  color: rgb(167, 230, 210);
+}
+
+/* Eyebrow kicker — gold filete + tracked label. */
+.kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-soft);
+}
+.kicker::before {
+  content: '';
+  width: 1.75rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7));
+}
+
+/* Primary CTA emerald halo on hover. */
+.cta-glow { box-shadow: 0 10px 40px -14px rgba(52, 211, 153, 0.55); }
+.cta-glow:hover { box-shadow: 0 16px 56px -14px rgba(52, 211, 153, 0.75); }
+
+/* Surreal hero word — bioluminescent bloom across the brand spectrum. */
+.text-surreal {
+  background: linear-gradient(
+    100deg,
+    var(--text-strong) 0%,
+    var(--emerald-bright) 24%,
+    var(--cyan) 56%,
+    #a78bfa 82%,
+    #c4b5fd 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 30px rgba(52, 211, 153, 0.28));
+}
+
+@keyframes dash {
+  to { stroke-dashoffset: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aurora-intense { animation: none; }
+  .gradient-border::before { animation: none; }
+  .panel:hover { transform: none; }
+  .text-surreal { filter: none; }
+}
+
 

@@ -52,13 +52,13 @@ Workspace (`pnpm-workspace.yaml`): `packages/*` + `apps/*`.
 ### packages/
 - **`@landmap/api`** — API REST em Hono + Zod (`/health`, `/markdowns`, `/search`,
   `/analyze`, `/cities`, `/stats`, `/compare`, `/favorites`, `/properties`,
-  `/kpi`, `/geo/autocomplete`, `/sales/*`, `/integrations/opendesign/feed`).
+  `/kpi`, `/geo/autocomplete`, `/sales/*`, `/integrations/*` (WABA + CRIE + OpenDesign + registry, mock-mode)).
   Data-driven a partir de `packages/api/src/data/properties.json` (seed 1.500).
 - **`@landmap/config`** — config/env/i18n/constants compartilhados.
 - **`@landmap/db`** — schemas + tipos (`Property`, `PriceHistory`).
 - **`@landmap/gamification`** — XP, níveis, LandCoins, badges, quests, streaks, leaderboards (engine puro + UI).
 - **`@landmap/geo`** — geocoding / autocomplete.
-- **`@landmap/integrations`** — integrações externas (ex.: opendesign feed).
+- **`@landmap/integrations`** — hub de integrações externas (registry central `listIntegrations()` exposto em `/integrations/*` no `@landmap/api`): **OpenDesign** (feed, mock), **WhatsApp Business API (WABA)** (envio + webhook, mock), **CRIE** (Registro de Imóveis Eletrônico, mock), **ViaCEP** (CEP→endereço, **live**), **IBGE** (UF/municípios, **live**), **Leilão** (imóveis em leilão judiciário+Caixa, **tempo real**, mock sem adaptador), **Câmbio** (BCB via AwesomeAPI, **live**), **CNPJ** (Receita Federal via BrasilAPI, **live**), **Bacen** (Selic/CDI/IPCA via SGS, **live**), **Geo** (geocodificação via Nominatim/OSM, **live**) e **Twenty CRM** (status).
 - **`@landmap/invest`** — engine PURA de métricas de investimento (cap rate,
   cash-on-cash, IRR, ROI, price-to-rent, GRM, fluxo de caixa). Sem React/IO.
 - **`@landmap/llm`** — pipeline RAG (TF-IDF + LangGraph/pgvector bilingue) +

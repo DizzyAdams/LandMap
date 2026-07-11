@@ -7,6 +7,7 @@ import { createAlert, deleteAlert, getAlerts, clearAlerts } from '../../../lib/a
 import type { AlertFilter } from '../../../lib/alerts';
 import { localeHref } from '../../../lib/locale';
 import { EmptyState, Skeleton } from '@landmap/ui';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                             */
@@ -111,7 +112,8 @@ export default function AlertsPage() {
         {/* Header */}
         <div className="flex items-end justify-between">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight text-neutral-50">Alertas</h1>
+            <span className="kicker">Monitoramento de busca</span>
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-50">Alertas</h1>
             <p className="mt-2 text-sm text-neutral-400">
               Salve filtros de busca para consultar rapidamente depois.
             </p>
@@ -125,10 +127,8 @@ export default function AlertsPage() {
         </div>
 
         {/* Form */}
-        <form
-          onSubmit={handleSave}
-          className="mt-8 rounded-xl border border-neutral-800 bg-neutral-900/40 p-6 space-y-5"
-        >
+        <GlowPanel className="mt-8 p-6">
+        <form onSubmit={handleSave} className="space-y-5">
           <h2 className="text-sm font-medium text-neutral-300">Novo Alerta</h2>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -220,7 +220,7 @@ export default function AlertsPage() {
             <button
               type="submit"
               disabled={!form.label.trim()}
-              className="rounded-lg bg-neutral-50 px-5 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200 disabled:opacity-40"
+              className="cta-glow rounded-lg bg-neutral-50 px-5 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200 disabled:opacity-40"
             >
               Salvar Alerta
             </button>
@@ -233,9 +233,11 @@ export default function AlertsPage() {
             </button>
           </div>
         </form>
+        </GlowPanel>
 
         {/* Alert list */}
-        <section className="mt-10">
+        <GlowPanel className="mt-10 p-6">
+        <section>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-neutral-400" aria-live="polite">
               {alerts.length} alerta{alerts.length !== 1 ? 's' : ''} salvo{alerts.length !== 1 ? 's' : ''}
@@ -267,6 +269,7 @@ export default function AlertsPage() {
             </div>
           )}
         </section>
+        </GlowPanel>
       </div>
     </main>
   );
@@ -310,7 +313,7 @@ function AlertCard({
           {chips.map((chip) => (
             <span
               key={chip}
-              className="inline-block rounded-md border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[11px] text-neutral-400"
+              className="chip"
             >
               {chip}
             </span>

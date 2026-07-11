@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 type Settings = {
   platformName: string;
@@ -46,12 +47,14 @@ export default function AdminSettingsPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-neutral-50">Configurações</h2>
+      <span className="kicker">Plataforma</span>
+      <h2 className="mt-2 text-lg font-medium text-neutral-50">Configurações</h2>
       <p className="mt-1 text-xs text-neutral-400">
         Configurações gerais da plataforma
       </p>
 
-      <div className="mt-8 max-w-lg space-y-5">
+      <GlowPanel className="mt-8 p-6 max-w-lg">
+      <div className="space-y-5">
         <Field label="Nome da Plataforma">
           <input
             type="text"
@@ -82,7 +85,7 @@ export default function AdminSettingsPage() {
         <div className="flex gap-3">
           <button
             onClick={handleSave}
-            className="rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200"
+            className="cta-glow rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200"
           >
             {saved ? '✓ Salvo' : 'Salvar'}
           </button>
@@ -94,6 +97,7 @@ export default function AdminSettingsPage() {
           </button>
         </div>
       </div>
+      </GlowPanel>
     </div>
   );
 }

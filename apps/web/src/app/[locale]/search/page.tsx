@@ -6,6 +6,7 @@ import { SearchKeyboardShortcuts } from '../../../components/SearchKeyboardShort
 import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { GlowPanel } from '../../../components/GlowPanel';
 import { PropertyThumb } from '../../../components/PropertyThumb';
 import { Filters } from './Filters';
 import { formatBRL } from '../../../lib/format';
@@ -126,6 +127,7 @@ export default async function SearchPage({
         <Reveal>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
+              <div className="mb-3"><span className="kicker">Explorar</span></div>
               <h1 className="text-3xl font-semibold tracking-tight text-gradient">Buscar imóveis</h1>
               <p className="mt-2 text-sm text-neutral-400">
                 Filtros diretamente por tipologia, modalidade, local e faixa de preço.
@@ -198,6 +200,7 @@ export default async function SearchPage({
                 description="Ajuste tipologia, modalidade ou cidade para ver mais opções."
               />
             ) : (
+              <GlowPanel className="p-2">
               <ul role="list" className="grid gap-3">
                 {pageItems.map((item) => {
                   const pricePerM2 = item.areaM2 > 0 ? Math.round(item.price / item.areaM2) : 0;
@@ -240,6 +243,7 @@ export default async function SearchPage({
                   );
                 })}
               </ul>
+              </GlowPanel>
             )}
 
             {/* Pagination */}

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { LANDMAP_API_BASE } from '../../../../lib/api';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 type Property = {
   id: string;
@@ -131,7 +132,8 @@ export default function AdminPropertiesPage() {
     <div>
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-lg font-medium text-neutral-50">Imóveis</h2>
+          <span className="kicker">Catálogo de imóveis</span>
+          <h2 className="mt-2 text-lg font-medium text-neutral-50">Imóveis</h2>
           <p className="mt-1 text-xs text-neutral-400">
             {properties.length} imóvel(is) cadastrado(s)
           </p>
@@ -145,7 +147,8 @@ export default function AdminPropertiesPage() {
       </div>
 
       {/* Table */}
-      <div className="mt-6 overflow-x-auto rounded-xl border border-neutral-800">
+      <GlowPanel className="mt-6 overflow-hidden">
+      <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-neutral-800 bg-neutral-900/60">
             <tr>
@@ -204,6 +207,7 @@ export default function AdminPropertiesPage() {
           </tbody>
         </table>
       </div>
+      </GlowPanel>
 
       {/* Edit modal */}
       {editId && (
@@ -313,7 +317,7 @@ export default function AdminPropertiesPage() {
               <button
                 type="submit"
                 disabled={saving}
-                className="rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200 disabled:opacity-40"
+                className="cta-glow rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200 disabled:opacity-40"
               >
                 {saving ? 'Salvando...' : 'Salvar'}
               </button>

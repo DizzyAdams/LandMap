@@ -11,6 +11,7 @@ import {
 import FreeAIBadge from '../../../components/FreeAIBadge';
 import { Button } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 export default function ChatPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
@@ -143,7 +144,8 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
     <main className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-3xl flex-col px-6 py-8">
       <div className="mb-4 flex items-center justify-between">
         <Reveal>
-          <h1 className="text-2xl font-semibold tracking-tight text-gradient">Chat Imobiliário</h1>
+          <span className="kicker">Assistente inteligente</span>
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-gradient">Chat Imobiliário</h1>
           <p className="mt-1 flex items-center gap-2 text-sm text-neutral-400">
             Pergunte sobre imóveis, preços, e regiões no Brasil.
             <FreeAIBadge model={model} />
@@ -175,13 +177,14 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         </select>
       </div>
 
-      <div
-        role="log"
-        aria-live="polite"
-        aria-relevant="additions"
-        aria-label="Histórico da conversa"
-        className="flex-1 space-y-4 overflow-y-auto rounded-xl border border-neutral-800 bg-neutral-900/30 p-5"
-      >
+      <GlowPanel className="flex-1 min-h-0 grid">
+        <div
+          role="log"
+          aria-live="polite"
+          aria-relevant="additions"
+          aria-label="Histórico da conversa"
+          className="h-full space-y-4 overflow-y-auto rounded-xl border border-neutral-800 bg-neutral-900/30 p-5"
+        >
         {messages.length === 0 && !loading && (
           <div className="flex h-full items-center justify-center">
             <p className="text-sm text-neutral-400">
@@ -249,6 +252,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
 
         <div ref={bottomRef} />
       </div>
+      </GlowPanel>
 
       <form onSubmit={handleSubmit} className="mt-4 flex gap-3">
         <input
@@ -262,7 +266,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         <Button
           type="submit"
           disabled={loading || !input.trim()}
-          className="px-5 py-3"
+          className="px-5 py-3 cta-glow"
         >
           Enviar
         </Button>

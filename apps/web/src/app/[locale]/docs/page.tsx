@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Reveal, Stagger } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -110,11 +111,12 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
       <div className="mx-auto max-w-6xl px-6 py-20">
         <Reveal className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-medium tracking-wide text-emerald-300">
+            <span className="chip">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
               Dados abertos
             </span>
-            <h1 className="mt-5 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
+            <span className="kicker mt-5 block">Referência da API</span>
+            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
               Documentação da API
             </h1>
             <p className="mt-2 text-sm text-neutral-400">
@@ -147,7 +149,8 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
         {CATEGORIES.map((cat) => (
           <Reveal key={cat.title} className="mt-12">
             <h2 className="text-lg font-medium text-neutral-100">{cat.title}</h2>
-            <Stagger className="mt-4 space-y-2">
+            <GlowPanel className="mt-4 p-4">
+            <Stagger className="space-y-2">
               {cat.endpoints.map((ep) => (
                 <details
                   key={`${ep.method}-${ep.path}`}
@@ -192,6 +195,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                 </details>
               ))}
             </Stagger>
+            </GlowPanel>
           </Reveal>
         ))}
       </div>

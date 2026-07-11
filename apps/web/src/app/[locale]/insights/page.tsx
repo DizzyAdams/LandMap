@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Sparkline, Stat, Skeleton } from '@landmap/ui';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
@@ -92,7 +93,8 @@ export default function InsightsPage() {
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-semibold tracking-tight text-gradient">
+            <span className="kicker">Inteligência de mercado</span>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient">
               Insights de mercado
             </h1>
             <p className="mt-2 text-sm text-neutral-400">
@@ -150,8 +152,9 @@ export default function InsightsPage() {
         )}
 
         {!loading && trend && (
-          <section className="surface glow-dual mt-10 rounded-xl p-6">
-            <div className="flex flex-wrap items-start justify-between gap-4">
+          <GlowPanel className="mt-10" as="section">
+            <div className="surface glow-dual rounded-xl p-6">
+              <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h2 className="text-gradient text-2xl font-semibold">
                   Tendência de preço — {trend.city}
@@ -178,7 +181,8 @@ export default function InsightsPage() {
                 trend={Number(variation.toFixed(1))}
               />
             </div>
-          </section>
+            </div>
+          </GlowPanel>
         )}
 
         {!loading && neighborhoods.length > 0 && (
@@ -188,7 +192,7 @@ export default function InsightsPage() {
             </h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {neighborhoods.map((n) => (
-                <article key={n.name} className="surface glow-emerald rounded-xl p-5">
+                <article key={n.name} className="surface glow-emerald rounded-xl p-5 panel">
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-semibold text-neutral-50">{n.name}</h3>
                     <span className="badge">{n.count} imóveis</span>

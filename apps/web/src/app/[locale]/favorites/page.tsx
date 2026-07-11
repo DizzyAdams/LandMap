@@ -6,6 +6,7 @@ import { useParams } from 'next/navigation';
 import { Button, EmptyState, Skeleton } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 interface Favorite {
   id: string;
@@ -65,7 +66,8 @@ export default function FavoritesPage() {
     <main className="min-h-screen grid-bg px-6 py-16">
       <div className="mx-auto max-w-6xl">
         <Reveal>
-          <h1 className="text-2xl font-semibold tracking-tight text-gradient">
+          <span className="kicker">Seus imóveis salvos</span>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-gradient">
             Favoritos
           </h1>
           <p className="mt-1 text-sm text-neutral-400" aria-live="polite">
@@ -74,13 +76,14 @@ export default function FavoritesPage() {
           </p>
         </Reveal>
 
+        <GlowPanel className="mt-6 p-6">
         {favorites.length === 0 ? (
           <EmptyState
             title="Nenhum imóvel favoritado ainda"
             description="Explore o catálogo e salve seus imóveis preferidos para compará-los depois."
           >
             <Link href={`/${locale}/search`}>
-              <Button className="mt-4">Buscar imóveis</Button>
+              <Button className="mt-4 cta-glow">Buscar imóveis</Button>
             </Link>
           </EmptyState>
         ) : (
@@ -114,6 +117,7 @@ export default function FavoritesPage() {
             ))}
           </ul>
         )}
+        </GlowPanel>
       </div>
     </main>
   );

@@ -30,7 +30,7 @@ export function BadgeShelf({ badges, columns = 4, className }: BadgeShelfProps) 
     <Card variant="default" className={cn('w-full', className)}>
       <div className="mb-3 flex items-center justify-between">
         <h3 className="text-sm font-semibold text-neutral-100">Conquistas</h3>
-        <span className="text-xs text-neutral-500">
+        <span className="text-xs text-neutral-400">
           {badges.filter((b) => b.unlocked).length}/{badges.length}
         </span>
       </div>

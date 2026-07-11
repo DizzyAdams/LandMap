@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -29,7 +30,8 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
           <span className="text-neutral-300">Embeddings</span>
         </nav>
 
-        <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
+        <span className="kicker block">Busca Semântica</span>
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-neutral-50">
           Embeddings & Busca Semântica
         </h1>
         <p className="mt-2 text-sm text-neutral-400">
@@ -68,7 +70,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
         {/* Endpoint */}
         <section className="mt-12">
           <h2 className="text-lg font-medium text-neutral-100">Endpoint</h2>
-          <div className="mt-4 rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+          <GlowPanel className="mt-4 p-5">
             <div className="flex items-center gap-3">
               <span className="shrink-0 rounded-md bg-emerald-400/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-400">GET</span>
               <code className="text-xs text-neutral-300 font-mono">/api/embeddings/similar</code>
@@ -125,7 +127,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
 }`}</code>
               </pre>
             </div>
-          </div>
+          </GlowPanel>
         </section>
 
         {/* Use cases */}

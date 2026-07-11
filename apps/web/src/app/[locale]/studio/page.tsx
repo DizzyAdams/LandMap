@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Reveal, Stagger } from '../../../components/Motion';
+import { GlowPanel } from '../../../components/GlowPanel';
 import { listWorkflows, runWorkflow, ragQuery, type WorkflowDefinition, type WorkflowRunStep } from '../../../lib/api';
 import { Button } from '@landmap/ui';
 
@@ -53,11 +54,12 @@ export default function StudioPage() {
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(40rem_26rem_at_70%_-10%,rgba(52,211,153,0.10),transparent_70%)]" />
 
         <Reveal className="mx-auto max-w-6xl px-6 pt-28 pb-10">
-          <span className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/40 px-4 py-1 text-xs text-neutral-400 tracking-wide uppercase">
+          <span className="chip">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
             AI Studio · LangChain · LangFlow
           </span>
-          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-gradient sm:text-5xl">
+          <span className="kicker mt-6 block">Surreal Intelligence</span>
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-gradient sm:text-5xl">
             O cérebro agentico do mercado imobiliário
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-neutral-400">
@@ -66,7 +68,8 @@ export default function StudioPage() {
         </Reveal>
 
         <div className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 lg:grid-cols-2">
-          <Reveal className="rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-400/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
+          <Reveal>
+            <GlowPanel className="p-6">
             <h2 className="text-lg font-medium">Laboratório de Workflows</h2>
             <p className="mt-1 text-sm text-neutral-400">Selecione um fluxo e execute passo a passo.</p>
 
@@ -84,7 +87,7 @@ export default function StudioPage() {
             <textarea value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} rows={9}
               className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 p-3 font-mono text-xs text-neutral-200 outline-none transition focus:border-emerald-400/50" />
 
-            <Button onClick={handleRun} disabled={running} className="mt-4 h-11 px-6">
+            <Button onClick={handleRun} disabled={running} className="cta-glow mt-4 h-11 px-6">
               {running ? 'Executando…' : 'Executar workflow'}
             </Button>
 
@@ -111,6 +114,7 @@ export default function StudioPage() {
                 )}
               </div>
             )}
+            </GlowPanel>
           </Reveal>
 
           <RagChat />
@@ -148,7 +152,8 @@ function RagChat() {
   }
 
   return (
-    <Reveal delay={0.1} className="flex flex-col rounded-2xl border border-neutral-800 bg-neutral-900/30 p-6 transition hover:border-emerald-400/30 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]">
+    <Reveal delay={0.1}>
+      <GlowPanel className="flex flex-col p-6">
       <h2 className="text-lg font-medium">Chat RAG</h2>
       <p className="mt-1 text-sm text-neutral-400">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
 
@@ -184,10 +189,11 @@ function RagChat() {
           aria-label="Sua pergunta sobre o catálogo de imóveis"
           className="flex-1 rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition focus:border-emerald-400/50 disabled:opacity-50"
         />
-        <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="px-5 py-3">
+        <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="cta-glow px-5 py-3">
           Enviar
         </Button>
       </form>
+      </GlowPanel>
     </Reveal>
   );
 }

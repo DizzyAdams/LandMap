@@ -473,7 +473,7 @@ export const seoAgent: AgentDef = {
       '@type': 'PropertyListingPage',
       name: featured.title,
       description: copy.slice(0, 160),
-      url: `https://landmap.com.br/imovel/${slug}`,
+      url: `https://landmapprod.vercel.app/imovel/${slug}`,
       address: {
         '@type': 'PostalAddress',
         addressLocality: lead?.city ?? 'Curitiba',

@@ -10,6 +10,7 @@ import { formatBRL } from '../../../../lib/format';
 import { SocialProof } from '../../../../components/SocialProof';
 import { UrgencyTimer } from '../../../../components/UrgencyTimer';
 import { PriceAnchoring } from '../../../../components/PriceAnchoring';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -76,7 +77,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
         <Reveal>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <p className="text-xs text-neutral-400">Imóvel</p>
+              <div className="mb-2"><span className="kicker">Imóvel</span></div>
               <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
               <p className="mt-2 text-sm text-neutral-400">
                 {property.city}, {property.state} · {property.areaM2} m²
@@ -94,35 +95,37 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
           </div>
         </Reveal>
 
-        <Stagger className="mt-8 grid gap-3 sm:grid-cols-3">
-          <Card variant="default" className="sm:col-span-2">
-            <p className="text-xs text-neutral-400">Valor</p>
-            <p className="mt-1 text-2xl font-medium">{priceText}</p>
-            <p className="mt-4 text-xs text-neutral-400">Disponibilidade</p>
-            <p className="mt-1 text-sm text-neutral-300">{property.available ? 'Disponível' : 'Indisponível'}</p>
-          </Card>
-          <Card variant="default">
-            <p className="text-xs text-neutral-400">Localização</p>
-            <a
-              className="mt-2 block text-sm text-neutral-300 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
-              href={`https://www.google.com/maps/search/?api=1&q=${mapQuery}`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              Abrir no mapa
-            </a>
-            <Link
-              className="mt-4 block text-xs text-neutral-400 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
-              href={`/${resolved.locale}/map?q=${encodeURIComponent(property.city)}`}
-            >
-              Ver mapa da cidade
-            </Link>
-          </Card>
-        </Stagger>
+        <GlowPanel className="mt-8 p-4">
+          <Stagger className="grid gap-3 sm:grid-cols-3">
+            <Card variant="default" className="sm:col-span-2">
+              <p className="text-xs text-neutral-400">Valor</p>
+              <p className="mt-1 text-2xl font-medium">{priceText}</p>
+              <p className="mt-4 text-xs text-neutral-400">Disponibilidade</p>
+              <p className="mt-1 text-sm text-neutral-300">{property.available ? 'Disponível' : 'Indisponível'}</p>
+            </Card>
+            <Card variant="default">
+              <p className="text-xs text-neutral-400">Localização</p>
+              <a
+                className="mt-2 block text-sm text-neutral-300 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
+                href={`https://www.google.com/maps/search/?api=1&q=${mapQuery}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                Abrir no mapa
+              </a>
+              <Link
+                className="mt-4 block text-xs text-neutral-400 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
+                href={`/${resolved.locale}/map?q=${encodeURIComponent(property.city)}`}
+              >
+                Ver mapa da cidade
+              </Link>
+            </Card>
+          </Stagger>
+        </GlowPanel>
 
         <div className="mt-6 flex gap-3">
           <Link href={`/${resolved.locale}/search`}>
-            <Button variant="ghost">Voltar para busca</Button>
+            <Button variant="ghost" className="cta-glow">Voltar para busca</Button>
           </Link>
           <Link href={`/${resolved.locale}`}>
             <Button variant="outline">Home</Button>

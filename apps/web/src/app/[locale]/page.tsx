@@ -5,8 +5,28 @@ import { formatBRL } from '../../lib/format';
 import { Reveal, Stagger, ScrollProgress } from '../../components/Motion';
 import { SpotlightCard } from '../../components/SpotlightCard';
 import { Marquee } from '../../components/Marquee';
-import { HeroTerritory } from '../../components/HeroTerritory';
+import { HeroAurora } from '../../components/HeroAurora';
+import { CountUp } from '../../components/CountUp';
 import { PropertyThumb } from '../../components/PropertyThumb';
+
+const TERMINAL_ROWS = [
+  { city: 'São Paulo', price: 'R$ 1,2M', delta: 4.2 },
+  { city: 'Curitiba', price: 'R$ 860k', delta: 2.8 },
+  { city: 'Florianópolis', price: 'R$ 1,4M', delta: 5.1 },
+  { city: 'Belo Horizonte', price: 'R$ 720k', delta: -1.3 },
+  { city: 'Recife', price: 'R$ 640k', delta: 3.4 },
+];
+
+function Metric({ value, suffix = '', label }: { value: number; suffix?: string; label: string }) {
+  return (
+    <div>
+      <div className="ledger-num text-3xl font-semibold text-white">
+        <CountUp value={value} suffix={suffix} />
+      </div>
+      <div className="mt-1 text-xs text-neutral-400">{label}</div>
+    </div>
+  );
+}
 
 export const dynamic = 'force-dynamic';
 
@@ -25,54 +45,96 @@ export default async function LocaleHomePage() {
     <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 cadastre-grid opacity-[0.35]" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[42rem]"
-        style={{ background: 'radial-gradient(48rem 30rem at 50% -12%, rgba(52,211,153,0.10), transparent 70%)' }}
-      />
+      {/* living bioluminescent field · cadastral grid · vignette */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 cadastre-grid opacity-[0.18]" />
+      <HeroAurora className="absolute inset-0 -z-10 h-full w-full opacity-90" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 vignette" />
 
-      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-6 pb-20 pt-20 sm:pt-28 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 pb-20 pt-20 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
-        <div className="h-px w-16 rule-gold" />
-        <p className="eyebrow-gold mt-5">Inteligência imobiliária aberta</p>
+          <span className="kicker">Inteligência imobiliária aberta</span>
 
-        <h1 className="mt-4 max-w-4xl text-balance text-4xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
-          Veja o território imobiliário como{' '}
-          <span className="text-gradient-gold">dados</span>.
-        </h1>
+          <h1 className="mt-5 max-w-4xl text-balance text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
+            Veja o território imobiliário como{' '}
+            <span className="text-surreal">dados</span>.
+          </h1>
 
-        <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
-          Busca por cidade e tipo, mapa interativo, chat com IA e cálculo de
-          investimento. 1.500 imóveis em 10 cidades — sem custo e sem login.
-        </p>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+            Busca por cidade e tipo, mapa interativo, chat com IA e cálculo de
+            investimento. 1.500 imóveis em 10 cidades — sem custo e sem login.
+          </p>
 
-        <div className="mt-8 flex flex-wrap items-center gap-3">
-          <Link
-            href="./search"
-            className="sheen group inline-flex h-11 items-center gap-2 rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 shadow-[0_8px_40px_-12px_rgba(255,255,255,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:bg-neutral-100 hover:shadow-[0_12px_50px_-12px_rgba(52,211,153,0.45)]"
-          >
-            Explorar imóveis
-            <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
-          </Link>
-          <Link
-            href="./map"
-            className="group inline-flex h-11 items-center gap-2 rounded-lg border border-neutral-800 px-5 text-sm text-neutral-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/50 hover:text-white"
-          >
-            Abrir o mapa
-            <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
-          </Link>
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
-            <span className="relative flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <Link
+              href="./search"
+              className="sheen cta-glow group inline-flex h-12 items-center gap-2 rounded-xl bg-white px-6 text-sm font-semibold text-neutral-900 transition-all duration-300 hover:-translate-y-0.5 hover:bg-neutral-100"
+            >
+              Explorar imóveis
+              <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+            </Link>
+            <Link
+              href="./map"
+              className="group inline-flex h-12 items-center gap-2 rounded-xl border border-neutral-800 px-6 text-sm font-medium text-neutral-200 transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-400/50 hover:text-white"
+            >
+              Abrir o mapa
+              <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
+            </Link>
+            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+              </span>
+              Dados vivos · 10 cidades
             </span>
-            Dados vivos · 10 cidades
-          </span>
-        </div>
+          </div>
+
+          <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
+            <Metric value={1500} suffix="+" label="Imóveis catalogados" />
+            <Metric value={10} label="Cidades mapeadas" />
+            <Metric value={6} label="Modalidades" />
+          </div>
         </div>
 
-        <HeroTerritory className="mx-auto aspect-square w-full max-w-sm animate-float lg:max-w-none" />
+        <div className="relative">
+          <div className="terminal gradient-border relative overflow-hidden p-5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+                <span className="font-mono text-xs text-neutral-400">landmap · live feed</span>
+              </div>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-2.5 py-1 text-[10px] uppercase tracking-wide text-emerald-200">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> live
+              </span>
+            </div>
+            <svg viewBox="0 0 320 90" className="mt-4 h-24 w-full" fill="none" aria-hidden>
+              <defs>
+                <linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0%" stopColor="#22d3ee" />
+                  <stop offset="100%" stopColor="#34d399" />
+                </linearGradient>
+              </defs>
+              <polyline
+                points="0,72 40,58 80,64 120,42 160,50 200,30 240,40 280,20 320,28"
+                stroke="url(#spark)"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ strokeDasharray: 600, strokeDashoffset: 600, animation: 'dash 2.4s ease forwards' }}
+              />
+            </svg>
+            <div className="mt-2 space-y-2">
+              {TERMINAL_ROWS.map((r) => (
+                <div key={r.city} className="flex items-center justify-between border-b border-white/5 pb-2 last:border-0">
+                  <span className="text-sm text-neutral-300">{r.city}</span>
+                  <span className="ledger-num text-sm text-neutral-100">{r.price}</span>
+                  <span className={`ledger-num text-xs ${r.delta >= 0 ? 'text-emerald-300' : 'text-rose-300'}`}>
+                    {r.delta >= 0 ? '▲' : '▼'} {Math.abs(r.delta).toFixed(1)}%
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </section>
 
       <Marquee />

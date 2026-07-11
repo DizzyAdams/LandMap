@@ -47,6 +47,17 @@ export const colors = {
   accentDim: '#e5e5e5',
   /** Back-compat alias of surface-1 (mirrors --surface in globals.css). */
   surfaceAlias: '#0a0a0a',
+  surface4: '#1a1a1a',
+  surfaceInset: '#070707',
+  borderSubtle: 'rgba(255,255,255,0.06)',
+  /** AA-compliant text ramp. */
+  textMuted: '#c9c9c9',
+  textFaint: '#8a8a8a',
+  /** Low-alpha accent fills. */
+  emeraldTint: 'rgba(52,211,153,0.12)',
+  cyanTint: 'rgba(34,211,238,0.12)',
+  goldTint: 'rgba(212,175,55,0.12)',
+  violetTint: 'rgba(167,139,250,0.12)',
 } as const;
 
 export const radii = {
@@ -65,10 +76,53 @@ export const shadows = {
     '0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38)',
   glowSovereign:
     '0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28)',
+  elevation1: '0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(0,0,0,0.3)',
+  elevation2:
+    '0 4px 12px -2px rgba(0,0,0,0.5), 0 2px 6px -2px rgba(0,0,0,0.4)',
+  elevation3:
+    '0 12px 32px -8px rgba(0,0,0,0.6), 0 4px 12px -4px rgba(0,0,0,0.5)',
+} as const;
+
+/** Typography scale (rem). */
+export const typography = {
+  display: '3.5rem',
+  h1: '2.25rem',
+  h2: '1.75rem',
+  h3: '1.375rem',
+  h4: '1.125rem',
+  body: '1rem',
+  sm: '0.875rem',
+  xs: '0.75rem',
+} as const;
+
+/** Spacing scale (px, 8px base). */
+export const spacing = {
+  1: 4,
+  2: 8,
+  3: 12,
+  4: 16,
+  5: 24,
+  6: 32,
+  7: 40,
+  8: 48,
+  9: 64,
+  10: 80,
+  11: 96,
+  12: 128,
+} as const;
+
+/** Layout container max-widths. */
+export const layout = {
+  container: '1200px',
+  containerNarrow: '720px',
 } as const;
 
 /** Legacy export name kept stable for `@landmap/ui` consumers. */
-export const config = { colors, radii, shadows } as const;
+export const config = { colors, radii, shadows, typography, spacing, layout } as const;
+
+export type LandmapTypography = typeof typography;
+export type LandmapSpacing = typeof spacing;
+export type LandmapLayout = typeof layout;
 
 export type LandmapColors = typeof colors;
 export type LandmapRadii = typeof radii;

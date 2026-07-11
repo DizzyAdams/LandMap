@@ -31,7 +31,7 @@ export async function generateMetadata({
   // Canonical production origin. Falling back to localhost (the old default)
   // silently shipped `og:url`/`og:image`/canonical pointing at localhost:3000
   // in production, breaking every social preview and canonical tag.
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmap.com.br';
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
 
   return {
     title,
@@ -113,7 +113,9 @@ export default async function RootLayout({
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[#050505]" />
           <div className="absolute inset-0 aurora" />
+          <div className="absolute inset-0 aurora-intense opacity-70" />
           <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
+          <div className="absolute inset-0 vignette" />
         </div>
         <Cursor />
         <Navbar />

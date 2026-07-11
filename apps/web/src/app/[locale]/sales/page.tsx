@@ -14,6 +14,7 @@ import {
   Stepper,
 } from '@landmap/ui';
 import { Reveal, Stagger } from '../../../components/Motion';
+import { GlowPanel } from '../../../components/GlowPanel';
 import type {
   AutonomyLevel,
   Deal,
@@ -146,7 +147,7 @@ export default function SalesCockpitPage() {
 
           <div className="flex flex-col items-start gap-3 md:items-end">
             <Segmented options={AUTONOMY_OPTIONS} value={state.autonomy} onChange={(v) => setLevel(v)} />
-            <Button onClick={() => cycle()} disabled={running || state.autonomy === 'off'}>
+            <Button className="cta-glow" onClick={() => cycle()} disabled={running || state.autonomy === 'off'}>
               {running ? 'Rodando ciclo…' : '▶ Rodar ciclo de agentes'}
             </Button>
           </div>
@@ -187,7 +188,7 @@ export default function SalesCockpitPage() {
         </Tabs>
 
         {/* Task inbox (human-in-the-loop) */}
-        <section className="mt-12">
+        <GlowPanel className="mt-12 p-6">
           <div className="flex items-center justify-between">
             <h2 className="text-lg font-medium">Caixa de aprovação</h2>
             <Badge variant={pending.length ? 'warning' : 'success'}>
@@ -216,7 +217,7 @@ export default function SalesCockpitPage() {
               />
             ))}
           </div>
-        </section>
+        </GlowPanel>
       </div>
     </main>
   );

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { LANDMAP_API_BASE } from '../../../lib/api';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 type AdminStats = {
   totalProperties: number;
@@ -65,7 +66,8 @@ export default function AdminDashboardPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-neutral-50">Dashboard</h2>
+      <span className="kicker">Painel Administrativo</span>
+      <h2 className="mt-2 text-lg font-medium text-neutral-50">Dashboard</h2>
       <p className="mt-1 text-xs text-neutral-400">
         Resumo geral do LandMap
       </p>
@@ -80,9 +82,9 @@ export default function AdminDashboardPage() {
           ))}
         </div>
       ) : (
-        <>
+        <GlowPanel className="mt-8 p-6">
           {/* Stats cards */}
-          <div className="mt-8 grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             {cards.map((card) => (
               <div
                 key={card.label}
@@ -120,7 +122,7 @@ export default function AdminDashboardPage() {
             ))}
           </div>
           )}
-        </>
+        </GlowPanel>
       )}
     </div>
   );

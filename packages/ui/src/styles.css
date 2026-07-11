@@ -39,6 +39,46 @@
   /* ── Sovereign gold glows ── */
   --glow-gold: 0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38);
   --glow-sovereign: 0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28);
+
+  /* ── Layered surfaces ── */
+  --surface-4: #1a1a1a;
+  --surface-inset: #070707;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-strong-2: #333333;
+
+  /* ── AA-compliant text ramp ── */
+  --text-muted: #c9c9c9;
+  --text-faint: #8a8a8a;
+
+  /* ── Typography scale (rem) ── */
+  --fs-display: 3.5rem;
+  --fs-h1: 2.25rem;
+  --fs-h2: 1.75rem;
+  --fs-h3: 1.375rem;
+  --fs-h4: 1.125rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-xs: 0.75rem;
+
+  /* ── Spacing scale (8px base) ── */
+  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 32px; --space-7: 40px; --space-8: 48px;
+  --space-9: 64px; --space-10: 80px; --space-11: 96px; --space-12: 128px;
+
+  /* ── Layout containers ── */
+  --container: 1200px;
+  --container-narrow: 720px;
+
+  /* ── Elevation ramp ── */
+  --elevation-1: 0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(0,0,0,0.3);
+  --elevation-2: 0 4px 12px -2px rgba(0,0,0,0.5), 0 2px 6px -2px rgba(0,0,0,0.4);
+  --elevation-3: 0 12px 32px -8px rgba(0,0,0,0.6), 0 4px 12px -4px rgba(0,0,0,0.5);
+
+  /* ── Semantic accent tints ── */
+  --emerald-tint: rgba(52, 211, 153, 0.12);
+  --cyan-tint: rgba(34, 211, 238, 0.12);
+  --gold-tint: rgba(212, 175, 55, 0.12);
+  --violet-tint: rgba(167, 139, 250, 0.12);
 }
 
 /* ─── Skeleton shimmer (loading placeholders) ─── */

@@ -59,7 +59,7 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="glass sticky top-0 z-40 mx-auto flex w-full max-w-6xl items-center justify-between border-b border-neutral-800 bg-[#050505]/70 px-6 py-5 backdrop-blur-md">
+    <header className="glass-strong sticky top-0 z-40 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
       <Link
         href={`/${locale}`}
         aria-label="LandMap — ir para a página inicial"
@@ -82,7 +82,7 @@ export function Navbar() {
               href={href}
               aria-current={isActive ? 'page' : undefined}
               className={`transition hover:text-white ${focusRing} ${
-                isActive ? 'text-white' : ''
+                isActive ? 'rounded-full bg-white/10 px-3 py-1 text-white' : 'text-neutral-300'
               }`}
             >
               {link.labelKey}

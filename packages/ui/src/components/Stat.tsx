@@ -16,12 +16,12 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
       ref={ref}
       className={cn(
         'rounded-xl border border-white/10 bg-white/[0.04] p-5 transition',
-        'hover:border-white/20 hover:bg-white/[0.06]',
+        'hover:border-white/20 hover:bg-white/[0.06] hover:shadow-[var(--elevation-2)]',
         'motion-reduce:transition-none',
         className,
       )}
     >
-      <p className="text-xs text-neutral-400">{label}</p>
+      <p className="text-xs text-[var(--text-muted)]">{label}</p>
       <p className="mt-2 text-2xl font-semibold tabular-nums text-neutral-50">{value}</p>
       {trend !== undefined && (
         <p
@@ -34,7 +34,7 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
           {Math.abs(trend)}%
         </p>
       )}
-      {hint && <p className="mt-1 text-[11px] text-neutral-400">{hint}</p>}
+      {hint && <p className="mt-1 text-[11px] text-[var(--text-muted)]">{hint}</p>}
     </div>
   ),
 );

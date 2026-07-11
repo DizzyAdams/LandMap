@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 type AuditEvent = {
   id: number;
@@ -51,12 +52,14 @@ export default function AdminAuditPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-neutral-50">Auditoria</h2>
+      <span className="kicker">Trilha de auditoria</span>
+      <h2 className="mt-2 text-lg font-medium text-neutral-50">Auditoria</h2>
       <p className="mt-1 text-xs text-neutral-400">
         Registro de eventos do sistema
       </p>
 
-      <div className="mt-8 space-y-1">
+      <GlowPanel className="mt-8 p-4">
+      <div className="space-y-1">
         {events.map((event) => (
           <div
             key={event.id}
@@ -70,7 +73,7 @@ export default function AdminAuditPage() {
             </div>
 
             {/* Action badge */}
-            <span className="shrink-0 rounded-md border border-neutral-800 bg-neutral-950/60 px-2 py-0.5 text-[11px] text-neutral-300">
+            <span className="chip">
               {event.action}
             </span>
 
@@ -84,6 +87,7 @@ export default function AdminAuditPage() {
           </div>
         ))}
       </div>
+      </GlowPanel>
 
       <p className="mt-6 text-xs text-neutral-700">
         Exibindo {events.length} eventos simulados

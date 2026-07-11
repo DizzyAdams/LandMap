@@ -36,7 +36,7 @@ export function StreakFlame({ streak, best, frozen, className }: StreakFlameProp
           {streak} {streak === 1 ? 'dia' : 'dias'}
         </span>
         {typeof best === 'number' ? (
-          <span className="text-[10px] text-neutral-500">recorde: {best}</span>
+          <span className="text-[10px] text-neutral-400">recorde: {best}</span>
         ) : null}
       </span>
     </div>

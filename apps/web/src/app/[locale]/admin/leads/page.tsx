@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import { GlowPanel } from '../../../../components/GlowPanel';
 
 type Lead = {
   id: string;
@@ -70,7 +71,8 @@ export default function AdminLeadsPage() {
 
   return (
     <div>
-      <h2 className="text-lg font-medium text-neutral-50">Leads</h2>
+      <span className="kicker">Pipeline de contatos</span>
+      <h2 className="mt-2 text-lg font-medium text-neutral-50">Leads</h2>
       <p className="mt-1 text-xs text-neutral-400">
         {leads.length} leads simulados
       </p>
@@ -93,7 +95,8 @@ export default function AdminLeadsPage() {
       </div>
 
       {/* Table */}
-      <div className="mt-4 overflow-x-auto rounded-xl border border-neutral-800">
+      <GlowPanel className="mt-4 overflow-hidden">
+      <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead className="border-b border-neutral-800 bg-neutral-900/60">
             <tr>
@@ -135,6 +138,7 @@ export default function AdminLeadsPage() {
           </tbody>
         </table>
       </div>
+      </GlowPanel>
     </div>
   );
 }

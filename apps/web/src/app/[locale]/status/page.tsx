@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { Logo } from '../../../components/Logo';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 import { Reveal, Stagger } from '../../../components/Motion';
+import { GlowPanel } from '../../../components/GlowPanel';
 
 type ServiceStatus = 'UP' | 'DOWN' | 'DEGRADED';
 
@@ -61,7 +62,7 @@ export default function StatusPage() {
         {/* Overall status */}
         <Reveal className="text-center">
           <Logo className="mx-auto mb-6 h-10 w-10" />
-          <div className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/40 px-4 py-1.5">
+          <div className="chip">
             <span
               className={`h-2 w-2 rounded-full ${
                 overall === 'UP' ? 'bg-emerald-400' : 'bg-amber-400'
@@ -71,7 +72,8 @@ export default function StatusPage() {
               {overallConfig.label}
             </span>
           </div>
-          <h1 className="mt-6 text-2xl font-semibold tracking-tight text-gradient">
+          <span className="kicker mt-6">Uptime & Saúde</span>
+          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
             Status dos Serviços
           </h1>
           <p className="mt-2 text-sm text-neutral-400">
@@ -80,7 +82,8 @@ export default function StatusPage() {
         </Reveal>
 
         {/* Services */}
-        <Stagger className="mt-10 space-y-3">
+        <GlowPanel className="mt-10 p-4">
+        <Stagger className="space-y-3">
           {services.map((service) => {
             const cfg = statusConfig[service.status];
             return (
@@ -113,6 +116,7 @@ export default function StatusPage() {
             );
           })}
         </Stagger>
+        </GlowPanel>
 
         <p className="mt-8 text-center text-xs text-neutral-400">
           Última verificação há poucos segundos · latências medidas em ambiente de demonstração
