@@ -16,6 +16,11 @@ import '../../app/globals.css';
 
 export const dynamic = 'force-dynamic';
 
+export const viewport = {
+  themeColor: '#050505',
+  colorScheme: 'dark',
+};
+
 export function generateStaticParams() {
   return ['pt-BR', 'en-US', 'es-ES'].map((locale) => ({ locale }));
 }

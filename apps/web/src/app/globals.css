@@ -752,6 +752,15 @@ body {
   filter: drop-shadow(0 0 30px rgba(52, 211, 153, 0.28));
 }
 
+/* Page entrance — subtle, replayed on every route change via template.tsx */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
 @keyframes dash {
   to { stroke-dashoffset: 0; }
 }
@@ -761,6 +770,7 @@ body {
   .gradient-border::before { animation: none; }
   .panel:hover { transform: none; }
   .text-surreal { filter: none; }
+  .page-enter { animation: none; }
 }
 
 
