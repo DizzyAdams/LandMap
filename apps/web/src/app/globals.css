@@ -772,5 +772,17 @@ body {
   .text-surreal { filter: none; }
   .page-enter { animation: none; }
 }
+/* Production hardening: no horizontal scroll on mobile, smooth anchor scroll
+   (overflow-x: clip — safe for position: sticky; does not create a scroll container). */
+html,
+body {
+  overflow-x: clip;
+}
+html {
+  scroll-behavior: smooth;
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 
 
