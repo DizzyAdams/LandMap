@@ -98,9 +98,23 @@ export function RealtimeValuator({
           {error ? '—' : brl.format(value)}
         </p>
         <p className="mt-1 text-xs text-neutral-500">
-          {result && !error
-            ? `${brl.format(result.pricePerM2)}/m² · engine ${result.engine}`
-            : 'calculando…'}
+          {result && !error ? (
+            <>
+              {brl.format(result.pricePerM2)}/m² ·{' '}
+              <span
+                className="cursor-help border-b border-dotted border-neutral-600"
+                title={
+                  result.engine === 'torch'
+                    ? 'Refinador PyTorch treinado em 1.500 imóveis reais — corrige o prior em numpy'
+                    : 'Prior calibrado em numpy — determinístico e sub-milissegundo'
+                }
+              >
+                engine {result.engine}
+              </span>
+            </>
+          ) : (
+            'calculando…'
+          )}
         </p>
       </div>
 

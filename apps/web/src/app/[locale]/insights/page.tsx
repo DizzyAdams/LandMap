@@ -3,9 +3,10 @@
 import { useEffect, useState } from 'react';
 import { Sparkline, Stat, Skeleton, EmptyState } from '@landmap/ui';
 import { GlowPanel } from '../../../components/GlowPanel';
+import { apiUrl } from '../../../lib/api';
 import { FEATURED_CITIES } from '../../../lib/constants';
 
-const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
+// URL resolvida via apiUrl() (lib/api) — fonte única de verdade, compatível com SSR/origem
 
 type NeighborhoodStat = {
   name: string;
@@ -31,7 +32,7 @@ type NeighborhoodsResponse = {
 };
 
 async function fetchMarket<T>(path: string): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, { cache: 'no-store' });
+  const res = await fetch(apiUrl(path), { cache: 'no-store' });
   if (!res.ok) throw new Error(`Falha ao buscar ${path} (${res.status})`);
   return (await res.json()) as T;
 }
