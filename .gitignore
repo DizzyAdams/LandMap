@@ -51,3 +51,5 @@ validate*.log
 .bugprobe/
 probe_html.txt
 
+.vercel
+.env*
