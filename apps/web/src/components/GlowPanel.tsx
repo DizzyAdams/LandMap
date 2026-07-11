@@ -1,4 +1,4 @@
-import { cn } from '@landmap/ui';
+import { cn } from '@landmap/ui/server';
 import type { ReactNode } from 'react';
 
 interface GlowPanelProps {
