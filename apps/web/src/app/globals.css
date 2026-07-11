@@ -535,6 +535,166 @@ body {
 /* Soft emerald halo wrapper. */
 .surface-glow { box-shadow: var(--glow-emerald); }
 
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   LandMap 4.0 — "Surreal Intelligence" surface system
+   Living, cinematic layer: animated mesh gradients, light-leaks, a
+   perspective cadastral grid, breathing orbs and a bioluminescent bloom.
+   Every animation is gated behind `prefers-reduced-motion` (block at end).
+   Pure CSS / no new deps — safe under Tailwind v4 (no custom @apply).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* Animated mesh-gradient aurora — the "surreal" atmosphere. Four brand hues
+   drift slowly across the viewport, blended additively for a living glow. */
+.mesh-bg {
+  background:
+    radial-gradient(40rem 30rem at 12% 8%, rgba(52, 211, 153, 0.22), transparent 60%),
+    radial-gradient(34rem 26rem at 88% 4%, rgba(34, 211, 238, 0.16), transparent 58%),
+    radial-gradient(38rem 30rem at 78% 22%, rgba(167, 139, 250, 0.16), transparent 60%),
+    radial-gradient(46rem 34rem at 50% 96%, rgba(212, 175, 55, 0.18), transparent 62%),
+    radial-gradient(50rem 40rem at 20% 90%, rgba(52, 211, 153, 0.14), transparent 60%);
+  filter: blur(20px) saturate(120%);
+  animation: mesh-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes mesh-drift {
+  0%   { transform: translate3d(-2%, -1%, 0) scale(1.05); }
+  50%  { transform: translate3d(1%, 1.5%, 0) scale(1.1); }
+  100% { transform: translate3d(3%, -1%, 0) scale(1.05); }
+}
+
+/* A soft diagonal light-leak — a broad spectral streak sliding across the
+   top of the canvas, like stage light catching fog. */
+.leak {
+  background:
+    linear-gradient(115deg, transparent 30%, rgba(52, 211, 153, 0.10) 46%, rgba(34, 211, 238, 0.12) 52%, rgba(167, 139, 250, 0.08) 58%, transparent 72%);
+  filter: blur(40px);
+  mix-blend-mode: screen;
+  animation: leak-drift 18s ease-in-out infinite alternate;
+}
+@keyframes leak-drift {
+  from { transform: translateX(-12%) translateY(-4%); opacity: 0.6; }
+  to   { transform: translateX(12%) translateY(4%); opacity: 1; }
+}
+
+/* Perspective cadastral grid — the plot texture receding into the distance
+   with a radial fade so it melts into the dark instead of a hard edge. */
+.cadastre-fade {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 32px 32px;
+  -webkit-mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
+}
+
+/* Breathing bioluminescent orbs — decorative focal points that slowly rise
+   and pulse. Floating accents behind hero / feature surfaces. */
+.orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(8px);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  animation: orb-float 14s ease-in-out infinite;
+  will-change: transform;
+  pointer-events: none;
+}
+.orb--emerald { background: radial-gradient(circle, rgba(52,211,153,0.55), transparent 70%); }
+.orb--cyan    { background: radial-gradient(circle, rgba(34,211,238,0.45), transparent 70%); }
+.orb--violet  { background: radial-gradient(circle, rgba(167,139,250,0.40), transparent 70%); }
+
+/* Cinematic depth: bottom vignette + top hairline highlight for chrome. */
+.depth {
+  background:
+    radial-gradient(130% 110% at 50% 0%, transparent 52%, rgba(0, 0, 0, 0.6) 100%),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent 18%);
+}
+
+/* Premium frosted glass — saturated, deep blur for floating surfaces. */
+.frost {
+  background: color-mix(in srgb, var(--bg) 64%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
+    0 24px 60px -28px rgba(0, 0, 0, 0.9);
+}
+
+/* Gradient rim wrapper — slow conic sweep in brand hues (needs @property
+   --angle). Pairs with .frost for floating hero chrome. */
+.rim { position: relative; }
+.rim::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from var(--angle),
+    rgba(52, 211, 153, 0),
+    rgba(52, 211, 153, 0.9),
+    rgba(34, 211, 238, 0.7),
+    rgba(167, 139, 250, 0.6),
+    rgba(212, 175, 55, 0.8),
+    rgba(52, 211, 153, 0)
+  );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: rim-spin 9s linear infinite;
+  pointer-events: none;
+}
+
+/* Bioluminescent bloom for hero display text — a soft outer glow that makes
+   the gradient word feel lit from within. */
+.text-bloom {
+  filter: drop-shadow(0 0 28px rgba(52, 211, 153, 0.28))
+          drop-shadow(0 0 60px rgba(34, 211, 238, 0.16));
+}
+
+/* Editorial display scale (used by the hero H1). */
+.text-display {
+  font-size: clamp(2.75rem, 7vw, 5.25rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+}
+
+/* Magnetic / springy surface lift for premium cards & CTAs. */
+.magnetic {
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
+  will-change: transform;
+}
+.magnetic:hover {
+  transform: translateY(-5px);
+  border-color: rgba(52, 211, 153, 0.4);
+  box-shadow: var(--glow-dual);
+}
+
+/* Slow conic spin — for orbital / loading glyphs. */
+.spin-slow { animation: rim-spin 14s linear infinite; }
+
+/* Reduced-motion: neutralize every new ambient animation. */
+@media (prefers-reduced-motion: reduce) {
+  .mesh-bg,
+  .leak,
+  .orb,
+  .rim::before { animation: none; }
+  .mesh-bg { transform: none; }
+  .leak { transform: none; opacity: 0.7; }
+  .orb { transform: none; opacity: 0.45; }
+  .text-bloom { filter: none; }
+  .magnetic:hover { transform: none; }
+}
+.orb--gold    { background: radial-gradient(circle, rgba(212,175,55,0.42), transparent 70%); }
+@keyframes orb-float {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.4; }
+  50%      { transform: translate3d(0, -18px, 0) scale(1.12); opacity: 0.65; }
+}
 /* Gold gradient hairline divider. */
 .divider-gold {
   height: 1px;

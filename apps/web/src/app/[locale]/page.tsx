@@ -1,4 +1,4 @@
-import Link from 'next/link';
+﻿import Link from 'next/link';
 import React from 'react';
 import { searchProperties } from '../../lib/api';
 import { formatBRL } from '../../lib/format';
@@ -45,23 +45,29 @@ export default async function LocaleHomePage() {
     <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
       <ScrollProgress />
 
-      {/* living bioluminescent field · cadastral grid · vignette */}
-      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 cadastre-grid opacity-[0.18]" />
+      {/* living cadastral field · bioluminescent aurora · floating orbs · vignette */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 cadastre-grid opacity-[0.16]" />
       <HeroAurora className="absolute inset-0 -z-10 h-full w-full opacity-90" />
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <span className="orb orb--emerald h-72 w-72 left-[-8%] top-[14%]" />
+        <span className="orb orb--cyan h-64 w-64 right-[-6%] top-[22%]" />
+        <span className="orb orb--gold h-56 w-56 left-[16%] bottom-[8%]" />
+        <span className="orb orb--violet h-60 w-60 right-[12%] bottom-[10%]" />
+      </div>
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 vignette" />
 
-      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-12 px-6 pb-20 pt-20 sm:pt-28 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+      <section className="mx-auto grid max-w-6xl grid-cols-1 gap-14 px-6 pb-24 pt-24 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <span className="kicker">Inteligência imobiliária aberta</span>
 
-          <h1 className="mt-5 max-w-4xl text-balance text-5xl font-semibold leading-[1.02] tracking-tight sm:text-7xl">
+          <h1 className="text-display text-balance mt-5 text-white">
             Veja o território imobiliário como{' '}
-            <span className="text-surreal">dados</span>.
+            <span className="text-surreal text-bloom">dados</span>.
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
             Busca por cidade e tipo, mapa interativo, chat com IA e cálculo de
-            investimento. 1.500 imóveis em 10 cidades — sem custo e sem login.
+            investimento. 1.500 imóveis em 10 cidades - sem custo e sem login.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -227,8 +233,8 @@ export default async function LocaleHomePage() {
       <Reveal className="border-t border-neutral-800">
         <div className="mx-auto max-w-6xl px-6 py-16">
           <p className="eyebrow-gold">Plataforma aberta</p>
-          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA — sem custo.</h2>
-          <p className="mt-2 max-w-md text-sm text-neutral-400">API REST, schema.org, RAG local, CRM — tudo open-source.</p>
+          <h2 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA - sem custo.</h2>
+          <p className="mt-2 max-w-md text-sm text-neutral-400">API REST, schema.org, RAG local, CRM - tudo open-source.</p>
           <div className="mt-6">
             <Link
               href="./search"

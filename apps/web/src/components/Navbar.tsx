@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 
 import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
@@ -44,12 +44,10 @@ export function Navbar() {
     window.location.href = '/' + segments.join('/');
   }
 
-  // Close the mobile menu whenever the route changes.
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
 
-  // Allow keyboard users to dismiss the mobile menu with Escape.
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
       if (e.key === 'Escape') setMobileOpen(false);
@@ -59,10 +57,10 @@ export function Navbar() {
   }, []);
 
   return (
-    <header className="glass-strong sticky top-0 z-40 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+    <header className="sticky top-3 z-50 mx-3 flex w-full max-w-5xl items-center justify-between gap-3 rounded-2xl border border-white/10 bg-[#0a0a0a]/70 px-4 py-2.5 backdrop-blur-xl [backdrop-filter:saturate(150%)] shadow-[0_8px_40px_-12px_rgba(0,0,0,0.85)] md:mx-auto">
       <Link
         href={`/${locale}`}
-        aria-label="LandMap — ir para a página inicial"
+        aria-label="LandMap - ir para a página inicial"
         className={`group flex items-center gap-2 text-sm font-semibold tracking-tight ${focusRing}`}
       >
         <Logo className="h-5 w-5 transition group-hover:scale-110" />
@@ -71,7 +69,7 @@ export function Navbar() {
 
       <nav
         aria-label="Navegação principal"
-        className="hidden items-center gap-4 text-sm text-neutral-300 md:flex"
+        className="hidden items-center gap-1 text-sm text-neutral-300 md:flex"
       >
         {links.map((link) => {
           const href = `/${locale}/${link.href}`;
@@ -81,27 +79,31 @@ export function Navbar() {
               key={link.href}
               href={href}
               aria-current={isActive ? 'page' : undefined}
-              className={`transition hover:text-white ${focusRing} ${
-                isActive ? 'rounded-full bg-white/10 px-3 py-1 text-white' : 'text-neutral-300'
+              className={`rounded-full px-3 py-1.5 transition hover:bg-white/5 hover:text-white ${focusRing} ${
+                isActive
+                  ? 'bg-emerald-400/10 text-emerald-200 shadow-[inset_0_0_0_1px_rgba(52,211,153,0.35)]'
+                  : 'text-neutral-300'
               }`}
             >
               {link.labelKey}
             </Link>
           );
         })}
+      </nav>
 
-        <span className="mx-1 h-4 w-px bg-white/10" aria-hidden />
+      <div className="flex items-center gap-2">
+        <span className="hidden md:block">
+          <NotificationCenter />
+        </span>
 
-        <NotificationCenter />
-
-        <span className="flex items-center gap-1">
+        <span className="hidden items-center gap-0.5 rounded-full border border-white/10 bg-white/5 p-0.5 md:flex">
           {locales.map((l) => (
             <Button
               key={l.code}
               variant={locale === l.code ? 'default' : 'ghost'}
               aria-label={`Mudar idioma para ${l.label}`}
               aria-pressed={locale === l.code}
-              className={`!px-2 !py-0.5 !text-xs ${
+              className={`!px-2.5 !py-0.5 !text-xs ${
                 locale === l.code ? '' : 'text-neutral-400'
               }`}
               onClick={() => switchLocale(l.code)}
@@ -110,39 +112,34 @@ export function Navbar() {
             </Button>
           ))}
         </span>
-      </nav>
 
-      {/* Mobile menu toggle */}
-      <button
-        type="button"
-        onClick={() => setMobileOpen((v) => !v)}
-        aria-expanded={mobileOpen}
-        aria-controls="mobile-nav"
-        aria-label={mobileOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
-        className={`inline-flex h-10 w-10 items-center justify-center rounded-lg border border-neutral-800 text-neutral-300 transition hover:border-neutral-500 hover:text-white md:hidden ${focusRing}`}
-      >
-        {mobileOpen ? (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-            <path d="M6 6l12 12M18 6L6 18" />
-          </svg>
-        ) : (
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
-            <path d="M4 7h16M4 12h16M4 17h16" />
-          </svg>
-        )}
-      </button>
+        <button
+          type="button"
+          onClick={() => setMobileOpen((v) => !v)}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-nav"
+          aria-label={mobileOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+          className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-neutral-300 transition hover:border-emerald-400/40 hover:text-white md:hidden ${focusRing}`}
+        >
+          {mobileOpen ? (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          ) : (
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
+              <path d="M4 7h16M4 12h16M4 17h16" />
+            </svg>
+          )}
+        </button>
+      </div>
 
-      {/* Mobile navigation panel */}
       <div
         id="mobile-nav"
-        className={`glass absolute inset-x-0 top-full z-40 border-b border-neutral-800 bg-[#050505]/95 backdrop-blur-md md:hidden ${
+        className={`absolute inset-x-3 top-[calc(100%+0.5rem)] z-50 rounded-2xl border border-white/10 bg-[#0a0a0a]/95 p-2 backdrop-blur-xl shadow-[0_24px_60px_-24px_rgba(0,0,0,0.9)] md:hidden ${
           mobileOpen ? 'block' : 'hidden'
         }`}
       >
-        <nav
-          aria-label="Navegação principal (mobile)"
-          className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4"
-        >
+        <nav aria-label="Navegação principal (mobile)" className="flex flex-col gap-0.5">
           {links.map((link) => {
             const href = `/${locale}/${link.href}`;
             const isActive = pathname === href || pathname.startsWith(href + '/');
@@ -151,29 +148,31 @@ export function Navbar() {
                 key={link.href}
                 href={href}
                 aria-current={isActive ? 'page' : undefined}
-                className={`rounded-lg px-3 py-2 text-sm transition hover:bg-neutral-800/60 hover:text-white ${focusRing} ${
-                  isActive ? 'bg-neutral-800 text-white' : 'text-neutral-300'
+                className={`rounded-xl px-3 py-2.5 text-sm transition hover:bg-white/5 hover:text-white ${focusRing} ${
+                  isActive ? 'bg-emerald-400/10 text-emerald-200' : 'text-neutral-300'
                 }`}
               >
                 {link.labelKey}
               </Link>
             );
           })}
-          <div className="mt-2 flex gap-2 border-t border-neutral-800 pt-3">
-            {locales.map((l) => (
-              <Button
-                key={l.code}
-                variant={locale === l.code ? 'default' : 'ghost'}
-                aria-label={`Mudar idioma para ${l.label}`}
-                aria-pressed={locale === l.code}
-                className={`!px-3 !py-1 !text-xs ${
-                  locale === l.code ? '' : 'text-neutral-400'
-                }`}
-                onClick={() => switchLocale(l.code)}
-              >
-                {l.label}
-              </Button>
-            ))}
+          <div className="mt-2 flex items-center justify-end gap-2 border-t border-white/10 px-1 pt-3">
+            <span className="flex items-center gap-1">
+              {locales.map((l) => (
+                <Button
+                  key={l.code}
+                  variant={locale === l.code ? 'default' : 'ghost'}
+                  aria-label={`Mudar idioma para ${l.label}`}
+                  aria-pressed={locale === l.code}
+                  className={`!px-3 !py-1 !text-xs ${
+                    locale === l.code ? '' : 'text-neutral-400'
+                  }`}
+                  onClick={() => switchLocale(l.code)}
+                >
+                  {l.label}
+                </Button>
+              ))}
+            </span>
           </div>
         </nav>
       </div>

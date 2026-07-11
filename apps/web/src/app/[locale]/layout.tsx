@@ -1,4 +1,4 @@
-import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
+﻿import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { Navbar } from '../../components/Navbar';
@@ -10,6 +10,7 @@ import { Cursor } from '../../components/Cursor';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ToastProvider, MobileBottomNav } from '@landmap/ui';
 import { CommandPaletteHost } from '../../components/CommandPaletteHost';
+import { SurrealBackground } from '../../components/SurrealBackground';
 import '@landmap/ui/styles.css';
 import '../../app/globals.css';
 
@@ -28,9 +29,6 @@ export async function generateMetadata({
   const messages = await getMessages();
   const title = (messages.landmap as any)?.title || 'LandMap';
   const description = (messages.landmap as any)?.tagline || 'Inteligência imobiliária aberta.';
-  // Canonical production origin. Falling back to localhost (the old default)
-  // silently shipped `og:url`/`og:image`/canonical pointing at localhost:3000
-  // in production, breaking every social preview and canonical tag.
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
 
   return {
@@ -83,9 +81,6 @@ export default async function RootLayout({
   const allowed = ['pt-BR', 'en-US', 'es-ES'];
   const resolvedLocale = allowed.includes((locale as string) || '') ? (locale as string) : 'pt-BR';
 
-  // Make the locale available to next-intl's request scope (getLocale/getMessages)
-  // and to the root layout that renders <html lang>. Required because the root
-  // layout is not under [locale] and cannot derive the locale from the segment.
   unstable_setRequestLocale(resolvedLocale);
 
   if (!resolvedLocale) {
@@ -110,12 +105,18 @@ export default async function RootLayout({
         }}
       />
       <div className="relative min-h-[100dvh] pb-[88px] text-neutral-50 antialiased md:pb-0">
+        {/* Surreal living canvas - a breathing bioluminescent field behind every page */}
+        <SurrealBackground />
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[#050505]" />
+          <div className="absolute inset-0 mesh-bg" />
           <div className="absolute inset-0 aurora" />
           <div className="absolute inset-0 aurora-intense opacity-70" />
+          <div className="absolute inset-0 leak" />
+          <div className="absolute inset-0 cadastre-fade opacity-30" />
           <div className="absolute inset-0 grain opacity-[0.05] mix-blend-overlay" />
           <div className="absolute inset-0 vignette" />
+          <div className="absolute inset-0 depth" />
         </div>
         <Cursor />
         <Navbar />
