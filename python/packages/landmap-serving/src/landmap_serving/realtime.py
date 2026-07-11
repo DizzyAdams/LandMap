@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass
+from pathlib import Path
 
 import numpy as np
 
@@ -41,6 +42,14 @@ except Exception:  # ModuleNotFoundError or partial install
 # ── Calibration priors (defensible defaults, no training required) ──────────
 DEFAULT_PPM2 = 6_000.0
 _REF_AREA = 250.0
+
+# Bounded correction the refiner may apply: multiplier ∈ [1-BOUND, 1+BOUND].
+REFINER_BOUND = 0.15
+
+
+def artifacts_dir() -> Path:
+    """Directory holding trained artifacts (refiner weights + metrics)."""
+    return Path(__file__).resolve().parent / "artifacts"
 
 _TYPE_MULT = {
     "apartamento": 1.00,
@@ -123,12 +132,35 @@ class _TorchRefiner:
             for p in self.net[-1].parameters():
                 p.mul_(0.01)
         self.net.eval()
+        # Feature standardisation — identity until trained weights are loaded.
+        self._mean = np.zeros(len(FEATURE_NAMES), dtype=np.float32)
+        self._std = np.ones(len(FEATURE_NAMES), dtype=np.float32)
+        self.trained = False
+        self._load_trained()
+
+    def _load_trained(self) -> None:
+        """Load real-data-trained weights + standardisation when present."""
+        path = artifacts_dir() / "refiner.pt"
+        if not path.exists():
+            return
+        try:
+            payload = torch.load(path, map_location="cpu", weights_only=True)
+            self.net.load_state_dict(payload["state_dict"])
+            self.net.eval()
+            self._mean = np.asarray(payload["feature_mean"], dtype=np.float32)
+            self._std = np.asarray(payload["feature_std"], dtype=np.float32)
+            self._std[self._std == 0] = 1.0
+            self.trained = True
+        except Exception:
+            # Corrupt/incompatible artifact -> keep near-identity safe defaults.
+            self.trained = False
 
     def multiplier(self, feats: np.ndarray) -> float:
+        z = (np.ascontiguousarray(feats) - self._mean) / self._std
         with torch.inference_mode():
-            x = torch.from_numpy(np.ascontiguousarray(feats)).float().reshape(1, -1)
+            x = torch.from_numpy(z).float().reshape(1, -1)
             raw = self.net(x).item()
-        return 1.0 + 0.15 * float(np.tanh(raw))
+        return 1.0 + REFINER_BOUND * float(np.tanh(raw))
 
 
 class RealtimeValuator:
@@ -146,6 +178,11 @@ class RealtimeValuator:
     @property
     def torch_available(self) -> bool:
         return self._refiner is not None
+
+    @property
+    def refiner_trained(self) -> bool:
+        """True when real-data-trained weights were loaded (not safe defaults)."""
+        return self._refiner is not None and self._refiner.trained
 
     def warmup(self) -> None:
         feats = _features(250.0, "apartamento", False, 0.05, 0.1, 2, DEFAULT_PPM2)

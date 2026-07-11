@@ -10,6 +10,7 @@ import { SpotlightCard } from '../../../components/SpotlightCard';
 import { SurrealBackground } from '../../../components/SurrealBackground';
 import { RealtimeValuator } from '../../../components/RealtimeValuator';
 import { getTerrain, type TerrainResponse } from '../../../lib/api';
+import { FEATURED_CITIES } from '../../../lib/constants';
 
 const brl = new Intl.NumberFormat('pt-BR', {
   style: 'currency',
@@ -18,16 +19,7 @@ const brl = new Intl.NumberFormat('pt-BR', {
 });
 const num = new Intl.NumberFormat('pt-BR');
 
-const CITIES = [
-  'Curitiba',
-  'Rio de Janeiro',
-  'São Paulo',
-  'Porto Alegre',
-  'Florianópolis',
-  'Joinville',
-  'Londrina',
-  'Balneário Camboriú',
-];
+const CITIES = FEATURED_CITIES;
 
 /* Anel de score animado, reutilizável e legível. */
 function ScoreRing({ score, label, color }: { score: number; label: string; color: string }) {

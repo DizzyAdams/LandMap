@@ -1,0 +1,14 @@
+{
+  "rows": 1500,
+  "buckets": 40,
+  "epochs": 400,
+  "lr": 0.01,
+  "trainSeconds": 0.198,
+  "finalLoss": 0.007974,
+  "priorMdapePct": 40.774,
+  "refinedMdapePct": 37.422,
+  "improvementPct": 3.351,
+  "multiplierMin": 0.85872,
+  "multiplierMax": 1.14991,
+  "multiplierMean": 1.00103
+}

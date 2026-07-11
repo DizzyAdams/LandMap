@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Sparkline, Stat, Skeleton, EmptyState } from '@landmap/ui';
 import { GlowPanel } from '../../../components/GlowPanel';
+import { FEATURED_CITIES } from '../../../lib/constants';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
@@ -41,7 +42,7 @@ const brl = new Intl.NumberFormat('pt-BR', {
   maximumFractionDigits: 0,
 });
 
-const CITIES = ['Curitiba', 'Florianópolis', 'São Paulo', 'Rio de Janeiro', 'Belo Horizonte'];
+const CITIES = FEATURED_CITIES;
 
 export default function InsightsPage() {
   const [city, setCity] = useState('Curitiba');
