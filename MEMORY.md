@@ -19,7 +19,7 @@ Stack mono-repo pnpm. Licença MIT.
 - Repo: `origin` = https://github.com/DizzyAdams/LandMap.git — branch `main`.
 - Commits em **pt-BR** são o padrão do projeto (ok manter).
 - Produção (Vercel): projeto **`landmapprod`** (projectId `prj_yGGRzfAXO3nfp96QwuvdA1jWARkt`), escopo `dizzys-projects-d5a44b36`.
-  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-2mmvzq3no`, status `READY`).
+  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-h8cyc8xcr`, status `READY` — refactor UX tokenizado + AtlasLanding completado, 2026-07-11).
   Outros aliases ativos: `landmap.us.kg`, `getlandmap.app`, `landmap.com.br` (+ www). Deploy via `vercel deploy --prod` (build remoto; `NEXT_PUBLIC_SITE_URL` em `vercel.json`).
 
 ---
