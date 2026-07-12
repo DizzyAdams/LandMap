@@ -69,6 +69,57 @@
      rest of the CSS (body / .font-mono) already consumes. */
   --font-geist-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  /* Lovable reference design tokens (light / indigo) — ADDITIVE only.
+     Suffixed vars (‑lovable) keep the legacy dark canvas tokens intact so the
+     19 existing product pages keep rendering correctly. New Lovable screens
+     consume these. See landmap-insight.lovable.app. */
+  --background: oklch(100% 0 0);
+  --foreground: oklch(18% 0.06 265);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(18% 0.06 265);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(18% 0.06 265);
+  --primary: oklch(34% 0.18 265);
+  --primary-foreground: oklch(99% 0.005 250);
+  --primary-glow: oklch(55% 0.2 265);
+  --secondary: oklch(24% 0.1 265);
+  --secondary-foreground: oklch(99% 0.005 250);
+  --destructive: oklch(58% 0.22 27);
+  --destructive-foreground: oklch(98% 0.01 27);
+  --success: oklch(60% 0.15 155);
+  --success-foreground: oklch(99% 0.005 155);
+  --warning: oklch(78% 0.15 78);
+  --warning-foreground: oklch(22% 0.05 78);
+  --sidebar: oklch(22% 0.1 265);
+  --sidebar-foreground: oklch(96% 0.01 250);
+  --sidebar-primary: oklch(55% 0.2 265);
+  --sidebar-primary-foreground: oklch(99% 0.005 250);
+  --sidebar-accent: oklch(28% 0.11 265);
+  --sidebar-accent-foreground: oklch(99% 0.005 250);
+  --sidebar-border: oklch(30% 0.09 265);
+  --sidebar-ring: oklch(55% 0.2 265);
+  --gradient-brand: linear-gradient(135deg, oklch(24% 0.1 265), oklch(34% 0.18 265));
+  --gradient-hero: linear-gradient(140deg, oklch(20% 0.08 265) 0%, oklch(30% 0.15 265) 55%, oklch(50% 0.2 265) 100%);
+  --gradient-accent: linear-gradient(135deg, oklch(34% 0.18 265), oklch(62% 0.18 250));
+  --gradient-hero-glow: radial-gradient(circle at 30% 20%, oklch(0.62 0.15 148 / 0.4), transparent 55%);
+  --shadow-elegant: 0 20px 40px -20px rgba(24, 24, 40, 0.4);
+  --shadow-glow: 0 0 40px oklch(55% 0.2 265 / 0.35);
+  --shadow-card: 0 1px 3px rgba(24, 24, 40, 0.12), 0 8px 24px -12px rgba(24, 24, 40, 0.15);
+  /* Lovable-screen-specific (suffixed so they don't touch the dark product theme) */
+  --accent-lovable: oklch(88% 0.06 250);
+  --accent-foreground-lovable: oklch(28% 0.14 265);
+  --muted-lovable: oklch(96% 0.01 250);
+  --muted-foreground-lovable: oklch(48% 0.04 265);
+  --border-lovable: oklch(92% 0.015 250);
+  --input-lovable: oklch(94% 0.012 250);
+  --ring-lovable: oklch(50% 0.18 265);
+  --radius-lovable: 0.625rem;
+  /* Fonts — mirror Lovable (DM Sans UI + Space Grotesk display + JetBrains Mono data) */
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --font-geist-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
 }
 
 html,

@@ -30,7 +30,7 @@ export default async function RootLayout({
         {/* eslint-disable-next-line @next/next/no-page-custom-font -- intentional: next/font (geist) crashes on Windows + Node 24 with ERR_UNSUPPORTED_ESM_URL_SCHEME; a <link> in the App Router root layout loads the font globally, not per-page. */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         />
       </head>
       <body>{children}</body>

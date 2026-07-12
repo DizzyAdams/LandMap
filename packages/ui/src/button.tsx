@@ -40,14 +40,14 @@ const variantMap: Record<
 > = {
   default: {
     base: {
-      background: 'linear-gradient(90deg, var(--emerald) 0%, var(--cyan) 100%)',
-      color: 'var(--bg)',
-      boxShadow: 'var(--glow-emerald)',
+      background: 'var(--primary)',
+      color: 'var(--primary-foreground)',
+      boxShadow: 'var(--shadow-card)',
     },
     hover: {
-      background: 'linear-gradient(90deg, var(--emerald-bright) 0%, var(--cyan) 100%)',
+      background: 'var(--primary-glow)',
       transform: 'translateY(-1px)',
-      boxShadow: 'var(--glow-dual)',
+      boxShadow: 'var(--shadow-glow)',
     },
   },
   outline: {
@@ -152,7 +152,7 @@ export function buttonVariants({
   };
   const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
     default:
-      'bg-[linear-gradient(90deg,var(--emerald),var(--cyan))] text-[var(--bg)] shadow-[var(--glow-emerald)] hover:bg-[linear-gradient(90deg,var(--emerald-bright),var(--cyan))] hover:-translate-y-px hover:shadow-[var(--glow-dual)]',
+      'bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] hover:bg-[var(--primary-glow)] hover:-translate-y-px hover:shadow-[var(--shadow-glow)]',
     outline:
       'bg-transparent border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--surface-2)] hover:border-[var(--muted-2)] hover:text-[var(--text-strong)]',
     ghost:

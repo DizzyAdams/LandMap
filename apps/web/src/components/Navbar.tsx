@@ -208,6 +208,13 @@ export function Navbar() {
           ))}
         </span>
 
+        <Link
+          href={`/${locale}/auth`}
+          className={`inline-flex h-9 items-center rounded-xl bg-emerald-400/10 px-3.5 text-sm font-medium text-emerald-200 shadow-[inset_0_0_0_1px_rgba(52,211,153,0.35)] transition hover:bg-emerald-400/20 ${focusRing} max-md:hidden`}
+        >
+          Entrar
+        </Link>
+
         <button
           type="button"
           onClick={() => setMobileOpen((v) => !v)}
