@@ -6,7 +6,17 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-11 (branch `main`, head `10c61eb`).
+Última atualização: 2026-07-12 (branch `main`, head `d8521c5`).
+
+> **2026-07-12 — Spec LandMap aplicado + deployado.** Commit `d8521c5` aplica o
+> spec `landmap-design.zip` (azul institutional `#003594`, fundo claro, verde só
+> success) em TODAS as 19 rotas de produto + novo `AppShell` autenticado
+> (sidebar 68px + header + `MobileBottomNav`) com `ShellSwitch` que alterna
+> público↔autenticado, mais telas `/onboarding` e `/regions`. Build local 101
+> páginas OK, lint 0, typecheck OK. Deploy `landmapprod-3iwouhmy0` (alias
+> `landmapprod.vercel.app`) READY — `pnpm install` agora usado no Vercel (o
+> deploy anterior falhou por ter rodado `npm install` de subdiretório, não lendo
+> o `vercel.json`).
 
 ---
 
@@ -29,6 +39,8 @@ Stack mono-repo pnpm. Licença MIT.
 | Item | Estado |
 |------|--------|
 | App web (19 rotas + APIs) | ✅ build/typecheck/lint/testes verdes |
+| **Spec LandMap (azul #003594, claro)** | ✅ **commit `d8521c5` + deploy `landmapprod-3iwouhmy0` (alias `landmapprod.vercel.app`) READY** |
+| AppShell autenticado + /onboarding + /regions | ✅ commit `d8521c5` |
 | Dataset | ✅ 1.500 imóveis reais + 1.500 markdowns (10 cidades) |
 | Sales cockpit (6 agentes) | ✅ feature completa + commit `975170d` |
 | Redesign "Sovereign Cadastre" | ✅ commit `8f9c073` (removeu AI-slop) |
@@ -130,12 +142,7 @@ build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arqu
      para a API de DNS de .br). Pronto para rodar assim que o usuário fornecer o token.
    - App já 100% funcional via URL de produção do Vercel enquanto isso.
 
-2. **Tailwind v4 não processa CSS (⚠️).** `tailwindcss@4.0.0` instalado, mas sem
-   pipeline PostCSS/`@import "tailwindcss"`. O app usa **classes utilitárias CSS puras**
-   definidas em `globals.css` (`.surface`, `.glass`, `.grid-bg`, `.aurora`, `.grain`,
-   `.text-gradient`, `.glow-emerald`, `.glow-dual`, `.hairline`, `.orb-float`,
-   `.ring-spin`, `.marquee-track`). Antes de "ligar" o Tailwind v4, resolver os pontos
-   do `CLAUDE.md` (item `@apply` custom + `.text-gradient` duplicado) senão o build quebra.
+2. ~~**Tailwind v4 não processa CSS (⚠️).**~~ **RESOLVIDO (2026-07-11, ver CLAUDE.md):** pipeline PostCSS + `@import "tailwindcss"` + `@source` ativo; utilitários e tokens compilados. O app ainda usa classes utilitárias CSS puras em `globals.css` (`.surface`, `.glass`, etc.) como base, e o spec LandMap (azul #003594) foi aplicado via tokens CSS `var(--foreground)`/`var(--primary)` em 2026-07-12.
 
 3. **Drift de design tokens.** 3 fontes devem sincronizar: `apps/web/src/app/globals.css`
    `:root` (fonte da verdade), `packages/ui/src/styles.css`, `packages/ui/src/tokens.ts`.
