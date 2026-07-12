@@ -17,7 +17,7 @@ export function Filters({ locale, defaults }: { locale: string; defaults: Filter
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4">
+    <div className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-4">
       {/* Mobile filter toggle — filters collapse into a sheet on small screens */}
       <div className="flex items-center justify-between lg:hidden">
         <button
@@ -25,11 +25,11 @@ export function Filters({ locale, defaults }: { locale: string; defaults: Filter
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
           aria-controls="filter-fields"
-          className="inline-flex items-center gap-2 rounded-lg border border-neutral-800 px-4 py-2 text-sm text-neutral-200 transition hover:border-neutral-500 hover:text-white"
+          className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-lovable)] px-4 py-2 text-sm text-[var(--foreground)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]"
         >
           {open ? 'Ocultar filtros' : 'Filtros'}
         </button>
-        <span className="text-xs text-neutral-400">
+        <span className="text-xs text-[var(--muted-foreground-lovable)]">
           {defaults.q ? `Filtro: ${defaults.q}` : 'Refine sua busca'}
         </span>
       </div>
@@ -99,16 +99,16 @@ export function Filters({ locale, defaults }: { locale: string; defaults: Filter
           className="input"
         />
         <div className="lg:col-span-5 flex flex-col items-stretch gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-neutral-400">
+          <p className="text-xs text-[var(--muted-foreground-lovable)]">
             {defaults.q ? `Filtro ativo: ${defaults.q}` : 'Use filtros para refinar.'}
           </p>
           <div className="flex items-center gap-3">
             <span
-              className="hidden items-center gap-1 text-[11px] text-neutral-400 sm:inline-flex"
+              className="hidden items-center gap-1 text-[11px] text-[var(--muted-foreground-lovable)] sm:inline-flex"
               aria-hidden="true"
             >
-              Pressione <kbd className="rounded border border-neutral-700 px-1">/</kbd> ou{' '}
-              <kbd className="rounded border border-neutral-700 px-1">⌘K</kbd>
+              Pressione <kbd className="rounded border border-[var(--border-lovable)] px-1">/</kbd> ou{' '}
+              <kbd className="rounded border border-[var(--border-lovable)] px-1">⌘K</kbd>
             </span>
             <Button type="submit">Aplicar filtros</Button>
           </div>

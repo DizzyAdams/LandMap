@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import { Logo } from '../../../components/Logo';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 import { Reveal, Stagger } from '../../../components/Motion';
-import { GlowPanel } from '../../../components/GlowPanel';
 
 type ServiceStatus = 'UP' | 'DOWN' | 'DEGRADED';
 
@@ -24,7 +23,7 @@ const SERVICES: Omit<Service, 'lastCheck'>[] = [
 ];
 
 const statusConfig: Record<ServiceStatus, { color: string; label: string }> = {
-  UP: { color: 'text-emerald-400', label: 'Operacional' },
+  UP: { color: 'text-[var(--primary)]', label: 'Operacional' },
   DOWN: { color: 'text-red-400', label: 'Indisponível' },
   DEGRADED: { color: 'text-amber-400', label: 'Degradado' },
 };
@@ -65,7 +64,7 @@ export default function StatusPage() {
           <div className="chip">
             <span
               className={`h-2 w-2 rounded-full ${
-                overall === 'UP' ? 'bg-emerald-400' : 'bg-amber-400'
+                overall === 'UP' ? 'bg-[var(--primary)]' : 'bg-amber-400'
               }`}
             />
             <span className={`text-xs font-medium ${overallConfig.color}`}>
@@ -76,13 +75,13 @@ export default function StatusPage() {
           <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
             Status dos Serviços
           </h1>
-          <p className="mt-2 text-sm text-neutral-400">
+          <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
             Monitoramento em tempo real
           </p>
         </Reveal>
 
         {/* Services */}
-        <GlowPanel className="mt-10 p-4">
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-10 p-4">
         <Stagger className="space-y-3">
           {services.map((service) => {
             const cfg = statusConfig[service.status];
@@ -95,18 +94,18 @@ export default function StatusPage() {
                   <span
                     className={`h-2 w-2 rounded-full ${
                       service.status === 'UP'
-                        ? 'bg-emerald-400'
+                        ? 'bg-[var(--primary)]'
                         : service.status === 'DEGRADED'
                           ? 'bg-amber-400'
                           : 'bg-red-400'
                     }`}
                   />
-                  <span className="text-sm text-neutral-50">{service.name}</span>
+                  <span className="text-sm text-[var(--foreground)]">{service.name}</span>
                 </div>
                 <div className="flex items-center gap-5">
                   <span className={`text-xs font-medium ${cfg.color}`}>{cfg.label}</span>
-                  <span className="text-xs text-neutral-400 font-mono">{service.latency}</span>
-                  <span className="text-[11px] text-neutral-400">
+                  <span className="text-xs text-[var(--muted-foreground-lovable)] font-mono">{service.latency}</span>
+                  <span className="text-[11px] text-[var(--muted-foreground-lovable)]">
                     {service.lastCheck
                       ? new Date(service.lastCheck).toLocaleTimeString('pt-BR')
                       : '—'}
@@ -116,9 +115,9 @@ export default function StatusPage() {
             );
           })}
         </Stagger>
-        </GlowPanel>
+        </div>
 
-        <p className="mt-8 text-center text-xs text-neutral-400">
+        <p className="mt-8 text-center text-xs text-[var(--muted-foreground-lovable)]">
           Última verificação há poucos segundos · latências medidas em ambiente de demonstração
         </p>
       </div>

@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from 'react';
 import { Sparkline, Stat, Skeleton, EmptyState } from '@landmap/ui';
-import { GlowPanel } from '../../../components/GlowPanel';
 import { apiUrl } from '../../../lib/api';
 import { FEATURED_CITIES } from '../../../lib/constants';
 
@@ -93,7 +92,7 @@ export default function InsightsPage() {
   const variation = maxAvg > 0 ? ((maxAvg - minAvg) / maxAvg) * 100 : 0;
 
   return (
-    <main className="min-h-screen grid-bg text-neutral-50">
+    <main className="min-h-screen grid-bg text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
@@ -101,7 +100,7 @@ export default function InsightsPage() {
             <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient">
               Insights de mercado
             </h1>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
               Bairros mais ativos e tendência de preço — dados agregados da LandMap.
             </p>
           </div>
@@ -179,14 +178,14 @@ export default function InsightsPage() {
         )}
 
         {!loading && trend && (
-          <GlowPanel className="mt-10" as="section">
+          <div className="mt-10 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
             <div className="surface glow-dual rounded-xl p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h2 className="text-gradient text-2xl font-semibold">
                   Tendência de preço — {trend.city}
                 </h2>
-                <p className="mt-1 text-sm text-neutral-400">
+                <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
                   Média mensal de apartamentos · últimos 12 meses
                 </p>
               </div>
@@ -209,7 +208,7 @@ export default function InsightsPage() {
               />
             </div>
             </div>
-          </GlowPanel>
+          </div>
         )}
 
         {!loading && neighborhoods.length > 0 && (
@@ -219,9 +218,9 @@ export default function InsightsPage() {
             </h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {neighborhoods.map((n) => (
-                <article key={n.name} className="surface glow-emerald rounded-xl p-5 panel">
+                <article key={n.name} className="surface glow-primary rounded-xl p-5 panel">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-base font-semibold text-neutral-50">{n.name}</h3>
+                    <h3 className="text-base font-semibold text-[var(--foreground)]">{n.name}</h3>
                     <span className="badge">{n.count} imóveis</span>
                   </div>
                   <div className="mt-4 grid grid-cols-2 gap-3">
@@ -235,7 +234,7 @@ export default function InsightsPage() {
         )}
 
         {!loading && !error && neighborhoods.length === 0 && (
-          <p className="mt-10 text-sm text-neutral-400">
+          <p className="mt-10 text-sm text-[var(--muted-foreground-lovable)]">
             Nenhum dado encontrado para {city}.
           </p>
         )}

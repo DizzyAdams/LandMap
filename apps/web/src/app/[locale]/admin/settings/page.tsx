@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { GlowPanel } from '../../../../components/GlowPanel';
 
 type Settings = {
   platformName: string;
@@ -48,56 +47,56 @@ export default function AdminSettingsPage() {
   return (
     <div>
       <span className="kicker">Plataforma</span>
-      <h2 className="mt-2 text-lg font-medium text-neutral-50">Configurações</h2>
-      <p className="mt-1 text-xs text-neutral-400">
+      <h2 className="mt-2 text-lg font-medium text-[var(--foreground)]">Configurações</h2>
+      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
         Configurações gerais da plataforma
       </p>
 
-      <GlowPanel className="mt-8 p-6 max-w-lg">
-      <div className="space-y-5">
-        <Field label="Nome da Plataforma">
-          <input
-            type="text"
-            value={settings.platformName}
-            onChange={(e) => handleChange('platformName', e.target.value)}
-            className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none placeholder:text-neutral-700 focus:border-neutral-500"
-          />
-        </Field>
+      <div className="mt-8 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6 max-w-lg">
+        <div className="space-y-5">
+          <Field label="Nome da Plataforma">
+            <input
+              type="text"
+              value={settings.platformName}
+              onChange={(e) => handleChange('platformName', e.target.value)}
+              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]"
+            />
+          </Field>
 
-        <Field label="Email de Contato">
-          <input
-            type="email"
-            value={settings.contactEmail}
-            onChange={(e) => handleChange('contactEmail', e.target.value)}
-            className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none placeholder:text-neutral-700 focus:border-neutral-500"
-          />
-        </Field>
+          <Field label="Email de Contato">
+            <input
+              type="email"
+              value={settings.contactEmail}
+              onChange={(e) => handleChange('contactEmail', e.target.value)}
+              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]"
+            />
+          </Field>
 
-        <Field label="API Base URL">
-          <input
-            type="url"
-            value={settings.apiBaseUrl}
-            onChange={(e) => handleChange('apiBaseUrl', e.target.value)}
-            className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none placeholder:text-neutral-700 focus:border-neutral-500"
-          />
-        </Field>
+          <Field label="API Base URL">
+            <input
+              type="url"
+              value={settings.apiBaseUrl}
+              onChange={(e) => handleChange('apiBaseUrl', e.target.value)}
+              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]"
+            />
+          </Field>
 
-        <div className="flex gap-3">
-          <button
-            onClick={handleSave}
-            className="cta-glow rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200"
-          >
-            {saved ? '✓ Salvo' : 'Salvar'}
-          </button>
-          <button
-            onClick={handleReset}
-            className="rounded-lg border border-neutral-800 px-4 py-2 text-xs text-neutral-400 transition hover:text-white"
-          >
-            Restaurar Padrões
-          </button>
+          <div className="flex gap-3">
+            <button
+              onClick={handleSave}
+              className="rounded-lg bg-[var(--primary)] px-4 py-2 text-xs font-medium text-[var(--primary-foreground)] transition hover:bg-[var(--primary)]/90"
+            >
+              {saved ? '✓ Salvo' : 'Salvar'}
+            </button>
+            <button
+              onClick={handleReset}
+              className="rounded-lg border border-[var(--border-lovable)] px-4 py-2 text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
+            >
+              Restaurar Padrões
+            </button>
+          </div>
         </div>
       </div>
-      </GlowPanel>
     </div>
   );
 }
@@ -105,7 +104,7 @@ export default function AdminSettingsPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] text-neutral-400">{label}</span>
+      <span className="mb-1 block text-[11px] text-[var(--muted-foreground-lovable)]">{label}</span>
       {children}
     </label>
   );

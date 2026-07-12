@@ -3,11 +3,11 @@
 type Status = 'active' | 'inactive' | 'pending' | 'sold' | 'reserved';
 
 const colorMap: Record<Status, string> = {
-  active: 'border-emerald-800 text-emerald-400 bg-emerald-950/40',
-  inactive: 'border-neutral-700 text-neutral-400 bg-neutral-950/40',
-  pending: 'border-amber-800 text-amber-400 bg-amber-950/40',
-  sold: 'border-red-800 text-red-400 bg-red-950/40',
-  reserved: 'border-blue-800 text-blue-400 bg-blue-950/40',
+  active: 'border-[var(--success)] text-[var(--success)] bg-[var(--success)]/30',
+  inactive: 'border-[var(--border-lovable)] text-[var(--muted-foreground-lovable)] bg-[var(--muted-lovable)]',
+  pending: 'border-[var(--warning)] text-[var(--warning)] bg-[var(--warning)]/30',
+  sold: 'border-[var(--destructive)] text-[var(--destructive)] bg-[var(--destructive)]/30',
+  reserved: 'border-[var(--primary)] text-[var(--primary)] bg-[var(--primary)]/30',
 };
 
 const labelMap: Record<Status, string> = {
@@ -28,7 +28,7 @@ export function StatusBadge({
   return (
     <span
       role="status"
-      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colorMap[status] ?? 'border-neutral-800 text-neutral-400'}`}
+      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colorMap[status] ?? 'border-[var(--border-lovable)] text-[var(--muted-foreground-lovable)]'}`}
     >
       {label ?? labelMap[status] ?? status}
     </span>

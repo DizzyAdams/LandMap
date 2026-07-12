@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { GlowPanel } from '../../../../components/GlowPanel';
+import { Activity } from '../../../../components/lovable/icons';
 
 type AuditEvent = {
   id: number;
@@ -51,45 +51,50 @@ export default function AdminAuditPage() {
   const events = useMemo(() => generateAuditEvents(), []);
 
   return (
-    <div>
-      <span className="kicker">Trilha de auditoria</span>
-      <h2 className="mt-2 text-lg font-medium text-neutral-50">Auditoria</h2>
-      <p className="mt-1 text-xs text-neutral-400">
-        Registro de eventos do sistema
-      </p>
+    <div className="mx-auto max-w-7xl space-y-6">
+      <header className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+          <Activity className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-[var(--primary)]">Trilha de auditoria</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Auditoria</h1>
+          <p className="mt-1 text-[var(--muted-foreground-lovable)]">Registro de eventos do sistema</p>
+        </div>
+      </header>
 
-      <GlowPanel className="mt-8 p-4">
-      <div className="space-y-1">
-        {events.map((event) => (
-          <div
-            key={event.id}
-            className="flex items-start gap-4 rounded-lg border border-neutral-800/50 bg-neutral-900/20 px-4 py-3 transition hover:bg-neutral-900/40"
-          >
-            {/* Time */}
-            <div className="w-32 shrink-0">
-              <p className="text-xs text-neutral-400 font-mono">
-                {new Date(event.date).toLocaleString('pt-BR')}
-              </p>
+      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+        <div className="space-y-1">
+          {events.map((event) => (
+            <div
+              key={event.id}
+              className="flex items-start gap-4 rounded-lg border border-[var(--border-lovable)] bg-[var(--muted-lovable)] px-4 py-3 transition hover:bg-[var(--accent-lovable)]"
+            >
+              {/* Time */}
+              <div className="w-32 shrink-0">
+                <p className="text-xs text-[var(--muted-foreground-lovable)] font-mono">
+                  {new Date(event.date).toLocaleString('pt-BR')}
+                </p>
+              </div>
+
+              {/* Action badge */}
+              <span className="inline-flex items-center rounded-md border border-[var(--border-lovable)] bg-[var(--accent-lovable)] px-2 py-0.5 text-[11px] font-medium text-[var(--foreground)]">
+                {event.action}
+              </span>
+
+              {/* User */}
+              <span className="shrink-0 text-[11px] text-[var(--muted-foreground-lovable)] font-mono">
+                {event.user}
+              </span>
+
+              {/* Details */}
+              <p className="text-xs text-[var(--muted-foreground-lovable)] truncate">{event.details}</p>
             </div>
-
-            {/* Action badge */}
-            <span className="chip">
-              {event.action}
-            </span>
-
-            {/* User */}
-            <span className="shrink-0 text-[11px] text-neutral-400 font-mono">
-              {event.user}
-            </span>
-
-            {/* Details */}
-            <p className="text-xs text-neutral-400 truncate">{event.details}</p>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-      </GlowPanel>
 
-      <p className="mt-6 text-xs text-neutral-700">
+      <p className="mt-6 text-xs text-[var(--muted-foreground-lovable)]">
         Exibindo {events.length} eventos simulados
       </p>
     </div>

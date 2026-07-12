@@ -228,7 +228,7 @@ export function OnboardingTour({
             <button
               type="button"
               onClick={next}
-              className="rounded-lg bg-gradient-to-r from-emerald-400 to-cyan-400 px-4 py-1.5 text-xs font-semibold text-[var(--bg)] outline-none transition hover:-translate-y-px focus-visible:shadow-[var(--ring)]"
+              className="rounded-lg bg-gradient-to-r from-[var(--primary)] to-cyan-400 px-4 py-1.5 text-xs font-semibold text-[var(--bg)] outline-none transition hover:-translate-y-px focus-visible:shadow-[var(--ring)]"
             >
               {isLast ? 'Concluir' : 'Próximo'}
             </button>

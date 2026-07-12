@@ -20,10 +20,10 @@ const TERMINAL_ROWS = [
 function Metric({ value, suffix = '', label }: { value: number; suffix?: string; label: string }) {
   return (
     <div>
-      <div className="ledger-num text-3xl font-semibold text-white">
+      <div className="ledger-num text-3xl font-semibold text-[var(--foreground)]">
         <CountUp value={value} suffix={suffix} />
       </div>
-      <div className="mt-1 text-xs text-neutral-400">{label}</div>
+      <div className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">{label}</div>
     </div>
   );
 }
@@ -42,19 +42,19 @@ export default async function LocaleHomePage() {
   } catch {}
 
   return (
-    <main className="relative min-h-[100dvh] overflow-hidden text-neutral-50">
+    <main className="relative min-h-[100dvh] overflow-hidden text-[var(--foreground)]">
       <ScrollProgress />
 
       <section className="mx-auto grid max-w-[1200px] grid-cols-1 gap-14 px-6 lg:px-24 pb-24 pt-24 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <span className="kicker">Inteligência imobiliária aberta</span>
 
-          <h1 className="text-display text-balance mt-5 text-white">
+          <h1 className="text-display text-balance mt-5 text-[var(--foreground)]">
             Veja o território imobiliário como{' '}
-            <span className="text-emerald-300">dados</span>.
+            <span className="text-[var(--primary)]">dados</span>.
           </h1>
 
-          <p className="mt-6 max-w-xl text-base leading-relaxed text-neutral-400 sm:text-lg">
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-[var(--muted-foreground-lovable)] sm:text-lg">
             Busca por cidade e tipo, mapa interativo, chat com IA e cálculo de
             investimento. 1.500 imóveis em 10 cidades - sem custo e sem login.
           </p>
@@ -72,18 +72,18 @@ export default async function LocaleHomePage() {
               className={cn(buttonVariants({ variant: 'outline' }), 'group h-12 px-6')}
             >
               Abrir o mapa
-              <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
+              <span aria-hidden className="text-[var(--primary)] transition-transform duration-300 group-hover:translate-x-0.5">↗</span>
             </Link>
-            <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-[var(--emerald-tint)] px-3 py-1 text-xs text-emerald-200">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/25 bg-[var(--emerald-tint)] px-3 py-1 text-xs text-[var(--primary)]">
               <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary)] opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
               </span>
               Dados vivos · 10 cidades
             </span>
           </div>
 
-          <div className="mt-10 grid grid-cols-3 gap-4 border-t border-white/10 pt-6">
+          <div className="mt-10 grid grid-cols-3 gap-4 border-t border-[var(--border-lovable)] pt-6">
             <Metric value={1500} suffix="+" label="Imóveis catalogados" />
             <Metric value={10} label="Cidades mapeadas" />
             <Metric value={6} label="Modalidades" />
@@ -91,21 +91,21 @@ export default async function LocaleHomePage() {
         </div>
 
         <div className="relative">
-          <div className="terminal relative overflow-hidden border border-neutral-800 p-5">
+          <div className="terminal relative overflow-hidden border border-[var(--border-lovable)] p-5">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-                <span className="font-mono text-xs text-neutral-400">landmap · live feed</span>
+                <span className="h-2.5 w-2.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
+                <span className="font-mono text-xs text-[var(--muted-foreground-lovable)]">landmap · live feed</span>
               </div>
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/25 bg-[var(--emerald-tint)] px-2.5 py-1 text-[10px] uppercase tracking-wide text-emerald-200">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> live
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--primary)]/25 bg-[var(--emerald-tint)] px-2.5 py-1 text-[10px] uppercase tracking-wide text-[var(--primary)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)]" /> live
               </span>
             </div>
             <svg viewBox="0 0 320 90" className="mt-4 h-24 w-full" fill="none" aria-hidden>
               <defs>
                 <linearGradient id="spark" x1="0" y1="0" x2="1" y2="0">
-                  <stop offset="0%" stopColor="#22d3ee" />
-                  <stop offset="100%" stopColor="#34d399" />
+                  <stop offset="0%" stopColor="#1e5fd0" />
+                  <stop offset="100%" stopColor="#003594" />
                 </linearGradient>
               </defs>
               <polyline
@@ -119,9 +119,9 @@ export default async function LocaleHomePage() {
             </svg>
             <div className="mt-2 space-y-2">
               {TERMINAL_ROWS.map((r) => (
-                <div key={r.city} className="flex items-center justify-between border-b border-white/5 pb-2 last:border-0">
-                  <span className="text-sm text-neutral-300">{r.city}</span>
-                  <span className="ledger-num text-sm text-neutral-100">{r.price}</span>
+                <div key={r.city} className="flex items-center justify-between border-b border-[var(--border-lovable)] pb-2 last:border-0">
+                  <span className="text-sm text-[var(--muted-foreground-lovable)]">{r.city}</span>
+                  <span className="ledger-num text-sm text-[var(--foreground)]">{r.price}</span>
                   <span className={`ledger-num text-xs ${r.delta >= 0 ? 'text-emerald-300' : 'text-rose-300'}`}>
                     {r.delta >= 0 ? '▲' : '▼'} {Math.abs(r.delta).toFixed(1)}%
                   </span>
@@ -140,7 +140,7 @@ export default async function LocaleHomePage() {
             <p className="eyebrow">Destaque no cadastro</p>
             <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight">Imóveis em destaque</h2>
           </div>
-          <Link href="./search" className="group shrink-0 text-sm text-neutral-400 transition hover:text-white">
+          <Link href="./search" className="group shrink-0 text-sm text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]">
             <span className="link-underline">Ver todos</span>
             <span aria-hidden className="ml-1 inline-block transition-transform duration-300 group-hover:translate-x-0.5">→</span>
           </Link>
@@ -150,36 +150,36 @@ export default async function LocaleHomePage() {
           <div className="mt-8 overflow-x-auto">
             <table className="w-full border-collapse text-sm">
               <thead>
-                <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-neutral-400">
-                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Imóvel</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Local</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 font-medium">Tipo</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Área</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Quartos</th>
-                  <th className="border-b border-neutral-800 px-3 py-3 text-right font-medium">Preço</th>
+                <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-[var(--muted-foreground-lovable)]">
+                  <th className="border-b border-[var(--border-lovable)] px-3 py-3 font-medium">Imóvel</th>
+                  <th className="border-b border-[var(--border-lovable)] px-3 py-3 font-medium">Local</th>
+                  <th className="border-b border-[var(--border-lovable)] px-3 py-3 font-medium">Tipo</th>
+                  <th className="border-b border-[var(--border-lovable)] px-3 py-3 text-right font-medium">Área</th>
+                  <th className="border-b border-[var(--border-lovable)] px-3 py-3 text-right font-medium">Quartos</th>
+                  <th className="border-b border-[var(--border-lovable)] px-3 py-3 text-right font-medium">Preço</th>
                 </tr>
               </thead>
               <tbody>
                 {featured.map((p) => (
                   <tr key={p.id} className="group transition hover:bg-white/[0.03]">
-                    <td className="border-b border-neutral-900 px-3 py-3">
-                      <Link href={`./property/${p.id}`} className="flex items-center gap-3 font-medium text-neutral-100 transition group-hover:text-white">
-                        <PropertyThumb seed={p.id} className="h-11 w-9 shrink-0 border border-neutral-800" />
+                    <td className="border-b border-[var(--border-lovable)] px-3 py-3">
+                      <Link href={`./property/${p.id}`} className="flex items-center gap-3 font-medium text-[var(--foreground)] transition group-hover:text-[var(--foreground)]">
+                        <PropertyThumb seed={p.id} className="h-11 w-9 shrink-0 border border-[var(--border-lovable)]" />
                         <span className="link-underline">{p.title}</span>
                       </Link>
                     </td>
-                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-neutral-400">{p.city}/{p.state}</td>
-                    <td className="border-b border-neutral-900 px-3 py-3 text-neutral-400">{p.type} · {p.modality}</td>
-                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-right text-neutral-300">{p.areaM2} m²</td>
-                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-right text-neutral-300">{p.bedrooms ?? '—'}</td>
-                    <td className="ledger-num border-b border-neutral-900 px-3 py-3 text-right font-medium text-white">{formatBRL(p.price)}</td>
+                    <td className="ledger-num border-b border-[var(--border-lovable)] px-3 py-3 text-[var(--muted-foreground-lovable)]">{p.city}/{p.state}</td>
+                    <td className="border-b border-[var(--border-lovable)] px-3 py-3 text-[var(--muted-foreground-lovable)]">{p.type} · {p.modality}</td>
+                    <td className="ledger-num border-b border-[var(--border-lovable)] px-3 py-3 text-right text-[var(--muted-foreground-lovable)]">{p.areaM2} m²</td>
+                    <td className="ledger-num border-b border-[var(--border-lovable)] px-3 py-3 text-right text-[var(--muted-foreground-lovable)]">{p.bedrooms ?? '—'}</td>
+                    <td className="ledger-num border-b border-[var(--border-lovable)] px-3 py-3 text-right font-medium text-[var(--foreground)]">{formatBRL(p.price)}</td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
         ) : (
-          <p className="mt-8 text-sm text-neutral-400">Nenhum imóvel encontrado no momento.</p>
+          <p className="mt-8 text-sm text-[var(--muted-foreground-lovable)]">Nenhum imóvel encontrado no momento.</p>
         )}
       </Reveal>
 
@@ -189,8 +189,8 @@ export default async function LocaleHomePage() {
             <p className="eyebrow">Ecossistema operando</p>
             <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight">Agentes &amp; Skills</h2>
           </div>
-          <span className="inline-flex items-center gap-2 rounded-full border border-emerald-400/25 bg-emerald-400/[0.06] px-3 py-1 text-xs text-emerald-200">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/25 bg-[var(--primary)]/[0.06] px-3 py-1 text-xs text-[var(--primary)]">
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
             All systems live
           </span>
         </div>
@@ -205,32 +205,32 @@ export default async function LocaleHomePage() {
             { href: './insights', title: 'Insights de Investimento', desc: 'Métricas PURAS: cap rate, cash-on-cash, IRR.', tag: 'Invest' },
             { href: './calculator', title: 'Calculadora', desc: 'Simule financiamento e ROI.', tag: 'Fin' },
           ].map((s) => (
-            <SpotlightCard key={s.href} className="border border-neutral-800 p-5 hover:-translate-y-1">
+            <SpotlightCard key={s.href} className="border border-[var(--border-lovable)] p-5 hover:-translate-y-1">
               <Link href={s.href} className="group block h-full">
                 <div className="flex items-center justify-between">
-                  <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]" />
-                  <span className="rounded-md border border-neutral-800 px-2 py-0.5 text-[10px] uppercase tracking-wide text-neutral-400">{s.tag}</span>
+                  <span className="h-2 w-2 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
+                  <span className="rounded-md border border-[var(--border-lovable)] px-2 py-0.5 text-[10px] uppercase tracking-wide text-[var(--muted-foreground-lovable)]">{s.tag}</span>
                 </div>
-                <p className="mt-3 text-sm font-medium text-neutral-100 transition group-hover:text-white">{s.title}</p>
-                <p className="mt-1 text-xs text-neutral-400">{s.desc}</p>
+                <p className="mt-3 text-sm font-medium text-[var(--foreground)] transition group-hover:text-[var(--foreground)]">{s.title}</p>
+                <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">{s.desc}</p>
               </Link>
             </SpotlightCard>
           ))}
         </Stagger>
       </Reveal>
 
-      <Reveal className="border-t border-neutral-800">
+      <Reveal className="border-t border-[var(--border-lovable)]">
         <div className="mx-auto max-w-[1200px] px-6 lg:px-24 py-16">
           <p className="eyebrow-gold">Plataforma aberta</p>
           <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA - sem custo.</h2>
-          <p className="mt-2 max-w-md text-sm text-neutral-400">API REST, schema.org, RAG local, CRM - tudo open-source.</p>
+          <p className="mt-2 max-w-md text-sm text-[var(--muted-foreground-lovable)]">API REST, schema.org, RAG local, CRM - tudo open-source.</p>
           <div className="mt-6">
             <Link
               href="./search"
               className={cn(buttonVariants({ variant: 'outline' }), 'group h-12 px-6')}
             >
               Começar busca
-              <span aria-hidden className="text-emerald-400 transition-transform duration-300 group-hover:translate-x-0.5">→</span>
+              <span aria-hidden className="text-[var(--primary)] transition-transform duration-300 group-hover:translate-x-0.5">→</span>
             </Link>
           </div>
         </div>

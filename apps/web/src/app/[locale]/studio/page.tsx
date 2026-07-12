@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Reveal, Stagger } from '../../../components/Motion';
-import { GlowPanel } from '../../../components/GlowPanel';
 import { listWorkflows, runWorkflow, ragQuery, type WorkflowDefinition, type WorkflowRunStep } from '../../../lib/api';
 import { Button } from '@landmap/ui';
 
@@ -50,42 +49,42 @@ export default function StudioPage() {
 
   return (
     <>
-      <main className="relative min-h-screen bg-[#050505] text-neutral-50">
-        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(40rem_26rem_at_70%_-10%,rgba(52,211,153,0.10),transparent_70%)]" />
+      <main className="relative min-h-screen bg-[#050505] text-[var(--foreground)]">
+        <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(40rem_26rem_at_70%_-10%,rgba(0,53,148,0.35),transparent_70%)]" />
 
         <Reveal className="mx-auto max-w-6xl px-6 pt-28 pb-10">
           <span className="chip">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
             AI Studio · LangChain · LangFlow
           </span>
           <span className="kicker mt-6 block">Surreal Intelligence</span>
           <h1 className="mt-3 text-4xl font-semibold tracking-tight text-gradient sm:text-5xl">
             O cérebro agentico do mercado imobiliário
           </h1>
-          <p className="mt-3 max-w-2xl text-sm text-neutral-400">
+          <p className="mt-3 max-w-2xl text-sm text-[var(--muted-foreground-lovable)]">
             Orchestre fluxos multi-agente, gere relatórios, enriqueça leads e converse com a base RAG — tudo na LandMap.
           </p>
         </Reveal>
 
         <div className="mx-auto grid max-w-6xl gap-6 px-6 pb-24 lg:grid-cols-2">
           <Reveal>
-            <GlowPanel className="p-6">
+            <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-6">
             <h2 className="text-lg font-medium">Laboratório de Workflows</h2>
-            <p className="mt-1 text-sm text-neutral-400">Selecione um fluxo e execute passo a passo.</p>
+            <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">Selecione um fluxo e execute passo a passo.</p>
 
             <Stagger className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-3">
               {workflows.map((w) => (
                 <button key={w.id} onClick={() => setSelected(w.id)}
-                  className={`rounded-xl border px-3 py-3 text-left text-sm transition ${selected === w.id ? 'border-emerald-400/60 bg-emerald-400/10 text-white' : 'border-neutral-800 bg-neutral-900/40 text-neutral-300 hover:border-neutral-600'}`}>
+                  className={`rounded-xl border px-3 py-3 text-left text-sm transition ${selected === w.id ? 'border-[var(--primary)]/60 bg-[var(--primary)]/10 text-[var(--foreground)]' : 'border-[var(--border-lovable)] bg-[var(--muted)] text-[var(--muted-foreground-lovable)] hover:border-[var(--primary)]/40'}`}>
                   <span className="block font-medium">{w.name}</span>
-                  <span className="mt-1 block text-xs text-neutral-400">{w.description}</span>
+                  <span className="mt-1 block text-xs text-[var(--muted-foreground-lovable)]">{w.description}</span>
                 </button>
               ))}
             </Stagger>
 
-            <label className="mt-5 block text-xs uppercase tracking-wide text-neutral-400">Entrada (JSON)</label>
+            <label className="mt-5 block text-xs uppercase tracking-wide text-[var(--muted-foreground-lovable)]">Entrada (JSON)</label>
             <textarea value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} rows={9}
-              className="mt-2 w-full rounded-xl border border-neutral-800 bg-neutral-950 p-3 font-mono text-xs text-neutral-200 outline-none transition focus:border-emerald-400/50" />
+              className="mt-2 w-full rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-3 font-mono text-xs text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]/50" />
 
             <Button onClick={handleRun} disabled={running} className="cta-glow mt-4 h-11 px-6">
               {running ? 'Executando…' : 'Executar workflow'}
@@ -98,23 +97,23 @@ export default function StudioPage() {
             {runResult && (
               <div className="mt-5 space-y-3">
                 {runResult.map((step) => (
-                  <div key={step.id} className="rounded-xl border border-neutral-800 bg-neutral-950 p-3">
+                  <div key={step.id} className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-3">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-medium text-neutral-200">{step.id}</span>
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${step.status === 'ok' ? 'bg-emerald-400/15 text-emerald-300' : 'bg-red-500/15 text-red-300'}`}>{step.status}</span>
+                      <span className="text-sm font-medium text-[var(--foreground)]">{step.id}</span>
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${step.status === 'ok' ? 'bg-[var(--primary)]/15 text-emerald-300' : 'bg-red-500/15 text-red-300'}`}>{step.status}</span>
                     </div>
-                    <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words text-xs text-neutral-400">{typeof step.output === 'string' ? step.output : JSON.stringify(step.output, null, 2)}</pre>
+                    <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words text-xs text-[var(--muted-foreground-lovable)]">{typeof step.output === 'string' ? step.output : JSON.stringify(step.output, null, 2)}</pre>
                   </div>
                 ))}
                 {finalOutput !== null && finalOutput !== undefined && (
-                  <div className="rounded-xl border border-emerald-400/30 bg-emerald-400/5 p-4">
-                    <p className="text-xs uppercase tracking-wide text-emerald-300/80">Resultado final</p>
-                    <pre className="mt-2 max-h-60 overflow-auto whitespace-pre-wrap break-words text-sm text-neutral-200">{typeof finalOutput === 'string' ? finalOutput : JSON.stringify(finalOutput, null, 2)}</pre>
+                  <div className="rounded-xl border border-[var(--primary)]/30 bg-[var(--primary)]/5 p-4">
+                    <p className="text-xs uppercase tracking-wide text-[var(--primary)]/80">Resultado final</p>
+                    <pre className="mt-2 max-h-60 overflow-auto whitespace-pre-wrap break-words text-sm text-[var(--foreground)]">{typeof finalOutput === 'string' ? finalOutput : JSON.stringify(finalOutput, null, 2)}</pre>
                   </div>
                 )}
               </div>
             )}
-            </GlowPanel>
+            </div>
           </Reveal>
 
           <RagChat />
@@ -153,13 +152,13 @@ function RagChat() {
 
   return (
     <Reveal delay={0.1}>
-      <GlowPanel className="flex flex-col p-6">
+      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 flex flex-col p-6">
       <h2 className="text-lg font-medium">Chat RAG</h2>
-      <p className="mt-1 text-sm text-neutral-400">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
+      <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">Pergunte sobre imóveis, bairros e tendências de mercado.</p>
 
-      <div className="mt-4 flex-1 space-y-3 overflow-y-auto rounded-xl border border-neutral-800 bg-neutral-950 p-4">
+      <div className="mt-4 flex-1 space-y-3 overflow-y-auto rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
         {chat.length === 0 && !chatLoading && (
-          <p className="text-sm text-neutral-400">Ex: &quot;Quais bairros de Curitiba têm melhor custo-benefício?&quot;</p>
+          <p className="text-sm text-[var(--muted-foreground-lovable)]">Ex: &quot;Quais bairros de Curitiba têm melhor custo-benefício?&quot;</p>
         )}
         {chat.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -170,7 +169,7 @@ function RagChat() {
         ))}
         {chatLoading && (
           <div className="flex justify-start">
-            <div className="rounded-2xl border border-neutral-700 bg-neutral-800/60 px-4 py-3 text-sm text-neutral-400">
+            <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]/60 px-4 py-3 text-sm text-[var(--muted-foreground-lovable)]">
               <span className="inline-block animate-pulse">Pensando</span>
               <span className="animate-pulse">.</span>
               <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>.</span>
@@ -187,13 +186,13 @@ function RagChat() {
           placeholder="Sua pergunta…"
           disabled={chatLoading}
           aria-label="Sua pergunta sobre o catálogo de imóveis"
-          className="flex-1 rounded-xl border border-neutral-700 bg-neutral-950 px-4 py-3 text-sm text-neutral-50 placeholder-neutral-500 outline-none transition focus:border-emerald-400/50 disabled:opacity-50"
+          className="flex-1 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--primary)]/50 disabled:opacity-50"
         />
         <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="cta-glow px-5 py-3">
           Enviar
         </Button>
       </form>
-      </GlowPanel>
+      </div>
     </Reveal>
   );
 }

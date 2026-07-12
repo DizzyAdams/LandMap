@@ -9,14 +9,15 @@ import { ShortcutsHelp } from '../../components/ShortcutsHelp';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ToastProvider, MobileBottomNav } from '@landmap/ui';
 import { CommandPaletteHost } from '../../components/CommandPaletteHost';
+import { ShellSwitch } from '../../components/ShellSwitch';
 import '@landmap/ui/styles.css';
 import '../../app/globals.css';
 
 export const dynamic = 'force-dynamic';
 
 export const viewport = {
-  themeColor: '#050505',
-  colorScheme: 'dark',
+  themeColor: '#ffffff',
+  colorScheme: 'light',
 };
 
 export function generateStaticParams() {
@@ -96,7 +97,7 @@ export default async function RootLayout({
     <NextIntlClientProvider messages={messages} locale={resolvedLocale}>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-neutral-900"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[var(--foreground)]"
       >
         Pular para o conteúdo
       </a>
@@ -104,23 +105,20 @@ export default async function RootLayout({
       <style
         dangerouslySetInnerHTML={{
           __html:
-            ':focus-visible{outline:2px solid rgba(52,211,153,0.8);outline-offset:2px;border-radius:6px;}',
+            ':focus-visible{outline:2px solid rgba(0,53,148,0.8);outline-offset:2px;border-radius:6px;}',
         }}
       />
-      <div className="relative min-h-[100dvh] pb-[88px] text-neutral-50 antialiased md:pb-0">
-        {/* Clean static backdrop — one quiet cadastral grid on solid ink */}
+      <div className="relative min-h-[100dvh] pb-[88px] text-[var(--foreground)] antialiased md:pb-0">
+        {/* Clean static backdrop — cadastral grid on solid ink white */}
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-          <div className="absolute inset-0 bg-[#050505]" />
-          <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
+          <div className="absolute inset-0 bg-[var(--background)]" />
+          <div className="absolute inset-0 cadastre-grid opacity-[0.03]" />
         </div>
-        <Navbar />
-        <div id="main-content" tabIndex={-1}>
+        <ShellSwitch>
           <ToastProvider>
             <ErrorBoundary>{children}</ErrorBoundary>
           </ToastProvider>
-        </div>
-        <Footer />
-        <MobileBottomNav />
+        </ShellSwitch>
         <ScrollToTop />
         <ShortcutsHelp />
         <CommandPaletteHost />

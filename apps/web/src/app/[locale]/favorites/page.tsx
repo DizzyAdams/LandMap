@@ -1,124 +1,224 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { Button, EmptyState, Skeleton } from '@landmap/ui';
-import { Reveal } from '../../../components/Motion';
-import { SpotlightCard } from '../../../components/SpotlightCard';
-import { GlowPanel } from '../../../components/GlowPanel';
+import { useLocale } from 'next-intl';
+import { useState } from 'react';
+import {
+  Building2,
+  MapPin,
+  Star,
+  Trash2,
+} from '../../../components/lovable/icons';
 
-interface Favorite {
+type FavoriteRegion = {
   id: string;
-  title: string;
-  city: string;
-  state: string;
-  price: number;
-  addedAt: string;
+  name: string;
+  avgObservedPrice: number;
+  confidence: number;
+  dataPoints: number;
+};
+
+type FavoriteProperty = {
+  id: string;
+  address: string;
+  totalPrice: number;
+  pricePerSqm: number;
+  regionName: string;
+  confidence: number;
+};
+
+const FAVORITE_REGIONS: FavoriteRegion[] = [
+  { id: 'r1', name: 'Meireles', avgObservedPrice: 9500, confidence: 5, dataPoints: 1840 },
+  { id: 'r2', name: 'Aldeota', avgObservedPrice: 8200, confidence: 5, dataPoints: 1520 },
+  { id: 'r3', name: 'Dionísio Torres', avgObservedPrice: 7800, confidence: 4, dataPoints: 1310 },
+  { id: 'r4', name: 'Cocó', avgObservedPrice: 7500, confidence: 4, dataPoints: 1120 },
+];
+
+const FAVORITE_PROPERTIES: FavoriteProperty[] = [
+  {
+    id: 'p1',
+    address: 'Av. Beira Mar, 2500 — Meireles',
+    totalPrice: 1850000,
+    pricePerSqm: 9200,
+    regionName: 'Meireles',
+    confidence: 5,
+  },
+  {
+    id: 'p2',
+    address: 'Rua Silva Paulet, 1200 — Aldeota',
+    totalPrice: 1320000,
+    pricePerSqm: 8100,
+    regionName: 'Aldeota',
+    confidence: 4,
+  },
+  {
+    id: 'p3',
+    address: 'Av. Washington Soares, 800 — Dionísio Torres',
+    totalPrice: 980000,
+    pricePerSqm: 7600,
+    regionName: 'Dionísio Torres',
+    confidence: 3,
+  },
+];
+
+const fmtBRL = (v: number) =>
+  v.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL',
+    maximumFractionDigits: 0,
+  });
+
+const fmtPerSqm = (v: number) => `${fmtBRL(v)} /m²`;
+
+function ConfidenceStars({ value }: { value: number }) {
+  return (
+    <div className="flex items-center gap-0.5" aria-label={`Confiança ${value} de 5`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <Star
+          key={i}
+          className={`h-4 w-4 ${
+            i < value
+              ? 'text-[var(--primary)]'
+              : 'text-[var(--muted-foreground-lovable)]'
+          }`}
+          fill={i < value ? 'currentColor' : 'none'}
+        />
+      ))}
+    </div>
+  );
 }
 
 export default function FavoritesPage() {
-  const [favorites, setFavorites] = useState<Favorite[]>([]);
-  const [mounted, setMounted] = useState(false);
-  const params = useParams();
-  const locale = (params.locale as string) || 'pt-BR';
+  const locale = useLocale();
+  const lh = (p: string) => `/${locale}${p}`;
 
-  useEffect(() => {
-    setMounted(true);
-    try {
-      const raw = localStorage.getItem('landmap_favorites');
-      if (raw) {
-        setFavorites(JSON.parse(raw));
-      }
-    } catch {
-      // localStorage unavailable
-    }
-  }, []);
+  const [regions, setRegions] = useState<FavoriteRegion[]>(FAVORITE_REGIONS);
+  const [properties, setProperties] = useState<FavoriteProperty[]>(FAVORITE_PROPERTIES);
 
-  function removeFavorite(id: string) {
-    const next = favorites.filter((f) => f.id !== id);
-    setFavorites(next);
-    localStorage.setItem('landmap_favorites', JSON.stringify(next));
-  }
-
-  if (!mounted) {
-    return (
-      <main className="min-h-screen grid-bg px-6 py-16" aria-busy="true">
-        <div className="mx-auto max-w-6xl">
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">
-            Favoritos
-          </h1>
-          <div className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3" aria-hidden>
-            {Array.from({ length: 6 }).map((_, i) => (
-              <div key={i} className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
-                <Skeleton className="h-4 w-2/3" />
-                <Skeleton className="mt-3 h-3 w-1/3" />
-                <Skeleton className="mt-4 h-4 w-1/2" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </main>
-    );
-  }
+  const removeRegion = (id: string) =>
+    setRegions((prev) => prev.filter((r) => r.id !== id));
+  const removeProperty = (id: string) =>
+    setProperties((prev) => prev.filter((p) => p.id !== id));
 
   return (
-    <main className="min-h-screen grid-bg px-6 py-16">
-      <div className="mx-auto max-w-6xl">
-        <Reveal>
-          <span className="kicker">Seus imóveis salvos</span>
-          <h1 className="mt-2 text-2xl font-semibold tracking-tight text-gradient">
-            Favoritos
+    <div className="mx-auto max-w-7xl space-y-8">
+      <header className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="text-sm font-medium text-[var(--primary)]">Meus favoritos</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight">
+            Terrenos e regiões salvos
           </h1>
-          <p className="mt-1 text-sm text-neutral-400" aria-live="polite">
-            {favorites.length} imóve{favorites.length === 1 ? 'l' : 'is'} salvo
-           {favorites.length === 1 ? '' : 's'}
-          </p>
-        </Reveal>
+        </div>
+        <Link
+          href={lh('/regions')}
+          className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-foreground)] transition-colors hover:bg-[var(--primary)]/90"
+        >
+          Ver regiões
+        </Link>
+      </header>
 
-        <GlowPanel className="mt-6 p-6">
-        {favorites.length === 0 ? (
-          <EmptyState
-            title="Nenhum imóvel favoritado ainda"
-            description="Explore o catálogo e salve seus imóveis preferidos para compará-los depois."
-          >
-            <Link href={`/${locale}/search`}>
-              <Button className="mt-4 cta-glow">Buscar imóveis</Button>
-            </Link>
-          </EmptyState>
-        ) : (
-          <ul role="list" className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-            {favorites.map((fav) => (
-              <li key={fav.id}>
-                <SpotlightCard>
-                  <Link href={`/${locale}/property/${fav.id}`} className="block">
-                    <h3 className="text-sm font-medium text-neutral-50">
-                      {fav.title}
-                    </h3>
-                    <p className="mt-1 text-xs text-neutral-400">
-                      {fav.city}, {fav.state}
+      {/* Regiões favoritas */}
+      <section className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+        <div className="flex items-center gap-2">
+          <MapPin className="h-5 w-5" />
+          <h2 className="text-base font-semibold">Regiões favoritas</h2>
+        </div>
+        <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {regions.length === 0 ? (
+            <p className="col-span-full text-sm text-[var(--muted-foreground-lovable)]">
+              Nenhuma região favoritada ainda.
+            </p>
+          ) : (
+            regions.map((region) => (
+              <div
+                key={region.id}
+                className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-[var(--foreground)]">{region.name}</p>
+                    <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+                      {fmtPerSqm(region.avgObservedPrice)}
                     </p>
-                    <p className="mt-2 text-sm font-medium text-neutral-200">
-                      {new Intl.NumberFormat('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL',
-                        maximumFractionDigits: 0,
-                      }).format(fav.price)}
-                    </p>
-                  </Link>
+                  </div>
                   <button
-                    onClick={() => removeFavorite(fav.id)}
-                    className="mt-3 text-xs text-red-400 transition hover:text-red-300"
+                    type="button"
+                    onClick={() => removeRegion(region.id)}
+                    aria-label="Remover região dos favoritos"
+                    className="rounded-md p-2 text-[var(--muted-foreground-lovable)] transition-colors hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
                   >
-                    Remover
+                    <Trash2 className="h-4 w-4" />
                   </button>
-                </SpotlightCard>
-              </li>
-            ))}
-          </ul>
-        )}
-        </GlowPanel>
-      </div>
-    </main>
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <ConfidenceStars value={region.confidence} />
+                  <span className="text-sm text-[var(--muted-foreground-lovable)]">
+                    {region.dataPoints} dados
+                  </span>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+
+      {/* Terrenos favoritos */}
+      <section className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+        <div className="flex items-center gap-2">
+          <Building2 className="h-5 w-5" />
+          <h2 className="text-base font-semibold">Terrenos favoritos</h2>
+        </div>
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
+          {properties.length === 0 ? (
+            <p className="col-span-full text-sm text-[var(--muted-foreground-lovable)]">
+              Nenhum terreno favoritado ainda.
+            </p>
+          ) : (
+            properties.map((property) => (
+              <div
+                key={property.id}
+                className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4"
+              >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <Building2 className="h-4 w-4 shrink-0 text-[var(--muted-foreground-lovable)]" />
+                      <p className="truncate font-semibold text-[var(--foreground)]">
+                        {property.address}
+                      </p>
+                    </div>
+                    <p className="mt-1 flex items-center gap-1 text-sm text-[var(--muted-foreground-lovable)]">
+                      <MapPin className="h-3 w-3 shrink-0" />
+                      {property.regionName}
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeProperty(property.id)}
+                    aria-label="Remover terreno dos favoritos"
+                    className="rounded-md p-2 text-[var(--muted-foreground-lovable)] transition-colors hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <span className="font-semibold text-[var(--foreground)]">
+                    {fmtBRL(property.totalPrice)}
+                  </span>
+                  <span className="text-sm text-[var(--muted-foreground-lovable)]">
+                    {fmtPerSqm(property.pricePerSqm)}
+                  </span>
+                </div>
+                <div className="mt-2 flex items-center gap-0.5">
+                  <ConfidenceStars value={property.confidence} />
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+    </div>
   );
 }
+

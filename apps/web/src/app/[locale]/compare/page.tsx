@@ -2,7 +2,6 @@ import Link from 'next/link';
 import { LANDMAP_API_BASE, type Property } from '../../../lib/api';
 import { EmptyState, Button } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
-import { GlowPanel } from '../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -49,7 +48,7 @@ export default async function ComparePage({
       <div className="mx-auto max-w-6xl">
         <Link
           href={`/${locale}/search`}
-          className="text-xs text-neutral-400 transition hover:text-white"
+          className="text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
         >
           ← Voltar para busca
         </Link>
@@ -81,20 +80,20 @@ export default async function ComparePage({
 
         {properties.length > 0 && (
           <Reveal className="mt-6">
-            <GlowPanel className="overflow-x-auto p-2">
+            <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 overflow-x-auto p-2">
             <table className="w-full border-collapse text-sm">
               <caption className="sr-only">Comparação lado a lado de imóveis</caption>
               <thead>
-                <tr className="border-b border-white/10 text-left text-xs text-neutral-400">
+                <tr className="border-b border-[var(--border-lovable)] text-left text-xs text-[var(--muted-foreground-lovable)]">
                   <th scope="col" className="py-3 pr-4">Atributo</th>
                   {properties.map((p) => (
-                    <th key={p.id} scope="col" className="py-3 px-4 font-medium text-neutral-200">
+                    <th key={p.id} scope="col" className="py-3 px-4 font-medium text-[var(--foreground)]">
                       {p.title}
                     </th>
                   ))}
                 </tr>
               </thead>
-              <tbody className="text-neutral-300">
+              <tbody className="text-[var(--muted-foreground-lovable)]">
                 {[
                   { label: 'Preço', get: (p: Property) =>
                     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(p.price) },
@@ -106,7 +105,7 @@ export default async function ComparePage({
                   { label: 'Disponível', get: (p: Property) => p.available ? 'Sim' : 'Não' },
                 ].map((row) => (
                   <tr key={row.label} className="border-b border-white/5">
-                    <th scope="row" className="py-3 pr-4 text-left text-xs font-normal text-neutral-400">{row.label}</th>
+                    <th scope="row" className="py-3 pr-4 text-left text-xs font-normal text-[var(--muted-foreground-lovable)]">{row.label}</th>
                     {properties.map((p) => (
                       <td key={p.id} className="py-3 px-4">
                         {row.get(p)}
@@ -116,7 +115,7 @@ export default async function ComparePage({
                 ))}
               </tbody>
             </table>
-            </GlowPanel>
+            </div>
           </Reveal>
         )}
       </div>

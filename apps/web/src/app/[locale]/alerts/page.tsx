@@ -7,7 +7,6 @@ import { createAlert, deleteAlert, getAlerts, clearAlerts } from '../../../lib/a
 import type { AlertFilter } from '../../../lib/alerts';
 import { localeHref } from '../../../lib/locale';
 import { EmptyState, Skeleton } from '@landmap/ui';
-import { GlowPanel } from '../../../components/GlowPanel';
 
 /* ------------------------------------------------------------------ */
 /*  Types                                                             */
@@ -93,9 +92,9 @@ export default function AlertsPage() {
 
   if (!mounted) {
     return (
-      <main className="min-h-screen bg-[#050505] px-6 py-10" aria-busy="true">
+      <main className="min-h-screen bg-[var(--background)] px-6 py-10" aria-busy="true">
         <div className="mx-auto max-w-6xl">
-          <h1 className="text-2xl font-semibold tracking-tight text-neutral-50">Alertas</h1>
+          <h1 className="text-2xl font-semibold tracking-tight text-[var(--foreground)]">Alertas</h1>
           <div className="mt-6 grid gap-3" aria-hidden>
             {Array.from({ length: 4 }).map((_, i) => (
               <Skeleton key={i} className="h-20 rounded-xl" />
@@ -107,34 +106,34 @@ export default function AlertsPage() {
   }
 
   return (
-    <main className="min-h-screen bg-[#050505] px-6 py-10">
+    <main className="min-h-screen bg-[var(--background)] px-6 py-10">
       <div className="mx-auto max-w-6xl">
         {/* Header */}
         <div className="flex items-end justify-between">
           <div>
             <span className="kicker">Monitoramento de busca</span>
-            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-neutral-50">Alertas</h1>
-            <p className="mt-2 text-sm text-neutral-400">
+            <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--foreground)]">Alertas</h1>
+            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
               Salve filtros de busca para consultar rapidamente depois.
             </p>
           </div>
           <Link
             href={localeHref('/', locale)}
-            className="text-xs text-neutral-400 transition hover:text-white"
+            className="text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
           >
             Voltar para Home
           </Link>
         </div>
 
         {/* Form */}
-        <GlowPanel className="mt-8 p-6">
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-8 p-6">
         <form onSubmit={handleSave} className="space-y-5">
-          <h2 className="text-sm font-medium text-neutral-300">Novo Alerta</h2>
+          <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Novo Alerta</h2>
 
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Label */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-400">
+              <label className="block mb-1 text-xs text-[var(--muted-foreground-lovable)]">
                 Nome do alerta <span aria-hidden="true">*</span>
               </label>
               <input
@@ -143,30 +142,30 @@ export default function AlertsPage() {
                 onChange={handleChange}
                 placeholder="Ex: Apartamentos SP até 500k"
                 required
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-neutral-500"
+                className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--border-lovable)]"
               />
             </div>
 
             {/* City */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-400">Cidade</label>
+              <label className="block mb-1 text-xs text-[var(--muted-foreground-lovable)]">Cidade</label>
               <input
                 name="city"
                 value={form.city}
                 onChange={handleChange}
                 placeholder="Ex: São Paulo"
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-neutral-500"
+                className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--border-lovable)]"
               />
             </div>
 
             {/* Type */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-400">Tipo</label>
+              <label className="block mb-1 text-xs text-[var(--muted-foreground-lovable)]">Tipo</label>
               <select
                 name="type"
                 value={form.type}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none transition focus:border-neutral-500"
+                className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--border-lovable)]"
               >
                 {TYPE_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -176,12 +175,12 @@ export default function AlertsPage() {
 
             {/* Modality */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-400">Modalidade</label>
+              <label className="block mb-1 text-xs text-[var(--muted-foreground-lovable)]">Modalidade</label>
               <select
                 name="modality"
                 value={form.modality}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none transition focus:border-neutral-500"
+                className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--border-lovable)]"
               >
                 {MODALITY_OPTIONS.map((opt) => (
                   <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -191,27 +190,27 @@ export default function AlertsPage() {
 
             {/* Max Price */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-400">Preço máx. (R$)</label>
+              <label className="block mb-1 text-xs text-[var(--muted-foreground-lovable)]">Preço máx. (R$)</label>
               <input
                 name="maxPrice"
                 type="number"
                 value={form.maxPrice}
                 onChange={handleChange}
                 placeholder="500000"
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-neutral-500"
+                className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--border-lovable)]"
               />
             </div>
 
             {/* Min Area */}
             <div>
-              <label className="block mb-1 text-xs text-neutral-400">Área mín. (m²)</label>
+              <label className="block mb-1 text-xs text-[var(--muted-foreground-lovable)]">Área mín. (m²)</label>
               <input
                 name="minArea"
                 type="number"
                 value={form.minArea}
                 onChange={handleChange}
                 placeholder="50"
-                className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-neutral-500"
+                className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--border-lovable)]"
               />
             </div>
           </div>
@@ -220,26 +219,26 @@ export default function AlertsPage() {
             <button
               type="submit"
               disabled={!form.label.trim()}
-              className="cta-glow rounded-lg bg-neutral-50 px-5 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200 disabled:opacity-40"
+              className="rounded-lg bg-[var(--primary)] px-5 py-2 text-xs font-medium text-[var(--foreground)] transition hover:bg-[var(--card)] disabled:opacity-40"
             >
               Salvar Alerta
             </button>
             <button
               type="button"
               onClick={() => setForm(EMPTY_FORM)}
-              className="rounded-lg border border-neutral-800 px-5 py-2 text-xs text-neutral-400 transition hover:text-white"
+              className="rounded-lg border border-[var(--border-lovable)] px-5 py-2 text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
             >
               Limpar
             </button>
           </div>
         </form>
-        </GlowPanel>
+        </div>
 
         {/* Alert list */}
-        <GlowPanel className="mt-10 p-6">
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-10 p-6">
         <section>
           <div className="flex items-center justify-between mb-4">
-            <p className="text-sm text-neutral-400" aria-live="polite">
+            <p className="text-sm text-[var(--muted-foreground-lovable)]" aria-live="polite">
               {alerts.length} alerta{alerts.length !== 1 ? 's' : ''} salvo{alerts.length !== 1 ? 's' : ''}
             </p>
             {alerts.length > 0 && (
@@ -269,7 +268,7 @@ export default function AlertsPage() {
             </div>
           )}
         </section>
-        </GlowPanel>
+        </div>
       </div>
     </main>
   );
@@ -306,9 +305,9 @@ function AlertCard({
   const createdDate = new Date(alert.createdAt).toLocaleDateString('pt-BR');
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-neutral-700">
+    <div className="flex items-center justify-between rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--border-lovable)]">
       <div className="min-w-0 flex-1">
-        <h3 className="text-sm font-medium text-neutral-50 truncate">{alert.label}</h3>
+        <h3 className="text-sm font-medium text-[var(--foreground)] truncate">{alert.label}</h3>
         <div className="mt-2 flex flex-wrap gap-2">
           {chips.map((chip) => (
             <span
@@ -319,19 +318,19 @@ function AlertCard({
             </span>
           ))}
         </div>
-        <p className="mt-2 text-[11px] text-neutral-400">Criado em {createdDate}</p>
+        <p className="mt-2 text-[11px] text-[var(--muted-foreground-lovable)]">Criado em {createdDate}</p>
       </div>
 
       <div className="ml-4 flex items-center gap-2 shrink-0">
         <Link
           href={localeHref(`/search${qs ? `?${qs}` : ''}`, alertLocale)}
-          className="rounded-lg border border-neutral-800 px-3 py-1.5 text-[11px] text-neutral-300 transition hover:border-neutral-500 hover:text-white"
+          className="rounded-lg border border-[var(--border-lovable)] px-3 py-1.5 text-[11px] text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]"
         >
           Buscar
         </Link>
         <button
           onClick={() => onDelete(alert.id)}
-          className="rounded-lg border border-neutral-800 px-3 py-1.5 text-[11px] text-red-400 transition hover:border-red-500/50 hover:text-red-300"
+          className="rounded-lg border border-[var(--border-lovable)] px-3 py-1.5 text-[11px] text-red-400 transition hover:border-red-500/50 hover:text-red-300"
         >
           Excluir
         </button>

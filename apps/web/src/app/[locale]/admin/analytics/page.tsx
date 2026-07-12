@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { LANDMAP_API_BASE } from '../../../../lib/api';
-import { GlowPanel } from '../../../../components/GlowPanel';
+import { LineChart } from '../../../../components/lovable/icons';
 
 type StatsData = {
   totalProperties: number;
@@ -24,7 +24,7 @@ type CityData = {
   avgPrice: number;
 };
 
-const COLORS = ['#10b981', '#06b6d4', '#8b5cf6', '#34d399', '#ef4444', '#22d3ee', '#a78bfa'];
+const COLORS = ['#6366f1', '#8b5cf6', '#06b6d4', '#22d3ee', '#a78bfa', '#34d399', '#f59e0b'];
 
 export default function AdminAnalyticsPage() {
   const [stats, setStats] = useState<StatsData | null>(null);
@@ -46,11 +46,11 @@ export default function AdminAnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="space-y-6">
-        <div className="h-8 w-48 animate-pulse rounded bg-neutral-800" />
+      <div className="mx-auto max-w-7xl space-y-6">
+        <div className="h-8 w-48 animate-pulse rounded bg-[var(--muted-lovable)]" />
         <div className="grid gap-4 sm:grid-cols-2">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-64 animate-pulse rounded-xl border border-neutral-800 bg-neutral-900/20" />
+            <div key={i} className="h-64 animate-pulse rounded-xl border border-[var(--border-lovable)] bg-[var(--muted-lovable)]" />
           ))}
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function AdminAnalyticsPage() {
   }
 
   if (!stats) {
-    return <p className="text-sm text-neutral-400">Erro ao carregar dados.</p>;
+    return <p className="text-sm text-[var(--muted-foreground-lovable)]">Erro ao carregar dados.</p>;
   }
 
   const typeEntries = Object.entries(stats.byType);
@@ -79,78 +79,83 @@ export default function AdminAnalyticsPage() {
   const top = stats.topCities.slice(0, 8);
 
   return (
-    <div>
-      <span className="kicker">Inteligência de dados</span>
-      <h2 className="mt-2 text-lg font-medium text-neutral-50">Analytics</h2>
-      <p className="mt-1 text-xs text-neutral-400">
-        Dados e distribuição dos imóveis
-      </p>
+    <div className="mx-auto max-w-7xl space-y-6">
+      <header className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+          <LineChart className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-[var(--primary)]">Inteligência de dados</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Analytics</h1>
+          <p className="mt-1 text-[var(--muted-foreground-lovable)]">Dados e distribuição dos imóveis</p>
+        </div>
+      </header>
 
-      <GlowPanel className="mt-8 p-6">
-      <div className="grid gap-6 lg:grid-cols-2">
-        {/* Chart: Imóveis por tipo */}
-        <ChartCard title="Imóveis por Tipo">
-          <BarChart
-            labels={typeEntries.map(([k]) => typeLabels[k] ?? k)}
-            values={typeEntries.map(([, v]) => v)}
-            color="#10b981"
-            height={200}
-          />
-        </ChartCard>
+      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+        <div className="grid gap-6 lg:grid-cols-2">
+          {/* Chart: Imóveis por tipo */}
+          <ChartCard title="Imóveis por Tipo">
+            <BarChart
+              labels={typeEntries.map(([k]) => typeLabels[k] ?? k)}
+              values={typeEntries.map(([, v]) => v)}
+              color="#6366f1"
+              height={200}
+            />
+          </ChartCard>
 
-        {/* Chart: Preço médio por cidade */}
-        <ChartCard title="Preço Médio por Cidade">
-          <BarChart
-            labels={top.map((c) => c.city)}
-            values={top.map((c) => Math.round(c.avgPrice / 1000))}
-            suffix="k"
-            color="#06b6d4"
-            height={200}
-          />
-        </ChartCard>
+          {/* Chart: Preço médio por cidade */}
+          <ChartCard title="Preço Médio por Cidade">
+            <BarChart
+              labels={top.map((c) => c.city)}
+              values={top.map((c) => Math.round(c.avgPrice / 1000))}
+              suffix="k"
+              color="#06b6d4"
+              height={200}
+            />
+          </ChartCard>
 
-        {/* Chart: Distribuição por Modalidade (pie) */}
-        <ChartCard title="Distribuição por Modalidade">
-          <PieChart
-            labels={modalityEntries.map(([k]) => modalityLabels[k] ?? k)}
-            values={modalityEntries.map(([, v]) => v)}
-            height={220}
-          />
-        </ChartCard>
+          {/* Chart: Distribuição por Modalidade (pie) */}
+          <ChartCard title="Distribuição por Modalidade">
+            <PieChart
+              labels={modalityEntries.map(([k]) => modalityLabels[k] ?? k)}
+              values={modalityEntries.map(([, v]) => v)}
+              height={220}
+            />
+          </ChartCard>
 
-        {/* Chart: Faixas de Preço */}
-        <ChartCard title="Faixas de Preço">
-          <BarChart
-            labels={stats.priceRanges.map((r) => r.label)}
-            values={stats.priceRanges.map((r) => r.count)}
-            color="#a855f7"
-            height={200}
-          />
-        </ChartCard>
+          {/* Chart: Faixas de Preço */}
+          <ChartCard title="Faixas de Preço">
+            <BarChart
+              labels={stats.priceRanges.map((r) => r.label)}
+              values={stats.priceRanges.map((r) => r.count)}
+              color="#8b5cf6"
+              height={200}
+            />
+          </ChartCard>
+        </div>
       </div>
-      </GlowPanel>
 
       {/* Type stats detail */}
       <div className="mt-8">
-        <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-neutral-400">
-            Detalhamento por Tipo
-          </h3>
-        <GlowPanel className="p-6">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.typeStats.map((t, i) => (
-            <div
-              key={t.type}
-              className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-4"
-            >
-              <p className="text-xs text-neutral-400">{typeLabels[t.type] ?? t.type}</p>
-              <p className="mt-1 text-lg font-semibold text-neutral-50">{t.count}</p>
-              <p className="mt-1 text-[11px] text-neutral-400">
-                {formatBRL(t.avgPrice)} · {t.avgAreaM2} m²
-              </p>
-            </div>
-          ))}
+        <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
+          Detalhamento por Tipo
+        </h3>
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {stats.typeStats.map((t) => (
+              <div
+                key={t.type}
+                className="rounded-xl border border-[var(--border-lovable)] bg-[var(--muted-lovable)] p-4"
+              >
+                <p className="text-xs text-[var(--muted-foreground-lovable)]">{typeLabels[t.type] ?? t.type}</p>
+                <p className="mt-1 text-lg font-semibold text-[var(--foreground)]">{t.count}</p>
+                <p className="mt-1 text-[11px] text-[var(--muted-foreground-lovable)]">
+                  {formatBRL(t.avgPrice)} · {t.avgAreaM2} m²
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
-        </GlowPanel>
       </div>
     </div>
   );
@@ -160,8 +165,8 @@ export default function AdminAnalyticsPage() {
 
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
-      <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-neutral-400">
+    <div className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-5">
+      <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
         {title}
       </h3>
       {children}
@@ -202,10 +207,10 @@ function BarChart({
               y1={y}
               x2={totalW}
               y2={y}
-              stroke="#262626"
+              stroke="var(--border-lovable)"
               strokeWidth={1}
             />
-            <text x={4} y={y + 3} fill="#525252" fontSize={9}>
+            <text x={4} y={y + 3} fill="var(--muted-foreground-lovable)" fontSize={9}>
               {Math.round(max * ratio)}
               {suffix ?? ''}
             </text>
@@ -233,7 +238,7 @@ function BarChart({
               x={x + w / 2}
               y={height - 4}
               textAnchor="middle"
-              fill="#737373"
+              fill="var(--muted-foreground-lovable)"
               fontSize={8}
             >
               {label.length > 10 ? label.slice(0, 10) + '…' : label}
@@ -291,10 +296,10 @@ function PieChart({
       {slices.map((s, i) => (
         <g key={`leg-${s.label}`}>
           <rect x={legendX} y={10 + i * 22} width={10} height={10} rx={2} fill={s.color} />
-          <text x={legendX + 16} y={19 + i * 22} fill="#a3a3a3" fontSize={10}>
+          <text x={legendX + 16} y={19 + i * 22} fill="var(--muted-foreground-lovable)" fontSize={10}>
             {s.label}
           </text>
-          <text x={legendX + 16 + 100} y={19 + i * 22} fill="#737373" fontSize={10}>
+          <text x={legendX + 16 + 100} y={19 + i * 22} fill="var(--muted-foreground-lovable)" fontSize={10}>
             {s.pct}%
           </text>
         </g>

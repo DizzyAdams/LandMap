@@ -40,15 +40,15 @@ export function ContactForm() {
   };
 
   return (
-    <div className="rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
-      <p className="mb-4 text-sm font-medium text-neutral-200">Fale com o anunciante</p>
+    <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-5">
+      <p className="mb-4 text-sm font-medium text-[var(--foreground)]">Fale com o anunciante</p>
 
       {sent ? (
-        <div className="rounded-lg border border-neutral-700 bg-neutral-800/40 p-4 text-center text-sm text-neutral-300">
+        <div className="rounded-lg border border-[var(--success)]/30 bg-[var(--success)]/10 p-4 text-center text-sm text-[var(--success-foreground)]">
           Mensagem enviada com sucesso! Entraremos em contato.
           <button
             onClick={() => setSent(false)}
-            className="ml-2 text-xs text-neutral-400 underline underline-offset-2 hover:text-white"
+            className="ml-2 text-xs text-[var(--muted-foreground-lovable)] underline underline-offset-2 hover:text-[var(--foreground)]"
           >
             Nova mensagem
           </button>
@@ -58,55 +58,55 @@ export function ContactForm() {
           {error && (
             <div
               role="alert"
-              className="rounded-lg border border-red-500/30 bg-red-500/10 p-3 text-center text-sm text-red-200"
+              className="rounded-lg border border-[var(--destructive)]/30 bg-[var(--destructive)]/10 p-3 text-center text-sm text-[var(--destructive)]"
             >
               {error}
             </div>
           )}
           <form onSubmit={handleSubmit} className="space-y-3">
-          <input
-            required
-            aria-label="Nome"
-            placeholder="Nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            className="input"
-          />
-          <input
-            required
-            type="email"
-            aria-label="E-mail"
-            placeholder="E-mail"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="input"
-          />
-          <input
-            required
-            type="tel"
-            aria-label="Telefone"
-            placeholder="Telefone"
-            value={telefone}
-            onChange={(e) => setTelefone(e.target.value)}
-            className="input"
-          />
-          <textarea
-            required
-            rows={3}
-            aria-label="Mensagem"
-            placeholder="Mensagem"
-            value={mensagem}
-            onChange={(e) => setMensagem(e.target.value)}
-            className="input resize-none"
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="btn-primary w-full disabled:opacity-40"
-          >
-            {loading ? 'Enviando...' : 'Enviar'}
-          </button>
-        </form>
+            <input
+              required
+              aria-label="Nome"
+              placeholder="Nome"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              className="input"
+            />
+            <input
+              required
+              type="email"
+              aria-label="E-mail"
+              placeholder="E-mail"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="input"
+            />
+            <input
+              required
+              type="tel"
+              aria-label="Telefone"
+              placeholder="Telefone"
+              value={telefone}
+              onChange={(e) => setTelefone(e.target.value)}
+              className="input"
+            />
+            <textarea
+              required
+              rows={3}
+              aria-label="Mensagem"
+              placeholder="Mensagem"
+              value={mensagem}
+              onChange={(e) => setMensagem(e.target.value)}
+              className="input resize-none"
+            />
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full disabled:opacity-40"
+            >
+              {loading ? 'Enviando...' : 'Enviar'}
+            </button>
+          </form>
         </>
       )}
     </div>

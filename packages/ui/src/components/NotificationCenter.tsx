@@ -114,7 +114,7 @@ export function NotificationCenter() {
       >
         <BellIcon />
         {unread > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-cyan-400 px-1 text-[10px] font-semibold text-[var(--bg)]">
+          <span className="absolute -right-1 -top-1 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-gradient-to-r from-[var(--primary)] to-cyan-400 px-1 text-[10px] font-semibold text-[var(--bg)]">
             {unread > 9 ? '9+' : unread}
           </span>
         )}

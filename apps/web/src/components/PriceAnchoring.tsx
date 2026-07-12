@@ -27,13 +27,13 @@ export function PriceAnchoring({
   return (
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline gap-2">
-        <span className="text-sm text-neutral-400 line-through">{fmt(originalPrice)}</span>
-        <span className="rounded bg-emerald-950/40 px-1.5 py-0.5 text-[10px] font-medium text-emerald-400">
+        <span className="text-sm text-[var(--muted-foreground-lovable)] line-through">{fmt(originalPrice)}</span>
+        <span className="rounded bg-emerald-950/40 px-1.5 py-0.5 text-[10px] font-medium text-[var(--primary)]">
           -{savingsPercent}%
         </span>
       </div>
-      <p className="text-2xl font-medium text-neutral-50">{fmt(currentPrice)}</p>
-      <p className="text-xs text-emerald-400/80">
+      <p className="text-2xl font-medium text-[var(--foreground)]">{fmt(currentPrice)}</p>
+      <p className="text-xs text-[var(--primary)]/80">
         Economia de {fmt(savings)}
       </p>
     </div>

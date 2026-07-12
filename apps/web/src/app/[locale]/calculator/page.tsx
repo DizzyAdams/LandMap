@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { Button } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
-import { GlowPanel } from '../../../components/GlowPanel';
 
 export default function CalculatorPage() {
   const [preco, setPreco] = useState('500000');
@@ -32,24 +31,24 @@ export default function CalculatorPage() {
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(v);
 
   return (
-    <main className="min-h-screen bg-[#050505] text-neutral-50">
+    <main className="min-h-screen bg-[#050505] text-[var(--foreground)]">
       <Reveal className="mx-auto max-w-2xl px-6 py-10">
         <span className="chip">
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
           Simulação de referência
         </span>
         <span className="kicker mt-4">Financiamento inteligente</span>
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
           Simulador de financiamento
         </h1>
-        <p className="mt-2 text-sm text-neutral-400">
+        <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
           Calcule a parcela mensal e o total de juros do seu financiamento imobiliário.
         </p>
 
-        <GlowPanel className="mt-8">
-          <div className="space-y-4 rounded-xl border border-neutral-800 bg-neutral-900/40 p-5">
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-8">
+          <div className="space-y-4 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5">
           <label className="block">
-            <span className="text-xs text-neutral-400">Preço do imóvel</span>
+            <span className="text-xs text-[var(--muted-foreground-lovable)]">Preço do imóvel</span>
             <input
               type="number"
               value={preco}
@@ -58,7 +57,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-neutral-400">Entrada (%)</span>
+            <span className="text-xs text-[var(--muted-foreground-lovable)]">Entrada (%)</span>
             <input
               type="number"
               value={entradaPct}
@@ -69,7 +68,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-neutral-400">Taxa de juros anual (%)</span>
+            <span className="text-xs text-[var(--muted-foreground-lovable)]">Taxa de juros anual (%)</span>
             <input
               type="number"
               value={taxaAnual}
@@ -79,7 +78,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-neutral-400">Prazo (meses)</span>
+            <span className="text-xs text-[var(--muted-foreground-lovable)]">Prazo (meses)</span>
             <input
               type="number"
               value={prazo}
@@ -93,21 +92,21 @@ export default function CalculatorPage() {
             Calcular
           </Button>
           </div>
-        </GlowPanel>
+        </div>
 
         {result && (
           <>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="panel rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
-                <p className="text-xs text-neutral-400">Parcela mensal</p>
-                <p className="mt-1 text-xl font-medium text-emerald-300">{fmt(result.parcela)}</p>
+              <div className="panel rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
+                <p className="text-xs text-[var(--muted-foreground-lovable)]">Parcela mensal</p>
+                <p className="mt-1 text-xl font-medium text-[var(--primary)]">{fmt(result.parcela)}</p>
               </div>
-              <div className="panel rounded-xl border border-neutral-800 bg-neutral-900/40 p-4 transition hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.3)]">
-                <p className="text-xs text-neutral-400">Total de juros</p>
-                <p className="mt-1 text-xl font-medium text-neutral-100">{fmt(result.totalJuros)}</p>
+              <div className="panel rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
+                <p className="text-xs text-[var(--muted-foreground-lovable)]">Total de juros</p>
+                <p className="mt-1 text-xl font-medium text-[var(--foreground)]">{fmt(result.totalJuros)}</p>
               </div>
             </div>
-            <p className="mt-4 text-xs text-neutral-400">
+            <p className="mt-4 text-xs text-[var(--muted-foreground-lovable)]">
               Simulação de referência. Taxas, prazos e encargos são exemplos — confirme as
               condições com seu banco.
             </p>

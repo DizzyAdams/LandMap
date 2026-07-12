@@ -12,8 +12,8 @@ export function Gallery({ images, title }: GalleryProps) {
 
   if (!images || images.length === 0) {
     return (
-      <div className="flex aspect-[16/9] items-center justify-center rounded-xl border border-neutral-800 bg-neutral-900/40">
-        <svg className="h-10 w-10 text-neutral-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="flex aspect-[16/9] items-center justify-center rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40">
+        <svg className="h-10 w-10 text-[var(--muted-foreground-lovable)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       </div>
@@ -23,9 +23,9 @@ export function Gallery({ images, title }: GalleryProps) {
   const img = images[current];
 
   return (
-    <div className="overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40">
+    <div className="overflow-hidden rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40">
       {/* Main image */}
-      <div className="relative aspect-[16/9] w-full overflow-hidden bg-neutral-950">
+      <div className="relative aspect-[16/9] w-full overflow-hidden bg-[var(--card)]">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={img}
@@ -34,14 +34,14 @@ export function Gallery({ images, title }: GalleryProps) {
           className="h-full w-full object-cover"
         />
         {/* Counter */}
-        <div className="absolute bottom-3 right-3 rounded-md bg-black/60 px-2.5 py-1 text-xs text-neutral-300">
+        <div className="absolute bottom-3 right-3 rounded-md bg-black/60 px-2.5 py-1 text-xs text-[var(--muted-foreground-lovable)]">
           {current + 1} / {images.length}
         </div>
       </div>
 
       {/* Navigation */}
       {images.length > 1 && (
-        <div className="flex items-center justify-between border-t border-neutral-800 px-4 py-3">
+        <div className="flex items-center justify-between border-t border-[var(--border-lovable)] px-4 py-3">
           <div className="flex gap-2">
             {images.map((_, i) => (
               <button
@@ -58,14 +58,14 @@ export function Gallery({ images, title }: GalleryProps) {
             <button
               onClick={() => setCurrent((p) => (p === 0 ? images.length - 1 : p - 1))}
               disabled={images.length <= 1}
-              className="rounded-lg border border-neutral-700 bg-neutral-800/60 px-3 py-1.5 text-xs text-neutral-300 transition hover:border-neutral-500 hover:text-white disabled:opacity-30"
+              className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)]/60 px-3 py-1.5 text-xs text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)] disabled:opacity-30"
             >
               ← Anterior
             </button>
             <button
               onClick={() => setCurrent((p) => (p === images.length - 1 ? 0 : p + 1))}
               disabled={images.length <= 1}
-              className="rounded-lg border border-neutral-700 bg-neutral-800/60 px-3 py-1.5 text-xs text-neutral-300 transition hover:border-neutral-500 hover:text-white disabled:opacity-30"
+              className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)]/60 px-3 py-1.5 text-xs text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)] disabled:opacity-30"
             >
               Próxima →
             </button>

@@ -10,7 +10,6 @@ import { formatBRL } from '../../../../lib/format';
 import { SocialProof } from '../../../../components/SocialProof';
 import { UrgencyTimer } from '../../../../components/UrgencyTimer';
 import { PriceAnchoring } from '../../../../components/PriceAnchoring';
-import { GlowPanel } from '../../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -65,7 +64,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
   const originalPrice = Math.round(property.price * 1.2); // mock original price 20% higher
 
   return (
-    <main className="min-h-screen grid-bg text-neutral-50">
+    <main className="min-h-screen grid-bg text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         {/* Dark patterns row */}
         <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -79,7 +78,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
             <div>
               <div className="mb-2"><span className="kicker">Imóvel</span></div>
               <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
-              <p className="mt-2 text-sm text-neutral-400">
+              <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
                 {property.city}, {property.state} · {property.areaM2} m²
                 {property.bedrooms ? ` · ${property.bedrooms} quarto(s)` : ''}
               </p>
@@ -95,18 +94,18 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
           </div>
         </Reveal>
 
-        <GlowPanel className="mt-8 p-4">
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-8 p-4">
           <Stagger className="grid gap-3 sm:grid-cols-3">
             <Card variant="default" className="sm:col-span-2">
-              <p className="text-xs text-neutral-400">Valor</p>
+              <p className="text-xs text-[var(--muted-foreground-lovable)]">Valor</p>
               <p className="mt-1 text-2xl font-medium">{priceText}</p>
-              <p className="mt-4 text-xs text-neutral-400">Disponibilidade</p>
-              <p className="mt-1 text-sm text-neutral-300">{property.available ? 'Disponível' : 'Indisponível'}</p>
+              <p className="mt-4 text-xs text-[var(--muted-foreground-lovable)]">Disponibilidade</p>
+              <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">{property.available ? 'Disponível' : 'Indisponível'}</p>
             </Card>
             <Card variant="default">
-              <p className="text-xs text-neutral-400">Localização</p>
+              <p className="text-xs text-[var(--muted-foreground-lovable)]">Localização</p>
               <a
-                className="mt-2 block text-sm text-neutral-300 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
+                className="mt-2 block text-sm text-[var(--muted-foreground-lovable)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
                 href={`https://www.google.com/maps/search/?api=1&q=${mapQuery}`}
                 target="_blank"
                 rel="noreferrer"
@@ -114,14 +113,14 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
                 Abrir no mapa
               </a>
               <Link
-                className="mt-4 block text-xs text-neutral-400 underline decoration-neutral-700 underline-offset-4 transition hover:text-white"
+                className="mt-4 block text-xs text-[var(--muted-foreground-lovable)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
                 href={`/${resolved.locale}/map?q=${encodeURIComponent(property.city)}`}
               >
                 Ver mapa da cidade
               </Link>
             </Card>
           </Stagger>
-        </GlowPanel>
+        </div>
 
         <div className="mt-6 flex gap-3">
           <Link href={`/${resolved.locale}/search`}>
@@ -178,7 +177,7 @@ async function SimilarProperties({
         <h2 className="text-lg font-semibold tracking-tight text-gradient">
           Imóveis Similares
         </h2>
-        <p className="mt-1 text-sm text-neutral-400">
+        <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
           Outras opções em {city} com preço próximo.
         </p>
       </Reveal>
@@ -190,12 +189,12 @@ async function SimilarProperties({
                 href={`/${locale}/property/${item.id}`}
                 className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
               >
-                <p className="text-sm text-neutral-300">{item.title}</p>
-                <p className="mt-1 text-xs text-neutral-400">
+                <p className="text-sm text-[var(--muted-foreground-lovable)]">{item.title}</p>
+                <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
                   {item.city}, {item.state} · {item.areaM2} m²
                   {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
                 </p>
-                <p className="mt-3 text-sm font-medium text-neutral-100">
+                <p className="mt-3 text-sm font-medium text-[var(--foreground)]">
                   {formatBRL(item.price)}
                 </p>
               </Link>

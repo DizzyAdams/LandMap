@@ -37,11 +37,11 @@ export class ErrorBoundary extends Component<Props, State> {
       }
 
       return (
-        <div role="alert" className="flex min-h-[40vh] items-center justify-center bg-[#050505] px-6">
+        <div role="alert" className="flex min-h-[40vh] items-center justify-center bg-[var(--card)] px-6">
           <div className="max-w-md text-center">
-            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-red-500/30 bg-red-500/10">
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full border border-[var(--destructive)]/30 bg-[var(--destructive)]/10">
               <svg
-                className="h-6 w-6 text-red-400"
+                className="h-6 w-6 text-[var(--destructive)]"
                 fill="none"
                 viewBox="0 0 24 24"
                 strokeWidth={1.5}
@@ -55,21 +55,21 @@ export class ErrorBoundary extends Component<Props, State> {
                 />
               </svg>
             </div>
-            <h2 className="text-lg font-semibold text-neutral-50">
+            <h2 className="text-lg font-semibold text-[var(--foreground)]">
               Algo deu errado
             </h2>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
               Ocorreu um erro inesperado ao carregar esta seção.
             </p>
             {this.state.error && (
-              <p className="mt-2 max-h-20 overflow-auto text-[11px] text-neutral-400 font-mono">
+              <p className="mt-2 max-h-20 overflow-auto text-[11px] text-[var(--muted-foreground-lovable)] font-mono">
                 {this.state.error.message}
               </p>
             )}
             <button
               type="button"
               onClick={this.handleRetry}
-              className="mt-6 rounded-lg border border-neutral-700 bg-neutral-900 px-5 py-2 text-xs font-medium text-neutral-300 transition hover:border-neutral-500 hover:text-white"
+              className="mt-6 rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-5 py-2 text-xs font-medium text-[var(--foreground)] transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
             >
               Tentar novamente
             </button>

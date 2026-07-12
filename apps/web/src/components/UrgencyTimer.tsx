@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Activity } from './lovable/icons';
 
 interface UrgencyTimerProps {
   expiresInMinutes?: number;
@@ -33,32 +34,19 @@ export function UrgencyTimer({ expiresInMinutes = 1440 }: UrgencyTimerProps) {
     <div
       className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-xs ${
         isExpired
-          ? 'border-red-900/50 bg-red-950/30 text-red-400'
+          ? 'border-[var(--destructive)]/50 bg-[var(--destructive)]/30 text-[var(--destructive)]'
           : isUrgent
-            ? 'border-red-800/40 bg-red-950/20 text-red-300'
-            : 'border-neutral-800 bg-neutral-900/60 text-neutral-400'
+            ? 'border-[var(--warning)]/40 bg-[var(--warning)]/20 text-[var(--warning)]'
+            : 'border-[var(--border-lovable)] bg-[var(--muted-lovable)] text-[var(--muted-foreground-lovable)]'
       }`}
     >
-      <svg
-        className={`h-3.5 w-3.5 ${isExpired || isUrgent ? 'text-red-400' : 'text-neutral-400'}`}
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-        strokeWidth={2}
-        aria-hidden
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-        />
-      </svg>
+      <Activity className={`h-3.5 w-3.5 ${isExpired || isUrgent ? 'text-[var(--destructive)]' : 'text-[var(--muted-foreground-lovable)]'}`} aria-hidden />
       {isExpired ? (
-        <span className="font-medium text-red-400">Oferta encerrada</span>
+        <span className="font-medium text-[var(--destructive)]">Oferta encerrada</span>
       ) : (
         <span>
           Oferta termina em{' '}
-          <strong className={isUrgent ? 'text-red-300' : 'text-neutral-300'}>
+          <strong className={isUrgent ? 'text-[var(--warning)]' : 'text-[var(--foreground)]'}>
             {formatTime(remaining)}
           </strong>
         </span>

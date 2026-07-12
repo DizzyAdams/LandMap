@@ -6,7 +6,6 @@ import { SearchKeyboardShortcuts } from '../../../components/SearchKeyboardShort
 import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
-import { GlowPanel } from '../../../components/GlowPanel';
 import { PropertyThumb } from '../../../components/PropertyThumb';
 import { Filters } from './Filters';
 import { formatBRL } from '../../../lib/format';
@@ -121,7 +120,7 @@ export default async function SearchPage({
   }
 
   return (
-    <main className="min-h-screen grid-bg text-neutral-50">
+    <main className="min-h-screen grid-bg text-[var(--foreground)]">
       <SearchKeyboardShortcuts />
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
@@ -129,11 +128,11 @@ export default async function SearchPage({
             <div>
               <div className="mb-3"><span className="kicker">Explorar</span></div>
               <h1 className="text-3xl font-semibold tracking-tight text-gradient">Buscar imóveis</h1>
-              <p className="mt-2 text-sm text-neutral-400">
+              <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
                 Filtros diretamente por tipologia, modalidade, local e faixa de preço.
               </p>
             </div>
-            <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
+            <Link href={`/${locale}`} className="text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]">
               Voltar para Home
             </Link>
           </div>
@@ -166,7 +165,7 @@ export default async function SearchPage({
         ) : (
           <>
             {/* Sort + count bar */}
-            <div className="mb-4 flex items-center justify-between text-xs text-neutral-400">
+            <div className="mb-4 flex items-center justify-between text-xs text-[var(--muted-foreground-lovable)]">
               <span aria-live="polite">
                 {sorted.length} resultado{sorted.length === 1 ? '' : 's'}
               </span>
@@ -184,8 +183,8 @@ export default async function SearchPage({
                     href={buildHref({ sort: opt.key, page: '1' })}
                     className={`rounded-md px-2 py-1 transition ${
                       sort === opt.key
-                        ? 'bg-neutral-800 text-white'
-                        : 'hover:text-white'
+                        ? 'bg-neutral-200 text-[var(--foreground)]'
+                        : 'hover:text-[var(--primary)]'
                     }`}
                   >
                     {opt.label}
@@ -200,7 +199,7 @@ export default async function SearchPage({
                 description="Ajuste tipologia, modalidade ou cidade para ver mais opções."
               />
             ) : (
-              <GlowPanel className="p-2">
+              <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-2">
               <ul role="list" className="grid gap-3">
                 {pageItems.map((item) => {
                   const pricePerM2 = item.areaM2 > 0 ? Math.round(item.price / item.areaM2) : 0;
@@ -213,16 +212,16 @@ export default async function SearchPage({
                         >
                           <div className="flex items-start justify-between gap-4">
                             <div className="flex items-start gap-4">
-                              <PropertyThumb seed={item.id} className="h-16 w-12 shrink-0 border border-neutral-800" />
+                              <PropertyThumb seed={item.id} className="h-16 w-12 shrink-0 border border-[var(--border-lovable)]" />
                               <div>
-                                <p className="text-sm text-neutral-300">{item.title}</p>
-                                <p className="mt-1 text-xs text-neutral-400">
+                                <p className="text-sm text-[var(--muted-foreground-lovable)]">{item.title}</p>
+                                <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
                                   {item.city}, {item.state} · {item.areaM2} m²
                                   {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
                                 </p>
                               </div>
                             </div>
-                            <span className="text-xs text-neutral-400">{item.modality}</span>
+                            <span className="text-xs text-[var(--muted-foreground-lovable)]">{item.modality}</span>
                           </div>
                           <div className="mt-4 flex items-center justify-between">
                             <span className="text-sm font-medium">
@@ -230,11 +229,11 @@ export default async function SearchPage({
                             </span>
                             <span className="flex items-center gap-2">
                               {pricePerM2 > 0 && (
-                                <span className="text-xs text-neutral-400">
+                                <span className="text-xs text-[var(--muted-foreground-lovable)]">
                                   {formatBRL(pricePerM2)}/m²
                                 </span>
                               )}
-                              <span className="text-xs text-neutral-400 capitalize">{item.type}</span>
+                              <span className="text-xs text-[var(--muted-foreground-lovable)] capitalize">{item.type}</span>
                             </span>
                           </div>
                         </Link>
@@ -243,14 +242,14 @@ export default async function SearchPage({
                   );
                 })}
               </ul>
-              </GlowPanel>
+              </div>
             )}
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-8 flex items-center justify-center gap-2 text-xs text-neutral-400">
+              <div className="mt-8 flex items-center justify-center gap-2 text-xs text-[var(--muted-foreground-lovable)]">
                 {safePage > 1 && (
-                  <a href={buildHref({ page: String(safePage - 1) })} className="rounded-md border border-neutral-800 px-3 py-1.5 transition hover:border-neutral-500 hover:text-white">
+                  <a href={buildHref({ page: String(safePage - 1) })} className="rounded-md border border-[var(--border-lovable)] px-3 py-1.5 transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]">
                     Anterior
                   </a>
                 )}
@@ -259,14 +258,14 @@ export default async function SearchPage({
                   .map((p, idx, arr) => (
                     <span key={p} className="flex items-center gap-1">
                       {idx > 0 && arr[idx - 1] !== p - 1 && (
-                        <span className="px-1 text-neutral-400">...</span>
+                        <span className="px-1 text-[var(--muted-foreground-lovable)]">...</span>
                       )}
                       {p === safePage ? (
-                        <span className="rounded-md bg-neutral-800 px-3 py-1.5 text-white">{p}</span>
+                        <span className="rounded-md bg-[var(--card)] px-3 py-1.5 text-[var(--foreground)]">{p}</span>
                       ) : (
                         <a
                           href={buildHref({ page: String(p) })}
-                          className="rounded-md px-3 py-1.5 transition hover:text-white"
+                          className="rounded-md px-3 py-1.5 transition hover:text-[var(--foreground)]"
                         >
                           {p}
                         </a>
@@ -274,7 +273,7 @@ export default async function SearchPage({
                     </span>
                   ))}
                 {safePage < totalPages && (
-                  <a href={buildHref({ page: String(safePage + 1) })} className="rounded-md border border-neutral-800 px-3 py-1.5 transition hover:border-neutral-500 hover:text-white">
+                  <a href={buildHref({ page: String(safePage + 1) })} className="rounded-md border border-[var(--border-lovable)] px-3 py-1.5 transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]">
                     Próximo
                   </a>
                 )}

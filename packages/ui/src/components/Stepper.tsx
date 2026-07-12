@@ -64,7 +64,7 @@ export function Stepper({
           'grid h-8 w-8 shrink-0 place-items-center rounded-full border text-xs font-semibold transition-colors motion-reduce:transition-none',
           state === 'done' && 'border-[var(--emerald-tint)] bg-[var(--emerald-tint)] text-[var(--emerald-bright)]',
           state === 'active' &&
-            'border-transparent bg-gradient-to-r from-emerald-400 to-cyan-400 text-[var(--bg)] shadow-[var(--glow-emerald)]',
+            'border-transparent bg-gradient-to-r from-[var(--primary)] to-cyan-400 text-[var(--bg)] shadow-[var(--glow-emerald)]',
           state === 'upcoming' && 'bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted)]',
         );
 
@@ -122,7 +122,7 @@ export function Stepper({
             aria-hidden
             className={cn(
               vertical ? 'ml-4 my-2 h-6 w-px' : 'mx-2 h-px flex-1',
-              i < current ? 'bg-gradient-to-r from-emerald-400 to-cyan-400' : 'bg-[var(--border-strong)]',
+              i < current ? 'bg-gradient-to-r from-[var(--primary)] to-cyan-400' : 'bg-[var(--border-strong)]',
             )}
           />
         );

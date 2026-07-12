@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { LANDMAP_API_BASE } from '../../../../lib/api';
-import { GlowPanel } from '../../../../components/GlowPanel';
+import { Building2, Plus, Trash2, X } from '../../../../components/lovable/icons';
 
 type Property = {
   id: string;
@@ -119,105 +119,120 @@ export default function AdminPropertiesPage() {
 
   if (loading) {
     return (
-      <div className="space-y-3">
-        <div className="h-8 w-48 animate-pulse rounded bg-neutral-800" />
+      <div className="mx-auto max-w-7xl space-y-3">
+        <div className="h-8 w-48 animate-pulse rounded bg-[var(--muted-lovable)]" />
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-14 animate-pulse rounded-lg bg-neutral-900/40" />
+          <div key={i} className="h-14 animate-pulse rounded-lg bg-[var(--muted-lovable)]" />
         ))}
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="mx-auto max-w-7xl space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <span className="kicker">Catálogo de imóveis</span>
-          <h2 className="mt-2 text-lg font-medium text-neutral-50">Imóveis</h2>
-          <p className="mt-1 text-xs text-neutral-400">
-            {properties.length} imóvel(is) cadastrado(s)
-          </p>
-        </div>
+        <header className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+            <Building2 className="h-5 w-5" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-[var(--primary)]">Catálogo de imóveis</p>
+            <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Imóveis</h1>
+            <p className="mt-1 text-[var(--muted-foreground-lovable)]">
+              {properties.length} imóvel(is) cadastrado(s)
+            </p>
+          </div>
+        </header>
         <button
           onClick={() => load()}
-          className="rounded-lg border border-neutral-800 px-4 py-1.5 text-[11px] text-neutral-400 transition hover:border-neutral-500 hover:text-white"
+          className="inline-flex items-center gap-2 rounded-md border border-[var(--border-lovable)] px-4 py-1.5 text-[11px] text-[var(--muted-foreground-lovable)] transition hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
         >
           Atualizar
         </button>
       </div>
 
       {/* Table */}
-      <GlowPanel className="mt-6 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-neutral-800 bg-neutral-900/60">
-            <tr>
-              <Th>Título</Th>
-              <Th>Cidade</Th>
-              <Th>Preço</Th>
-              <Th>Tipo</Th>
-              <Th>Status</Th>
-              <Th className="text-right">Ações</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {properties.map((p) => (
-              <tr
-                key={p.id}
-                className="border-b border-neutral-800/50 transition hover:bg-neutral-900/20"
-              >
-                <td className="px-4 py-3 text-neutral-50">{p.title}</td>
-                <td className="px-4 py-3 text-neutral-400">
-                  {p.city}/{p.state}
-                </td>
-                <td className="px-4 py-3 text-neutral-200 font-mono text-xs">
-                  {formatBRL(p.price)}
-                </td>
-                <td className="px-4 py-3">
-                  <span className="inline-block rounded-md border border-neutral-800 bg-neutral-950 px-2 py-0.5 text-[11px] text-neutral-400">
-                    {p.type}
-                  </span>
-                </td>
-                <td className="px-4 py-3">
-                  <StatusBadge status={p.status} />
-                </td>
-                <td className="px-4 py-3 text-right">
-                  <button
-                    onClick={() => openEdit(p)}
-                    className="mr-2 rounded-md border border-neutral-800 px-2.5 py-1 text-[11px] text-neutral-400 transition hover:border-neutral-500 hover:text-white"
-                  >
-                    Editar
-                  </button>
-                  <button
-                    onClick={() => handleDelete(p.id)}
-                    className="rounded-md border border-neutral-800 px-2.5 py-1 text-[11px] text-red-400 transition hover:border-red-500/50 hover:text-red-300"
-                  >
-                    Excluir
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {properties.length === 0 && (
+      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="border-b border-[var(--border-lovable)] bg-[var(--muted-lovable)]">
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-sm text-neutral-400">
-                  Nenhum imóvel encontrado.
-                </td>
+                <Th>Título</Th>
+                <Th>Cidade</Th>
+                <Th>Preço</Th>
+                <Th>Tipo</Th>
+                <Th>Status</Th>
+                <Th className="text-right">Ações</Th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {properties.map((p) => (
+                <tr
+                  key={p.id}
+                  className="border-b border-[var(--border-lovable)] transition hover:bg-[var(--muted-lovable)]"
+                >
+                  <td className="px-4 py-3 text-[var(--foreground)]">{p.title}</td>
+                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)]">
+                    {p.city}/{p.state}
+                  </td>
+                  <td className="px-4 py-3 text-[var(--foreground)] font-mono text-xs">
+                    {formatBRL(p.price)}
+                  </td>
+                  <td className="px-4 py-3">
+                    <span className="inline-block rounded-md border border-[var(--border-lovable)] bg-[var(--muted-lovable)] px-2 py-0.5 text-[11px] text-[var(--muted-foreground-lovable)]">
+                      {p.type}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3">
+                    <StatusBadge status={p.status} />
+                  </td>
+                  <td className="px-4 py-3 text-right">
+                    <button
+                      onClick={() => openEdit(p)}
+                      className="mr-2 inline-flex items-center gap-1 rounded-md border border-[var(--border-lovable)] px-2.5 py-1 text-[11px] text-[var(--muted-foreground-lovable)] transition hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
+                    >
+                      Editar
+                    </button>
+                    <button
+                      onClick={() => handleDelete(p.id)}
+                      className="inline-flex items-center gap-1 rounded-md border border-[var(--border-lovable)] px-2.5 py-1 text-[11px] text-[var(--destructive)] transition hover:bg-[var(--destructive)]/10"
+                    >
+                      <Trash2 className="h-3 w-3" /> Excluir
+                    </button>
+                  </td>
+                </tr>
+              ))}
+              {properties.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-[var(--muted-foreground-lovable)]">
+                    Nenhum imóvel encontrado.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-      </GlowPanel>
 
       {/* Edit modal */}
       {editId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#050505]/70 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
           <form
             onSubmit={handleSave}
-            className="w-full max-w-lg rounded-xl border border-neutral-800 bg-neutral-900 p-6 shadow-2xl"
+            className="w-full max-w-lg rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-6 shadow-2xl"
           >
-            <h3 className="text-sm font-medium text-neutral-50">Editar Imóvel</h3>
-            <p className="mt-1 text-[11px] text-neutral-400">ID: {editId}</p>
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-[var(--foreground)]">Editar Imóvel</h3>
+              <button
+                type="button"
+                onClick={closeEdit}
+                aria-label="Fechar"
+                className="rounded-md p-1.5 text-[var(--muted-foreground-lovable)] transition hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            </div>
+            <p className="mt-1 text-[11px] text-[var(--muted-foreground-lovable)]">ID: {editId}</p>
 
             <div className="mt-5 space-y-4">
               <div className="grid grid-cols-2 gap-4">
@@ -225,14 +240,14 @@ export default function AdminPropertiesPage() {
                   <input
                     value={editForm.title}
                     onChange={(e) => setEditForm((f) => ({ ...f, title: e.target.value }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   />
                 </Field>
                 <Field label="Cidade">
                   <input
                     value={editForm.city}
                     onChange={(e) => setEditForm((f) => ({ ...f, city: e.target.value }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   />
                 </Field>
               </div>
@@ -243,7 +258,7 @@ export default function AdminPropertiesPage() {
                     type="number"
                     value={editForm.price}
                     onChange={(e) => setEditForm((f) => ({ ...f, price: Number(e.target.value) }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   />
                 </Field>
                 <Field label="Área (m²)">
@@ -251,7 +266,7 @@ export default function AdminPropertiesPage() {
                     type="number"
                     value={editForm.areaM2}
                     onChange={(e) => setEditForm((f) => ({ ...f, areaM2: Number(e.target.value) }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   />
                 </Field>
               </div>
@@ -261,7 +276,7 @@ export default function AdminPropertiesPage() {
                   <select
                     value={editForm.type}
                     onChange={(e) => setEditForm((f) => ({ ...f, type: e.target.value }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   >
                     <option value="apartamento">Apartamento</option>
                     <option value="casa">Casa</option>
@@ -273,7 +288,7 @@ export default function AdminPropertiesPage() {
                   <select
                     value={editForm.modality}
                     onChange={(e) => setEditForm((f) => ({ ...f, modality: e.target.value }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   >
                     <option value="venda">Venda</option>
                     <option value="aluguel">Aluguel</option>
@@ -287,7 +302,7 @@ export default function AdminPropertiesPage() {
                   <select
                     value={editForm.status}
                     onChange={(e) => setEditForm((f) => ({ ...f, status: e.target.value }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   >
                     <option value="active">Ativo</option>
                     <option value="sold">Vendido</option>
@@ -300,7 +315,7 @@ export default function AdminPropertiesPage() {
                     type="number"
                     value={editForm.bedrooms}
                     onChange={(e) => setEditForm((f) => ({ ...f, bedrooms: Number(e.target.value) }))}
-                    className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-50 outline-none focus:border-neutral-500"
+                    className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
                   />
                 </Field>
               </div>
@@ -310,14 +325,14 @@ export default function AdminPropertiesPage() {
               <button
                 type="button"
                 onClick={closeEdit}
-                className="rounded-lg border border-neutral-800 px-4 py-2 text-xs text-neutral-400 transition hover:text-white"
+                className="rounded-lg border border-[var(--border-lovable)] px-4 py-2 text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
               >
                 Cancelar
               </button>
               <button
                 type="submit"
                 disabled={saving}
-                className="cta-glow rounded-lg bg-neutral-50 px-4 py-2 text-xs font-medium text-[#050505] transition hover:bg-neutral-200 disabled:opacity-40"
+                className="inline-flex items-center gap-2 rounded-lg bg-[var(--primary)] px-4 py-2 text-xs font-medium text-[var(--primary-foreground)] transition hover:bg-[var(--primary)]/90 disabled:opacity-40"
               >
                 {saving ? 'Salvando...' : 'Salvar'}
               </button>
@@ -333,7 +348,7 @@ export default function AdminPropertiesPage() {
 
 function Th({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
-    <th className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-400 ${className ?? ''}`}>
+    <th className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)] ${className ?? ''}`}>
       {children}
     </th>
   );
@@ -342,7 +357,7 @@ function Th({ children, className }: { children: React.ReactNode; className?: st
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] text-neutral-400">{label}</span>
+      <span className="mb-1 block text-[11px] text-[var(--muted-foreground-lovable)]">{label}</span>
       {children}
     </label>
   );
@@ -350,10 +365,10 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function StatusBadge({ status }: { status: string }) {
   const colors: Record<string, string> = {
-    active: 'border-emerald-800 text-emerald-400 bg-emerald-950/40',
-    sold: 'border-red-800 text-red-400 bg-red-950/40',
-    rented: 'border-cyan-800 text-cyan-400 bg-cyan-950/40',
-    reserved: 'border-violet-800 text-violet-400 bg-violet-950/40',
+    active: 'border-[var(--border-lovable)] text-[var(--success)]',
+    sold: 'border-[var(--border-lovable)] text-[var(--destructive)]',
+    rented: 'border-[var(--border-lovable)] text-[var(--ring-lovable)]',
+    reserved: 'border-[var(--border-lovable)] text-[var(--primary)]',
   };
   const labels: Record<string, string> = {
     active: 'Ativo',
@@ -363,7 +378,7 @@ function StatusBadge({ status }: { status: string }) {
   };
   return (
     <span
-      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colors[status] ?? 'border-neutral-800 text-neutral-400'}`}
+      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colors[status] ?? 'border-[var(--border-lovable)] text-[var(--muted-foreground-lovable)]'}`}
     >
       {labels[status] ?? status}
     </span>

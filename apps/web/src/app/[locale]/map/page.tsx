@@ -6,7 +6,6 @@ import { useParams } from 'next/navigation';
 import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
-import { GlowPanel } from '../../../components/GlowPanel';
 import { searchProperties, geoAutocomplete, geoReverse, type AutocompleteSuggestion, type GeoFeature, type ReverseResult } from '../../../lib/api';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
@@ -175,25 +174,25 @@ export default function MapPage() {
   );
 
   return (
-    <main className="min-h-screen grid-bg text-neutral-50">
+    <main className="min-h-screen grid-bg text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
           <div className="flex items-end justify-between">
             <div>
               <div className="mb-3"><span className="kicker">Inteligência Geoespacial</span></div>
               <h1 className="text-3xl font-semibold tracking-tight text-gradient">Mapa mundial</h1>
-              <p className="mt-2 text-sm text-neutral-400">
+              <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
                 Navegue por localizações disponíveis ou refine por cidade.
               </p>
             </div>
-            <Link href={`/${locale}`} className="text-xs text-neutral-400 transition hover:text-white">
+            <Link href={`/${locale}`} className="text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]">
               Voltar para Home
             </Link>
           </div>
         </Reveal>
 
         <Reveal delay={0.1} className="mt-8">
-          <GlowPanel className="p-4 space-y-4">
+          <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-4 space-y-4">
           {/* Search input */}
           <div className="relative">
             <input
@@ -214,14 +213,14 @@ export default function MapPage() {
               }}
               placeholder="Buscar cidade, estado ou país…"
               aria-label="Buscar localização no mundo todo"
-              className="w-full rounded-lg border border-neutral-800 bg-neutral-950 px-4 py-2.5 text-sm text-neutral-50 placeholder-neutral-600 outline-none transition focus:border-emerald-400"
+              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--primary)]"
             />
             {suggestions.length > 0 && (
               <ul
                 id="geo-suggestions"
                 role="listbox"
                 aria-label="Sugestões de localização"
-                className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-neutral-800 bg-neutral-900/95 shadow-xl backdrop-blur"
+                className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-[var(--border-lovable)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
               >
                 {suggestions.map((s, i) => (
                   <li
@@ -231,7 +230,7 @@ export default function MapPage() {
                     aria-selected={i === activeIdx}
                     onMouseEnter={() => setActiveIdx(i)}
                     onClick={() => selectSuggestion(s)}
-                    className={`cursor-pointer px-4 py-2.5 text-sm transition ${i === activeIdx ? 'bg-emerald-950/40 text-white' : 'text-neutral-300 hover:text-white'}`}
+                    className={`cursor-pointer px-4 py-2.5 text-sm transition ${i === activeIdx ? 'bg-[var(--primary)]/10 text-[var(--primary)]' : 'text-[var(--muted-foreground-lovable)] hover:text-[var(--foreground)]'}`}
                   >
                     {s.label}
                   </li>
@@ -242,7 +241,7 @@ export default function MapPage() {
 
           {/* Radius slider */}
           <div className="flex items-center gap-4">
-            <label className="text-xs text-neutral-400 w-28">Raio de busca:</label>
+            <label className="text-xs text-[var(--muted-foreground-lovable)] w-28">Raio de busca:</label>
             <input
               type="range"
               min={5}
@@ -253,13 +252,13 @@ export default function MapPage() {
               aria-label="Raio de busca em quilômetros"
               className="flex-1 accent-neutral-50"
             />
-            <span className="text-xs text-neutral-400 w-16 text-right">{radiusKm} km</span>
+            <span className="text-xs text-[var(--muted-foreground-lovable)] w-16 text-right">{radiusKm} km</span>
           </div>
 
           {/* Price range */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex items-center gap-3">
-              <label className="text-xs text-neutral-400">Preço mín.:</label>
+              <label className="text-xs text-[var(--muted-foreground-lovable)]">Preço mín.:</label>
               <input
                 type="range"
                 min={0}
@@ -270,7 +269,7 @@ export default function MapPage() {
                 aria-label="Preço mínimo"
                 className="flex-1 accent-neutral-50"
               />
-              <span className="text-xs text-neutral-400 w-24 text-right">
+              <span className="text-xs text-[var(--muted-foreground-lovable)] w-24 text-right">
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
@@ -280,7 +279,7 @@ export default function MapPage() {
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <label className="text-xs text-neutral-400">Preço máx.:</label>
+              <label className="text-xs text-[var(--muted-foreground-lovable)]">Preço máx.:</label>
               <input
                 type="range"
                 min={0}
@@ -291,7 +290,7 @@ export default function MapPage() {
                 aria-label="Preço máximo"
                 className="flex-1 accent-neutral-50"
               />
-              <span className="text-xs text-neutral-400 w-24 text-right">
+              <span className="text-xs text-[var(--muted-foreground-lovable)] w-24 text-right">
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
@@ -303,8 +302,8 @@ export default function MapPage() {
           </div>
 
           {/* Type filter */}
-          <div className="flex flex-wrap items-center gap-2 border-t border-neutral-800 pt-4">
-            <span className="text-xs text-neutral-400">Tipo de imóvel:</span>
+          <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border-lovable)] pt-4">
+            <span className="text-xs text-[var(--muted-foreground-lovable)]">Tipo de imóvel:</span>
             {(['todos', 'apartamento', 'casa', 'terreno', 'comercial'] as const).map((t) => (
               <button
                 key={t}
@@ -319,7 +318,7 @@ export default function MapPage() {
           </div>
 
           {/* Legend */}
-          <div className="flex flex-wrap gap-4 text-xs text-neutral-400">
+          <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground-lovable)]">
             <span className="flex items-center gap-1.5">
               <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.apartamento }} />
               Apartamento
@@ -339,14 +338,14 @@ export default function MapPage() {
           </div>
 
           {/* Heatmap de preço */}
-          <div className="flex flex-wrap items-center gap-3 border-t border-neutral-800 pt-4">
-            <span className="text-xs text-neutral-400">Heatmap de preço:</span>
+          <div className="flex flex-wrap items-center gap-3 border-t border-[var(--border-lovable)] pt-4">
+            <span className="text-xs text-[var(--muted-foreground-lovable)]">Heatmap de preço:</span>
             <input
               value={heatCity}
               onChange={(e) => setHeatCity(e.target.value)}
               aria-label="Cidade do heatmap"
               placeholder="Cidade"
-              className="w-40 rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-1.5 text-sm text-neutral-50 outline-none transition focus:border-emerald-400"
+              className="w-40 rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-1.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]"
             />
             <button
               type="button"
@@ -356,15 +355,15 @@ export default function MapPage() {
             >
               {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
             </button>
-            {heatLoading && <span className="text-xs text-neutral-400">Carregando…</span>}
+            {heatLoading && <span className="text-xs text-[var(--muted-foreground-lovable)]">Carregando…</span>}
           </div>
 
           {reverse && (
-            <div className="rounded-lg border border-emerald-900/60 bg-emerald-950/20 p-3 text-sm text-neutral-200">
-              <p className="font-medium text-emerald-300">Local selecionado</p>
+            <div className="rounded-lg border border-[var(--primary)]900/60 bg-emerald-950/20 p-3 text-sm text-[var(--foreground)]">
+              <p className="font-medium text-[var(--primary)]">Local selecionado</p>
               <p className="mt-1">{reverse.label}</p>
               {reverse.pricePerM2 != null && (
-                <p className="mt-1 text-neutral-400">
+                <p className="mt-1 text-[var(--muted-foreground-lovable)]">
                   Preço/m²:{' '}
                   {new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
@@ -375,14 +374,14 @@ export default function MapPage() {
                 </p>
               )}
               {reverse.zoning && (
-                <p className="mt-1 text-neutral-400">
+                <p className="mt-1 text-[var(--muted-foreground-lovable)]">
                   Zona: {reverse.zoning}
                   {reverse.schools != null && ` · Escolas: ${reverse.schools}`}
                 </p>
               )}
             </div>
           )}
-          </GlowPanel>
+          </div>
         </Reveal>
       </section>
 
@@ -578,7 +577,7 @@ function MapView({
           : `${items.length} imóvel${items.length === 1 ? '' : 'eis'} exibido${items.length === 1 ? '' : 's'} no mapa.`}
       </p>
       <div className="lg:col-span-2 w-full">
-        <GlowPanel className="p-1">
+        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-1">
           <div
             ref={mapRef}
             role="region"
@@ -587,9 +586,9 @@ function MapView({
             style={{ zIndex: 0 }}
           >
             {loading && (
-              <div className="absolute inset-0 z-[1] flex items-center justify-center bg-neutral-950/60">
+              <div className="absolute inset-0 z-[1] flex items-center justify-center bg-[var(--card)]/60">
                 <span
-                  className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-700 border-t-emerald-400"
+                  className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border-lovable)] border-t-[var(--primary)]"
                   aria-hidden="true"
                 />
                 <span className="sr-only">Carregando imóveis no mapa…</span>
@@ -605,14 +604,14 @@ function MapView({
               </div>
             )}
           </div>
-        </GlowPanel>
+        </div>
       </div>
 
       {/* Mobile toggle */}
       <div className="lg:hidden">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="w-full rounded-xl border border-neutral-800 bg-neutral-900/40 px-4 py-2.5 text-sm text-neutral-300 transition hover:border-neutral-500"
+          className="w-full rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 px-4 py-2.5 text-sm text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)]"
         >
           {sidebarOpen ? 'Ocultar resultados' : `Mostrar resultados (${items.length})`}
         </button>
@@ -620,7 +619,7 @@ function MapView({
 
       {/* Sidebar with collapse on mobile */}
       <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block space-y-3`}>
-        <p className="text-xs text-neutral-400" aria-live="polite">
+        <p className="text-xs text-[var(--muted-foreground-lovable)]" aria-live="polite">
           {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
         </p>
         <ul role="list" className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
@@ -637,8 +636,8 @@ function MapView({
                       style={{ backgroundColor: getMarkerColor(item.type) }}
                     />
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-neutral-300 truncate">{item.title}</p>
-                      <p className="mt-1 text-xs text-neutral-400">
+                      <p className="text-sm text-[var(--muted-foreground-lovable)] truncate">{item.title}</p>
+                      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
                         {item.city}, {item.state} · {item.areaM2} m²
                       </p>
                     </div>

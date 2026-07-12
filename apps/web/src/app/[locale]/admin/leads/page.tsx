@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { GlowPanel } from '../../../../components/GlowPanel';
+import { Star, Filter } from '../../../../components/lovable/icons';
 
 type Lead = {
   id: string;
@@ -70,75 +70,83 @@ export default function AdminLeadsPage() {
   );
 
   return (
-    <div>
-      <span className="kicker">Pipeline de contatos</span>
-      <h2 className="mt-2 text-lg font-medium text-neutral-50">Leads</h2>
-      <p className="mt-1 text-xs text-neutral-400">
-        {leads.length} leads simulados
-      </p>
+    <div className="mx-auto max-w-7xl space-y-6">
+      <header className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+          <Star className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-[var(--primary)]">Pipeline de contatos</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Leads</h1>
+          <p className="mt-1 text-[var(--muted-foreground-lovable)]">{leads.length} leads simulados</p>
+        </div>
+      </header>
 
       {/* Filter */}
-      <div className="mt-6 flex items-center gap-3">
-        <label className="text-[11px] text-neutral-400">Filtrar por estágio:</label>
-        <select
-          value={filterStage}
-          onChange={(e) => setFilterStage(e.target.value)}
-          className="rounded-lg border border-neutral-800 bg-neutral-950 px-3 py-1.5 text-xs text-neutral-50 outline-none focus:border-neutral-500"
-        >
-          <option value="">Todos</option>
-          {STAGES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+      <div className="flex items-center gap-3">
+        <label className="text-[11px] text-[var(--muted-foreground-lovable)]">Filtrar por estágio:</label>
+        <div className="relative">
+          <Filter className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground-lovable)]" />
+          <select
+            value={filterStage}
+            onChange={(e) => setFilterStage(e.target.value)}
+            className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] py-1.5 pl-8 pr-3 text-xs text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
+          >
+            <option value="">Todos</option>
+            {STAGES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       {/* Table */}
-      <GlowPanel className="mt-4 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm">
-          <thead className="border-b border-neutral-800 bg-neutral-900/60">
-            <tr>
-              <Th>Nome</Th>
-              <Th>Email</Th>
-              <Th>Score</Th>
-              <Th>Estágio</Th>
-              <Th>Interesse</Th>
-              <Th>Data</Th>
-            </tr>
-          </thead>
-          <tbody>
-            {filtered.map((lead) => (
-              <tr
-                key={lead.id}
-                className="border-b border-neutral-800/50 transition hover:bg-neutral-900/20"
-              >
-                <td className="px-4 py-3 text-neutral-50">{lead.name}</td>
-                <td className="px-4 py-3 text-neutral-400 text-[13px]">{lead.email}</td>
-                <td className="px-4 py-3">
-                  <ScoreBadge score={lead.score} />
-                </td>
-                <td className="px-4 py-3">
-                  <StageBadge stage={lead.stage} />
-                </td>
-                <td className="px-4 py-3 text-neutral-400 text-[13px]">{lead.propertyInterest}</td>
-                <td className="px-4 py-3 text-neutral-400 text-[13px]">
-                  {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
-                </td>
-              </tr>
-            ))}
-            {filtered.length === 0 && (
+      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm">
+            <thead className="border-b border-[var(--border-lovable)] bg-[var(--muted-lovable)]">
               <tr>
-                <td colSpan={6} className="px-4 py-10 text-center text-sm text-neutral-400">
-                  Nenhum lead encontrado.
-                </td>
+                <Th>Nome</Th>
+                <Th>Email</Th>
+                <Th>Score</Th>
+                <Th>Estágio</Th>
+                <Th>Interesse</Th>
+                <Th>Data</Th>
               </tr>
-            )}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filtered.map((lead) => (
+                <tr
+                  key={lead.id}
+                  className="border-b border-[var(--border-lovable)] transition hover:bg-[var(--muted-lovable)]"
+                >
+                  <td className="px-4 py-3 text-[var(--foreground)]">{lead.name}</td>
+                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)] text-[13px]">{lead.email}</td>
+                  <td className="px-4 py-3">
+                    <ScoreBadge score={lead.score} />
+                  </td>
+                  <td className="px-4 py-3">
+                    <StageBadge stage={lead.stage} />
+                  </td>
+                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)] text-[13px]">{lead.propertyInterest}</td>
+                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)] text-[13px]">
+                    {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
+                  </td>
+                </tr>
+              ))}
+              {filtered.length === 0 && (
+                <tr>
+                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-[var(--muted-foreground-lovable)]">
+                    Nenhum lead encontrado.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-      </GlowPanel>
     </div>
   );
 }
@@ -147,7 +155,7 @@ export default function AdminLeadsPage() {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-neutral-400">
+    <th className="px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
       {children}
     </th>
   );
@@ -156,10 +164,10 @@ function Th({ children }: { children: React.ReactNode }) {
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score >= 90
-      ? 'text-emerald-400 border-emerald-800'
+      ? 'text-[var(--primary)] border-[var(--border-lovable)]'
       : score >= 75
-        ? 'text-violet-400 border-violet-800'
-        : 'text-neutral-400 border-neutral-700';
+        ? 'text-[var(--ring-lovable)] border-[var(--border-lovable)]'
+        : 'text-[var(--muted-foreground-lovable)] border-[var(--border-lovable)]';
   return (
     <span className={`inline-block rounded-md border px-2 py-0.5 text-[11px] font-mono ${color}`}>
       {score}
@@ -169,16 +177,16 @@ function ScoreBadge({ score }: { score: number }) {
 
 function StageBadge({ stage }: { stage: string }) {
   const colors: Record<string, string> = {
-    Novo: 'text-cyan-400 border-cyan-800',
-    Contatado: 'text-cyan-400 border-cyan-800',
-    'Agendou Visita': 'text-violet-400 border-violet-800',
-    'Negociação': 'text-violet-400 border-violet-800',
-    'Fechado': 'text-emerald-400 border-emerald-800',
-    'Perdido': 'text-red-400 border-red-800',
+    Novo: 'text-[var(--ring-lovable)] border-[var(--border-lovable)]',
+    Contatado: 'text-[var(--ring-lovable)] border-[var(--border-lovable)]',
+    'Agendou Visita': 'text-[var(--primary)] border-[var(--border-lovable)]',
+    'Negociação': 'text-[var(--primary)] border-[var(--border-lovable)]',
+    'Fechado': 'text-[var(--success)] border-[var(--border-lovable)]',
+    'Perdido': 'text-[var(--destructive)] border-[var(--border-lovable)]',
   };
   return (
     <span
-      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colors[stage] ?? 'text-neutral-400 border-neutral-700'}`}
+      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colors[stage] ?? 'text-[var(--muted-foreground-lovable)] border-[var(--border-lovable)]'}`}
     >
       {stage}
     </span>

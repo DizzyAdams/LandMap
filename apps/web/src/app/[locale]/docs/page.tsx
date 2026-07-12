@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Reveal, Stagger } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
-import { GlowPanel } from '../../../components/GlowPanel';
 
 export const dynamic = 'force-dynamic';
 
@@ -97,7 +96,7 @@ const CATEGORIES: Array<{ title: string; endpoints: Endpoint[] }> = [
 ];
 
 const methodColors: Record<string, string> = {
-  GET: 'text-emerald-400',
+  GET: 'text-[var(--primary)]',
   POST: 'text-blue-400',
   PUT: 'text-amber-400',
   DELETE: 'text-red-400',
@@ -112,35 +111,35 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
         <Reveal className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="chip">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
               Dados abertos
             </span>
             <span className="kicker mt-5 block">Referência da API</span>
             <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
               Documentação da API
             </h1>
-            <p className="mt-2 text-sm text-neutral-400">
+            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
               Referência completa dos endpoints REST do LandMap
             </p>
           </div>
-          <p className="text-xs text-neutral-400">Base URL: <code className="text-neutral-400">http://localhost:4000</code></p>
+          <p className="text-xs text-[var(--muted-foreground-lovable)]">Base URL: <code className="text-[var(--muted-foreground-lovable)]">http://localhost:4000</code></p>
         </Reveal>
 
         {/* Auth + Rate limit card */}
         <Stagger className="mt-8 grid gap-4 sm:grid-cols-2">
           <SpotlightCard className="p-5">
-            <h2 className="text-sm font-medium text-neutral-50">Autenticação</h2>
-            <p className="mt-2 text-xs text-neutral-400">
+            <h2 className="text-sm font-medium text-[var(--foreground)]">Autenticação</h2>
+            <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">
               Endpoints marcados com <span className="text-amber-400">🔒 Auth</span> exigem o header{' '}
-              <code className="text-neutral-400">Authorization: Bearer seu_token</code>.
+              <code className="text-[var(--muted-foreground-lovable)]">Authorization: Bearer seu_token</code>.
             </p>
           </SpotlightCard>
           <SpotlightCard className="p-5">
-            <h2 className="text-sm font-medium text-neutral-50">Rate Limiting</h2>
-            <p className="mt-2 text-xs text-neutral-400">
-              Gratuito: <span className="text-neutral-300">100 req/min</span>
-              {' · '}Profissional: <span className="text-neutral-300">1.000 req/min</span>
-              {' · '}Enterprise: <span className="text-neutral-300">Sob consulta</span>
+            <h2 className="text-sm font-medium text-[var(--foreground)]">Rate Limiting</h2>
+            <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">
+              Gratuito: <span className="text-[var(--muted-foreground-lovable)]">100 req/min</span>
+              {' · '}Profissional: <span className="text-[var(--muted-foreground-lovable)]">1.000 req/min</span>
+              {' · '}Enterprise: <span className="text-[var(--muted-foreground-lovable)]">Sob consulta</span>
             </p>
           </SpotlightCard>
         </Stagger>
@@ -148,27 +147,27 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
         {/* Categories */}
         {CATEGORIES.map((cat) => (
           <Reveal key={cat.title} className="mt-12">
-            <h2 className="text-lg font-medium text-neutral-100">{cat.title}</h2>
-            <GlowPanel className="mt-4 p-4">
+            <h2 className="text-lg font-medium text-[var(--foreground)]">{cat.title}</h2>
+            <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-4 p-4">
             <Stagger className="space-y-2">
               {cat.endpoints.map((ep) => (
                 <details
                   key={`${ep.method}-${ep.path}`}
-                  className="group rounded-xl border border-neutral-800 bg-neutral-900/40 transition hover:border-emerald-400/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.25)]"
+                  className="group rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.25)]"
                 >
                   <summary className="flex cursor-pointer items-center gap-3 px-5 py-3.5">
                     <span
-                      className={`shrink-0 rounded-md px-2 py-0.5 font-mono text-[11px] font-semibold ${methodColors[ep.method] ?? 'text-neutral-400'} bg-neutral-950/60`}
+                      className={`shrink-0 rounded-md px-2 py-0.5 font-mono text-[11px] font-semibold ${methodColors[ep.method] ?? 'text-[var(--muted-foreground-lovable)]'} bg-neutral-200`}
                     >
                       {ep.method}
                     </span>
-                    <code className="text-xs text-neutral-300 font-mono">{ep.path}</code>
+                    <code className="text-xs text-[var(--muted-foreground-lovable)] font-mono">{ep.path}</code>
                     {ep.auth && (
                       <span className="text-[10px] text-amber-500 uppercase tracking-wide">🔒 Auth</span>
                     )}
-                    <span className="ml-auto text-xs text-neutral-400">{ep.desc}</span>
+                    <span className="ml-auto text-xs text-[var(--muted-foreground-lovable)]">{ep.desc}</span>
                     <svg
-                      className="h-4 w-4 shrink-0 text-neutral-400 transition group-open:rotate-180"
+                      className="h-4 w-4 shrink-0 text-[var(--muted-foreground-lovable)] transition group-open:rotate-180"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -176,18 +175,18 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </summary>
-                  <div className="border-t border-neutral-800 px-5 py-4 space-y-3">
+                  <div className="border-t border-[var(--border-lovable)] px-5 py-4 space-y-3">
                     {ep.params && (
                       <div>
-                        <p className="text-xs font-medium text-neutral-400">Parâmetros</p>
-                        <code className="mt-1 block rounded-md bg-neutral-950 px-3 py-2 font-mono text-xs text-neutral-300">
+                        <p className="text-xs font-medium text-[var(--muted-foreground-lovable)]">Parâmetros</p>
+                        <code className="mt-1 block rounded-md bg-[var(--card)] px-3 py-2 font-mono text-xs text-[var(--muted-foreground-lovable)]">
                           {ep.params}
                         </code>
                       </div>
                     )}
                     <div>
-                      <p className="text-xs font-medium text-neutral-400">Exemplo</p>
-                      <pre className="mt-1 overflow-x-auto rounded-md bg-neutral-950 p-3 text-xs text-neutral-300">
+                      <p className="text-xs font-medium text-[var(--muted-foreground-lovable)]">Exemplo</p>
+                      <pre className="mt-1 overflow-x-auto rounded-md bg-[var(--card)] p-3 text-xs text-[var(--muted-foreground-lovable)]">
                         <code>{ep.example}</code>
                       </pre>
                     </div>
@@ -195,7 +194,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                 </details>
               ))}
             </Stagger>
-            </GlowPanel>
+            </div>
           </Reveal>
         ))}
       </div>

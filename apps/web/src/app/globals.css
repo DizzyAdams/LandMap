@@ -4,128 +4,99 @@
 @source '../../../../packages/ui/src/**/*.{ts,tsx}';
 
 :root {
-  /* ── Canvas ── */
-  --bg: #050505;
-  --surface: #0a0a0a;          /* surface-1 alias (back-compat) */
-  --surface-1: #0a0a0a;
-  --surface-2: #0f0f0f;
-  --surface-3: #141414;
-
-  /* ── Lines ── */
-  --border: #1a1a1a;            /* hairline / default border */
-  --border-strong: #262626;
-
-  /* ── Text ── */
-  --text: #f5f5f5;
-  --text-strong: #ffffff;
-  --muted: #a3a3a3;
-  --muted-2: #737373;
-
-  /* ── Brand (bioluminescent) ── */
-  --emerald: #34d399;
-  --emerald-bright: #6ee7b7;
-  --cyan: #22d3ee;
-  --violet: #a78bfa;
-
-  /* ── Sovereign gold (capital / investor accent — Gulf & sovereign-fund feel) ── */
-  --gold: #d4af37;
-  --gold-soft: #e8c873;
-  --gold-bright: #f4e2a1;
-  --gold-deep: #a67c00;
-
-  /* ── Semantic ── */
-  --accent: #ffffff;
-  --accent-dim: #e5e5e5;
-  --danger: #ff4d4d;
-
-  /* ── Radii ── */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-
-  /* ── Signature glows ── */
-  --glow-emerald: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25);
-  --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
-  --glow-gold: 0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38);
-  --glow-sovereign: 0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28);
-
-  /* ── Focus ring (unified, token-driven — reused by Button & Card) ── */
-  --ring: 0 0 0 1px var(--emerald), 0 0 0 3px rgba(52, 211, 153, 0.25);
-
-  /* ── Tints (mirror of @landmap/ui styles.css — low-opacity brand fills) ── */
-  --emerald-tint: rgba(52, 211, 153, 0.12);
-  --cyan-tint: rgba(34, 211, 238, 0.12);
-  --gold-tint: rgba(212, 175, 55, 0.12);
-  --violet-tint: rgba(167, 139, 250, 0.12);
-  --border-subtle: rgba(255, 255, 255, 0.06);
-
-
-  /* ── Fonts ──
-     Loaded via a Google Fonts <link> in src/app/layout.tsx (see note there).
-     We define the variables here instead of using next/font because next/font
-     (and the `geist` package it wraps) crashes on Windows + Node 24 with
-     ERR_UNSUPPORTED_ESM_URL_SCHEME. This keeps the same variable names the
-     rest of the CSS (body / .font-mono) already consumes. */
-  --font-geist-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  /* Lovable reference design tokens (light / indigo) — ADDITIVE only.
-     Suffixed vars (‑lovable) keep the legacy dark canvas tokens intact so the
-     19 existing product pages keep rendering correctly. New Lovable screens
-     consume these. See landmap-insight.lovable.app. */
+  /* ── Spec LandMap (landmap-design.zip): azul #003594, fundo claro, verde só success ── */
   --background: oklch(100% 0 0);
   --foreground: oklch(18% 0.06 265);
   --card: oklch(100% 0 0);
   --card-foreground: oklch(18% 0.06 265);
   --popover: oklch(100% 0 0);
   --popover-foreground: oklch(18% 0.06 265);
-  --primary: oklch(34% 0.18 265);
+
+  --primary: #003594;
+  --primary-bright: #1e5fd0;
+  --primary-soft: #3b6fc4;
   --primary-foreground: oklch(99% 0.005 250);
-  --primary-glow: oklch(55% 0.2 265);
+  --primary-glow: #1e5fd0;
+
   --secondary: oklch(24% 0.1 265);
   --secondary-foreground: oklch(99% 0.005 250);
+
   --destructive: oklch(58% 0.22 27);
   --destructive-foreground: oklch(98% 0.01 27);
   --success: oklch(60% 0.15 155);
   --success-foreground: oklch(99% 0.005 155);
   --warning: oklch(78% 0.15 78);
   --warning-foreground: oklch(22% 0.05 78);
-  --sidebar: oklch(22% 0.1 265);
+
+  --sidebar: oklch(24% 0.1 265);
   --sidebar-foreground: oklch(96% 0.01 250);
-  --sidebar-primary: oklch(55% 0.2 265);
+  --sidebar-primary: #003594;
   --sidebar-primary-foreground: oklch(99% 0.005 250);
   --sidebar-accent: oklch(28% 0.11 265);
   --sidebar-accent-foreground: oklch(99% 0.005 250);
   --sidebar-border: oklch(30% 0.09 265);
-  --sidebar-ring: oklch(55% 0.2 265);
-  --gradient-brand: linear-gradient(135deg, oklch(24% 0.1 265), oklch(34% 0.18 265));
-  --gradient-hero: linear-gradient(140deg, oklch(20% 0.08 265) 0%, oklch(30% 0.15 265) 55%, oklch(50% 0.2 265) 100%);
-  --gradient-accent: linear-gradient(135deg, oklch(34% 0.18 265), oklch(62% 0.18 250));
-  --gradient-hero-glow: radial-gradient(circle at 30% 20%, oklch(0.62 0.15 148 / 0.4), transparent 55%);
+  --sidebar-ring: #1e5fd0;
+
+  --gradient-brand: linear-gradient(135deg, oklch(24% 0.1 265), #003594);
+  --gradient-hero: linear-gradient(140deg, oklch(20% 0.08 265) 0%, #003594 55%, #1e5fd0 100%);
+  --gradient-accent: linear-gradient(135deg, #003594, #3b6fc4);
   --shadow-elegant: 0 20px 40px -20px rgba(24, 24, 40, 0.4);
-  --shadow-glow: 0 0 40px oklch(55% 0.2 265 / 0.35);
+  --shadow-glow: 0 0 40px rgba(0, 53, 148, 0.35);
   --shadow-card: 0 1px 3px rgba(24, 24, 40, 0.12), 0 8px 24px -12px rgba(24, 24, 40, 0.15);
-  /* Lovable-screen-specific (suffixed so they don't touch the dark product theme) */
+
+  /* screen-specific (Lovable mirror) */
   --accent-lovable: oklch(88% 0.06 250);
   --accent-foreground-lovable: oklch(28% 0.14 265);
   --muted-lovable: oklch(96% 0.01 250);
   --muted-foreground-lovable: oklch(48% 0.04 265);
   --border-lovable: oklch(92% 0.015 250);
   --input-lovable: oklch(94% 0.012 250);
-  --ring-lovable: oklch(50% 0.18 265);
+  --ring-lovable: #1e5fd0;
   --radius-lovable: 0.625rem;
-  /* Fonts — mirror Lovable (DM Sans UI + Space Grotesk display + JetBrains Mono data) */
+
+  /* Fonts — DM Sans (UI) + Space Grotesk (display) + JetBrains Mono (data) */
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --font-geist-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
+  /* ── Back-compat aliases (tokens legados → spec claro/azul) ── */
+  --bg: var(--background);
+  --text: var(--foreground);
+  --text-strong: #ffffff;
+  --surface: var(--card);
+  --surface-1: var(--card);
+  --surface-2: var(--muted-lovable);
+  --surface-3: var(--muted-lovable);
+  --border: var(--border-lovable);
+  --border-strong: var(--sidebar-border);
+  --muted: var(--muted-foreground-lovable);
+  --muted-2: var(--muted-foreground-lovable);
+  --accent: var(--accent-lovable);
+  --accent-dim: var(--accent-foreground-lovable);
+  --danger: var(--destructive);
+  --ring: 0 0 0 1px var(--primary), 0 0 0 3px rgba(0, 53, 148, 0.25);
+  --emerald: #34d399; /* success badge only */
+  --emerald-bright: #6ee7b7;
+  --emerald-tint: rgba(0, 53, 148, 0.10);
+  --cyan: #22d3ee;
+  --cyan-tint: rgba(0, 53, 148, 0.10);
+  --gold: #d4af37;
+  --violet: #a78bfa;
+  --glow-emerald: 0 0 0 1px rgba(0, 53, 148, 0.15), 0 8px 40px -12px rgba(0, 53, 148, 0.25);
+  --glow-dual: 0 0 0 1px rgba(0, 53, 148, 0.22), 0 12px 60px -12px rgba(0, 53, 148, 0.38);
+  --glow-gold: 0 0 0 1px rgba(212, 175, 55, 0.28), 0 10px 48px -12px rgba(212, 175, 55, 0.38);
+  --border-subtle: rgba(24, 24, 40, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
 }
 
 html,
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--background);
+  color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
 }
 
@@ -145,15 +116,15 @@ body {
 /* NOTE: Tailwind v4 `@apply` cannot reference custom classes, so `.btn` is inlined
    into the variants below instead of `@apply btn` (which would error at build). */
 .btn-primary {
-  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition bg-white text-neutral-900 hover:bg-neutral-200;
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition bg-[var(--primary)] text-white hover:bg-[var(--primary-bright)];
 }
 
 .btn-ghost {
-  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition border border-neutral-800 text-neutral-200 hover:border-neutral-500 hover:text-white;
+  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition border border-[var(--border-lovable)] bg-[var(--card)] text-[var(--foreground)] hover:border-[var(--primary)]/40;
 }
 
-.badge {
-  @apply rounded-md border border-neutral-800 px-2 py-1 text-xs text-neutral-300;
+.input {
+  @apply w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]/50;
 }
 
 .surface {
@@ -175,16 +146,20 @@ html {
 body {
   background-color: var(--bg);
   background-image:
-    radial-gradient(60rem 60rem at 50% -10%, rgba(52, 211, 153, 0.08), transparent 60%),
-    radial-gradient(48rem 48rem at 88% 4%, rgba(212, 175, 55, 0.07), transparent 58%),
-    radial-gradient(40rem 40rem at 100% 0%, rgba(99, 102, 241, 0.06), transparent 55%);
+    radial-gradient(60rem 60rem at 50% -10%, rgba(0, 53, 148, 0.10), transparent 60%),
+    radial-gradient(48rem 48rem at 88% 4%, rgba(0, 53, 148, 0.06), transparent 58%),
+    radial-gradient(40rem 40rem at 100% 0%, rgba(59, 111, 196, 0.07), transparent 55%);
   background-attachment: fixed;
 }
 
-/* Subtle dotted grid overlay for depth */
+/* Subtle dotted grid overlay for depth (azul, visível no claro) */
 .grid-bg {
-  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(0, 53, 148, 0.06) 1px, transparent 1px);
   background-size: 22px 22px;
+}
+
+.badge {
+  @apply rounded-md border border-[var(--border-lovable)] bg-[var(--muted)] px-2 py-1 text-xs font-medium text-[var(--muted-foreground-lovable)];
 }
 
 .glass {
@@ -196,9 +171,19 @@ body {
 .glow-emerald {
   box-shadow: var(--glow-emerald);
 }
+.glow-primary {
+  box-shadow: 0 0 0 1px rgba(0,53,148,0.28), 0 10px 40px -12px rgba(0,53,148,0.30);
+}
 
 .hairline {
   border-color: var(--border);
+}
+.pulse-primary {
+  animation: pulse-primary 2.4s ease-in-out infinite;
+}
+@keyframes pulse-primary {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,53,148,0.5); }
+  50%      { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,53,148,0); }
 }
 
 /* Refined scrollbar */

@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useState } from 'react';
-import { GlowPanel } from '../../../../components/GlowPanel';
+import { ArrowUpDown } from '../../../../components/lovable/icons';
 
 export default function AdminExportsPage() {
   const [exporting, setExporting] = useState<'properties' | 'leads' | 'report' | null>(null);
@@ -16,7 +16,7 @@ export default function AdminExportsPage() {
       const headers = ['ID', 'Título', 'Cidade', 'Estado', 'Preço', 'Área (m²)', 'Tipo', 'Modalidade', 'Status', 'Quartos'];
       const rows = items.map((p: Record<string, unknown>) => [
         p.id,
-        `"${String(p.title ?? '').replace(/"/g, '""')}"`,
+        `"${String(p.title ?? '').replace(/\"/g, '""')}"`,
         p.city,
         p.state,
         p.price,
@@ -44,7 +44,7 @@ export default function AdminExportsPage() {
       const headers = ['ID', 'Nome', 'Email', 'Telefone', 'Score', 'Estágio', 'Interesse', 'Data'];
       const rows = items.map((l: Record<string, unknown>) => [
         l.id,
-        `"${String(l.name ?? '').replace(/"/g, '""')}"`,
+        `"${String(l.name ?? '').replace(/\"/g, '""')}"`,
         l.email,
         l.phone,
         l.score,
@@ -85,35 +85,40 @@ export default function AdminExportsPage() {
   }, []);
 
   return (
-    <div>
-      <span className="kicker">Dados & relatórios</span>
-      <h2 className="mt-2 text-lg font-medium text-neutral-50">Exportações</h2>
-      <p className="mt-1 text-xs text-neutral-400">
-        Exportar dados do LandMap
-      </p>
+    <div className="mx-auto max-w-7xl space-y-6">
+      <header className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+          <ArrowUpDown className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-[var(--primary)]">Dados & relatórios</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Exportações</h1>
+          <p className="mt-1 text-[var(--muted-foreground-lovable)]">Exportar dados do LandMap</p>
+        </div>
+      </header>
 
-      <GlowPanel className="mt-8 p-6">
-      <div className="grid gap-4 sm:grid-cols-3">
-        <ExportCard
-          title="Properties (CSV)"
-          description="Exportar todos os imóveis cadastrados"
-          onClick={exportPropertiesCSV}
-          loading={exporting === 'properties'}
-        />
-        <ExportCard
-          title="Leads (CSV)"
-          description="Exportar todos os leads"
-          onClick={exportLeadsCSV}
-          loading={exporting === 'leads'}
-        />
-        <ExportCard
-          title="Relatório (JSON)"
-          description="Exportar relatório completo com estatísticas"
-          onClick={exportReportJSON}
-          loading={exporting === 'report'}
-        />
+      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+        <div className="grid gap-4 sm:grid-cols-3">
+          <ExportCard
+            title="Properties (CSV)"
+            description="Exportar todos os imóveis cadastrados"
+            onClick={exportPropertiesCSV}
+            loading={exporting === 'properties'}
+          />
+          <ExportCard
+            title="Leads (CSV)"
+            description="Exportar todos os leads"
+            onClick={exportLeadsCSV}
+            loading={exporting === 'leads'}
+          />
+          <ExportCard
+            title="Relatório (JSON)"
+            description="Exportar relatório completo com estatísticas"
+            onClick={exportReportJSON}
+            loading={exporting === 'report'}
+          />
+        </div>
       </div>
-      </GlowPanel>
     </div>
   );
 }
@@ -135,16 +140,16 @@ function ExportCard({
     <button
       onClick={onClick}
       disabled={loading}
-      className="cta-glow rounded-xl border border-neutral-800 bg-neutral-900/40 p-5 text-left transition hover:border-neutral-600 hover:bg-neutral-900/60 disabled:opacity-50"
+      className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-5 text-left transition hover:bg-[var(--muted-lovable)] hover:border-[var(--primary)] disabled:opacity-50"
     >
-      <p className="text-sm font-medium text-neutral-50">{loading ? 'Exportando...' : title}</p>
-      <p className="mt-2 text-xs text-neutral-400">{description}</p>
+      <p className="text-sm font-medium text-[var(--foreground)]">{loading ? 'Exportando...' : title}</p>
+      <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">{description}</p>
     </button>
   );
 }
 
 function downloadBlob(content: string, filename: string, mime: string) {
-  const blob = new Blob([`\uFEFF${content}`], { type: mime });
+  const blob = new Blob([`﻿${content}`], { type: mime });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;

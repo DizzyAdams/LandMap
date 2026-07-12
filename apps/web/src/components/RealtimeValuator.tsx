@@ -76,28 +76,28 @@ export function RealtimeValuator({
   return (
     <div className="surface rounded-xl p-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-neutral-300">Simulador de valor ao vivo</h2>
+        <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Simulador de valor ao vivo</h2>
         {result && !error && (
           <span
-            className="chip pulse-live"
+            className="chip pulse-primary"
             title="Latência da inferência em microssegundos"
           >
-            <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
             {result.latencyUs < 1000
               ? `${result.latencyUs.toFixed(0)} µs`
               : `${(result.latencyUs / 1000).toFixed(2)} ms`}
           </span>
         )}
       </div>
-      <p className="mt-1 text-xs text-neutral-400">
+      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
         Estimativa instantânea pelo modelo calibrado — ajuste os parâmetros.
       </p>
 
       <div className="mt-5">
-        <p className="ledger-num text-3xl font-semibold tabular-nums text-emerald-300">
+        <p className="ledger-num text-3xl font-semibold tabular-nums text-[var(--primary)]">
           {error ? '—' : brl.format(value)}
         </p>
-        <p className="mt-1 text-xs text-neutral-500">
+        <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
           {result && !error ? (
             <>
               {brl.format(result.pricePerM2)}/m² ·{' '}
@@ -120,9 +120,9 @@ export function RealtimeValuator({
 
       <div className="mt-5 space-y-4">
         <div>
-          <div className="flex items-center justify-between text-xs text-neutral-400">
+          <div className="flex items-center justify-between text-xs text-[var(--muted-foreground-lovable)]">
             <label htmlFor="rt-area">Área</label>
-            <span className="ledger-num tabular-nums text-neutral-300">{area} m²</span>
+            <span className="ledger-num tabular-nums text-[var(--muted-foreground-lovable)]">{area} m²</span>
           </div>
           <input
             id="rt-area"
@@ -133,7 +133,7 @@ export function RealtimeValuator({
             value={area}
             onChange={(e) => setArea(Number(e.target.value))}
             aria-label="Área em metros quadrados"
-            className="mt-2 w-full accent-emerald-400"
+            className="mt-2 w-full accent-[var(--primary)]"
           />
         </div>
 

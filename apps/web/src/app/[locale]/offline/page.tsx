@@ -12,7 +12,7 @@ export default function OfflinePage() {
   const locale = (params.locale as string) || 'pt-BR';
 
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-neutral-50">
+    <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-[var(--foreground)]">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[#050505]" />
         <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
@@ -25,7 +25,7 @@ export default function OfflinePage() {
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
           Sem conexão
         </h1>
-        <p className="mt-2 text-sm text-neutral-400">
+        <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
           Você está offline. Verifique sua internet e tente novamente — o LandMap
           volta assim que a rede retornar.
         </p>
@@ -33,13 +33,13 @@ export default function OfflinePage() {
         <div className="mt-8 flex items-center justify-center gap-3">
           <button
             onClick={() => window.location.reload()}
-            className="cta-glow glow-emerald inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-neutral-900 transition hover:bg-neutral-200"
+            className="cta-glow glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted-lovable)]"
           >
             Recarregar
           </button>
           <Link
             href={localeHref('/', locale)}
-            className="inline-flex h-10 items-center rounded-lg border border-neutral-800 px-5 text-sm text-neutral-300 transition hover:border-neutral-500 hover:text-white"
+            className="inline-flex h-10 items-center rounded-lg border border-[var(--border-lovable)] px-5 text-sm text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]"
           >
             Voltar ao início
           </Link>

@@ -401,7 +401,7 @@ export default function BmapViewer() {
   }
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-950">
+    <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]">
       <Script
         src={MAPLIBRE_JS}
         strategy="afterInteractive"
@@ -431,12 +431,12 @@ export default function BmapViewer() {
                 }}
                 placeholder={t('searchPlaceholder')}
                 aria-label={t('searchPlaceholder')}
-                className="w-full rounded-xl border border-neutral-800 bg-neutral-950/80 px-4 py-2.5 text-sm text-neutral-50 outline-none backdrop-blur-md transition focus:border-emerald-400"
+                className="w-full rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2.5 text-sm text-[var(--foreground)] outline-none backdrop-blur-md transition focus:border-[var(--primary)]"
               />
               {suggestions.length > 0 && (
                 <ul
                   role="listbox"
-                  className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-neutral-800 bg-neutral-950/95 text-sm shadow-xl backdrop-blur-md"
+                  className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] text-sm shadow-xl backdrop-blur-md"
                 >
                   {suggestions.map((s, i) => (
                     <li key={s.id} role="option" aria-selected={i === activeIdx}>
@@ -446,7 +446,7 @@ export default function BmapViewer() {
                         onMouseEnter={() => setActiveIdx(i)}
                         className={`block w-full px-4 py-2 text-left transition ${
                           i === activeIdx
-                            ? 'bg-emerald-500/10 text-emerald-200'
+                            ? 'bg-[var(--primary)]/10 text-emerald-200'
                             : 'text-neutral-300 hover:bg-neutral-800/60'
                         }`}
                       >
@@ -458,7 +458,7 @@ export default function BmapViewer() {
               )}
             </div>
             <div className="mt-3 flex items-center gap-3">
-              <label className="text-xs text-neutral-400">{t('size')}</label>
+              <label className="text-xs text-[var(--muted-foreground-lovable)]">{t('size')}</label>
               <input
                 type="range"
                 min={0.5}
@@ -467,9 +467,9 @@ export default function BmapViewer() {
                 value={sizeKm}
                 onChange={(e) => setSizeKm(Number(e.target.value))}
                 aria-label={t('size')}
-                className="flex-1 accent-emerald-400"
+                className="flex-1 accent-[var(--primary)]"
               />
-              <span className="w-12 text-right text-xs text-neutral-300">
+              <span className="w-12 text-right text-xs text-[var(--muted-foreground-lovable)]">
                 {sizeKm} {t('km')}
               </span>
               <button
@@ -507,7 +507,7 @@ export default function BmapViewer() {
             <div
               role="tablist"
               aria-label={t('title')}
-              className="flex gap-1 rounded-xl border border-neutral-800 bg-neutral-950/80 p-1 backdrop-blur-md"
+              className="flex gap-1 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-1 backdrop-blur-md"
             >
               {(['3d', 'investor', 'solar', 'thermal'] as const).map((id) => (
                 <button
@@ -518,7 +518,7 @@ export default function BmapViewer() {
                   onClick={() => setLayer(id)}
                   className={
                     layer === id
-                      ? 'rounded-lg bg-emerald-500/20 px-3 py-1 text-xs font-medium text-emerald-300'
+                      ? 'rounded-lg bg-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-emerald-300'
                       : 'rounded-lg px-3 py-1 text-xs text-neutral-400 transition hover:text-neutral-200'
                   }
                 >
@@ -539,7 +539,7 @@ export default function BmapViewer() {
             <span
               className={
                 source === 'overpass'
-                  ? 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-400/[0.08] px-3 py-1 text-[11px] font-medium text-emerald-200 backdrop-blur-md'
+                  ? 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/[0.08] px-3 py-1 text-[11px] font-medium text-emerald-200 backdrop-blur-md'
                   : 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/[0.08] px-3 py-1 text-[11px] font-medium text-amber-200 backdrop-blur-md'
               }
               title={source === 'overpass' ? 'Geometria real do OpenStreetMap' : 'Modelo procedural (OSM indisponível)'}
@@ -547,7 +547,7 @@ export default function BmapViewer() {
               <span
                 className={`h-1.5 w-1.5 rounded-full ${
                   source === 'overpass'
-                    ? 'bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)]'
+                    ? 'bg-[var(--primary)] shadow-[0_0_8px_rgba(52,211,153,0.9)]'
                     : 'bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.9)]'
                 }`}
               />
@@ -567,8 +567,8 @@ export default function BmapViewer() {
             suffix={` ${t('km2')}`}
           />
           {layer === '3d' && (
-            <div className="pointer-events-auto rounded-xl border border-neutral-800 bg-neutral-950/80 px-3 py-2 backdrop-blur-md">
-              <div className="mb-1 text-[10px] uppercase tracking-wider text-neutral-400">
+            <div className="pointer-events-auto rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 backdrop-blur-md">
+              <div className="mb-1 text-[10px] uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
                 {t('layers.d3')} · altura
               </div>
               <div
@@ -578,7 +578,7 @@ export default function BmapViewer() {
                     'linear-gradient(90deg,#0f766e,#34d399,#22d3ee,#a78bfa)',
                 }}
               />
-              <div className="mt-1 flex w-28 justify-between text-[10px] text-neutral-400">
+              <div className="mt-1 flex w-28 justify-between text-[10px] text-[var(--muted-foreground-lovable)]">
                 <span>0m</span>
                 <span>120m+</span>
               </div>
@@ -616,9 +616,9 @@ export default function BmapViewer() {
       />
 
       {loading && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center bg-neutral-950/50">
+        <div className="absolute inset-0 z-20 flex items-center justify-center bg-[var(--card)]">
           <span
-            className="h-8 w-8 animate-spin rounded-full border-2 border-neutral-700 border-t-emerald-400"
+            className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border-lovable)] border-t-[var(--primary)]"
             aria-hidden
           />
           <span className="sr-only">{t('building')}</span>
@@ -630,12 +630,12 @@ export default function BmapViewer() {
         </div>
       )}
       {!libReady && !loading && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center text-sm text-neutral-400">
+        <div className="absolute inset-0 z-20 flex items-center justify-center text-sm text-[var(--muted-foreground-lovable)]">
           {t('loadingMap')}
         </div>
       )}
 
-      <p className="px-4 py-2 text-[11px] text-neutral-500">{t('source')}</p>
+      <p className="px-4 py-2 text-[11px] text-[var(--muted-foreground-lovable)]">{t('source')}</p>
     </div>
   );
 }
@@ -650,12 +650,12 @@ function Stat({
   suffix?: string;
 }) {
   return (
-    <div className="pointer-events-auto rounded-xl border border-neutral-800 bg-neutral-950/80 px-4 py-2 backdrop-blur-md">
+    <div className="pointer-events-auto rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2 backdrop-blur-md">
       <div className="text-lg font-semibold tabular-nums text-gradient">
         {value}
         {suffix}
       </div>
-      <div className="text-[11px] text-neutral-400">{label}</div>
+      <div className="text-[11px] text-[var(--muted-foreground-lovable)]">{label}</div>
     </div>
   );
 }

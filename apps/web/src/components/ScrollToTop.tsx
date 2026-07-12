@@ -27,7 +27,7 @@ export function ScrollToTop() {
       type="button"
       onClick={scrollToTop}
       aria-label="Voltar ao topo"
-      className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-neutral-800 text-neutral-300 shadow-lg transition hover:bg-neutral-700 hover:text-white"
+      className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--card)] text-[var(--muted-foreground-lovable)] shadow-lg transition hover:bg-[var(--card)] hover:text-[var(--foreground)]"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
