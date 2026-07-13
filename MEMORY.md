@@ -6,7 +6,7 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-12 (branch `main`, head `d8521c5`).
+Última atualização: 2026-07-13 (branch `main`, head `8626aa0`).
 
 > **2026-07-12 — Spec LandMap aplicado + deployado.** Commit `d8521c5` aplica o
 > spec `landmap-design.zip` (azul institutional `#003594`, fundo claro, verde só
@@ -17,6 +17,16 @@
 > `landmapprod.vercel.app`) READY — `pnpm install` agora usado no Vercel (o
 > deploy anterior falhou por ter rodado `npm install` de subdiretório, não lendo
 > o `vercel.json`).
+
+> **2026-07-13 — Port Lote 5 + telas auxiliares para o design system Lovable + deploy.** Commit
+> `3669c7b` (e `8626aa0` no .gitignore) removem todos os artefatos do design antigo (Sovereign/dark)
+> de 37 telas/arquivos restantes (`apps/web/src/app/[locale]`): grid-bg, text-gradient, kicker,
+> glow-*, cta-glow, surface, aurora, bg-[#050505], shadow-glow, font-display, chip, ledger-num,
+> btn btn-*, bg-white/fundos transparentes do dark → tokens `var(--*)`. Verde/cyan semântico
+> preservado (força de senha, status de CRM, alta/baixa). Typecheck ✅, lint ✅, build remoto
+> Vercel ✅. Deploy `landmapprod-3vepf2emb` (alias `landmapprod.vercel.app`) READY; rotas
+> `/pt-BR`, `/pt-BR/insights`, `/pt-BR/terrenos` retornam 200. `landmap.us.kg` segue sem
+> resolução DNS (pendência de troca de NS no registrador, fora do repo).
 
 ---
 
@@ -29,7 +39,7 @@ Stack mono-repo pnpm. Licença MIT.
 - Repo: `origin` = https://github.com/DizzyAdams/LandMap.git — branch `main`.
 - Commits em **pt-BR** são o padrão do projeto (ok manter).
 - Produção (Vercel): projeto **`landmapprod`** (projectId `prj_yGGRzfAXO3nfp96QwuvdA1jWARkt`), escopo `dizzys-projects-d5a44b36`.
-  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-4pjjeqzck`, status `READY` — port design Lovable light/indigo + telas onboarding/plans/auth, 2026-07-11).
+  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-3vepf2emb`, status `READY` — port design Lovable light/indigo de TODAS as telas do Lote 5 + auxiliares, 2026-07-13).
   Outros aliases ativos: `landmap.us.kg`, `getlandmap.app`, `landmap.com.br` (+ www). Deploy via `vercel deploy --prod` (build remoto; `NEXT_PUBLIC_SITE_URL` em `vercel.json`).
 
 ---
