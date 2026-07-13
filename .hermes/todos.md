@@ -16,7 +16,7 @@ Regra: só o VISUAL — não alterar lógica de fetch/API.
 ### Lote 2 — dashboard (conteúdo Lovable já extraído)
 - [x] dashboard
 ### Lote 3 — landing
-- [ ] page.tsx (index)
+- [x] page.tsx (index)
 ### Lote 4 — admin suite
 - [ ] admin/page
 - [ ] admin/analytics

@@ -101,7 +101,7 @@ export default async function LocaleHomePage() {
                 <div key={r.city} className="flex items-center justify-between border-b border-[var(--border)] pb-3 last:border-0 last:pb-0">
                   <span className="text-sm text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)]">{r.city}</span>
                   <span className="font-semibold text-[var(--foreground)]">{r.price}</span>
-                  <span className={`text-xs font-medium ${r.delta >= 0 ? 'text-emerald-600' : 'text-rose-600'}`}>
+                  <span className={`text-xs font-medium ${r.delta >= 0 ? 'text-[var(--success)]' : 'text-[var(--destructive)]'}`}>
                     {r.delta >= 0 ? '▲' : '▼'} {Math.abs(r.delta).toFixed(1)}%
                   </span>
                 </div>
