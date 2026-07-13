@@ -42,9 +42,9 @@ O usado de fato (linhas atuais ~160): `linear-gradient(180deg,var(--text-strong)
 ## Design tokens — 3 fontes que DEVEM ficar em sincronia
 | Arquivo | Papel | O que tem de diferente |
 |---|---|---|
-| `apps/web/src/app/globals.css` `:root` | **fonte da verdade** completa | tem `--surface` (alias de surface-1), `--accent`, `--accent-dim`, `--danger` que FALTAM nos outros |
-| `packages/ui/src/styles.css` `:root` | mirror | **não tem** `--surface`, `--accent`, `--accent-dim`, `--danger` |
-| `packages/ui/src/tokens.ts` | mirror JS (objetos aninhados) | `colors.semantic.success` duplica emerald; **sem** `--surface`/`--accent`/`--danger`; estrutura aninhada (`surface.1`, `text.muted`, `brand.emerald`) diverge do CSS flat |
+| `apps/web/src/app/globals.css` `:root` | **fonte da verdade** completa | tem `--surface`, `--accent`, `--accent-dim`, `--danger`, `--primary` + tokens Lovable |
+| `packages/ui/src/styles.css` `:root` | mirror | **tem** `--surface`/`--accent`/`--accent-dim`/`--danger`/`--primary` + Lovable (✅ sincronizado) |
+| `packages/ui/src/tokens.ts` | mirror JS (flat, 1:1 com CSS) | espelha `:root` 1:1: `surface`/`accent`/`danger`/`primary`/`lovable` + `colors.semantic`/`colors.brand` (✅ sincronizado em 2026-07-12) |
 
 Paleta de marca (bioluminescente): `--emerald:#34d399`, `--emerald-bright:#6ee7b7`, `--cyan:#22d3ee`, `--violet:#a78bfa`. Camada Sovereign gold (capital/investidor): `--gold:#d4af37`, `--gold-soft:#e8c873`, `--gold-bright:#f4e2a1`, `--gold-deep:#a67c00` (glows `--glow-gold`/`--glow-sovereign`).
 > Nota de cor: `#34d399` = **emerald-400** do Tailwind, NÃO emerald-500 (`#10b981`).

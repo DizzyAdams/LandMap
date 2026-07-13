@@ -1,4 +1,4 @@
-﻿import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
+import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { Navbar } from '../../components/Navbar';
@@ -9,6 +9,7 @@ import { ShortcutsHelp } from '../../components/ShortcutsHelp';
 import { ErrorBoundary } from '../../components/ErrorBoundary';
 import { ToastProvider, MobileBottomNav } from '@landmap/ui';
 import { CommandPaletteHost } from '../../components/CommandPaletteHost';
+import { CompareWidget } from '../../components/CompareWidget';
 import { ShellSwitch } from '../../components/ShellSwitch';
 import '@landmap/ui/styles.css';
 import '../../app/globals.css';
@@ -122,6 +123,7 @@ export default async function RootLayout({
         <ScrollToTop />
         <ShortcutsHelp />
         <CommandPaletteHost />
+        <CompareWidget />
       </div>
     </NextIntlClientProvider>
   );

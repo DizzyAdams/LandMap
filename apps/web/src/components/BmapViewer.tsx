@@ -447,7 +447,7 @@ export default function BmapViewer() {
                         className={`block w-full px-4 py-2 text-left transition ${
                           i === activeIdx
                             ? 'bg-[var(--primary)]/10 text-emerald-200'
-                            : 'text-neutral-300 hover:bg-neutral-800/60'
+                            : 'text-neutral-300 hover:bg-[var(--card)] hover:border-[var(--border-lovable)]'
                         }`}
                       >
                         {s.label}
@@ -519,7 +519,7 @@ export default function BmapViewer() {
                   className={
                     layer === id
                       ? 'rounded-lg bg-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-emerald-300'
-                      : 'rounded-lg px-3 py-1 text-xs text-neutral-400 transition hover:text-neutral-200'
+                      : 'rounded-lg px-3 py-1 text-xs text-neutral-400 transition hover:bg-[var(--card)] hover:text-neutral-200'
                   }
                 >
                   {t(`layers.${id === '3d' ? 'd3' : id}`)}

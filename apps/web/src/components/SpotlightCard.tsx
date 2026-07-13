@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, type ReactNode } from 'react';
+import { cn } from '@landmap/ui';
 
 /**
  * Card with an internal radial spotlight that follows the pointer —
@@ -27,14 +28,17 @@ export function SpotlightCard({
     <div
       ref={ref}
       onPointerMove={onMove}
-      className={`spotlight-card group relative overflow-hidden rounded-xl border border-neutral-800 bg-neutral-900/40 transition-all duration-300 hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(52,211,153,0.35)] ${className}`}
+      className={cn(
+        'group relative overflow-hidden rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] transition-all duration-300 hover:border-[var(--primary)]/30 hover:shadow-[var(--shadow-card)]',
+        className
+      )}
     >
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         style={{
           background:
-            'radial-gradient(300px circle at var(--mx, 50%) var(--my, 50%), rgba(52,211,153,0.20), rgba(34,211,238,0.10) 42%, transparent 66%)',
+            'radial-gradient(400px circle at var(--mx, 50%) var(--my, 50%), rgba(0, 53, 148, 0.05), transparent 50%)',
         }}
       />
       <div className="relative">{children}</div>

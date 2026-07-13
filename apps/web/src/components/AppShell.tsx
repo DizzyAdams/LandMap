@@ -64,9 +64,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               aria-current={isActive(item.href) ? 'page' : undefined}
               title={item.label}
               className={`group relative flex h-11 w-11 items-center justify-center rounded-xl transition ${focusRing} ${
-                isActive(item.href)
-                  ? 'bg-white/10 text-[var(--primary)] ring-1 ring-white/15'
-                  : 'text-neutral-300 hover:bg-white/5 hover:text-white'
+                  isActive(item.href) 
+                    ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-medium' 
+                    : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
               }`}
             >
               {isActive(item.href) && (

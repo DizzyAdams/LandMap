@@ -7,6 +7,8 @@ import { EmptyState } from '@landmap/ui';
 import { Reveal } from '../../../components/Motion';
 import { SpotlightCard } from '../../../components/SpotlightCard';
 import { PropertyThumb } from '../../../components/PropertyThumb';
+import { FavoriteButton } from '../../../components/FavoriteButton';
+import { CompareButton } from '../../../components/CompareButton';
 import { Filters } from './Filters';
 import { formatBRL } from '../../../lib/format';
 
@@ -221,7 +223,13 @@ export default async function SearchPage({
                                 </p>
                               </div>
                             </div>
-                            <span className="text-xs text-[var(--muted-foreground-lovable)]">{item.modality}</span>
+                            <div className="flex flex-col items-end gap-2 z-10">
+                              <span className="text-xs text-[var(--muted-foreground-lovable)]">{item.modality}</span>
+                              <div className="flex items-center gap-1">
+                                <CompareButton id={item.id} />
+                                <FavoriteButton propertyId={item.id} />
+                              </div>
+                            </div>
                           </div>
                           <div className="mt-4 flex items-center justify-between">
                             <span className="text-sm font-medium">

@@ -162,7 +162,7 @@ function RagChat() {
         )}
         {chat.map((m, i) => (
           <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${m.role === 'user' ? 'bg-neutral-700 text-neutral-50' : 'border border-neutral-700 bg-neutral-800/60 text-neutral-200'}`}>
+            <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${m.role === 'user' ? 'bg-[var(--primary)] text-[var(--primary-foreground)]' : 'border border-[var(--border-lovable)] bg-[var(--card)] text-[var(--foreground)]'}`}>
               {m.content}
             </div>
           </div>

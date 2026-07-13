@@ -7,3 +7,4 @@
 // `undefined` value and throws "cn is not a function" during SSR.
 export { cn } from './cn';
 export { config } from './tokens';
+export { buttonVariants } from './button';

@@ -97,16 +97,22 @@
   "scripts": {
     "build": "tsc",
     "lint": "tsc --noEmit",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "devDependencies": {
-    "typescript": "5.5.4"
+    "typescript": "5.5.4",
+    "vitest": "^2.1.0"
   },
   "dependencies": {
     "@langchain/community": "0.3.19",
     "@langchain/core": "0.3.6",
     "@langchain/langgraph": "0.2.47",
     "@langchain/openai": "0.3.17",
-    "langchain": "0.3.7"
+    "langchain": "0.3.7",
+    "pg": "^8.13.0"
+  },
+  "optionalDependencies": {
+    "@types/pg": "^8.11.0"
   }
 }
