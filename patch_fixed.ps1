@@ -1,5 +1,5 @@
 $ErrorActionPreference = "Stop"
-$appDir = "C:\Users\forrydev\Desktop\LandMap\apps\web\src"
+$appDir = "C:\Users\forrydev\.gemini\antigravity-cli\brain\1a768326-4e4c-45ab-aa13-2f7f822f36d5\.system_generated\worktrees\subagent-Feature-Builder-self-e1ea4886\apps\web\src"
 
 # 1. Fix FavoriteButton syntax error
 $favBtnPath = "$appDir\components\FavoriteButton.tsx"

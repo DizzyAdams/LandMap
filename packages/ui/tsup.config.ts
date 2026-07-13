@@ -24,7 +24,7 @@ export default [
     entry: ['src/index.ts', 'src/styles.css'],
     format: ['esm'],
     dts: true,
-    clean: true,
+    clean: false,
     banner: { js: '"use client";' },
     external,
   }),
