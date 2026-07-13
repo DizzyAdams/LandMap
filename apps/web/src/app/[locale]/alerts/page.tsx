@@ -111,7 +111,7 @@ export default function AlertsPage() {
         {/* Header */}
         <div className="flex items-end justify-between">
           <div>
-            <span className="kicker">Monitoramento de busca</span>
+            <p className="text-sm font-medium text-[var(--primary)]">Monitoramento de busca</p>
             <h1 className="mt-2 text-3xl font-semibold tracking-tight text-[var(--foreground)]">Alertas</h1>
             <p className="mt-2 text-sm text-[var(--muted-foreground)]">
               Salve filtros de busca para consultar rapidamente depois.
@@ -312,7 +312,7 @@ function AlertCard({
           {chips.map((chip) => (
             <span
               key={chip}
-              className="chip"
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]"
             >
               {chip}
             </span>

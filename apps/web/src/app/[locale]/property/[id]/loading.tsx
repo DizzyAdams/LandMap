@@ -1,6 +1,6 @@
 export default function PropertyLoading() {
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="mb-6 flex flex-wrap items-center gap-3">
           <div className="h-6 w-40 animate-pulse rounded-full bg-[var(--card)]" />

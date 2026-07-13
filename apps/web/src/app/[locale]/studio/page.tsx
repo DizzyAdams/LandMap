@@ -49,16 +49,16 @@ export default function StudioPage() {
 
   return (
     <>
-      <main className="relative min-h-screen bg-[#050505] text-[var(--foreground)]">
+      <main className="relative min-h-screen text-[var(--foreground)]">
         <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(40rem_26rem_at_70%_-10%,rgba(0,53,148,0.35),transparent_70%)]" />
 
         <Reveal className="mx-auto max-w-6xl px-6 pt-28 pb-10">
-          <span className="chip">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
             AI Studio · LangChain · LangFlow
           </span>
           <span className="kicker mt-6 block">Surreal Intelligence</span>
-          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-gradient sm:text-5xl">
+          <h1 className="mt-3 text-4xl font-semibold tracking-tight text-[var(--foreground)] sm:text-5xl">
             O cérebro agentico do mercado imobiliário
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-[var(--muted-foreground)]">
@@ -86,7 +86,7 @@ export default function StudioPage() {
             <textarea value={input} onChange={(e) => setInput(e.target.value)} spellCheck={false} rows={9}
               className="mt-2 w-full rounded-xl border border-[var(--border)] bg-[var(--card)] p-3 font-mono text-xs text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]/50" />
 
-            <Button onClick={handleRun} disabled={running} className="cta-glow mt-4 h-11 px-6">
+            <Button onClick={handleRun} disabled={running} className="mt-4 h-11 px-6">
               {running ? 'Executando…' : 'Executar workflow'}
             </Button>
 
@@ -188,7 +188,7 @@ function RagChat() {
           aria-label="Sua pergunta sobre o catálogo de imóveis"
           className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)]/50 disabled:opacity-50"
         />
-        <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="cta-glow px-5 py-3">
+        <Button type="submit" disabled={chatLoading || !chatInput.trim()} className="px-5 py-3">
           Enviar
         </Button>
       </form>

@@ -76,8 +76,8 @@ function KpiCard({
       className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5"
     >
       <p
-        className={`ledger-num text-2xl font-semibold tabular-nums ${
-          accent === 'up' ? 'text-emerald-300' : accent === 'down' ? 'text-red-400' : 'text-neutral-50'
+        className={`tabular-nums text-2xl font-semibold tabular-nums ${
+          accent === 'up' ? 'text-emerald-300' : accent === 'down' ? 'text-red-400' : 'text-[var(--muted-foreground)]'
         }`}
       >
         {value}
@@ -141,8 +141,8 @@ export default function TerrenosPage() {
         {/* Header */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="kicker">Inteligência de terrenos</span>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
+            <p className="text-sm font-medium text-[var(--primary)]">Inteligência de terrenos</p>
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
               Terrenos & Lotes
             </h1>
             <p className="mt-2 max-w-2xl text-sm text-[var(--muted-foreground)]">
@@ -164,7 +164,7 @@ export default function TerrenosPage() {
               aria-label="Buscar cidade"
               className="rounded-xl border border-[var(--border)] bg-[var(--card)]/50 px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]/60"
             />
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]">
               Analisar
             </button>
           </form>
@@ -182,17 +182,17 @@ export default function TerrenosPage() {
                   setCity(c);
                   setInput(c);
                 }}
-                className={c === city ? 'btn btn-primary' : 'btn btn-ghost'}
+                className={c === city ? 'inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]' : 'inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]'}
               >
                 {c}
               </button>
             ))}
           </span>
           {updatedAt && !loading && (
-            <span className="chip ml-auto pulse-primary">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
               <span
                 className="h-2 w-2 rounded-full bg-[var(--primary)]"
-                style={{ boxShadow: '0 0 10px rgba(52,211,153,0.9)' }}
+                style={{ boxShadow: '0 0 10px rgba(0,53,148,0.9)' }}
               />
               dados vivos · {updatedAt}
             </span>
@@ -230,7 +230,7 @@ export default function TerrenosPage() {
             <button
               type="button"
               onClick={() => setReloadKey((k) => k + 1)}
-              className="btn btn-primary cta-glow mt-4"
+              className="inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] mt-4"
             >
               Tentar de novo
             </button>
@@ -249,7 +249,7 @@ export default function TerrenosPage() {
                 setCity('Curitiba');
                 setInput('Curitiba');
               }}
-              className="btn btn-ghost mt-4"
+              className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)] mt-4"
             >
               Ver Curitiba
             </button>
@@ -274,10 +274,10 @@ export default function TerrenosPage() {
             {/* Trend + aproveitamento */}
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 lg:col-span-2">
-                <div className="surface glow-dual rounded-xl p-6">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
-                      <h2 className="text-gradient text-xl font-semibold">
+                      <h2 className="text-[var(--foreground)] text-xl font-semibold">
                         Tendência de preço / m² — {data.city}
                       </h2>
                       <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -300,7 +300,7 @@ export default function TerrenosPage() {
               </div>
 
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
-                <div className="surface rounded-xl p-6">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6">
                   <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Aproveitamento do lote</h2>
                   <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                     Quanto do terreno tende a ser útil para construir (0–100).
@@ -318,7 +318,7 @@ export default function TerrenosPage() {
             {/* Rankings */}
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
-                <div className="surface rounded-xl p-6">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6">
                   <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Bairros por preço / m²</h2>
                   <div className="mt-5 space-y-3">
                     {data.byNeighborhood.map((n) => (
@@ -344,7 +344,7 @@ export default function TerrenosPage() {
               </div>
 
               <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
-                <div className="surface rounded-xl p-6">
+                <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6">
                   <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Características dos lotes</h2>
                   <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                     O que está mais presente nas ofertas de terrenos.
@@ -386,7 +386,7 @@ export default function TerrenosPage() {
             <section className="mt-10">
               <div className="flex items-end justify-between gap-4">
                 <div>
-                  <h2 className="text-gradient text-xl font-semibold">Melhores terrenos em {city}</h2>
+                  <h2 className="text-[var(--foreground)] text-xl font-semibold">Melhores terrenos em {city}</h2>
                   <p className="mt-1 text-sm text-[var(--muted-foreground)]">
                     Ranqueados por custo-benefício, tamanho, valorização e prontidão.
                   </p>
@@ -395,12 +395,12 @@ export default function TerrenosPage() {
                   {data.plots.length >= 2 && (
                     <Link
                       href={`/${locale}/compare?ids=${data.plots.slice(0, 3).map((p) => p.id).join(',')}`}
-                      className="btn btn-ghost"
+                      className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
                     >
                       Comparar top 3 ⚖️
                     </Link>
                   )}
-                  <Link href={`/${locale}/map`} className="btn btn-ghost">
+                  <Link href={`/${locale}/map`} className="inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]">
                     Ver no mapa →
                   </Link>
                 </div>

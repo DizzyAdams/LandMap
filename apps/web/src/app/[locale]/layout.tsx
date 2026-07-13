@@ -98,7 +98,7 @@ export default async function RootLayout({
     <NextIntlClientProvider messages={messages} locale={resolvedLocale}>
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[var(--foreground)]"
+        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:bg-[var(--card)] border border-[var(--border)] focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-[var(--foreground)]"
       >
         Pular para o conteúdo
       </a>

@@ -79,16 +79,16 @@ export default function PricingPage() {
   const locale = (params.locale as string) || 'pt-BR';
 
   return (
-    <div className="min-h-screen bg-[#050505]">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-6xl px-6 py-20">
         {/* Header */}
         <Reveal className="text-center">
-          <span className="chip">
+          <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
             Preços em reais (BRL) · Sem fidelidade
           </span>
           <span className="kicker mt-6">Planos LandMap</span>
-          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
+          <h1 className="mt-3 text-3xl font-semibold tracking-tight text-[var(--foreground)] sm:text-4xl">
             Planos e Preços
           </h1>
           <p className="mt-3 text-sm text-[var(--muted-foreground)]">
@@ -102,7 +102,7 @@ export default function PricingPage() {
             <SpotlightCard
               key={plan.name}
               className={`flex h-full flex-col p-6 transition-all duration-300 hover:-translate-y-1 ${
-                plan.highlight ? 'glow-dual ring-1 ring-[var(--primary)]/40' : ''
+                plan.highlight ? ' ring-1 ring-[var(--primary)]/40' : ''
               }`}
             >
               {plan.highlight && (
@@ -129,11 +129,11 @@ export default function PricingPage() {
               <Link
                 href={`/${locale}/${plan.href}`}
                 className={`group mt-6 flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-xs font-semibold transition-all duration-300 ${
-                  plan.highlight ? 'cta-glow ' : ''
+                  plan.highlight ? ' ' : ''
                 }${
                   plan.highlight
-                    ? 'bg-gradient-to-r from-[var(--primary)] to-cyan-400 text-[#050505] shadow-[0_0_0_1px_rgba(52,211,153,0.15),0_8px_30px_-12px_rgba(34,211,238,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(52,211,153,0.45),0_14px_44px_-12px_rgba(34,211,238,0.65)]'
-                    : 'border border-[var(--primary)]/30 text-emerald-200 hover:border-[var(--primary)]/60 hover:text-emerald-100 hover:shadow-[0_0_0_1px_rgba(52,211,153,0.3),0_12px_48px_-12px_rgba(34,211,238,0.35)]'
+                    ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary)] text-[var(--primary-foreground)] shadow-[0_0_0_1px_rgba(0,53,148,0.15),0_8px_30px_-12px_rgba(0,53,148,0.5)] hover:-translate-y-px hover:shadow-[0_0_0_1px_rgba(0,53,148,0.45),0_14px_44px_-12px_rgba(0,53,148,0.65)]'
+                    : 'border border-[var(--primary)]/30 text-[var(--primary-foreground)] hover:border-[var(--primary)]/60 hover:text-[var(--primary-foreground)] hover:shadow-[0_0_0_1px_rgba(0,53,148,0.3),0_12px_48px_-12px_rgba(0,53,148,0.35)]'
                 }`}
               >
                 {plan.cta}

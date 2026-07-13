@@ -7,15 +7,15 @@ import BmapViewer from '../../../components/BmapViewer';
 export default function WorldPage() {
   const t = useTranslations('world');
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <div className="mb-3">
-                <span className="kicker">Mercado Global</span>
+                <p className="text-sm font-medium text-[var(--primary)]">Mercado Global</p>
               </div>
-              <h1 className="text-3xl font-semibold tracking-tight text-gradient">
+              <h1 className="text-3xl font-semibold tracking-tight text-[var(--foreground)]">
                 {t('title')}
               </h1>
               <p className="mt-2 max-w-2xl text-sm text-[var(--muted-foreground)]">

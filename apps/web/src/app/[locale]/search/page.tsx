@@ -122,14 +122,14 @@ export default async function SearchPage({
   }
 
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <SearchKeyboardShortcuts />
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
           <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <div className="mb-3"><span className="kicker">Explorar</span></div>
-              <h1 className="text-3xl font-semibold tracking-tight text-gradient">Buscar imóveis</h1>
+              <div className="mb-3"><p className="text-sm font-medium text-[var(--primary)]">Explorar</p></div>
+              <h1 className="text-3xl font-semibold tracking-tight text-[var(--foreground)]">Buscar imóveis</h1>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 Filtros diretamente por tipologia, modalidade, local e faixa de preço.
               </p>

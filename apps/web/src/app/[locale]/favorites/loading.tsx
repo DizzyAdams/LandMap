@@ -1,6 +1,6 @@
 export default function FavoritesLoading() {
   return (
-    <main className="min-h-screen grid-bg px-6 py-16">
+    <main className="min-h-screen px-6 py-16">
       <div className="mx-auto max-w-6xl">
         <div className="h-8 w-48 animate-pulse rounded bg-[var(--card)]" />
         <div className="mt-2 h-4 w-32 animate-pulse rounded bg-[var(--card)]" />

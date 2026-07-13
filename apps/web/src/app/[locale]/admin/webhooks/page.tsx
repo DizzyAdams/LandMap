@@ -48,7 +48,7 @@ export default function AdminWebhooksPage() {
 
   return (
     <div>
-      <span className="kicker">Integrações</span>
+      <p className="text-sm font-medium text-[var(--primary)]">Integrações</p>
       <h2 className="mt-2 text-lg font-medium text-[var(--foreground)]">Webhooks</h2>
       <p className="mt-1 text-xs text-[var(--muted-foreground)]">
         Configurar URLs de callback para eventos do LandMap

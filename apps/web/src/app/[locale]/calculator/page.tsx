@@ -31,14 +31,14 @@ export default function CalculatorPage() {
     new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(v);
 
   return (
-    <main className="min-h-screen bg-[#050505] text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <Reveal className="mx-auto max-w-2xl px-6 py-10">
-        <span className="chip">
+        <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
           <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
           Simulação de referência
         </span>
         <span className="kicker mt-4">Financiamento inteligente</span>
-        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--foreground)] sm:text-3xl">
           Simulador de financiamento
         </h1>
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">
@@ -88,7 +88,7 @@ export default function CalculatorPage() {
             />
           </label>
 
-          <Button onClick={calc} className="mt-2 w-full cta-glow">
+          <Button onClick={calc} className="mt-2 w-full">
             Calcular
           </Button>
           </div>
@@ -97,11 +97,11 @@ export default function CalculatorPage() {
         {result && (
           <>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="panel rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
                 <p className="text-xs text-[var(--muted-foreground)]">Parcela mensal</p>
                 <p className="mt-1 text-xl font-medium text-[var(--primary)]">{fmt(result.parcela)}</p>
               </div>
-              <div className="panel rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
+              <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
                 <p className="text-xs text-[var(--muted-foreground)]">Total de juros</p>
                 <p className="mt-1 text-xl font-medium text-[var(--foreground)]">{fmt(result.totalJuros)}</p>
               </div>

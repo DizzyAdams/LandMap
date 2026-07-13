@@ -64,7 +64,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
   const originalPrice = Math.round(property.price * 1.2); // mock original price 20% higher
 
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         {/* Dark patterns row */}
         <div className="mb-6 flex flex-wrap items-center gap-3">
@@ -76,7 +76,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
         <Reveal>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
-              <div className="mb-2"><span className="kicker">Imóvel</span></div>
+              <div className="mb-2"><p className="text-sm font-medium text-[var(--primary)]">Imóvel</p></div>
               <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 {property.city}, {property.state} · {property.areaM2} m²
@@ -124,7 +124,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
 
         <div className="mt-6 flex gap-3">
           <Link href={`/${resolved.locale}/search`}>
-            <Button variant="ghost" className="cta-glow">Voltar para busca</Button>
+            <Button variant="ghost" className="">Voltar para busca</Button>
           </Link>
           <Link href={`/${resolved.locale}`}>
             <Button variant="outline">Home</Button>
@@ -174,7 +174,7 @@ async function SimilarProperties({
   return (
     <section className="mt-12">
       <Reveal>
-        <h2 className="text-lg font-semibold tracking-tight text-gradient">
+        <h2 className="text-lg font-semibold tracking-tight text-[var(--foreground)]">
           Imóveis Similares
         </h2>
         <p className="mt-1 text-sm text-[var(--muted-foreground)]">

@@ -20,7 +20,7 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
   const { locale } = await params;
 
   return (
-    <div className="min-h-screen bg-[#050505]">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-4xl px-6 py-20">
         {/* Breadcrumb */}
         <nav className="mb-8 flex items-center gap-2 text-xs text-[var(--muted-foreground)]">

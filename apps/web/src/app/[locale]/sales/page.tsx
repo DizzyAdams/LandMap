@@ -123,18 +123,18 @@ export default function SalesCockpitPage() {
   const pending = state.tasks.filter((t) => t.status === 'pending');
 
   return (
-    <main className="relative min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="relative min-h-screen text-[var(--foreground)]">
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[36rem] bg-[radial-gradient(40rem_28rem_at_70%_-10%,rgba(0,53,148,0.35),transparent_70%)]" />
 
       <div className="mx-auto max-w-6xl px-6 pb-24 pt-24">
         <Reveal>
           <div className="flex flex-col gap-5 border-b border-[var(--border)] pb-6 md:flex-row md:items-end md:justify-between">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]800/50 bg-emerald-950/40 px-3 py-1 text-[11px] uppercase tracking-wide text-[var(--primary)]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)]/50 bg-[var(--muted)] px-3 py-1 text-[11px] uppercase tracking-wide text-[var(--primary)]">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
               Agente Autônomo de Vendas
             </span>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient">
+            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-[var(--foreground)]">
               Sales Cockpit
             </h1>
             <p className="mt-2 max-w-xl text-sm text-[var(--muted-foreground)]">
@@ -146,7 +146,7 @@ export default function SalesCockpitPage() {
 
           <div className="flex flex-col items-start gap-3 md:items-end">
             <Segmented options={AUTONOMY_OPTIONS} value={state.autonomy} onChange={(v) => setLevel(v)} />
-            <Button className="cta-glow" onClick={() => cycle()} disabled={running || state.autonomy === 'off'}>
+            <Button className="" onClick={() => cycle()} disabled={running || state.autonomy === 'off'}>
               {running ? 'Rodando ciclo…' : '▶ Rodar ciclo de agentes'}
             </Button>
           </div>
@@ -236,7 +236,7 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
 
   return (
     <>
-      <div className="surface mb-6 overflow-x-auto rounded-xl p-5">
+      <div className="border border-[var(--border)] bg-[var(--card)] mb-6 overflow-x-auto rounded-xl p-5">
         <p className="eyebrow mb-4">Funil de vendas</p>
         <Stepper
           steps={STAGE_ORDER.map((s) => ({ id: s, label: STAGE_LABEL[s] }))}
@@ -248,7 +248,7 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
         const deals = byStage(stage);
         const value = deals.reduce((s, d) => s + d.amount, 0);
         return (
-          <div key={stage} className="rounded-xl border border-[var(--border)] bg-white/[0.03] p-3">
+          <div key={stage} className="rounded-xl border border-[var(--border)] bg-[var(--muted)] p-3">
             <div className="flex items-center justify-between">
               <span className={`text-xs font-medium ${STAGE_COLOR[stage]}`}>{STAGE_LABEL[stage]}</span>
               <span className="text-[11px] text-[var(--muted-foreground)]">{deals.length}</span>
@@ -270,7 +270,7 @@ function PipelineView({ state, agentName }: { state: SalesState; agentName: Reco
 
 function DealCard({ deal, agentName }: { deal: Deal; agentName: string }) {
   return (
-    <div className="rounded-lg border border-[var(--border)] bg-white/[0.04] p-3 transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01]">
+    <div className="rounded-lg border border-[var(--border)] bg-[var(--muted)] p-3 transition duration-300 hover:-translate-y-0.5 hover:scale-[1.01]">
       <p className="text-xs font-medium leading-tight text-[var(--foreground)]">{deal.title}</p>
       <p className="mt-1 text-sm font-semibold tabular-nums">{BRL(deal.amount)}</p>
       <div className="mt-2">
@@ -329,7 +329,7 @@ function ActivityView({ events }: { events: AgentEvent[] }) {
       {events.slice(0, 30).map((e) => (
         <div
           key={e.id}
-          className={`rounded-lg border-l-2 border border-white/10 bg-white/[0.03] px-4 py-3 ${LEVEL_COLOR[e.level]}`}
+          className={`rounded-lg border-l-2 border border-white/10 bg-[var(--muted)] px-4 py-3 ${LEVEL_COLOR[e.level]}`}
         >
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-[var(--foreground)]">{e.title}</p>
@@ -349,7 +349,7 @@ function ChannelsView({ state }: { state: SalesState }) {
   return (
     <div className="space-y-4">
       {state.analytics.channelPerformance.map((c) => (
-        <div key={c.channel} className="rounded-xl border border-[var(--border)] bg-white/[0.03] p-4">
+        <div key={c.channel} className="rounded-xl border border-[var(--border)] bg-[var(--muted)] p-4">
           <div className="flex items-center justify-between">
             <span className="text-sm font-medium text-[var(--foreground)]">{CHANNEL_LABEL[c.channel]}</span>
             <span className="text-xs text-[var(--muted-foreground)]">
@@ -371,13 +371,13 @@ function ForecastView({ state }: { state: SalesState }) {
   const max = Math.max(1, ...analytics.funnel.map((f) => f.value));
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
-      <div className="rounded-xl border border-[var(--border)] bg-white/[0.03] p-5 lg:col-span-2">
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--muted)] p-5 lg:col-span-2">
         <h3 className="text-sm font-medium text-[var(--foreground)]">Funil por valor</h3>
         <div className="mt-4 space-y-3">
           {analytics.funnel.map((f) => (
             <div key={f.stage} className="flex items-center gap-3">
               <span className={`w-24 shrink-0 text-xs ${STAGE_COLOR[f.stage]}`}>{STAGE_LABEL[f.stage]}</span>
-              <div className="h-2 flex-1 overflow-hidden rounded-full bg-white/10">
+              <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--muted)]">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-blue-700 to-blue-500"
                   style={{ width: `${(f.value / max) * 100}%` }}
@@ -389,9 +389,9 @@ function ForecastView({ state }: { state: SalesState }) {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[var(--primary)]800/40 bg-emerald-950/20 p-5">
+      <div className="rounded-xl border border-[var(--border)]/40 bg-[var(--muted)] p-5">
         <h3 className="text-sm font-medium text-[var(--primary)]">Previsão de receita</h3>
-        <p className="mt-3 text-3xl font-semibold tabular-nums text-gradient">{BRL(forecast.expectedValue)}</p>
+        <p className="mt-3 text-3xl font-semibold tabular-nums text-[var(--foreground)]">{BRL(forecast.expectedValue)}</p>
         <p className="mt-1 text-xs text-[var(--muted-foreground)]">{forecast.period}</p>
         <div className="mt-4">
           <div className="mb-1 flex items-center justify-between text-[11px] text-[var(--muted-foreground)]">
@@ -421,7 +421,7 @@ function TaskCard({
   onReject: () => void;
 }) {
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-white/[0.03] p-4">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--muted)] p-4">
       <div className="flex flex-wrap items-center gap-3">
         <Badge variant="info">{TASK_LABEL[task.kind]}</Badge>
         <span className="text-sm font-medium text-[var(--foreground)]">{task.title}</span>

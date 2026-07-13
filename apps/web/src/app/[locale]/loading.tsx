@@ -1,6 +1,6 @@
 export default function LocaleLoading() {
   return (
-    <div className="flex min-h-screen flex-col bg-[#050505]">
+    <div className="flex min-h-screen flex-col">
       {/* Skeleton hero */}
       <section className="mx-auto w-full max-w-6xl px-6 pt-32 pb-20">
         <div className="mb-4 h-5 w-44 animate-pulse rounded-full bg-[var(--card)]" />
@@ -17,7 +17,7 @@ export default function LocaleLoading() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-16">
         <div className="grid gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card)] sm:grid-cols-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-[#050505] p-6">
+            <div key={i} className="p-6">
               <div className="mb-2 h-7 w-24 animate-pulse rounded bg-[var(--card)]" />
               <div className="h-3 w-32 animate-pulse rounded bg-[var(--card)]" />
             </div>

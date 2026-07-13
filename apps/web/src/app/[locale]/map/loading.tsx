@@ -1,6 +1,6 @@
 export default function MapLoading() {
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="h-9 w-56 animate-pulse rounded bg-[var(--card)]" />
         <div className="mt-2 h-4 w-72 max-w-full animate-pulse rounded bg-[var(--card)]/60" />

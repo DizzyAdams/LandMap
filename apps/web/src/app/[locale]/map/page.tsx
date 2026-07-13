@@ -174,13 +174,13 @@ export default function MapPage() {
   );
 
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <Reveal>
           <div className="flex items-end justify-between">
             <div>
-              <div className="mb-3"><span className="kicker">Inteligência Geoespacial</span></div>
-              <h1 className="text-3xl font-semibold tracking-tight text-gradient">Mapa mundial</h1>
+              <div className="mb-3"><p className="text-sm font-medium text-[var(--primary)]">Inteligência Geoespacial</p></div>
+              <h1 className="text-3xl font-semibold tracking-tight text-[var(--foreground)]">Mapa mundial</h1>
               <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 Navegue por localizações disponíveis ou refine por cidade.
               </p>
@@ -351,7 +351,7 @@ export default function MapPage() {
               type="button"
               onClick={toggleHeat}
               aria-pressed={showHeat}
-              className={`btn ${showHeat ? 'btn-primary' : 'btn-ghost'} cta-glow`}
+              className={`btn ${showHeat ? 'btn-primary' : 'btn-ghost'} `}
             >
               {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
             </button>
@@ -359,7 +359,7 @@ export default function MapPage() {
           </div>
 
           {reverse && (
-            <div className="rounded-lg border border-[var(--primary)]900/60 bg-emerald-950/20 p-3 text-sm text-[var(--foreground)]">
+            <div className="rounded-lg border border-[var(--border)]/60 bg-[var(--muted)] p-3 text-sm text-[var(--foreground)]">
               <p className="font-medium text-[var(--primary)]">Local selecionado</p>
               <p className="mt-1">{reverse.label}</p>
               {reverse.pricePerM2 != null && (
@@ -465,7 +465,7 @@ function MapView({
       };
     }
 
-    // Reverse-geocode on click (real-estate context panel in the parent).
+    // Reverse-geocode on click (real-estate context  in the parent).
     if (onMapClick) {
       map.on('click', (e: any) => onMapClick(e.latlng.lat, e.latlng.lng));
     }

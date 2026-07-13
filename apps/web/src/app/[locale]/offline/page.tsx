@@ -14,7 +14,7 @@ export default function OfflinePage() {
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center px-6 text-[var(--foreground)]">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0" />
         <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
 
       </div>
@@ -22,7 +22,7 @@ export default function OfflinePage() {
         <Logo className="mx-auto h-10 w-10" />
 
         <span className="kicker mt-6">Conexão</span>
-        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
+        <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
           Sem conexão
         </h1>
         <p className="mt-2 text-sm text-[var(--muted-foreground)]">
@@ -33,7 +33,7 @@ export default function OfflinePage() {
         <div className="mt-8 flex items-center justify-center gap-3">
           <button
             onClick={() => window.location.reload()}
-            className="cta-glow glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+            className="inline-flex h-10 items-center rounded-lg bg-[var(--card)] border border-[var(--border)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
           >
             Recarregar
           </button>

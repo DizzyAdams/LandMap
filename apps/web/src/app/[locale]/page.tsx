@@ -20,7 +20,7 @@ const TERMINAL_ROWS = [
 function Metric({ value, suffix = '', label }: { value: number; suffix?: string; label: string }) {
   return (
     <div>
-      <div className="ledger-num text-3xl font-semibold text-[var(--foreground)]">
+      <div className="tabular-nums text-3xl font-semibold text-[var(--foreground)]">
         <CountUp value={value} suffix={suffix} />
       </div>
       <div className="mt-1 text-xs text-[var(--muted-foreground)]">{label}</div>
@@ -147,11 +147,11 @@ export default async function LocaleHomePage() {
                         <span className="link-underline">{p.title}</span>
                       </Link>
                     </td>
-                    <td className="ledger-num border-b border-[var(--border)] px-3 py-3 text-[var(--muted-foreground)]">{p.city}/{p.state}</td>
+                    <td className="tabular-nums border-b border-[var(--border)] px-3 py-3 text-[var(--muted-foreground)]">{p.city}/{p.state}</td>
                     <td className="border-b border-[var(--border)] px-3 py-3 text-[var(--muted-foreground)]">{p.type} · {p.modality}</td>
-                    <td className="ledger-num border-b border-[var(--border)] px-3 py-3 text-right text-[var(--muted-foreground)]">{p.areaM2} m²</td>
-                    <td className="ledger-num border-b border-[var(--border)] px-3 py-3 text-right text-[var(--muted-foreground)]">{p.bedrooms ?? '—'}</td>
-                    <td className="ledger-num border-b border-[var(--border)] px-3 py-3 text-right font-medium text-[var(--foreground)]">{formatBRL(p.price)}</td>
+                    <td className="tabular-nums border-b border-[var(--border)] px-3 py-3 text-right text-[var(--muted-foreground)]">{p.areaM2} m²</td>
+                    <td className="tabular-nums border-b border-[var(--border)] px-3 py-3 text-right text-[var(--muted-foreground)]">{p.bedrooms ?? '—'}</td>
+                    <td className="tabular-nums border-b border-[var(--border)] px-3 py-3 text-right font-medium text-[var(--foreground)]">{formatBRL(p.price)}</td>
                   </tr>
                 ))}
               </tbody>

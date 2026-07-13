@@ -46,7 +46,7 @@ export default function AdminSettingsPage() {
 
   return (
     <div>
-      <span className="kicker">Plataforma</span>
+      <p className="text-sm font-medium text-[var(--primary)]">Plataforma</p>
       <h2 className="mt-2 text-lg font-medium text-[var(--foreground)]">Configurações</h2>
       <p className="mt-1 text-xs text-[var(--muted-foreground)]">
         Configurações gerais da plataforma

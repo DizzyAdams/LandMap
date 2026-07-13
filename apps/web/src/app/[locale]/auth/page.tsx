@@ -120,7 +120,7 @@ export default function AuthPage() {
         />
         <LandMapWordmark />
         <div>
-          <h2 className="max-w-md font-[var(--font-display)] text-4xl font-bold leading-tight">
+          <h2 className="max-w-md text-4xl font-bold leading-tight">
             Inteligência de terrenos, do mapa à decisão.
           </h2>
           <p className="mt-4 max-w-md text-[color:color-mix(in_srgb,var(--primary-foreground)_80%,transparent)]">

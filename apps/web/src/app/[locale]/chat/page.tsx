@@ -143,8 +143,8 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
     <main className="mx-auto flex min-h-[calc(100vh-12rem)] max-w-3xl flex-col px-6 py-8">
       <div className="mb-4 flex items-center justify-between">
         <Reveal>
-          <span className="kicker">Assistente inteligente</span>
-          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-gradient">Chat Imobiliário</h1>
+          <p className="text-sm font-medium text-[var(--primary)]">Assistente inteligente</p>
+          <h1 className="mt-4 text-2xl font-semibold tracking-tight text-[var(--foreground)]">Chat Imobiliário</h1>
           <p className="mt-1 flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
             Pergunte sobre imóveis, preços, e regiões no Brasil.
             <FreeAIBadge model={model} />
@@ -202,7 +202,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                     msg.role === 'user'
-                      ? 'bg-neutral-700 text-neutral-50'
+                      ? 'bg-neutral-700 text-[var(--muted-foreground)]'
                       : 'border border-[var(--border)] bg-[var(--muted)] text-[var(--foreground)]'
                   }`}
                 >
@@ -265,7 +265,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         <Button
           type="submit"
           disabled={loading || !input.trim()}
-          className="px-5 py-3 cta-glow"
+          className="px-5 py-3"
         >
           Enviar
         </Button>

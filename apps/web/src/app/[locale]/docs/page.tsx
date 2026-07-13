@@ -106,16 +106,16 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
   const { locale } = await params;
 
   return (
-    <div className="min-h-screen bg-[#050505]">
+    <div className="min-h-screen">
       <div className="mx-auto max-w-6xl px-6 py-20">
         <Reveal className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <span className="chip">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
               Dados abertos
             </span>
             <span className="kicker mt-5 block">Referência da API</span>
-            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
+            <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--foreground)] sm:text-3xl">
               Documentação da API
             </h1>
             <p className="mt-2 text-sm text-[var(--muted-foreground)]">

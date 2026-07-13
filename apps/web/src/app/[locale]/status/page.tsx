@@ -53,7 +53,7 @@ export default function StatusPage() {
   return (
     <div className="relative min-h-screen">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0" />
         <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
 
       </div>
@@ -61,7 +61,7 @@ export default function StatusPage() {
         {/* Overall status */}
         <Reveal className="text-center">
           <Logo className="mx-auto mb-6 h-10 w-10" />
-          <div className="chip">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
             <span
               className={`h-2 w-2 rounded-full ${
                 overall === 'UP' ? 'bg-[var(--primary)]' : 'bg-amber-400'
@@ -72,7 +72,7 @@ export default function StatusPage() {
             </span>
           </div>
           <span className="kicker mt-6">Uptime & Saúde</span>
-          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
+          <h1 className="mt-3 text-2xl font-semibold tracking-tight text-[var(--foreground)]">
             Status dos Serviços
           </h1>
           <p className="mt-2 text-sm text-[var(--muted-foreground)]">

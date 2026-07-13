@@ -48,7 +48,7 @@ export function Gallery({ images, title }: GalleryProps) {
                 key={i}
                 onClick={() => setCurrent(i)}
                 className={`h-2 w-2 rounded-full transition ${
-                  i === current ? 'bg-white' : 'bg-neutral-700 hover:bg-neutral-500'
+                  i === current ? 'bg-[var(--card)] border border-[var(--border)]' : 'bg-neutral-700 hover:bg-neutral-500'
                 }`}
                 aria-label={`Foto ${i + 1}`}
               />

@@ -118,7 +118,7 @@ export default function InsightsPage() {
               placeholder="Cidade"
               className="input w-44"
             />
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]">
               Analisar
             </button>
           </form>
@@ -134,7 +134,7 @@ export default function InsightsPage() {
                 setInput(c);
               }}
               aria-pressed={c === city}
-              className={c === city ? 'btn btn-primary' : 'btn btn-ghost'}
+              className={c === city ? 'inline-flex items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]' : 'inline-flex items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]'}
             >
               {c}
             </button>

@@ -1,6 +1,6 @@
 export default function AlertsLoading() {
   return (
-    <main className="min-h-screen bg-[#050505] px-6 py-10">
+    <main className="min-h-screen px-6 py-10">
       <div className="mx-auto max-w-6xl">
         <div className="h-9 w-48 animate-pulse rounded bg-[var(--card)]" />
         <div className="mt-2 h-4 w-72 max-w-full animate-pulse rounded bg-[var(--card)]" />
