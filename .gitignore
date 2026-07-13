@@ -53,3 +53,5 @@ probe_html.txt
 
 .vercel
 .env*
+
+__pycache__/
