@@ -11,10 +11,10 @@ Regra: só o VISUAL — não alterar lógica de fetch/API.
 
 ## Pendente (portar, page by page)
 ### Lote 1 — telas simples
-- [ ] onboarding
-- [ ] compare
+- [x] onboarding
+- [x] compare
 ### Lote 2 — dashboard (conteúdo Lovable já extraído)
-- [ ] dashboard
+- [x] dashboard
 ### Lote 3 — landing
 - [ ] page.tsx (index)
 ### Lote 4 — admin suite

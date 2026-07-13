@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { Card, Button, Badge } from '@landmap/ui';
+import { Card, Badge } from '@landmap/ui';
 import { Reveal, Stagger } from '../../../components/Motion';
 import { searchProperties, type Property } from '../../../lib/api';
 
@@ -96,14 +96,14 @@ const MACRO_NOTES = [
 
 function TrendBadge({ trend, label }: { trend: RegionInsight['trend']; label: string }) {
   const map = {
-    up: 'text-emerald-400 border-emerald-400/30 bg-emerald-400/10',
-    stable: 'text-sky-400 border-sky-400/30 bg-sky-400/10',
-    down: 'text-rose-400 border-rose-400/30 bg-rose-400/10',
+    up: 'text-[var(--success)] border-[color:color-mix(in_srgb,var(--success)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--success)_10%,transparent)]',
+    stable: 'text-[var(--primary)] border-[color:color-mix(in_srgb,var(--primary)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--primary)_10%,transparent)]',
+    down: 'text-[var(--destructive)] border-[color:color-mix(in_srgb,var(--destructive)_30%,transparent)] bg-[color:color-mix(in_srgb,var(--destructive)_10%,transparent)]',
   } as const;
   const glyph = trend === 'up' ? '↑' : trend === 'down' ? '↓' : '→';
   return (
     <span className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium ${map[trend]}`}>
-      <span className="font-display font-bold">{glyph}</span>
+      <span className="font-bold">{glyph}</span>
       {label}
     </span>
   );
@@ -113,7 +113,7 @@ function MetricCard({ label, value, hint }: { label: string; value: string; hint
   return (
     <Card variant="default" className="bg-[var(--card)]">
       <p className="text-xs text-[var(--muted-foreground)]">{label}</p>
-      <p className="mt-2 font-display text-2xl font-bold tracking-tight text-[var(--foreground)]">
+      <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--foreground)]">
         {value}
       </p>
       {hint && (
@@ -157,14 +157,12 @@ export default function DashboardPage() {
   const avgDelta = properties.length > 0 ? 4.2 : 0; // demonstração quando sem série
 
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       {/* Hero */}
       <section className="mx-auto max-w-6xl px-6 pb-10 pt-14">
         <Reveal>
-          <div className="mb-3">
-            <span className="kicker">Inteligência territorial</span>
-          </div>
-          <h1 className="text-4xl font-semibold tracking-tight text-gradient">
+          <p className="text-sm font-medium text-[var(--primary)]">Inteligência territorial</p>
+          <h1 className="mt-1 text-4xl font-bold tracking-tight text-[var(--foreground)]">
             Dashboard de valorização
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-[var(--muted-foreground)]">
@@ -200,11 +198,17 @@ export default function DashboardPage() {
         {/* CTA para o mapa completo */}
         <Reveal delay={0.1} className="mt-6">
           <div className="flex flex-wrap gap-3">
-            <Link href={`/${locale}/map`}>
-              <Button variant="default">Abrir mapa de calor</Button>
+            <Link
+              href={`/${locale}/map`}
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]"
+            >
+              Abrir mapa de calor
             </Link>
-            <Link href={`/${locale}/compare`}>
-              <Button variant="outline">Comparar regiões</Button>
+            <Link
+              href={`/${locale}/compare`}
+              className="inline-flex h-11 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+            >
+              Comparar regiões
             </Link>
           </div>
         </Reveal>
@@ -236,7 +240,7 @@ export default function DashboardPage() {
             <Card key={r.name} variant="interactive" className="bg-[var(--card)]">
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <h3 className="font-display text-lg font-bold tracking-tight">
+                  <h3 className="text-lg font-bold tracking-tight">
                     {r.name}
                   </h3>
                   <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">
@@ -286,16 +290,16 @@ export default function DashboardPage() {
 
         <Stagger className="mt-6 grid gap-4 md:grid-cols-2">
           <Card variant="default" className="bg-[var(--card)]">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Notas automáticas de potencial
             </h3>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {MACRO_NOTES.map((note) => (
                 <li
                   key={note}
-                  className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-sm"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)] px-3 py-2 text-sm"
                 >
-                  <span className="text-emerald-400">✓</span>
+                  <span className="text-[var(--success)]">✓</span>
                   {note}
                 </li>
               ))}
@@ -303,17 +307,18 @@ export default function DashboardPage() {
           </Card>
 
           <Card variant="default" className="bg-[var(--card)]">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
+            <h3 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Radar de oportunidades
             </h3>
             <p className="mt-3 text-sm text-[var(--muted-foreground)]">
               Alertas inteligentes de valorização e queda de preço direto no seu
               bolso — não perca janelas.
             </p>
-            <Link href={`/${locale}/alerts`} className="mt-4 block">
-              <Button variant="ghost" size="sm">
-                Ver alertas ativos →
-              </Button>
+            <Link
+              href={`/${locale}/alerts`}
+              className="mt-4 inline-flex h-10 items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+            >
+              Ver alertas ativos →
             </Link>
           </Card>
         </Stagger>
