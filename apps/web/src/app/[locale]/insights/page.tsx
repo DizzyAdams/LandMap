@@ -92,12 +92,12 @@ export default function InsightsPage() {
   const variation = maxAvg > 0 ? ((maxAvg - minAvg) / maxAvg) * 100 : 0;
 
   return (
-    <main className="min-h-screen grid-bg text-[var(--foreground)]">
+    <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="kicker">Inteligência de mercado</span>
-            <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient">
+            <p className="text-sm font-medium text-[var(--primary)]">Inteligência de mercado</p>
+            <h1 className="mt-1 text-3xl font-semibold tracking-tight text-[var(--foreground)]">
               Insights de mercado
             </h1>
             <p className="mt-2 text-sm text-[var(--muted-foreground)]">
@@ -170,7 +170,7 @@ export default function InsightsPage() {
             <button
               type="button"
               onClick={() => setReloadKey((k) => k + 1)}
-              className="btn btn-primary cta-glow mt-4"
+              className="inline-flex h-11 items-center justify-center rounded-lg bg-[var(--primary)] px-5 text-sm font-medium text-[var(--primary-foreground)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]"
             >
               Tentar de novo
             </button>
@@ -179,10 +179,10 @@ export default function InsightsPage() {
 
         {!loading && trend && (
           <div className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
-            <div className="surface glow-dual rounded-xl p-6">
+            <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
-                <h2 className="text-gradient text-2xl font-semibold">
+                <h2 className="text-2xl font-semibold text-[var(--foreground)]">
                   Tendência de preço — {trend.city}
                 </h2>
                 <p className="mt-1 text-sm text-[var(--muted-foreground)]">
@@ -193,7 +193,7 @@ export default function InsightsPage() {
                 data={series}
                 width={180}
                 height={48}
-                color="#34d399"
+                color="var(--success)"
                 aria-label={`Tendência de preço em ${trend.city}`}
               />
             </div>
@@ -213,15 +213,15 @@ export default function InsightsPage() {
 
         {!loading && neighborhoods.length > 0 && (
           <section className="mt-10">
-            <h2 className="text-gradient text-xl font-semibold">
+            <h2 className="text-xl font-semibold text-[var(--foreground)]">
               Bairros mais ativos em {city}
             </h2>
             <div className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {neighborhoods.map((n) => (
-                <article key={n.name} className="surface glow-primary rounded-xl p-5 panel">
+                <article key={n.name} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
                   <div className="flex items-center justify-between">
                     <h3 className="text-base font-semibold text-[var(--foreground)]">{n.name}</h3>
-                    <span className="badge">{n.count} imóveis</span>
+                    <span className="inline-flex items-center rounded-full border border-[var(--border)] bg-[var(--muted)] px-2 py-0.5 text-[11px] font-medium text-[var(--muted-foreground)]">{n.count} imóveis</span>
                   </div>
                   <div className="mt-4 grid grid-cols-2 gap-3">
                     <Stat label="Preço/m²" value={brl.format(n.avgPriceM2)} />

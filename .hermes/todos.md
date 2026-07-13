@@ -17,21 +17,21 @@ Regra: só o VISUAL — não alterar lógica de fetch/API.
 - [x] dashboard
 ### Lote 3 — landing
 - [x] page.tsx (index)
-### Lote 4 — admin suite
-- [ ] admin/page
-- [ ] admin/analytics
-- [ ] admin/audit
-- [ ] admin/exports
-- [ ] admin/leads
-- [ ] admin/properties
-- [ ] admin/settings
-- [ ] admin/webhooks
+### Lote 4 — admin suite (VERIFICADO: ja no padrao Lovable, sem artefatos antigos)
+- [x] admin/page
+- [x] admin/analytics
+- [x] admin/audit
+- [x] admin/exports
+- [x] admin/leads
+- [x] admin/properties
+- [x] admin/settings
+- [x] admin/webhooks
 ### Lote 5 — resto do app (aplicar design system)
+- [x] insights
 - [ ] search (+ Filters)
 - [ ] calculator
 - [ ] alerts
 - [ ] sales
-- [ ] insights
 - [ ] pricing
 - [ ] studio
 - [ ] chat
