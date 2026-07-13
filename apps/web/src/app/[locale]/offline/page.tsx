@@ -25,7 +25,7 @@ export default function OfflinePage() {
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
           Sem conexão
         </h1>
-        <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+        <p className="mt-2 text-sm text-[var(--muted-foreground)]">
           Você está offline. Verifique sua internet e tente novamente — o LandMap
           volta assim que a rede retornar.
         </p>
@@ -33,13 +33,13 @@ export default function OfflinePage() {
         <div className="mt-8 flex items-center justify-center gap-3">
           <button
             onClick={() => window.location.reload()}
-            className="cta-glow glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted-lovable)]"
+            className="cta-glow glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
           >
             Recarregar
           </button>
           <Link
             href={localeHref('/', locale)}
-            className="inline-flex h-10 items-center rounded-lg border border-[var(--border-lovable)] px-5 text-sm text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]"
+            className="inline-flex h-10 items-center rounded-lg border border-[var(--border)] px-5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--border)] hover:text-[var(--foreground)]"
           >
             Voltar ao início
           </Link>

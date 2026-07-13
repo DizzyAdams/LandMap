@@ -72,25 +72,25 @@ export default function AdminLeadsPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <header className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-[var(--primary)]">
           <Star className="h-5 w-5" />
         </div>
         <div>
           <p className="text-sm font-medium text-[var(--primary)]">Pipeline de contatos</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Leads</h1>
-          <p className="mt-1 text-[var(--muted-foreground-lovable)]">{leads.length} leads simulados</p>
+          <p className="mt-1 text-[var(--muted-foreground)]">{leads.length} leads simulados</p>
         </div>
       </header>
 
       {/* Filter */}
       <div className="flex items-center gap-3">
-        <label className="text-[11px] text-[var(--muted-foreground-lovable)]">Filtrar por estágio:</label>
+        <label className="text-[11px] text-[var(--muted-foreground)]">Filtrar por estágio:</label>
         <div className="relative">
-          <Filter className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground-lovable)]" />
+          <Filter className="pointer-events-none absolute left-2.5 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
           <select
             value={filterStage}
             onChange={(e) => setFilterStage(e.target.value)}
-            className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] py-1.5 pl-8 pr-3 text-xs text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
+            className="rounded-lg border border-[var(--border)] bg-[var(--card)] py-1.5 pl-8 pr-3 text-xs text-[var(--foreground)] outline-none focus:border-[var(--primary)]"
           >
             <option value="">Todos</option>
             {STAGES.map((s) => (
@@ -103,10 +103,10 @@ export default function AdminLeadsPage() {
       </div>
 
       {/* Table */}
-      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
-            <thead className="border-b border-[var(--border-lovable)] bg-[var(--muted-lovable)]">
+            <thead className="border-b border-[var(--border)] bg-[var(--muted)]">
               <tr>
                 <Th>Nome</Th>
                 <Th>Email</Th>
@@ -120,25 +120,25 @@ export default function AdminLeadsPage() {
               {filtered.map((lead) => (
                 <tr
                   key={lead.id}
-                  className="border-b border-[var(--border-lovable)] transition hover:bg-[var(--muted-lovable)]"
+                  className="border-b border-[var(--border)] transition hover:bg-[var(--muted)]"
                 >
                   <td className="px-4 py-3 text-[var(--foreground)]">{lead.name}</td>
-                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)] text-[13px]">{lead.email}</td>
+                  <td className="px-4 py-3 text-[var(--muted-foreground)] text-[13px]">{lead.email}</td>
                   <td className="px-4 py-3">
                     <ScoreBadge score={lead.score} />
                   </td>
                   <td className="px-4 py-3">
                     <StageBadge stage={lead.stage} />
                   </td>
-                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)] text-[13px]">{lead.propertyInterest}</td>
-                  <td className="px-4 py-3 text-[var(--muted-foreground-lovable)] text-[13px]">
+                  <td className="px-4 py-3 text-[var(--muted-foreground)] text-[13px]">{lead.propertyInterest}</td>
+                  <td className="px-4 py-3 text-[var(--muted-foreground)] text-[13px]">
                     {new Date(lead.createdAt).toLocaleDateString('pt-BR')}
                   </td>
                 </tr>
               ))}
               {filtered.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-[var(--muted-foreground-lovable)]">
+                  <td colSpan={6} className="px-4 py-10 text-center text-sm text-[var(--muted-foreground)]">
                     Nenhum lead encontrado.
                   </td>
                 </tr>
@@ -155,7 +155,7 @@ export default function AdminLeadsPage() {
 
 function Th({ children }: { children: React.ReactNode }) {
   return (
-    <th className="px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
+    <th className="px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
       {children}
     </th>
   );
@@ -164,10 +164,10 @@ function Th({ children }: { children: React.ReactNode }) {
 function ScoreBadge({ score }: { score: number }) {
   const color =
     score >= 90
-      ? 'text-[var(--primary)] border-[var(--border-lovable)]'
+      ? 'text-[var(--primary)] border-[var(--border)]'
       : score >= 75
-        ? 'text-[var(--ring-lovable)] border-[var(--border-lovable)]'
-        : 'text-[var(--muted-foreground-lovable)] border-[var(--border-lovable)]';
+        ? 'text-[var(--ring)] border-[var(--border)]'
+        : 'text-[var(--muted-foreground)] border-[var(--border)]';
   return (
     <span className={`inline-block rounded-md border px-2 py-0.5 text-[11px] font-mono ${color}`}>
       {score}
@@ -177,16 +177,16 @@ function ScoreBadge({ score }: { score: number }) {
 
 function StageBadge({ stage }: { stage: string }) {
   const colors: Record<string, string> = {
-    Novo: 'text-[var(--ring-lovable)] border-[var(--border-lovable)]',
-    Contatado: 'text-[var(--ring-lovable)] border-[var(--border-lovable)]',
-    'Agendou Visita': 'text-[var(--primary)] border-[var(--border-lovable)]',
-    'Negociação': 'text-[var(--primary)] border-[var(--border-lovable)]',
-    'Fechado': 'text-[var(--success)] border-[var(--border-lovable)]',
-    'Perdido': 'text-[var(--destructive)] border-[var(--border-lovable)]',
+    Novo: 'text-[var(--ring)] border-[var(--border)]',
+    Contatado: 'text-[var(--ring)] border-[var(--border)]',
+    'Agendou Visita': 'text-[var(--primary)] border-[var(--border)]',
+    'Negociação': 'text-[var(--primary)] border-[var(--border)]',
+    'Fechado': 'text-[var(--success)] border-[var(--border)]',
+    'Perdido': 'text-[var(--destructive)] border-[var(--border)]',
   };
   return (
     <span
-      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colors[stage] ?? 'text-[var(--muted-foreground-lovable)] border-[var(--border-lovable)]'}`}
+      className={`inline-block rounded-md border px-2 py-0.5 text-[11px] ${colors[stage] ?? 'text-[var(--muted-foreground)] border-[var(--border)]'}`}
     >
       {stage}
     </span>

@@ -9,8 +9,8 @@ export default function PropertyLoading() {
         <div className="h-8 w-72 max-w-full animate-pulse rounded bg-[var(--card)]" />
         <div className="mt-2 h-4 w-56 animate-pulse rounded bg-[var(--card)]/60" />
         <div className="mt-8 grid gap-3 sm:grid-cols-3">
-          <div className="h-32 animate-pulse rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 sm:col-span-2" />
-          <div className="h-32 animate-pulse rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40" />
+          <div className="h-32 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--card)]/40 sm:col-span-2" />
+          <div className="h-32 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--card)]/40" />
         </div>
       </section>
     </main>

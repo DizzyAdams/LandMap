@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
@@ -181,18 +181,18 @@ export default function MapPage() {
             <div>
               <div className="mb-3"><span className="kicker">Inteligência Geoespacial</span></div>
               <h1 className="text-3xl font-semibold tracking-tight text-gradient">Mapa mundial</h1>
-              <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 Navegue por localizações disponíveis ou refine por cidade.
               </p>
             </div>
-            <Link href={`/${locale}`} className="text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]">
+            <Link href={`/${locale}`} className="text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]">
               Voltar para Home
             </Link>
           </div>
         </Reveal>
 
         <Reveal delay={0.1} className="mt-8">
-          <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-4 space-y-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 p-4 space-y-4">
           {/* Search input */}
           <div className="relative">
             <input
@@ -213,14 +213,14 @@ export default function MapPage() {
               }}
               placeholder="Buscar cidade, estado ou país…"
               aria-label="Buscar localização no mundo todo"
-              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--primary)]"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)]"
             />
             {suggestions.length > 0 && (
               <ul
                 id="geo-suggestions"
                 role="listbox"
                 aria-label="Sugestões de localização"
-                className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-[var(--border-lovable)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
+                className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
               >
                 {suggestions.map((s, i) => (
                   <li
@@ -230,7 +230,7 @@ export default function MapPage() {
                     aria-selected={i === activeIdx}
                     onMouseEnter={() => setActiveIdx(i)}
                     onClick={() => selectSuggestion(s)}
-                    className={`cursor-pointer px-4 py-2.5 text-sm transition ${i === activeIdx ? 'bg-[var(--primary)]/10 text-[var(--primary)]' : 'text-[var(--muted-foreground-lovable)] hover:text-[var(--foreground)]'}`}
+                    className={`cursor-pointer px-4 py-2.5 text-sm transition ${i === activeIdx ? 'bg-[var(--primary)]/10 text-[var(--primary)]' : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'}`}
                   >
                     {s.label}
                   </li>
@@ -241,7 +241,7 @@ export default function MapPage() {
 
           {/* Radius slider */}
           <div className="flex items-center gap-4">
-            <label className="text-xs text-[var(--muted-foreground-lovable)] w-28">Raio de busca:</label>
+            <label className="text-xs text-[var(--muted-foreground)] w-28">Raio de busca:</label>
             <input
               type="range"
               min={5}
@@ -252,13 +252,13 @@ export default function MapPage() {
               aria-label="Raio de busca em quilômetros"
               className="flex-1 accent-neutral-50"
             />
-            <span className="text-xs text-[var(--muted-foreground-lovable)] w-16 text-right">{radiusKm} km</span>
+            <span className="text-xs text-[var(--muted-foreground)] w-16 text-right">{radiusKm} km</span>
           </div>
 
           {/* Price range */}
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="flex items-center gap-3">
-              <label className="text-xs text-[var(--muted-foreground-lovable)]">Preço mín.:</label>
+              <label className="text-xs text-[var(--muted-foreground)]">Preço mín.:</label>
               <input
                 type="range"
                 min={0}
@@ -269,7 +269,7 @@ export default function MapPage() {
                 aria-label="Preço mínimo"
                 className="flex-1 accent-neutral-50"
               />
-              <span className="text-xs text-[var(--muted-foreground-lovable)] w-24 text-right">
+              <span className="text-xs text-[var(--muted-foreground)] w-24 text-right">
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
@@ -279,7 +279,7 @@ export default function MapPage() {
               </span>
             </div>
             <div className="flex items-center gap-3">
-              <label className="text-xs text-[var(--muted-foreground-lovable)]">Preço máx.:</label>
+              <label className="text-xs text-[var(--muted-foreground)]">Preço máx.:</label>
               <input
                 type="range"
                 min={0}
@@ -290,7 +290,7 @@ export default function MapPage() {
                 aria-label="Preço máximo"
                 className="flex-1 accent-neutral-50"
               />
-              <span className="text-xs text-[var(--muted-foreground-lovable)] w-24 text-right">
+              <span className="text-xs text-[var(--muted-foreground)] w-24 text-right">
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL',
@@ -302,8 +302,8 @@ export default function MapPage() {
           </div>
 
           {/* Type filter */}
-          <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border-lovable)] pt-4">
-            <span className="text-xs text-[var(--muted-foreground-lovable)]">Tipo de imóvel:</span>
+          <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-4">
+            <span className="text-xs text-[var(--muted-foreground)]">Tipo de imóvel:</span>
             {(['todos', 'apartamento', 'casa', 'terreno', 'comercial'] as const).map((t) => (
               <button
                 key={t}
@@ -318,7 +318,7 @@ export default function MapPage() {
           </div>
 
           {/* Legend */}
-          <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground-lovable)]">
+          <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground)]">
             <span className="flex items-center gap-1.5">
               <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.apartamento }} />
               Apartamento
@@ -338,14 +338,14 @@ export default function MapPage() {
           </div>
 
           {/* Heatmap de preço */}
-          <div className="flex flex-wrap items-center gap-3 border-t border-[var(--border-lovable)] pt-4">
-            <span className="text-xs text-[var(--muted-foreground-lovable)]">Heatmap de preço:</span>
+          <div className="flex flex-wrap items-center gap-3 border-t border-[var(--border)] pt-4">
+            <span className="text-xs text-[var(--muted-foreground)]">Heatmap de preço:</span>
             <input
               value={heatCity}
               onChange={(e) => setHeatCity(e.target.value)}
               aria-label="Cidade do heatmap"
               placeholder="Cidade"
-              className="w-40 rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-1.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]"
+              className="w-40 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-1.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]"
             />
             <button
               type="button"
@@ -355,7 +355,7 @@ export default function MapPage() {
             >
               {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
             </button>
-            {heatLoading && <span className="text-xs text-[var(--muted-foreground-lovable)]">Carregando…</span>}
+            {heatLoading && <span className="text-xs text-[var(--muted-foreground)]">Carregando…</span>}
           </div>
 
           {reverse && (
@@ -363,7 +363,7 @@ export default function MapPage() {
               <p className="font-medium text-[var(--primary)]">Local selecionado</p>
               <p className="mt-1">{reverse.label}</p>
               {reverse.pricePerM2 != null && (
-                <p className="mt-1 text-[var(--muted-foreground-lovable)]">
+                <p className="mt-1 text-[var(--muted-foreground)]">
                   Preço/m²:{' '}
                   {new Intl.NumberFormat('pt-BR', {
                     style: 'currency',
@@ -374,7 +374,7 @@ export default function MapPage() {
                 </p>
               )}
               {reverse.zoning && (
-                <p className="mt-1 text-[var(--muted-foreground-lovable)]">
+                <p className="mt-1 text-[var(--muted-foreground)]">
                   Zona: {reverse.zoning}
                   {reverse.schools != null && ` · Escolas: ${reverse.schools}`}
                 </p>
@@ -577,7 +577,7 @@ function MapView({
           : `${items.length} imóvel${items.length === 1 ? '' : 'eis'} exibido${items.length === 1 ? '' : 's'} no mapa.`}
       </p>
       <div className="lg:col-span-2 w-full">
-        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-1">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 p-1">
           <div
             ref={mapRef}
             role="region"
@@ -588,7 +588,7 @@ function MapView({
             {loading && (
               <div className="absolute inset-0 z-[1] flex items-center justify-center bg-[var(--card)]/60">
                 <span
-                  className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border-lovable)] border-t-[var(--primary)]"
+                  className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]"
                   aria-hidden="true"
                 />
                 <span className="sr-only">Carregando imóveis no mapa…</span>
@@ -611,7 +611,7 @@ function MapView({
       <div className="lg:hidden">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="w-full rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 px-4 py-2.5 text-sm text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)]"
+          className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)]/40 px-4 py-2.5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--border)]"
         >
           {sidebarOpen ? 'Ocultar resultados' : `Mostrar resultados (${items.length})`}
         </button>
@@ -619,7 +619,7 @@ function MapView({
 
       {/* Sidebar with collapse on mobile */}
       <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block space-y-3`}>
-        <p className="text-xs text-[var(--muted-foreground-lovable)]" aria-live="polite">
+        <p className="text-xs text-[var(--muted-foreground)]" aria-live="polite">
           {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
         </p>
         <ul role="list" className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
@@ -636,8 +636,8 @@ function MapView({
                       style={{ backgroundColor: getMarkerColor(item.type) }}
                     />
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-[var(--muted-foreground-lovable)] truncate">{item.title}</p>
-                      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+                      <p className="text-sm text-[var(--muted-foreground)] truncate">{item.title}</p>
+                      <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                         {item.city}, {item.state} · {item.areaM2} m²
                       </p>
                     </div>

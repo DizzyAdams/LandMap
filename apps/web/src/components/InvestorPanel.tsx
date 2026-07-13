@@ -38,7 +38,7 @@ export default function InvestorPanel({ data }: { data: WorldAnalysis['investmen
   ];
 
   return (
-    <section className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] backdrop-blur-md p-4 text-sm text-[var(--foreground)]">
+    <section className="rounded-xl border border-[var(--border)] bg-[var(--card)] backdrop-blur-md p-4 text-sm text-[var(--foreground)]">
       <header className="flex items-center justify-between gap-3 mb-4">
         <h3 className="text-base font-semibold text-[var(--foreground)]">{t('investor.title')}</h3>
         <span className="rounded-full bg-[var(--primary)]/15 text-[var(--primary)] text-[10px] font-semibold tracking-wider px-2 py-0.5 uppercase">
@@ -48,8 +48,8 @@ export default function InvestorPanel({ data }: { data: WorldAnalysis['investmen
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
         {kpis.map((kpi) => (
-          <div key={kpi.label} className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] p-3">
-            <div className="text-xs text-[var(--muted-foreground-lovable)] mb-1">{kpi.label}</div>
+          <div key={kpi.label} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
+            <div className="text-xs text-[var(--muted-foreground)] mb-1">{kpi.label}</div>
             <div className={kpi.accent ? 'text-gradient text-xl font-bold' : 'text-emerald-300 text-xl font-bold'}>
               {kpi.value}
             </div>
@@ -59,11 +59,11 @@ export default function InvestorPanel({ data }: { data: WorldAnalysis['investmen
 
       <ul className="flex flex-col gap-3 mb-4">
         {data.topByScore.slice(0, 6).map((opp) => (
-          <li key={opp.id} className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] p-3">
+          <li key={opp.id} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
             <div className="flex items-center justify-between gap-2 mb-2">
               <div className="flex items-center gap-2 min-w-0">
                 <span className="truncate font-medium text-[var(--foreground)]">{opp.title}</span>
-                <span className="shrink-0 rounded-full bg-[var(--card)] text-[var(--muted-foreground-lovable)] text-[10px] px-2 py-0.5">
+                <span className="shrink-0 rounded-full bg-[var(--card)] text-[var(--muted-foreground)] text-[10px] px-2 py-0.5">
                   {KIND_LABEL[opp.kind]}
                 </span>
               </div>
@@ -89,19 +89,19 @@ export default function InvestorPanel({ data }: { data: WorldAnalysis['investmen
 
             <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
               <div className="flex justify-between gap-2">
-                <span className="text-[var(--muted-foreground-lovable)]">{t('investor.priceM2')}</span>
+                <span className="text-[var(--muted-foreground)]">{t('investor.priceM2')}</span>
                 <span className="text-[var(--foreground)] tabular-nums">{brl.format(opp.priceM2Proxy)}</span>
               </div>
               <div className="flex justify-between gap-2">
-                <span className="text-[var(--muted-foreground-lovable)]">{t('investor.capRate')}</span>
+                <span className="text-[var(--muted-foreground)]">{t('investor.capRate')}</span>
                 <span className="text-[var(--foreground)] tabular-nums">{opp.capRateProxy}%</span>
               </div>
               <div className="flex justify-between gap-2">
-                <span className="text-[var(--muted-foreground-lovable)]">{t('investor.roi')}</span>
+                <span className="text-[var(--muted-foreground)]">{t('investor.roi')}</span>
                 <span className="text-[var(--foreground)] tabular-nums">{opp.roiProxy}%</span>
               </div>
               <div className="flex justify-between gap-2">
-                <span className="text-[var(--muted-foreground-lovable)]">{t('investor.ticket')}</span>
+                <span className="text-[var(--muted-foreground)]">{t('investor.ticket')}</span>
                 <span className="text-[var(--foreground)] tabular-nums">{brl.format(opp.ticketBRL)}</span>
               </div>
             </div>

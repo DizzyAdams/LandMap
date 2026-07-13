@@ -78,7 +78,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
             <div>
               <div className="mb-2"><span className="kicker">Imóvel</span></div>
               <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
-              <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
                 {property.city}, {property.state} · {property.areaM2} m²
                 {property.bedrooms ? ` · ${property.bedrooms} quarto(s)` : ''}
               </p>
@@ -94,18 +94,18 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
           </div>
         </Reveal>
 
-        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-8 p-4">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 mt-8 p-4">
           <Stagger className="grid gap-3 sm:grid-cols-3">
             <Card variant="default" className="sm:col-span-2">
-              <p className="text-xs text-[var(--muted-foreground-lovable)]">Valor</p>
+              <p className="text-xs text-[var(--muted-foreground)]">Valor</p>
               <p className="mt-1 text-2xl font-medium">{priceText}</p>
-              <p className="mt-4 text-xs text-[var(--muted-foreground-lovable)]">Disponibilidade</p>
-              <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">{property.available ? 'Disponível' : 'Indisponível'}</p>
+              <p className="mt-4 text-xs text-[var(--muted-foreground)]">Disponibilidade</p>
+              <p className="mt-1 text-sm text-[var(--muted-foreground)]">{property.available ? 'Disponível' : 'Indisponível'}</p>
             </Card>
             <Card variant="default">
-              <p className="text-xs text-[var(--muted-foreground-lovable)]">Localização</p>
+              <p className="text-xs text-[var(--muted-foreground)]">Localização</p>
               <a
-                className="mt-2 block text-sm text-[var(--muted-foreground-lovable)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
+                className="mt-2 block text-sm text-[var(--muted-foreground)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
                 href={`https://www.google.com/maps/search/?api=1&q=${mapQuery}`}
                 target="_blank"
                 rel="noreferrer"
@@ -113,7 +113,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
                 Abrir no mapa
               </a>
               <Link
-                className="mt-4 block text-xs text-[var(--muted-foreground-lovable)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
+                className="mt-4 block text-xs text-[var(--muted-foreground)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
                 href={`/${resolved.locale}/map?q=${encodeURIComponent(property.city)}`}
               >
                 Ver mapa da cidade
@@ -177,7 +177,7 @@ async function SimilarProperties({
         <h2 className="text-lg font-semibold tracking-tight text-gradient">
           Imóveis Similares
         </h2>
-        <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+        <p className="mt-1 text-sm text-[var(--muted-foreground)]">
           Outras opções em {city} com preço próximo.
         </p>
       </Reveal>
@@ -189,8 +189,8 @@ async function SimilarProperties({
                 href={`/${locale}/property/${item.id}`}
                 className="block rounded-xl p-5 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
               >
-                <p className="text-sm text-[var(--muted-foreground-lovable)]">{item.title}</p>
-                <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+                <p className="text-sm text-[var(--muted-foreground)]">{item.title}</p>
+                <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                   {item.city}, {item.state} · {item.areaM2} m²
                   {item.bedrooms ? ` · ${item.bedrooms} quarto(s)` : ''}
                 </p>

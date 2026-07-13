@@ -40,7 +40,7 @@ export function ContactForm() {
   };
 
   return (
-    <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-5">
+    <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5">
       <p className="mb-4 text-sm font-medium text-[var(--foreground)]">Fale com o anunciante</p>
 
       {sent ? (
@@ -48,7 +48,7 @@ export function ContactForm() {
           Mensagem enviada com sucesso! Entraremos em contato.
           <button
             onClick={() => setSent(false)}
-            className="ml-2 text-xs text-[var(--muted-foreground-lovable)] underline underline-offset-2 hover:text-[var(--foreground)]"
+            className="ml-2 text-xs text-[var(--muted-foreground)] underline underline-offset-2 hover:text-[var(--foreground)]"
           >
             Nova mensagem
           </button>

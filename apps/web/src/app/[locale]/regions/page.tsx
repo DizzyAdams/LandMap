@@ -42,7 +42,7 @@ export default function RegionsPage() {
         <div>
           <p className="text-sm font-medium text-[var(--primary)]">Regiões monitoradas</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight">Bairros de Fortaleza</h1>
-          <p className="mt-1 text-[var(--muted-foreground-lovable)]">
+          <p className="mt-1 text-[var(--muted-foreground)]">
             Preços médios anunciados e observados, faixa estimada e confiança dos dados.
           </p>
         </div>
@@ -55,24 +55,24 @@ export default function RegionsPage() {
         </Link>
       </header>
 
-      <div className="bg-[var(--card)] border border-[var(--border-lovable)] rounded-lg">
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg">
         <div className="relative w-full overflow-auto">
           <table className="w-full caption-bottom text-sm">
             <thead className="[&_tr]:border-b">
               <tr>
-                <th className="h-10 px-2 text-left align-middle font-medium text-[var(--muted-foreground-lovable)]">
+                <th className="h-10 px-2 text-left align-middle font-medium text-[var(--muted-foreground)]">
                   Bairro
                 </th>
-                <th className="h-10 px-2 text-right align-middle font-medium text-[var(--muted-foreground-lovable)]">
+                <th className="h-10 px-2 text-right align-middle font-medium text-[var(--muted-foreground)]">
                   Observado (R$/m²)
                 </th>
-                <th className="h-10 px-2 text-right align-middle font-medium text-[var(--muted-foreground-lovable)]">
+                <th className="h-10 px-2 text-right align-middle font-medium text-[var(--muted-foreground)]">
                   Faixa estimada
                 </th>
-                <th className="h-10 px-2 text-right align-middle font-medium text-[var(--muted-foreground-lovable)]">
+                <th className="h-10 px-2 text-right align-middle font-medium text-[var(--muted-foreground)]">
                   Dados
                 </th>
-                <th className="h-10 px-2 text-left align-middle font-medium text-[var(--muted-foreground-lovable)]">
+                <th className="h-10 px-2 text-left align-middle font-medium text-[var(--muted-foreground)]">
                   Confiança
                 </th>
               </tr>
@@ -81,13 +81,13 @@ export default function RegionsPage() {
               {regions.map((region) => (
                 <tr
                   key={region.id}
-                  className="border-b transition-colors hover:bg-[var(--muted-lovable)]"
+                  className="border-b transition-colors hover:bg-[var(--muted)]"
                 >
                   <td className="p-2 align-middle font-medium">{region.name}</td>
                   <td className="p-2 align-middle text-right tabular-nums font-semibold">
                     {fmtBRL(region.avgObservedPrice)}
                   </td>
-                  <td className="p-2 align-middle text-right tabular-nums text-[var(--muted-foreground-lovable)]">
+                  <td className="p-2 align-middle text-right tabular-nums text-[var(--muted-foreground)]">
                     {fmtPrice(region.minPrice)} – {fmtPrice(region.maxPrice)}
                   </td>
                   <td className="p-2 align-middle text-right tabular-nums">{region.dataPoints}</td>
@@ -99,7 +99,7 @@ export default function RegionsPage() {
                           className={`h-4 w-4 ${
                             i < region.confidence
                               ? 'text-[var(--primary)]'
-                              : 'text-[var(--muted-foreground-lovable)]'
+                              : 'text-[var(--muted-foreground)]'
                           }`}
                           fill={i < region.confidence ? 'currentColor' : 'none'}
                         />

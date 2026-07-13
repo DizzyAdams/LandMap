@@ -29,7 +29,7 @@ export function SpotlightCard({
       ref={ref}
       onPointerMove={onMove}
       className={cn(
-        'group relative overflow-hidden rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] transition-all duration-300 hover:border-[var(--primary)]/30 hover:shadow-[var(--shadow-card)]',
+        'group relative overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card)] transition-all duration-300 hover:border-[var(--primary)]/30 hover:shadow-[var(--shadow-card)]',
         className
       )}
     >

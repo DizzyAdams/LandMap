@@ -38,7 +38,7 @@ export function WhatsNewBanner() {
           <span className="h-1.5 w-1.5 rounded-full bg-amber-300 shadow-[0_0_8px_rgba(212,175,55,0.9)]" />
           Novidades
         </span>
-        <p className="min-w-0 flex-1 truncate text-[var(--muted-foreground-lovable)]">
+        <p className="min-w-0 flex-1 truncate text-[var(--muted-foreground)]">
           LandMap 2.0 — API aberta, agentes de IA ao vivo e mapa interativo
           worldwide. Tudo open-source.
         </p>
@@ -46,7 +46,7 @@ export function WhatsNewBanner() {
           type="button"
           onClick={dismiss}
           aria-label="Dispensar aviso de novidades"
-          className="shrink-0 rounded-md px-2 py-0.5 text-[var(--muted-foreground-lovable)] transition hover:bg-white/5 hover:text-[var(--foreground)]"
+          className="shrink-0 rounded-md px-2 py-0.5 text-[var(--muted-foreground)] transition hover:bg-white/5 hover:text-[var(--foreground)]"
         >
           Dispensar
         </button>

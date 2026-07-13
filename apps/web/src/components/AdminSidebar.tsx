@@ -49,22 +49,22 @@ export function AdminSidebar() {
 
   return (
     <aside
-      className={`hidden md:flex flex-col border-r border-[var(--border-lovable)] bg-[var(--card)] transition-all duration-200 ${
+      className={`hidden md:flex flex-col border-r border-[var(--border)] bg-[var(--card)] transition-all duration-200 ${
         collapsed ? 'w-16' : 'w-56'
       }`}
     >
       {/* Toggle */}
-      <div className="flex h-14 items-center border-b border-[var(--border-lovable)] px-4">
+      <div className="flex h-14 items-center border-b border-[var(--border)] px-4">
         <button
           onClick={() => setCollapsed((v) => !v)}
           aria-label={collapsed ? 'Expandir barra lateral' : 'Recolher barra lateral'}
-          className="rounded-lg p-1.5 text-[var(--muted-foreground-lovable)] transition hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
+          className="rounded-lg p-1.5 text-[var(--muted-foreground)] transition hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
           title={collapsed ? 'Expandir' : 'Recolher'}
         >
           {collapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
         </button>
         {!collapsed && (
-          <span className="ml-3 text-xs font-medium tracking-widest text-[var(--muted-foreground-lovable)] uppercase">
+          <span className="ml-3 text-xs font-medium tracking-widest text-[var(--muted-foreground)] uppercase">
             Admin
           </span>
         )}
@@ -82,7 +82,7 @@ export function AdminSidebar() {
               className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm transition ${
                 active
                   ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
-                  : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
+                  : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]'
               }`}
               title={link.label}
               aria-current={active ? 'page' : undefined}
@@ -96,10 +96,10 @@ export function AdminSidebar() {
 
       {/* Footer */}
       {!collapsed && (
-        <div className="border-t border-[var(--border-lovable)] p-3">
+        <div className="border-t border-[var(--border)] p-3">
           <Link
             href={`/${locale}`}
-            className="block rounded-lg px-3 py-2 text-[11px] text-[var(--muted-foreground-lovable)] transition hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
+            className="block rounded-lg px-3 py-2 text-[11px] text-[var(--muted-foreground)] transition hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
           >
             ← Voltar ao site
           </Link>

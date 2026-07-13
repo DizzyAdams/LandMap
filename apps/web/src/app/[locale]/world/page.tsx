@@ -18,7 +18,7 @@ export default function WorldPage() {
               <h1 className="text-3xl font-semibold tracking-tight text-gradient">
                 {t('title')}
               </h1>
-              <p className="mt-2 max-w-2xl text-sm text-[var(--muted-foreground-lovable)]">
+              <p className="mt-2 max-w-2xl text-sm text-[var(--muted-foreground)]">
                 {t('subtitle')}
               </p>
             </div>
@@ -26,13 +26,13 @@ export default function WorldPage() {
         </Reveal>
 
         <Reveal delay={0.1} className="mt-8">
-          <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 p-2">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 p-2">
             <BmapViewer />
           </div>
         </Reveal>
 
         <Reveal delay={0.15} className="mt-6">
-          <p className="text-xs text-[var(--muted-foreground-lovable)]">{t('hint')}</p>
+          <p className="text-xs text-[var(--muted-foreground)]">{t('hint')}</p>
         </Reveal>
       </section>
     </main>

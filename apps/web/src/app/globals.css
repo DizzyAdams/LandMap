@@ -1,835 +1,96 @@
 @import "tailwindcss";
 
-/* Include UI package sources so shared component utilities/classes are generated */
 @source '../../../../packages/ui/src/**/*.{ts,tsx}';
 
-:root {
-  /* ── Spec LandMap (landmap-design.zip): azul #003594, fundo claro, verde só success ── */
-  --background: oklch(100% 0 0);
-  --foreground: oklch(18% 0.06 265);
-  --card: oklch(100% 0 0);
-  --card-foreground: oklch(18% 0.06 265);
-  --popover: oklch(100% 0 0);
-  --popover-foreground: oklch(18% 0.06 265);
-
-  --primary: #003594;
-  --primary-bright: #1e5fd0;
-  --primary-soft: #3b6fc4;
-  --primary-foreground: oklch(99% 0.005 250);
-  --primary-glow: #1e5fd0;
-
-  --secondary: oklch(24% 0.1 265);
-  --secondary-foreground: oklch(99% 0.005 250);
-
-  --destructive: oklch(58% 0.22 27);
-  --destructive-foreground: oklch(98% 0.01 27);
-  --success: oklch(60% 0.15 155);
-  --success-foreground: oklch(99% 0.005 155);
-  --warning: oklch(78% 0.15 78);
-  --warning-foreground: oklch(22% 0.05 78);
-
-  --sidebar: oklch(24% 0.1 265);
-  --sidebar-foreground: oklch(96% 0.01 250);
-  --sidebar-primary: #003594;
-  --sidebar-primary-foreground: oklch(99% 0.005 250);
-  --sidebar-accent: oklch(28% 0.11 265);
-  --sidebar-accent-foreground: oklch(99% 0.005 250);
-  --sidebar-border: oklch(30% 0.09 265);
-  --sidebar-ring: #1e5fd0;
-
-  --gradient-brand: linear-gradient(135deg, oklch(24% 0.1 265), #003594);
-  --gradient-hero: linear-gradient(140deg, oklch(20% 0.08 265) 0%, #003594 55%, #1e5fd0 100%);
-  --gradient-accent: linear-gradient(135deg, #003594, #3b6fc4);
-  --shadow-elegant: 0 20px 40px -20px rgba(24, 24, 40, 0.4);
-  --shadow-glow: 0 0 40px rgba(0, 53, 148, 0.35);
-  --shadow-card: 0 1px 3px rgba(24, 24, 40, 0.12), 0 8px 24px -12px rgba(24, 24, 40, 0.15);
-
-  /* screen-specific (Lovable mirror) */
-  --accent-lovable: oklch(88% 0.06 250);
-  --accent-foreground-lovable: oklch(28% 0.14 265);
-  --muted-lovable: oklch(96% 0.01 250);
-  --muted-foreground-lovable: oklch(48% 0.04 265);
-  --border-lovable: oklch(92% 0.015 250);
-  --input-lovable: oklch(94% 0.012 250);
-  --ring-lovable: #1e5fd0;
-  --radius-lovable: 0.625rem;
-
-  /* Fonts — DM Sans (UI) + Space Grotesk (display) + JetBrains Mono (data) */
+@theme {
   --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-geist-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
 
-  /* ── Back-compat aliases (tokens legados → spec claro/azul) ── */
-  --bg: var(--background);
-  --text: var(--foreground);
-  --text-strong: #ffffff;
-  --surface: var(--card);
-  --surface-1: var(--card);
-  --surface-2: var(--muted-lovable);
-  --surface-3: var(--muted-lovable);
-  --border: var(--border-lovable);
-  --border-strong: var(--sidebar-border);
-  --muted: var(--muted-foreground-lovable);
-  --muted-2: var(--muted-foreground-lovable);
-  --accent: var(--accent-lovable);
-  --accent-dim: var(--accent-foreground-lovable);
-  --danger: var(--destructive);
-  --ring: 0 0 0 1px var(--primary), 0 0 0 3px rgba(0, 53, 148, 0.25);
-  --emerald: #34d399; /* success badge only */
-  --emerald-bright: #6ee7b7;
-  --emerald-tint: rgba(0, 53, 148, 0.10);
-  --cyan: #22d3ee;
-  --cyan-tint: rgba(0, 53, 148, 0.10);
-  --gold: #d4af37;
-  --violet: #a78bfa;
-  --glow-emerald: 0 0 0 1px rgba(0, 53, 148, 0.15), 0 8px 40px -12px rgba(0, 53, 148, 0.25);
-  --glow-dual: 0 0 0 1px rgba(0, 53, 148, 0.22), 0 12px 60px -12px rgba(0, 53, 148, 0.38);
-  --glow-gold: 0 0 0 1px rgba(212, 175, 55, 0.28), 0 10px 48px -12px rgba(212, 175, 55, 0.38);
-  --border-subtle: rgba(24, 24, 40, 0.08);
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+:root {
+  --radius: 0.625rem;
+  --background: oklch(100% 0 0);
+  --foreground: oklch(18% .06 265);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(18% .06 265);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(18% .06 265);
+  --primary: oklch(34% .18 265);
+  --primary-foreground: oklch(99% .005 250);
+  --primary-glow: oklch(55% .2 265);
+  --secondary: oklch(24% .1 265);
+  --secondary-foreground: oklch(99% .005 250);
+  --accent: oklch(88% .06 250);
+  --accent-foreground: oklch(28% .14 265);
+  --muted: oklch(96% .01 250);
+  --muted-foreground: oklch(48% .04 265);
+  --destructive: oklch(58% .22 27);
+  --destructive-foreground: oklch(98% .01 27);
+  --success: oklch(60% .15 155);
+  --success-foreground: oklch(99% .005 155);
+  --warning: oklch(78% .15 78);
+  --warning-foreground: oklch(22% .05 78);
+  --border: oklch(92% .015 250);
+  --input: oklch(94% .012 250);
+  --ring: oklch(50% .18 265);
+  --chart-1: oklch(34% .18 265);
+  --chart-2: oklch(55% .2 265);
+  --chart-3: oklch(72% .13 245);
+  --chart-4: oklch(24% .1 265);
+  --chart-5: oklch(78% .15 78);
+  --sidebar: oklch(22% .1 265);
+  --sidebar-foreground: oklch(96% .01 250);
+  --sidebar-primary: oklch(55% .2 265);
+  --sidebar-primary-foreground: oklch(99% .005 250);
+  --sidebar-accent: oklch(28% .11 265);
+  --sidebar-accent-foreground: oklch(99% .005 250);
+  --sidebar-border: oklch(30% .09 265);
+  --sidebar-ring: oklch(55% .2 265);
+  --gradient-brand: linear-gradient(135deg, oklch(24% .1 265), oklch(34% .18 265));
+  --gradient-hero: linear-gradient(140deg, oklch(20% .08 265) 0%, oklch(30% .15 265) 55%, oklch(50% .2 265) 100%);
+  --gradient-accent: linear-gradient(135deg, oklch(34% .18 265), oklch(62% .18 250));
+  --shadow-elegant: 0 20px 40px -20px oklab(24% -.00871557 -.0996195/.4);
+  --shadow-glow: 0 0 40px oklab(55% -.0174311 -.199239/.35);
+  --shadow-card: 0 1px 3px oklab(24% -.00871557 -.0996195/.12), 0 8px 24px -12px oklab(24% -.00871557 -.0996195/.15);
+}
+
+.dark {
+  --background: oklch(14% .05 265);
+  --foreground: oklch(96% .01 250);
+  --card: oklch(19% .07 265);
+  --card-foreground: oklch(96% .01 250);
+  --popover: oklch(19% .07 265);
+  --popover-foreground: oklch(96% .01 250);
+  --primary: oklch(62% .2 265);
+  --primary-foreground: oklch(99% .005 250);
+  --primary-glow: oklch(75% .17 250);
+  --secondary: oklch(26% .08 265);
+  --secondary-foreground: oklch(96% .01 250);
+  --accent: oklch(55% .18 265);
+  --accent-foreground: oklch(99% .005 250);
+  --muted: oklch(22% .06 265);
+  --muted-foreground: oklch(72% .03 250);
+  --destructive: oklch(65% .22 27);
+  --destructive-foreground: oklch(98% .01 27);
+  --success: oklch(72% .15 148);
+  --success-foreground: oklch(15% .04 148);
+  --warning: oklch(82% .15 78);
+  --warning-foreground: oklch(22% .05 78);
+  --border: oklch(100% 0 0/.1);
+  --input: oklch(100% 0 0/.12);
+  --ring: oklch(62% .2 265);
 }
 
 html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
 }
 
-/* Geist Mono for numeric / data-dense surfaces (dashboards, stats, prices). */
-.font-mono {
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-}
-
-.input {
-  @apply w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--background)] px-3 py-2 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)]/20;
-}
-
-.btn {
-  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm transition;
-}
-
-/* NOTE: Tailwind v4 `@apply` cannot reference custom classes, so `.btn` is inlined
-   into the variants below instead of `@apply btn` (which would error at build). */
-.btn-primary {
-  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition bg-[var(--primary)] text-white hover:bg-[var(--primary-bright)];
-}
-
-.btn-ghost {
-  @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition border border-[var(--border-lovable)] bg-[var(--card)] text-[var(--foreground)] hover:border-[var(--primary)]/40;
-}
-
-.input {
-  @apply w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--muted)] px-3 py-2 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]/50;
-}
-
-.surface {
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  background: color-mix(in srgb, var(--surface-1) 40%, transparent);
-}
-
-::selection {
-  background: #262626;
-  color: #f5f5f5;
-}
-
-/* ─── Silicon-Valley-startup polish ─── */
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--bg);
-  background-image:
-    radial-gradient(60rem 60rem at 50% -10%, rgba(0, 53, 148, 0.10), transparent 60%),
-    radial-gradient(48rem 48rem at 88% 4%, rgba(0, 53, 148, 0.06), transparent 58%),
-    radial-gradient(40rem 40rem at 100% 0%, rgba(59, 111, 196, 0.07), transparent 55%);
-  background-attachment: fixed;
-}
-
-/* Subtle dotted grid overlay for depth (azul, visível no claro) */
-.grid-bg {
-  background-image: radial-gradient(rgba(0, 53, 148, 0.06) 1px, transparent 1px);
-  background-size: 22px 22px;
-}
-
-.badge {
-  @apply rounded-md border border-[var(--border-lovable)] bg-[var(--muted)] px-2 py-1 text-xs font-medium text-[var(--muted-foreground-lovable)];
-}
-
-.glass {
-  background: color-mix(in srgb, var(--bg) 60%, transparent);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.glow-emerald {
-  box-shadow: var(--glow-emerald);
-}
-.glow-primary {
-  box-shadow: 0 0 0 1px rgba(0,53,148,0.28), 0 10px 40px -12px rgba(0,53,148,0.30);
-}
-
-.hairline {
-  border-color: var(--border);
-}
-.pulse-primary {
-  animation: pulse-primary 2.4s ease-in-out infinite;
-}
-@keyframes pulse-primary {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,53,148,0.5); }
-  50%      { opacity: 0.7; box-shadow: 0 0 0 6px rgba(0,53,148,0); }
-}
-
-/* Refined scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-::-webkit-scrollbar-thumb {
-  background: #1f1f1f;
-  border-radius: 9999px;
-  border: 2px solid var(--bg);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #2e2e2e;
-}
-
-/* ─── Out-of-the-ordinary layer: grain + bioluminescent aurora ─── */
-.grain {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
-  background-size: 160px 160px;
-}
-
-.aurora {
-  background:
-    radial-gradient(48rem 34rem at 8% -12%, rgba(34, 211, 238, 0.16), transparent 60%),
-    radial-gradient(42rem 32rem at 94% -8%, rgba(167, 139, 250, 0.10), transparent 55%),
-    radial-gradient(54rem 38rem at 78% 2%, rgba(212, 175, 55, 0.14), transparent 58%),
-    radial-gradient(66rem 46rem at 50% 120%, rgba(52, 211, 153, 0.18), transparent 60%);
-  filter: blur(10px);
-  animation: aurora-drift 20s ease-in-out infinite alternate;
-}
-@keyframes aurora-drift {
-  from {
-    transform: translate3d(-2%, -1%, 0) scale(1);
-  }
-  to {
-    transform: translate3d(2%, 1%, 0) scale(1.05);
+@layer base {
+  * {
+    border-color: var(--border);
   }
 }
-
-/* Restrained monochrome gradient — the calm default for section headings.
-   Keeps a hint of dimensionality without the "AI gradient slop" tell. */
-.text-gradient {
-  background: linear-gradient(180deg, var(--text-strong) 0%, #c9c9c9 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Signature bioluminescent gradient — reserved for the hero H1 only,
-   the single "surreal" moment where a full multi-tone wash earns its place. */
-.text-aurora {
-  background: linear-gradient(
-    100deg,
-    var(--text-strong) 0%,
-    var(--emerald-bright) 26%,
-    var(--emerald) 50%,
-    var(--cyan) 78%,
-    #7dd3fc 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-.glow-dual {
-  box-shadow: var(--glow-dual);
-}
-
-/* ─── Sovereign gold layer (capital / investor accent) ─── */
-.glow-gold {
-  box-shadow: var(--glow-gold);
-}
-.glow-sovereign {
-  box-shadow: var(--glow-sovereign);
-}
-.hairline-gold {
-  border-color: rgba(212, 175, 55, 0.28);
-}
-
-/* Gold champagne gradient for hero words / accent type. */
-.text-gradient-gold {
-  background: linear-gradient(
-    100deg,
-    var(--gold-bright) 0%,
-    var(--gold-soft) 38%,
-    var(--gold) 62%,
-    #b8860b 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
-
-/* Soft gold radial halo — used behind the hero mandala / key focal points. */
-.gold-aura {
-  background: radial-gradient(
-    circle at 50% 50%,
-    rgba(212, 175, 55, 0.22),
-    rgba(212, 175, 55, 0.06) 42%,
-    transparent 70%
-  );
-}
-
-/* ─── Editorial system — "Sovereign Cadastre" ───
-   Restraint is the signature. No aimless ambient motion (no drifting dust,
-   no endless mandala/orbit spin): confidence reads as stillness. Type, hairlines
-   and a single monospace data layer do the talking. */
-
-/* Small uppercase tracked label — the cadastral "section marker". */
-.eyebrow {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-.eyebrow-gold {
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold-soft);
-}
-
-/* Monospace, tabular numerals for prices / metrics / coordinates. */
-.ledger-num {
-  font-family: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
-  font-variant-numeric: tabular-nums;
-  font-feature-settings: 'tnum' 1;
-}
-
-/* Thin gold rule used to open/close editorial sections. */
-.rule-gold {
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(212, 175, 55, 0.55),
-    transparent
-  );
-}
-
-/* Precise hairline grid — the "cadastral plot" texture, static and intentional. */
-.cadastre-grid {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 28px 28px;
-}
-
-/* Accessible, on-brand focus rings */
-:focus-visible {
-  outline: 2px solid color-mix(in srgb, var(--emerald) 70%, transparent);
-  outline-offset: 2px;
-  border-radius: 6px;
-}
-
-/* Perpetual market ticker */
-.marquee-track {
-  animation: marquee 28s linear infinite;
-}
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee-track { animation: none; }
-  .aurora { animation: none; }
-}
-
-/* ─── Skeleton shimmer (loading placeholders) ─── */
-/* Appended additively; existing rules above are untouched. */
-.skeleton {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--surface-2);
-  border-radius: var(--radius-md);
-}
-.skeleton::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.07) 50%,
-    transparent 100%
-  );
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
-}
-@keyframes skeleton-shimmer {
-  100% { transform: translateX(100%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .skeleton::after { animation: none; }
-}
-
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   Fluid motion kit — premium, restrained, and fully `prefers-reduced-motion`
-   aware. Adds life without the "aimless drift" the editorial system avoids:
-   every animation is slow, low-amplitude and tied to a real focal point.
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Animated champagne shimmer for the hero gold word. */
-.text-gradient-gold {
-  background-size: 200% auto;
-  animation: sheen-text 6s ease-in-out infinite;
-}
-/* Animated bioluminescent shimmer for the hero aurora word. */
-.text-aurora {
-  background-size: 200% auto;
-  animation: sheen-text 7s ease-in-out infinite;
-}
-@keyframes sheen-text {
-  0%   { background-position: 0% center; }
-  50%  { background-position: 100% center; }
-  100% { background-position: 0% center; }
-}
-
-/* Gentle float for accent chips / focal glyphs. */
-.animate-float {
-  animation: float-soft 6s ease-in-out infinite;
-}
-@keyframes float-soft {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-6px); }
-}
-
-/* Sheen sweep — a light glint that crosses a primary surface on hover. */
-.sheen {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-}
-.sheen::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  transform: translateX(-120%) skewX(-18deg);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.35) 50%,
-    transparent 100%
-  );
-  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
-  pointer-events: none;
-}
-.sheen:hover::after {
-  transform: translateX(120%) skewX(-18deg);
-}
-
-/* Fluid, springy micro-lift for interactive cards / links. */
-.lift {
-  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.35s ease;
-  will-change: transform;
-}
-.lift:hover {
-  transform: translateY(-4px);
-}
-
-/* Soft pulse for "live" status dots (slower, calmer than Tailwind's ping). */
-.pulse-live {
-  animation: pulse-live 2.4s ease-in-out infinite;
-}
-@keyframes pulse-live {
-  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.5); }
-  50%      { opacity: 0.7; box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
-}
-
-/* Underline that grows from the left on hover — for editorial links. */
-.link-underline {
-  background-image: linear-gradient(currentColor, currentColor);
-  background-position: 0% 100%;
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.link-underline:hover {
-  background-size: 100% 1px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .text-gradient-gold,
-  .text-aurora,
-  .animate-float,
-  .pulse-live { animation: none; }
-  .sheen::after,
-  .lift,
-  .link-underline { transition: none; }
-  .lift:hover { transform: none; }
-}
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   LandMap 3.0 — "Surreal Intelligence" layer
-   Elevated palette intensity + reusable surreal surfaces. Every animation is
-   gated behind `prefers-reduced-motion` (see the block at the very bottom).
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Rotating conic angle for the sovereign rim (progressive enhancement). */
-@property --angle {
-  syntax: '<angle>';
-  inherits: false;
-  initial-value: 0deg;
-}
-
-/* Cinematic edge vignette — depth without noise. */
-.vignette {
-  background: radial-gradient(120% 100% at 50% 40%, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
-}
-
-/* Stronger, multi-stop aurora for the global canvas (layered under content). */
-.aurora-intense {
-  background:
-    radial-gradient(52rem 38rem at 10% -12%, rgba(34, 211, 238, 0.26), transparent 60%),
-    radial-gradient(48rem 36rem at 92% -8%, rgba(167, 139, 250, 0.20), transparent 58%),
-    radial-gradient(62rem 44rem at 80% 4%, rgba(212, 175, 55, 0.22), transparent 60%),
-    radial-gradient(74rem 52rem at 50% 130%, rgba(52, 211, 153, 0.30), transparent 60%);
-  filter: blur(14px);
-  animation: aurora-drift 24s ease-in-out infinite alternate;
-}
-
-/* Premium glass — stronger, saturated blur for the sticky nav. */
-.glass-strong {
-  background: color-mix(in srgb, var(--bg) 72%, transparent);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(16px) saturate(140%);
-  -webkit-backdrop-filter: blur(16px) saturate(140%);
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset, 0 12px 40px -24px rgba(0, 0, 0, 0.9);
-}
-
-/* Glass terminal surface — base for data / live-feed panels. */
-.terminal {
-  background: color-mix(in srgb, var(--surface-2) 66%, transparent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--elevation-2);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-/* Animated sovereign rim — a slow conic sweep in brand hues. */
-.gradient-border {
-  position: relative;
-}
-.gradient-border::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--angle),
-    rgba(52, 211, 153, 0.0),
-    rgba(52, 211, 153, 0.9),
-    rgba(34, 211, 238, 0.7),
-    rgba(167, 139, 250, 0.6),
-    rgba(212, 175, 55, 0.8),
-    rgba(52, 211, 153, 0.0)
-  );
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: rim-spin 8s linear infinite;
-  pointer-events: none;
-}
-@keyframes rim-spin {
-  to { --angle: 360deg; }
-}
-
-/* Hover-lift glass card. */
-.panel {
-  background: color-mix(in srgb, var(--surface-2) 72%, transparent);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--elevation-2);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.4s ease;
-}
-.panel:hover {
-  transform: translateY(-4px);
-  border-color: rgba(52, 211, 153, 0.35);
-  box-shadow: var(--glow-emerald);
-}
-
-/* Soft emerald halo wrapper. */
-.surface-glow { box-shadow: var(--glow-emerald); }
-
-
-/* ═══════════════════════════════════════════════════════════════════════════
-   LandMap 4.0 — "Surreal Intelligence" surface system
-   Living, cinematic layer: animated mesh gradients, light-leaks, a
-   perspective cadastral grid, breathing orbs and a bioluminescent bloom.
-   Every animation is gated behind `prefers-reduced-motion` (block at end).
-   Pure CSS / no new deps — safe under Tailwind v4 (no custom @apply).
-   ═══════════════════════════════════════════════════════════════════════════ */
-
-/* Animated mesh-gradient aurora — the "surreal" atmosphere. Four brand hues
-   drift slowly across the viewport, blended additively for a living glow. */
-.mesh-bg {
-  background:
-    radial-gradient(40rem 30rem at 12% 8%, rgba(52, 211, 153, 0.22), transparent 60%),
-    radial-gradient(34rem 26rem at 88% 4%, rgba(34, 211, 238, 0.16), transparent 58%),
-    radial-gradient(38rem 30rem at 78% 22%, rgba(167, 139, 250, 0.16), transparent 60%),
-    radial-gradient(46rem 34rem at 50% 96%, rgba(212, 175, 55, 0.18), transparent 62%),
-    radial-gradient(50rem 40rem at 20% 90%, rgba(52, 211, 153, 0.14), transparent 60%);
-  filter: blur(20px) saturate(120%);
-  animation: mesh-drift 26s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes mesh-drift {
-  0%   { transform: translate3d(-2%, -1%, 0) scale(1.05); }
-  50%  { transform: translate3d(1%, 1.5%, 0) scale(1.1); }
-  100% { transform: translate3d(3%, -1%, 0) scale(1.05); }
-}
-
-/* A soft diagonal light-leak — a broad spectral streak sliding across the
-   top of the canvas, like stage light catching fog. */
-.leak {
-  background:
-    linear-gradient(115deg, transparent 30%, rgba(52, 211, 153, 0.10) 46%, rgba(34, 211, 238, 0.12) 52%, rgba(167, 139, 250, 0.08) 58%, transparent 72%);
-  filter: blur(40px);
-  mix-blend-mode: screen;
-  animation: leak-drift 18s ease-in-out infinite alternate;
-}
-@keyframes leak-drift {
-  from { transform: translateX(-12%) translateY(-4%); opacity: 0.6; }
-  to   { transform: translateX(12%) translateY(4%); opacity: 1; }
-}
-
-/* Perspective cadastral grid — the plot texture receding into the distance
-   with a radial fade so it melts into the dark instead of a hard edge. */
-.cadastre-fade {
-  background-image:
-    linear-gradient(to right, var(--border) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
-  background-size: 32px 32px;
-  -webkit-mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
-  mask-image: radial-gradient(120% 90% at 50% 30%, #000 0%, transparent 78%);
-}
-
-/* Breathing bioluminescent orbs — decorative focal points that slowly rise
-   and pulse. Floating accents behind hero / feature surfaces. */
-.orb {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(8px);
-  opacity: 0.5;
-  mix-blend-mode: screen;
-  animation: orb-float 14s ease-in-out infinite;
-  will-change: transform;
-  pointer-events: none;
-}
-.orb--emerald { background: radial-gradient(circle, rgba(52,211,153,0.55), transparent 70%); }
-.orb--cyan    { background: radial-gradient(circle, rgba(34,211,238,0.45), transparent 70%); }
-.orb--violet  { background: radial-gradient(circle, rgba(167,139,250,0.40), transparent 70%); }
-
-/* Cinematic depth: bottom vignette + top hairline highlight for chrome. */
-.depth {
-  background:
-    radial-gradient(130% 110% at 50% 0%, transparent 52%, rgba(0, 0, 0, 0.6) 100%),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05), transparent 18%);
-}
-
-/* Premium frosted glass — saturated, deep blur for floating surfaces. */
-.frost {
-  background: color-mix(in srgb, var(--bg) 64%, transparent);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  box-shadow:
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.06),
-    0 24px 60px -28px rgba(0, 0, 0, 0.9);
-}
-
-/* Gradient rim wrapper — slow conic sweep in brand hues (needs @property
-   --angle). Pairs with .frost for floating hero chrome. */
-.rim { position: relative; }
-.rim::before {
-  content: '';
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: conic-gradient(
-    from var(--angle),
-    rgba(52, 211, 153, 0),
-    rgba(52, 211, 153, 0.9),
-    rgba(34, 211, 238, 0.7),
-    rgba(167, 139, 250, 0.6),
-    rgba(212, 175, 55, 0.8),
-    rgba(52, 211, 153, 0)
-  );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  animation: rim-spin 9s linear infinite;
-  pointer-events: none;
-}
-
-/* Bioluminescent bloom for hero display text — a soft outer glow that makes
-   the gradient word feel lit from within. */
-.text-bloom {
-  filter: drop-shadow(0 0 28px rgba(52, 211, 153, 0.28))
-          drop-shadow(0 0 60px rgba(34, 211, 238, 0.16));
-}
-
-/* Editorial display scale (used by the hero H1). */
-.text-display {
-  font-size: clamp(2.75rem, 7vw, 5.25rem);
-  line-height: 0.98;
-  letter-spacing: -0.02em;
-  font-weight: 600;
-}
-
-/* Magnetic / springy surface lift for premium cards & CTAs. */
-.magnetic {
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-    border-color 0.4s ease;
-  will-change: transform;
-}
-.magnetic:hover {
-  transform: translateY(-5px);
-  border-color: rgba(52, 211, 153, 0.4);
-  box-shadow: var(--glow-dual);
-}
-
-/* Slow conic spin — for orbital / loading glyphs. */
-.spin-slow { animation: rim-spin 14s linear infinite; }
-
-/* Reduced-motion: neutralize every new ambient animation. */
-@media (prefers-reduced-motion: reduce) {
-  .mesh-bg,
-  .leak,
-  .orb,
-  .rim::before { animation: none; }
-  .mesh-bg { transform: none; }
-  .leak { transform: none; opacity: 0.7; }
-  .orb { transform: none; opacity: 0.45; }
-  .text-bloom { filter: none; }
-  .magnetic:hover { transform: none; }
-}
-.orb--gold    { background: radial-gradient(circle, rgba(212,175,55,0.42), transparent 70%); }
-@keyframes orb-float {
-  0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.4; }
-  50%      { transform: translate3d(0, -18px, 0) scale(1.12); opacity: 0.65; }
-}
-/* Gold gradient hairline divider. */
-.divider-gold {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.5), transparent);
-}
-
-/* Live/data chip. */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  border: 1px solid rgba(52, 211, 153, 0.25);
-  background: rgba(52, 211, 153, 0.06);
-  padding: 0.25rem 0.75rem;
-  font-size: 0.75rem;
-  color: rgb(167, 230, 210);
-}
-
-/* Eyebrow kicker — gold filete + tracked label. */
-.kicker {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.625rem;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--gold-soft);
-}
-.kicker::before {
-  content: '';
-  width: 1.75rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.7));
-}
-
-/* Primary CTA emerald halo on hover. */
-.cta-glow { box-shadow: 0 10px 40px -14px rgba(52, 211, 153, 0.55); }
-.cta-glow:hover { box-shadow: 0 16px 56px -14px rgba(52, 211, 153, 0.75); }
-
-/* Surreal hero word — bioluminescent bloom across the brand spectrum. */
-.text-surreal {
-  background: linear-gradient(
-    100deg,
-    var(--text-strong) 0%,
-    var(--emerald-bright) 24%,
-    var(--cyan) 56%,
-    #a78bfa 82%,
-    #c4b5fd 100%
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  filter: drop-shadow(0 0 30px rgba(52, 211, 153, 0.28));
-}
-
-/* Page entrance — subtle, replayed on every route change via template.tsx */
-@keyframes pageEnter {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.page-enter {
-  animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-@keyframes dash {
-  to { stroke-dashoffset: 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .aurora-intense { animation: none; }
-  .gradient-border::before { animation: none; }
-  .panel:hover { transform: none; }
-  .text-surreal { filter: none; }
-  .page-enter { animation: none; }
-}
-/* Production hardening: no horizontal scroll on mobile, smooth anchor scroll
-   (overflow-x: clip — safe for position: sticky; does not create a scroll container). */
-html,
-body {
-  overflow-x: clip;
-}
-html {
-  scroll-behavior: smooth;
-}
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
-
-

@@ -145,7 +145,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         <Reveal>
           <span className="kicker">Assistente inteligente</span>
           <h1 className="mt-4 text-2xl font-semibold tracking-tight text-gradient">Chat Imobiliário</h1>
-          <p className="mt-1 flex items-center gap-2 text-sm text-[var(--muted-foreground-lovable)]">
+          <p className="mt-1 flex items-center gap-2 text-sm text-[var(--muted-foreground)]">
             Pergunte sobre imóveis, preços, e regiões no Brasil.
             <FreeAIBadge model={model} />
           </p>
@@ -153,20 +153,20 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         <button
           onClick={handleSuggest}
           disabled={suggesting}
-          className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/60 px-4 py-2 text-xs font-medium text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)] disabled:opacity-40"
+          className="rounded-xl border border-[var(--border)] bg-[var(--card)]/60 px-4 py-2 text-xs font-medium text-[var(--muted-foreground)] transition hover:border-[var(--border)] hover:text-[var(--foreground)] disabled:opacity-40"
         >
           {suggesting ? 'Sugerindo...' : '💡 Sugerir imóveis'}
         </button>
       </div>
 
-      <div className="mb-3 flex items-center gap-2 text-xs text-[var(--muted-foreground-lovable)]">
+      <div className="mb-3 flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
         <span className="uppercase tracking-wide">Modelo MiniMax</span>
         <select
           value={model}
           onChange={(e) => setModel(e.target.value)}
           disabled={loading}
           aria-label="Modelo de IA"
-          className="rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-1.5 text-xs text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]/50 disabled:opacity-50"
+          className="rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-1.5 text-xs text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]/50 disabled:opacity-50"
         >
           {MINIMAX_MODELS.map((m) => (
             <option key={m.id} value={m.id}>
@@ -176,17 +176,17 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
         </select>
       </div>
 
-      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 flex-1 min-h-0 grid">
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 flex-1 min-h-0 grid">
         <div
           role="log"
           aria-live="polite"
           aria-relevant="additions"
           aria-label="Histórico da conversa"
-          className="h-full space-y-4 overflow-y-auto rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/30 p-5"
+          className="h-full space-y-4 overflow-y-auto rounded-xl border border-[var(--border)] bg-[var(--card)]/30 p-5"
         >
         {messages.length === 0 && !loading && (
           <div className="flex h-full items-center justify-center">
-            <p className="text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="text-sm text-[var(--muted-foreground)]">
               Digite uma pergunta para começar. Ex: &quot;Apartamentos em Curitiba até R$ 500 mil&quot;
             </p>
           </div>
@@ -203,11 +203,11 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
                   className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                     msg.role === 'user'
                       ? 'bg-neutral-700 text-neutral-50'
-                      : 'border border-[var(--border-lovable)] bg-[var(--muted)] text-[var(--foreground)]'
+                      : 'border border-[var(--border)] bg-[var(--muted)] text-[var(--foreground)]'
                   }`}
                 >
                   {msg.content || (
-                    <span className="inline-flex gap-0.5 text-[var(--muted-foreground-lovable)]" aria-hidden>
+                    <span className="inline-flex gap-0.5 text-[var(--muted-foreground)]" aria-hidden>
                       <span className="animate-pulse">.</span>
                       <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>.</span>
                       <span className="animate-pulse" style={{ animationDelay: '0.4s' }}>.</span>
@@ -221,7 +221,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
 
         {loading && (
           <div className="flex justify-start">
-            <div className="max-w-[85%] rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]/60 px-4 py-3 text-sm text-[var(--muted-foreground-lovable)]">
+            <div className="max-w-[85%] rounded-2xl border border-[var(--border)] bg-[var(--card)]/60 px-4 py-3 text-sm text-[var(--muted-foreground)]">
               <span className="inline-block animate-pulse">Pensando</span>
               <span className="animate-pulse">.</span>
               <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>
@@ -236,7 +236,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
 
         {suggesting && (
           <div className="flex justify-start">
-            <div className="max-w-[85%] rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]/60 px-4 py-3 text-sm text-[var(--muted-foreground-lovable)]">
+            <div className="max-w-[85%] rounded-2xl border border-[var(--border)] bg-[var(--card)]/60 px-4 py-3 text-sm text-[var(--muted-foreground)]">
               <span className="inline-block animate-pulse">Buscando sugestões</span>
               <span className="animate-pulse">.</span>
               <span className="animate-pulse" style={{ animationDelay: '0.2s' }}>
@@ -260,7 +260,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
           placeholder="Digite sua pergunta sobre imóveis..."
           disabled={loading}
           aria-label="Sua pergunta sobre imóveis"
-          className="flex-1 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground-lovable)] outline-none transition focus:border-[var(--primary)]/50 disabled:opacity-50"
+          className="flex-1 rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-3 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)]/50 disabled:opacity-50"
         />
         <Button
           type="submit"

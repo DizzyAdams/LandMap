@@ -102,7 +102,7 @@ export default function IntroPage() {
         )}
         <Link
           href={lh('/auth')}
-          className="inline-flex h-12 w-full items-center justify-center rounded-full text-sm font-semibold text-[color:color-mix(in_srgb,var(--foreground)_70%,transparent)] transition hover:bg-[var(--muted-lovable)]"
+          className="inline-flex h-12 w-full items-center justify-center rounded-full text-sm font-semibold text-[color:color-mix(in_srgb,var(--foreground)_70%,transparent)] transition hover:bg-[var(--muted)]"
         >
           Já tenho conta
         </Link>

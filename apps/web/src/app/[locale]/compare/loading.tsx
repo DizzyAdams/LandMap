@@ -5,7 +5,7 @@ export default function CompareLoading() {
         <div className="h-4 w-40 animate-pulse rounded bg-[var(--card)]" />
         <div className="mt-4 h-8 w-64 animate-pulse rounded bg-[var(--card)]" />
         <div className="mt-6 overflow-x-auto">
-          <div className="min-w-[640px] space-y-3 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+          <div className="min-w-[640px] space-y-3 rounded-xl border border-[var(--border)] bg-[var(--card)] p-4">
             {Array.from({ length: 7 }).map((_, i) => (
               <div key={i} className="h-6 animate-pulse rounded bg-[var(--card)]" />
             ))}

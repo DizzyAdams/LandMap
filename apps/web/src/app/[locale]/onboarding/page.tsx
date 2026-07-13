@@ -59,7 +59,7 @@ export default function OnboardingPage() {
           <Logo className="h-8 w-8" />
         </Link>
 
-        <div className="overflow-hidden rounded-3xl border border-[var(--border-lovable)] bg-[var(--card)] p-8 shadow-[var(--shadow-card)]">
+        <div className="overflow-hidden rounded-3xl border border-[var(--border)] bg-[var(--card)] p-8 shadow-[var(--shadow-card)]">
           <div
             key={i}
             className="flex flex-col items-center text-center"
@@ -69,14 +69,14 @@ export default function OnboardingPage() {
               {slides[i].icon}
             </div>
             <h1 className="text-2xl font-semibold tracking-tight">{slides[i].title}</h1>
-            <p className="mt-3 text-sm leading-relaxed text-[var(--muted-foreground-lovable)]">{slides[i].body}</p>
+            <p className="mt-3 text-sm leading-relaxed text-[var(--muted-foreground)]">{slides[i].body}</p>
           </div>
 
           <div className="mt-8 flex items-center justify-center gap-2">
             {slides.map((_, n) => (
               <span
                 key={n}
-                className={`h-1.5 rounded-full transition-all ${n === i ? 'w-6 bg-[var(--primary)]' : 'w-1.5 bg-[var(--border-lovable)]'}`}
+                className={`h-1.5 rounded-full transition-all ${n === i ? 'w-6 bg-[var(--primary)]' : 'w-1.5 bg-[var(--border)]'}`}
               />
             ))}
           </div>
@@ -86,7 +86,7 @@ export default function OnboardingPage() {
               type="button"
               onClick={() => setI((v) => Math.max(0, v - 1))}
               disabled={i === 0}
-              className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted-foreground-lovable)] transition hover:border-[var(--primary)]/40 disabled:opacity-40"
+              className="rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 text-sm font-medium text-[var(--muted-foreground)] transition hover:border-[var(--primary)]/40 disabled:opacity-40"
             >
               Voltar
             </button>
@@ -109,7 +109,7 @@ export default function OnboardingPage() {
           </div>
         </div>
 
-        <p className="mt-6 text-center text-xs text-[var(--muted-foreground-lovable)]">
+        <p className="mt-6 text-center text-xs text-[var(--muted-foreground)]">
           LandMap — inteligência imobiliária aberta.
         </p>
       </div>

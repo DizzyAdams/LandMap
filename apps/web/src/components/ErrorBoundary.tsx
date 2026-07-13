@@ -58,18 +58,18 @@ export class ErrorBoundary extends Component<Props, State> {
             <h2 className="text-lg font-semibold text-[var(--foreground)]">
               Algo deu errado
             </h2>
-            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
               Ocorreu um erro inesperado ao carregar esta seção.
             </p>
             {this.state.error && (
-              <p className="mt-2 max-h-20 overflow-auto text-[11px] text-[var(--muted-foreground-lovable)] font-mono">
+              <p className="mt-2 max-h-20 overflow-auto text-[11px] text-[var(--muted-foreground)] font-mono">
                 {this.state.error.message}
               </p>
             )}
             <button
               type="button"
               onClick={this.handleRetry}
-              className="mt-6 rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-5 py-2 text-xs font-medium text-[var(--foreground)] transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
+              className="mt-6 rounded-lg border border-[var(--border)] bg-[var(--card)] px-5 py-2 text-xs font-medium text-[var(--foreground)] transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
             >
               Tentar novamente
             </button>

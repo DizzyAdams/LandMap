@@ -15,14 +15,14 @@ export const colors = {
   textStrong: '#ffffff',
   surface: 'oklch(100% 0 0)',       // --surface (= --card)
   surface1: 'oklch(100% 0 0)',      // --surface-1
-  surface2: 'oklch(96% 0.01 250)',  // --surface-2 (= --muted-lovable)
+  surface2: 'oklch(96% 0.01 250)',  // --surface-2 (= --muted)
   surface3: 'oklch(96% 0.01 250)',  // --surface-3
-  border: 'oklch(92% 0.015 250)',   // --border (= --border-lovable)
+  border: 'oklch(92% 0.015 250)',   // --border (= --border)
   borderStrong: 'oklch(30% 0.09 265)', // --border-strong (= --sidebar-border)
-  muted: 'oklch(48% 0.04 265)',     // --muted (= --muted-foreground-lovable)
+  muted: 'oklch(48% 0.04 265)',     // --muted (= --muted-foreground)
   muted2: 'oklch(48% 0.04 265)',
-  accent: 'oklch(88% 0.06 250)',    // --accent (= --accent-lovable)
-  accentDim: 'oklch(28% 0.14 265)', // --accent-dim (= --accent-foreground-lovable)
+  accent: 'oklch(88% 0.06 250)',    // --accent (= --accent)
+  accentDim: 'oklch(28% 0.14 265)', // --accent-dim (= --accent-foreground)
   danger: 'oklch(58% 0.22 27)',     // --danger (= --destructive)
 
   /* ── Primary brand ramp (LandMap azul #003594) ── */

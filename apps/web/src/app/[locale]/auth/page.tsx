@@ -20,19 +20,19 @@ function Field({
   const hasIcon = Boolean(icon);
   return (
     <label className="block">
-      <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground-lovable)]">
+      <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground)]">
         {label}
       </span>
       <div className="relative">
         {hasIcon && (
-          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground-lovable)]">
+          <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]">
             {icon}
           </span>
         )}
         <input
           type={isPassword && show ? 'text' : type}
           className={`${fieldClass} ${hasIcon ? 'pl-10' : ''} ${isPassword ? 'pr-10' : ''}`}
-          style={{ borderColor: 'var(--border-lovable)' }}
+          style={{ borderColor: 'var(--border)' }}
           {...rest}
         />
         {isPassword && (
@@ -40,7 +40,7 @@ function Field({
             type="button"
             onClick={() => setShow((s) => !s)}
             aria-label={show ? 'Ocultar senha' : 'Mostrar senha'}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground-lovable)]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]"
           >
             {show ? <EyeOff size={16} /> : <Eye size={16} />}
           </button>
@@ -140,7 +140,7 @@ export default function AuthPage() {
 
           <div
             role="tablist"
-            className="grid w-full grid-cols-2 rounded-lg bg-[var(--muted-lovable)] p-1 text-sm font-medium"
+            className="grid w-full grid-cols-2 rounded-lg bg-[var(--muted)] p-1 text-sm font-medium"
           >
             {([
               { id: 'login', label: 'Entrar' },
@@ -154,7 +154,7 @@ export default function AuthPage() {
                 className="rounded-md px-3 py-1.5 transition"
                 style={{
                   backgroundColor: tab === t.id ? 'var(--background)' : 'transparent',
-                  color: tab === t.id ? 'var(--foreground)' : 'var(--muted-foreground-lovable)',
+                  color: tab === t.id ? 'var(--foreground)' : 'var(--muted-foreground)',
                   boxShadow: tab === t.id ? 'var(--shadow-card)' : 'none',
                 }}
               >
@@ -192,7 +192,7 @@ export default function AuthPage() {
           {tab === 'signup' && (
             <form onSubmit={onSignup} className="mt-6 space-y-4">
               <h1 className="text-2xl font-bold tracking-tight">Criar conta</h1>
-              <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+              <p className="mt-1 text-sm text-[var(--muted-foreground)]">
                 Preencha seus dados para começar a usar o LandMap.
               </p>
               <Field
@@ -213,7 +213,7 @@ export default function AuthPage() {
                 onChange={(e) => setPhone(e.target.value)}
               />
               <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground-lovable)]">
+                <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground)]">
                   Tipo de usuário
                 </span>
                 <select
@@ -221,7 +221,7 @@ export default function AuthPage() {
                   onChange={(e) => setUserType(e.target.value)}
                   required
                   className={fieldClass}
-                  style={{ borderColor: 'var(--border-lovable)' }}
+                  style={{ borderColor: 'var(--border)' }}
                 >
                   <option value="" disabled>
                     Selecione seu perfil
@@ -242,11 +242,11 @@ export default function AuthPage() {
               />
 
               <label className="block">
-                <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground-lovable)]">
+                <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground)]">
                   Senha
                 </span>
                 <div className="relative">
-                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground-lovable)]">
+                  <span className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]">
                     <Lock size={16} />
                   </span>
                   <input
@@ -257,38 +257,38 @@ export default function AuthPage() {
                     onFocus={() => setSignupPwFocused(true)}
                     onBlur={() => setSignupPwFocused(false)}
                     className={`${fieldClass} pl-10 pr-10`}
-                    style={{ borderColor: 'var(--border-lovable)' }}
+                    style={{ borderColor: 'var(--border)' }}
                   />
                   <button
                     type="button"
                     onClick={() => setShowSignupPw((s) => !s)}
                     aria-label={showSignupPw ? 'Ocultar senha' : 'Mostrar senha'}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground-lovable)]"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]"
                   >
                     {showSignupPw ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
                 {showPwHint && (
-                  <div className="mt-2 flex flex-col gap-1 rounded-md border border-[color:color-mix(in_srgb,var(--foreground)_12%,transparent)] bg-[var(--muted-lovable)] p-2 text-xs">
+                  <div className="mt-2 flex flex-col gap-1 rounded-md border border-[color:color-mix(in_srgb,var(--foreground)_12%,transparent)] bg-[var(--muted)] p-2 text-xs">
                     <div className="flex items-center gap-2">
                       <span
                         className={`flex h-3.5 w-3.5 items-center justify-center rounded-full ${
-                          pwLenMet ? 'bg-emerald-100 text-emerald-700' : 'bg-[var(--muted-lovable)] text-[var(--muted-foreground-lovable)]'
+                          pwLenMet ? 'bg-emerald-100 text-emerald-700' : 'bg-[var(--muted)] text-[var(--muted-foreground)]'
                         }`}
                       />
-                      <span className={pwLenMet ? 'text-emerald-600' : 'text-[var(--muted-foreground-lovable)]'}>
+                      <span className={pwLenMet ? 'text-emerald-600' : 'text-[var(--muted-foreground)]'}>
                         Mínimo 8 caracteres
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span
                         className={`flex h-3.5 w-3.5 items-center justify-center rounded-full ${
-                          pwSpecialMet ? 'bg-emerald-100 text-emerald-700' : 'bg-[var(--muted-lovable)] text-[var(--muted-foreground-lovable)]'
+                          pwSpecialMet ? 'bg-emerald-100 text-emerald-700' : 'bg-[var(--muted)] text-[var(--muted-foreground)]'
                         }`}
                       />
                       <span
                         className={
-                          pwSpecialMet ? 'text-emerald-600' : 'text-[var(--muted-foreground-lovable)]'
+                          pwSpecialMet ? 'text-emerald-600' : 'text-[var(--muted-foreground)]'
                         }
                       >
                         Ao menos 1 caractere especial
@@ -308,23 +308,23 @@ export default function AuthPage() {
           )}
 
           <div className="mt-6 flex items-center gap-3">
-            <div className="h-px flex-1 bg-[var(--border-lovable)]" />
-            <span className="text-xs uppercase tracking-wide text-[var(--muted-foreground-lovable)]">ou</span>
-            <div className="h-px flex-1 bg-[var(--border-lovable)]" />
+            <div className="h-px flex-1 bg-[var(--border)]" />
+            <span className="text-xs uppercase tracking-wide text-[var(--muted-foreground)]">ou</span>
+            <div className="h-px flex-1 bg-[var(--border)]" />
           </div>
 
           <button
             type="button"
             onClick={guest}
-            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg border text-sm font-semibold transition hover:bg-[var(--muted-lovable)]"
-            style={{ borderColor: 'var(--border-lovable)', color: 'var(--foreground)' }}
+            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg border text-sm font-semibold transition hover:bg-[var(--muted)]"
+            style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
           >
             Entrar sem cadastro
           </button>
 
           <Link
             href={lh('/intro')}
-            className="mt-8 block text-center text-sm text-[var(--muted-foreground-lovable)] hover:text-[var(--foreground)]"
+            className="mt-8 block text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
           >
             ← Voltar para o site
           </Link>

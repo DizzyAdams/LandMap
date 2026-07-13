@@ -75,13 +75,13 @@ export default function StatusPage() {
           <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient">
             Status dos Serviços
           </h1>
-          <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+          <p className="mt-2 text-sm text-[var(--muted-foreground)]">
             Monitoramento em tempo real
           </p>
         </Reveal>
 
         {/* Services */}
-        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-10 p-4">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 mt-10 p-4">
         <Stagger className="space-y-3">
           {services.map((service) => {
             const cfg = statusConfig[service.status];
@@ -104,8 +104,8 @@ export default function StatusPage() {
                 </div>
                 <div className="flex items-center gap-5">
                   <span className={`text-xs font-medium ${cfg.color}`}>{cfg.label}</span>
-                  <span className="text-xs text-[var(--muted-foreground-lovable)] font-mono">{service.latency}</span>
-                  <span className="text-[11px] text-[var(--muted-foreground-lovable)]">
+                  <span className="text-xs text-[var(--muted-foreground)] font-mono">{service.latency}</span>
+                  <span className="text-[11px] text-[var(--muted-foreground)]">
                     {service.lastCheck
                       ? new Date(service.lastCheck).toLocaleTimeString('pt-BR')
                       : '—'}
@@ -117,7 +117,7 @@ export default function StatusPage() {
         </Stagger>
         </div>
 
-        <p className="mt-8 text-center text-xs text-[var(--muted-foreground-lovable)]">
+        <p className="mt-8 text-center text-xs text-[var(--muted-foreground)]">
           Última verificação há poucos segundos · latências medidas em ambiente de demonstração
         </p>
       </div>

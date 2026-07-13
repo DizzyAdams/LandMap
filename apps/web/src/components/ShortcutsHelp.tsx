@@ -39,7 +39,7 @@ export function ShortcutsHelp() {
         onClick={() => setOpen((v) => !v)}
         aria-label="Atalhos de teclado"
         aria-expanded={open}
-        className="fixed bottom-4 right-4 z-40 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-lovable)] bg-[var(--card)] text-sm text-[var(--muted-foreground-lovable)] backdrop-blur-md transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
+        className="fixed bottom-4 right-4 z-40 flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--card)] text-sm text-[var(--muted-foreground)] backdrop-blur-md transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
       >
         ?
       </button>
@@ -55,7 +55,7 @@ export function ShortcutsHelp() {
             className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={() => setOpen(false)}
           />
-          <div className="surface relative w-full max-w-sm rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-5 shadow-xl">
+          <div className="surface relative w-full max-w-sm rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-xl">
             <div className="flex items-center justify-between">
               <h2 className="text-sm font-semibold text-[var(--foreground)]">
                 Atalhos de teclado
@@ -64,7 +64,7 @@ export function ShortcutsHelp() {
                 type="button"
                 onClick={() => setOpen(false)}
                 aria-label="Fechar"
-                className="rounded-md px-2 py-1 text-[var(--muted-foreground-lovable)] transition hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]"
+                className="rounded-md px-2 py-1 text-[var(--muted-foreground)] transition hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -75,12 +75,12 @@ export function ShortcutsHelp() {
                   key={s.label + s.keys.join()}
                   className="flex items-center justify-between gap-3 text-sm"
                 >
-                  <span className="text-[var(--muted-foreground-lovable)]">{s.label}</span>
+                  <span className="text-[var(--muted-foreground)]">{s.label}</span>
                   <span className="flex gap-1">
                     {s.keys.map((k) => (
                       <kbd
                         key={k}
-                        className="rounded border border-[var(--border-lovable)] bg-[var(--muted-lovable)] px-1.5 py-0.5 text-xs text-[var(--foreground)]"
+                        className="rounded border border-[var(--border)] bg-[var(--muted)] px-1.5 py-0.5 text-xs text-[var(--foreground)]"
                       >
                         {k}
                       </kbd>

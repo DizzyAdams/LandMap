@@ -48,18 +48,18 @@ export default function AdminSettingsPage() {
     <div>
       <span className="kicker">Plataforma</span>
       <h2 className="mt-2 text-lg font-medium text-[var(--foreground)]">Configurações</h2>
-      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+      <p className="mt-1 text-xs text-[var(--muted-foreground)]">
         Configurações gerais da plataforma
       </p>
 
-      <div className="mt-8 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6 max-w-lg">
+      <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 max-w-lg">
         <div className="space-y-5">
           <Field label="Nome da Plataforma">
             <input
               type="text"
               value={settings.platformName}
               onChange={(e) => handleChange('platformName', e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)]"
             />
           </Field>
 
@@ -68,7 +68,7 @@ export default function AdminSettingsPage() {
               type="email"
               value={settings.contactEmail}
               onChange={(e) => handleChange('contactEmail', e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)]"
             />
           </Field>
 
@@ -77,7 +77,7 @@ export default function AdminSettingsPage() {
               type="url"
               value={settings.apiBaseUrl}
               onChange={(e) => handleChange('apiBaseUrl', e.target.value)}
-              className="w-full rounded-lg border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]"
+              className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)]"
             />
           </Field>
 
@@ -90,7 +90,7 @@ export default function AdminSettingsPage() {
             </button>
             <button
               onClick={handleReset}
-              className="rounded-lg border border-[var(--border-lovable)] px-4 py-2 text-xs text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
+              className="rounded-lg border border-[var(--border)] px-4 py-2 text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]"
             >
               Restaurar Padrões
             </button>
@@ -104,7 +104,7 @@ export default function AdminSettingsPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-[11px] text-[var(--muted-foreground-lovable)]">{label}</span>
+      <span className="mb-1 block text-[11px] text-[var(--muted-foreground)]">{label}</span>
       {children}
     </label>
   );

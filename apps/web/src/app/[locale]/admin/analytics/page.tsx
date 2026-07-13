@@ -47,10 +47,10 @@ export default function AdminAnalyticsPage() {
   if (loading) {
     return (
       <div className="mx-auto max-w-7xl space-y-6">
-        <div className="h-8 w-48 animate-pulse rounded bg-[var(--muted-lovable)]" />
+        <div className="h-8 w-48 animate-pulse rounded bg-[var(--muted)]" />
         <div className="grid gap-4 sm:grid-cols-2">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-64 animate-pulse rounded-xl border border-[var(--border-lovable)] bg-[var(--muted-lovable)]" />
+            <div key={i} className="h-64 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--muted)]" />
           ))}
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function AdminAnalyticsPage() {
   }
 
   if (!stats) {
-    return <p className="text-sm text-[var(--muted-foreground-lovable)]">Erro ao carregar dados.</p>;
+    return <p className="text-sm text-[var(--muted-foreground)]">Erro ao carregar dados.</p>;
   }
 
   const typeEntries = Object.entries(stats.byType);
@@ -81,17 +81,17 @@ export default function AdminAnalyticsPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <header className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-[var(--primary)]">
           <LineChart className="h-5 w-5" />
         </div>
         <div>
           <p className="text-sm font-medium text-[var(--primary)]">Inteligência de dados</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Analytics</h1>
-          <p className="mt-1 text-[var(--muted-foreground-lovable)]">Dados e distribuição dos imóveis</p>
+          <p className="mt-1 text-[var(--muted-foreground)]">Dados e distribuição dos imóveis</p>
         </div>
       </header>
 
-      <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
         <div className="grid gap-6 lg:grid-cols-2">
           {/* Chart: Imóveis por tipo */}
           <ChartCard title="Imóveis por Tipo">
@@ -137,19 +137,19 @@ export default function AdminAnalyticsPage() {
 
       {/* Type stats detail */}
       <div className="mt-8">
-        <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
+        <h3 className="mb-3 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
           Detalhamento por Tipo
         </h3>
-        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {stats.typeStats.map((t) => (
               <div
                 key={t.type}
-                className="rounded-xl border border-[var(--border-lovable)] bg-[var(--muted-lovable)] p-4"
+                className="rounded-xl border border-[var(--border)] bg-[var(--muted)] p-4"
               >
-                <p className="text-xs text-[var(--muted-foreground-lovable)]">{typeLabels[t.type] ?? t.type}</p>
+                <p className="text-xs text-[var(--muted-foreground)]">{typeLabels[t.type] ?? t.type}</p>
                 <p className="mt-1 text-lg font-semibold text-[var(--foreground)]">{t.count}</p>
-                <p className="mt-1 text-[11px] text-[var(--muted-foreground-lovable)]">
+                <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">
                   {formatBRL(t.avgPrice)} · {t.avgAreaM2} m²
                 </p>
               </div>
@@ -165,8 +165,8 @@ export default function AdminAnalyticsPage() {
 
 function ChartCard({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-5">
-      <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5">
+      <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
         {title}
       </h3>
       {children}
@@ -207,10 +207,10 @@ function BarChart({
               y1={y}
               x2={totalW}
               y2={y}
-              stroke="var(--border-lovable)"
+              stroke="var(--border)"
               strokeWidth={1}
             />
-            <text x={4} y={y + 3} fill="var(--muted-foreground-lovable)" fontSize={9}>
+            <text x={4} y={y + 3} fill="var(--muted-foreground)" fontSize={9}>
               {Math.round(max * ratio)}
               {suffix ?? ''}
             </text>
@@ -238,7 +238,7 @@ function BarChart({
               x={x + w / 2}
               y={height - 4}
               textAnchor="middle"
-              fill="var(--muted-foreground-lovable)"
+              fill="var(--muted-foreground)"
               fontSize={8}
             >
               {label.length > 10 ? label.slice(0, 10) + '…' : label}
@@ -296,10 +296,10 @@ function PieChart({
       {slices.map((s, i) => (
         <g key={`leg-${s.label}`}>
           <rect x={legendX} y={10 + i * 22} width={10} height={10} rx={2} fill={s.color} />
-          <text x={legendX + 16} y={19 + i * 22} fill="var(--muted-foreground-lovable)" fontSize={10}>
+          <text x={legendX + 16} y={19 + i * 22} fill="var(--muted-foreground)" fontSize={10}>
             {s.label}
           </text>
-          <text x={legendX + 16 + 100} y={19 + i * 22} fill="var(--muted-foreground-lovable)" fontSize={10}>
+          <text x={legendX + 16 + 100} y={19 + i * 22} fill="var(--muted-foreground)" fontSize={10}>
             {s.pct}%
           </text>
         </g>

@@ -6,7 +6,7 @@ export default function FavoritesLoading() {
         <div className="mt-2 h-4 w-32 animate-pulse rounded bg-[var(--card)]" />
         <ul role="list" className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {Array.from({ length: 6 }).map((_, i) => (
-            <li key={i} className="h-32 animate-pulse rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]" />
+            <li key={i} className="h-32 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--card)]" />
           ))}
         </ul>
       </div>

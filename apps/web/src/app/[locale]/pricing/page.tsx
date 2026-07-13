@@ -91,7 +91,7 @@ export default function PricingPage() {
           <h1 className="mt-3 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
             Planos e Preços
           </h1>
-          <p className="mt-3 text-sm text-[var(--muted-foreground-lovable)]">
+          <p className="mt-3 text-sm text-[var(--muted-foreground)]">
             Escolha o plano ideal para o seu negócio
           </p>
         </Reveal>
@@ -113,13 +113,13 @@ export default function PricingPage() {
               <h3 className="text-sm font-medium text-[var(--foreground)]">{plan.name}</h3>
               <div className="mt-3 flex items-baseline gap-1">
                 <span className="text-3xl font-semibold text-[var(--foreground)]">{plan.price}</span>
-                <span className="text-xs text-[var(--muted-foreground-lovable)]">{plan.period}</span>
+                <span className="text-xs text-[var(--muted-foreground)]">{plan.period}</span>
               </div>
-              <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">{plan.description}</p>
+              <p className="mt-2 text-xs text-[var(--muted-foreground)]">{plan.description}</p>
 
               <ul className="mt-6 space-y-3">
                 {plan.features.map((feat) => (
-                  <li key={feat} className="flex items-start gap-2 text-xs text-[var(--muted-foreground-lovable)]">
+                  <li key={feat} className="flex items-start gap-2 text-xs text-[var(--muted-foreground)]">
                     <span className="mt-0.5 text-[var(--primary)]">✓</span>
                     {feat}
                   </li>
@@ -144,7 +144,7 @@ export default function PricingPage() {
         </Stagger>
 
         {/* Honest trust signal */}
-        <Reveal className="mt-8 text-center text-xs text-[var(--muted-foreground-lovable)]">
+        <Reveal className="mt-8 text-center text-xs text-[var(--muted-foreground)]">
           Todos os planos incluem acesso à base de dados abertos do LandMap. Cancele a qualquer
           momento, sem multa.
         </Reveal>
@@ -154,9 +154,9 @@ export default function PricingPage() {
           <h2 className="text-center text-lg font-medium text-[var(--foreground)]">
             Comparação de Planos
           </h2>
-          <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-6 overflow-x-auto">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 mt-6 overflow-x-auto">
             <table className="w-full text-left text-sm">
-              <thead className="border-b border-[var(--border-lovable)] bg-[var(--card)]/60">
+              <thead className="border-b border-[var(--border)] bg-[var(--card)]/60">
                 <tr>
                   <Th> </Th>
                   <Th className="text-center">Gratuito</Th>
@@ -168,12 +168,12 @@ export default function PricingPage() {
                 {COMPARISON_ROWS.map((row) => (
                   <tr
                     key={row.label}
-                    className="border-b border-[var(--border-lovable)]/50 transition hover:bg-[var(--card)]/20"
+                    className="border-b border-[var(--border)]/50 transition hover:bg-[var(--card)]/20"
                   >
-                    <td className="px-4 py-3 text-xs text-[var(--muted-foreground-lovable)]">{row.label}</td>
-                    <td className="px-4 py-3 text-center text-xs text-[var(--muted-foreground-lovable)]">{row.free}</td>
-                    <td className="px-4 py-3 text-center text-xs text-[var(--muted-foreground-lovable)]">{row.pro}</td>
-                    <td className="px-4 py-3 text-center text-xs text-[var(--muted-foreground-lovable)]">{row.enterprise}</td>
+                    <td className="px-4 py-3 text-xs text-[var(--muted-foreground)]">{row.label}</td>
+                    <td className="px-4 py-3 text-center text-xs text-[var(--muted-foreground)]">{row.free}</td>
+                    <td className="px-4 py-3 text-center text-xs text-[var(--muted-foreground)]">{row.pro}</td>
+                    <td className="px-4 py-3 text-center text-xs text-[var(--muted-foreground)]">{row.enterprise}</td>
                   </tr>
                 ))}
               </tbody>
@@ -188,7 +188,7 @@ export default function PricingPage() {
 function Th({ children, className }: { children: React.ReactNode; className?: string }) {
   return (
     <th
-      className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground-lovable)] ${className ?? ''}`}
+      className={`px-4 py-3 text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground)] ${className ?? ''}`}
     >
       {children}
     </th>

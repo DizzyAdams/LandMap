@@ -100,7 +100,7 @@ export default function InsightsPage() {
             <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient">
               Insights de mercado
             </h1>
-            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
               Bairros mais ativos e tendência de preço — dados agregados da LandMap.
             </p>
           </div>
@@ -178,14 +178,14 @@ export default function InsightsPage() {
         )}
 
         {!loading && trend && (
-          <div className="mt-10 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+          <div className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
             <div className="surface glow-dual rounded-xl p-6">
               <div className="flex flex-wrap items-start justify-between gap-4">
               <div>
                 <h2 className="text-gradient text-2xl font-semibold">
                   Tendência de preço — {trend.city}
                 </h2>
-                <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+                <p className="mt-1 text-sm text-[var(--muted-foreground)]">
                   Média mensal de apartamentos · últimos 12 meses
                 </p>
               </div>
@@ -234,7 +234,7 @@ export default function InsightsPage() {
         )}
 
         {!loading && !error && neighborhoods.length === 0 && (
-          <p className="mt-10 text-sm text-[var(--muted-foreground-lovable)]">
+          <p className="mt-10 text-sm text-[var(--muted-foreground)]">
             Nenhum dado encontrado para {city}.
           </p>
         )}

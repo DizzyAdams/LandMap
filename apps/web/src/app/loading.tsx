@@ -33,7 +33,7 @@ export default function RootLoading() {
 
       {/* Skeleton stats */}
       <section className="mx-auto w-full max-w-6xl px-6 pb-16">
-        <div className="grid gap-px overflow-hidden rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] sm:grid-cols-3">
+        <div className="grid gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card)] sm:grid-cols-3">
           {[1, 2, 3].map((i) => (
             <div key={i} className="bg-[#050505] p-6">
               <div className="mb-2 h-7 w-24 animate-pulse rounded bg-[var(--card)]" />
@@ -50,7 +50,7 @@ export default function RootLoading() {
           {[1, 2, 3].map((i) => (
             <div
               key={i}
-              className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5"
+              className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5"
             >
               <div className="mb-2 h-4 w-3/4 animate-pulse rounded bg-[var(--card)]" />
               <div className="mb-2 h-3 w-1/2 animate-pulse rounded bg-[var(--card)]/60" />

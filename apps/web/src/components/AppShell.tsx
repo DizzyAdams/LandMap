@@ -52,7 +52,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex min-h-[100dvh] bg-[var(--background)] text-[var(--foreground)]">
       {/* Sidebar desktop 68px — azul LandMap #003594 */}
-      <aside className="sticky top-0 hidden h-[100dvh] w-[68px] shrink-0 flex-col items-center border-r border-[var(--border-lovable)] bg-[var(--secondary)] py-4 backdrop-blur-xl md:flex">
+      <aside className="sticky top-0 hidden h-[100dvh] w-[68px] shrink-0 flex-col items-center border-r border-[var(--border)] bg-[var(--secondary)] py-4 backdrop-blur-xl md:flex">
         <Link href={`/${locale}`} aria-label="LandMap" className={`mb-6 rounded-xl p-1.5 ${focusRing}`}>
           <Logo className="h-7 w-7" />
         </Link>
@@ -66,7 +66,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               className={`group relative flex h-11 w-11 items-center justify-center rounded-xl transition ${focusRing} ${
                   isActive(item.href) 
                     ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-medium' 
-                    : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
+                    : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]'
               }`}
             >
               {isActive(item.href) && (
@@ -84,25 +84,25 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Coluna principal */}
       <div className="flex min-w-0 flex-1 flex-col">
         {/* Header sticky h-16 */}
-        <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-[var(--border-lovable)] bg-[var(--card)] px-4 backdrop-blur-xl md:px-6">
+        <header className="sticky top-0 z-40 flex h-16 items-center gap-3 border-b border-[var(--border)] bg-[var(--card)] px-4 backdrop-blur-xl md:px-6">
           <div className="relative flex-1 max-w-xl">
-            <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground-lovable)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
+            <svg className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted-foreground)]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden><circle cx="11" cy="11" r="7" /><path d="m21 21-4.3-4.3" /></svg>
             <input
               type="search"
               placeholder="Buscar imóveis, cidades, bairros…"
               aria-label="Buscar"
-              className="w-full rounded-full border border-[var(--border-lovable)] bg-[var(--muted)] py-2 pl-9 pr-12 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted-foreground-lovable)] focus:border-[var(--primary)]/50"
+              className="w-full rounded-full border border-[var(--border)] bg-[var(--muted)] py-2 pl-9 pr-12 text-sm text-[var(--foreground)] outline-none transition placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)]/50"
             />
-            <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-[var(--border-lovable)] bg-[var(--card)] px-1.5 py-0.5 text-[10px] text-[var(--muted-foreground-lovable)]">⌘K</kbd>
+            <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 rounded border border-[var(--border)] bg-[var(--card)] px-1.5 py-0.5 text-[10px] text-[var(--muted-foreground)]">⌘K</kbd>
           </div>
 
-          <button type="button" aria-label="Notificações" className={`relative inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border-lovable)] bg-[var(--muted)] text-[var(--foreground)] transition hover:border-[var(--primary)]/40 ${focusRing}`}>
+          <button type="button" aria-label="Notificações" className={`relative inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--muted)] text-[var(--foreground)] transition hover:border-[var(--primary)]/40 ${focusRing}`}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" /><path d="M10 21a2 2 0 0 0 4 0" /></svg>
             <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-[var(--primary)]" />
           </button>
 
           <div className="relative">
-            <button type="button" aria-label="Conta" className={`inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)]/15 text-[var(--primary)] ring-1 ring-[var(--border-lovable)] ${focusRing}`}>
+            <button type="button" aria-label="Conta" className={`inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)]/15 text-[var(--primary)] ring-1 ring-[var(--border)] ${focusRing}`}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden><circle cx="12" cy="8" r="4" /><path d="M4 21a8 8 0 0 1 16 0" /></svg>
             </button>
           </div>
@@ -113,14 +113,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* Bottom nav mobile 4 colunas */}
-      <nav aria-label="Navegação mobile" className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-[var(--border-lovable)] bg-[var(--card)] backdrop-blur-xl md:hidden">
+      <nav aria-label="Navegação mobile" className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-[var(--border)] bg-[var(--card)] backdrop-blur-xl md:hidden">
         {bottomItems.map((item) => (
           <Link
             key={item.href}
             href={`/${locale}/${item.href}`}
             aria-current={isActive(item.href) ? 'page' : undefined}
             className={`flex flex-col items-center gap-1 py-2.5 text-[11px] transition ${focusRing} ${
-              isActive(item.href) ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground-lovable)]'
+              isActive(item.href) ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)]'
             }`}
           >
             <Icon name={item.icon} />

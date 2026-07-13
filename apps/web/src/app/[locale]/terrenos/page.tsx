@@ -45,7 +45,7 @@ function ScoreRing({ score, label, color }: { score: number; label: string; colo
       <span className="-mt-14 text-lg font-semibold tabular-nums" style={{ color }}>
         {Math.round(score)}
       </span>
-      <span className="mt-6 text-[11px] uppercase tracking-wide text-[var(--muted-foreground-lovable)]">{label}</span>
+      <span className="mt-6 text-[11px] uppercase tracking-wide text-[var(--muted-foreground)]">{label}</span>
     </div>
   );
 }
@@ -73,7 +73,7 @@ function KpiCard({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.45 }}
-      className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5"
+      className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5"
     >
       <p
         className={`ledger-num text-2xl font-semibold tabular-nums ${
@@ -82,8 +82,8 @@ function KpiCard({
       >
         {value}
       </p>
-      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">{label}</p>
-      {sub && <p className="mt-0.5 text-[11px] text-[var(--muted-foreground-lovable)]">{sub}</p>}
+      <p className="mt-1 text-xs text-[var(--muted-foreground)]">{label}</p>
+      {sub && <p className="mt-0.5 text-[11px] text-[var(--muted-foreground)]">{sub}</p>}
     </motion.div>
   );
 }
@@ -145,7 +145,7 @@ export default function TerrenosPage() {
             <h1 className="mt-4 text-3xl font-semibold tracking-tight text-gradient sm:text-4xl">
               Terrenos & Lotes
             </h1>
-            <p className="mt-2 max-w-2xl text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="mt-2 max-w-2xl text-sm text-[var(--muted-foreground)]">
               Tudo que você precisa para escolher um terreno com segurança: preço por m²,
               valorização, potencial de aproveitamento e os melhores lotes — em linguagem simples.
             </p>
@@ -162,7 +162,7 @@ export default function TerrenosPage() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Buscar cidade…"
               aria-label="Buscar cidade"
-              className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/50 px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]/60"
+              className="rounded-xl border border-[var(--border)] bg-[var(--card)]/50 px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)]/60"
             />
             <button type="submit" className="btn btn-primary">
               Analisar
@@ -273,14 +273,14 @@ export default function TerrenosPage() {
 
             {/* Trend + aproveitamento */}
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
-              <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 lg:col-span-2">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 lg:col-span-2">
                 <div className="surface glow-dual rounded-xl p-6">
                   <div className="flex flex-wrap items-start justify-between gap-4">
                     <div>
                       <h2 className="text-gradient text-xl font-semibold">
                         Tendência de preço / m² — {data.city}
                       </h2>
-                      <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+                      <p className="mt-1 text-sm text-[var(--muted-foreground)]">
                         Média mensal de terrenos · últimos 12 meses
                       </p>
                     </div>
@@ -299,16 +299,16 @@ export default function TerrenosPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
                 <div className="surface rounded-xl p-6">
-                  <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Aproveitamento do lote</h2>
-                  <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+                  <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Aproveitamento do lote</h2>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                     Quanto do terreno tende a ser útil para construir (0–100).
                   </p>
                   <div className="mt-4 flex justify-center">
                     <ScoreRing score={kpis.avgBuildScore} label="potencial médio" color={scoreColor(kpis.avgBuildScore)} />
                   </div>
-                  <p className="mt-3 text-center text-xs text-[var(--muted-foreground-lovable)]">
+                  <p className="mt-3 text-center text-xs text-[var(--muted-foreground)]">
                     Considera tamanho, loteamento e documentação.
                   </p>
                 </div>
@@ -317,13 +317,13 @@ export default function TerrenosPage() {
 
             {/* Rankings */}
             <div className="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-2">
-              <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
                 <div className="surface rounded-xl p-6">
-                  <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Bairros por preço / m²</h2>
+                  <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Bairros por preço / m²</h2>
                   <div className="mt-5 space-y-3">
                     {data.byNeighborhood.map((n) => (
                       <div key={n.name} className="flex items-center gap-3">
-                        <span className="w-36 shrink-0 truncate text-xs text-[var(--muted-foreground-lovable)]" title={n.name}>
+                        <span className="w-36 shrink-0 truncate text-xs text-[var(--muted-foreground)]" title={n.name}>
                           {n.name}
                         </span>
                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--card)]">
@@ -334,7 +334,7 @@ export default function TerrenosPage() {
                             transition={{ duration: 0.7, ease: 'easeOut' }}
                           />
                         </div>
-                        <span className="w-24 text-right text-xs tabular-nums text-[var(--muted-foreground-lovable)]">
+                        <span className="w-24 text-right text-xs tabular-nums text-[var(--muted-foreground)]">
                           {brl.format(n.avgPriceM2)}
                         </span>
                       </div>
@@ -343,16 +343,16 @@ export default function TerrenosPage() {
                 </div>
               </div>
 
-              <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
                 <div className="surface rounded-xl p-6">
-                  <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Características dos lotes</h2>
-                  <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+                  <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Características dos lotes</h2>
+                  <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                     O que está mais presente nas ofertas de terrenos.
                   </p>
                   <div className="mt-5 space-y-3">
                     {data.byTag.map((t) => (
                       <div key={t.tag} className="flex items-center gap-3">
-                        <span className="w-32 shrink-0 truncate text-xs capitalize text-[var(--muted-foreground-lovable)]">
+                        <span className="w-32 shrink-0 truncate text-xs capitalize text-[var(--muted-foreground)]">
                           {t.tag}
                         </span>
                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--card)]">
@@ -363,11 +363,11 @@ export default function TerrenosPage() {
                             transition={{ duration: 0.7, ease: 'easeOut' }}
                           />
                         </div>
-                        <span className="w-10 text-right text-xs tabular-nums text-[var(--muted-foreground-lovable)]">{t.count}</span>
+                        <span className="w-10 text-right text-xs tabular-nums text-[var(--muted-foreground)]">{t.count}</span>
                       </div>
                     ))}
                     {data.byTag.length === 0 && (
-                      <p className="text-xs text-[var(--muted-foreground-lovable)]">Sem características catalogadas.</p>
+                      <p className="text-xs text-[var(--muted-foreground)]">Sem características catalogadas.</p>
                     )}
                   </div>
                 </div>
@@ -377,7 +377,7 @@ export default function TerrenosPage() {
 
             {/* Simulador ao vivo */}
             <div className="mt-6">
-              <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4">
+              <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
                 <RealtimeValuator basePpm2={kpis.avgPriceM2} defaultType="terreno" defaultArea={kpis.avgAreaM2} />
               </div>
             </div>
@@ -387,7 +387,7 @@ export default function TerrenosPage() {
               <div className="flex items-end justify-between gap-4">
                 <div>
                   <h2 className="text-gradient text-xl font-semibold">Melhores terrenos em {city}</h2>
-                  <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+                  <p className="mt-1 text-sm text-[var(--muted-foreground)]">
                     Ranqueados por custo-benefício, tamanho, valorização e prontidão.
                   </p>
                 </div>
@@ -415,7 +415,7 @@ export default function TerrenosPage() {
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
                           <p className="truncate text-sm font-semibold text-[var(--foreground)]">{p.title}</p>
-                          <p className="mt-0.5 truncate text-xs text-[var(--muted-foreground-lovable)]">
+                          <p className="mt-0.5 truncate text-xs text-[var(--muted-foreground)]">
                             {p.neighborhood} · {p.state}
                           </p>
                         </div>
@@ -441,7 +441,7 @@ export default function TerrenosPage() {
 
                       <ul className="mt-4 space-y-1.5">
                         {p.reasons.map((r) => (
-                          <li key={r} className="flex items-start gap-2 text-xs text-[var(--muted-foreground-lovable)]">
+                          <li key={r} className="flex items-start gap-2 text-xs text-[var(--muted-foreground)]">
                             <span className="mt-0.5 text-[var(--primary)]">✓</span>
                             {r}
                           </li>

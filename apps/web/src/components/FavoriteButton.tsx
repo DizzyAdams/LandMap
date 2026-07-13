@@ -9,7 +9,7 @@ export function FavoriteButton({ propertyId, className = '' }: { propertyId: str
   if (!hydrated) {
     return (
       <button 
-        className={"inline-flex items-center justify-center rounded-full p-2 text-[var(--muted-foreground-lovable)] opacity-50 cursor-not-allowed"} 
+        className={"inline-flex items-center justify-center rounded-full p-2 text-[var(--muted-foreground)] opacity-50 cursor-not-allowed"} 
         disabled
         aria-hidden="true"
       >

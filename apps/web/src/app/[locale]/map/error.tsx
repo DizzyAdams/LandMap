@@ -23,20 +23,20 @@ export default function MapError({
       <Logo className="h-10 w-10" />
       <span className="mt-8 text-8xl font-bold tracking-tight text-gradient">500</span>
       <h1 className="mt-2 text-xl font-medium text-[var(--foreground)]">Algo deu errado</h1>
-      <p className="mt-2 max-w-md text-center text-sm text-[var(--muted-foreground-lovable)]">
+      <p className="mt-2 max-w-md text-center text-sm text-[var(--muted-foreground)]">
         Não foi possível carregar o mapa. Tente novamente.
       </p>
       <div className="mt-8 flex items-center gap-3">
         <button
           type="button"
           onClick={reset}
-          className="glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted-lovable)]"
+          className="glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
         >
           Tentar novamente
         </button>
         <Link
           href={`/${locale}`}
-          className="inline-flex h-10 items-center rounded-lg border border-[var(--border-lovable)] px-5 text-sm text-[var(--muted-foreground-lovable)] transition hover:border-[var(--border-lovable)] hover:text-[var(--foreground)]"
+          className="inline-flex h-10 items-center rounded-lg border border-[var(--border)] px-5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--border)] hover:text-[var(--foreground)]"
         >
           Voltar ao início
         </Link>

@@ -66,8 +66,8 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
 
   if (loading) {
     return (
-      <div className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5">
-        <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Análise IA</h2>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5">
+        <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Análise IA</h2>
         <div className="mt-3 space-y-2">
           <div className="h-3 w-3/4 animate-pulse rounded bg-[var(--card)]" />
           <div className="h-3 w-1/2 animate-pulse rounded bg-[var(--card)]" />
@@ -79,9 +79,9 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
 
   if (error) {
     return (
-      <div className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5">
-        <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Análise IA</h2>
-        <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">Indisponível no momento.</p>
+      <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5">
+        <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Análise IA</h2>
+        <p className="mt-2 text-xs text-[var(--muted-foreground)]">Indisponível no momento.</p>
       </div>
     );
   }
@@ -89,9 +89,9 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
   if (!analysis) return null;
 
   return (
-    <div className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5">
-      <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">
-        Análise por IA <span className="ml-1.5 text-[10px] text-[var(--muted-foreground-lovable)]">· gerado automaticamente</span>
+    <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5">
+      <h2 className="text-sm font-medium text-[var(--muted-foreground)]">
+        Análise por IA <span className="ml-1.5 text-[10px] text-[var(--muted-foreground)]">· gerado automaticamente</span>
       </h2>
 
       {analysis.strengths.length > 0 && (
@@ -99,7 +99,7 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
           <p className="text-xs font-medium text-[var(--primary)]">✅ Pontos fortes</p>
           <ul className="mt-1.5 space-y-1">
             {analysis.strengths.map((s, i) => (
-              <li key={i} className="text-xs text-[var(--muted-foreground-lovable)]">
+              <li key={i} className="text-xs text-[var(--muted-foreground)]">
                 {s}
               </li>
             ))}
@@ -112,7 +112,7 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
           <p className="text-xs font-medium text-amber-400">⚠️ Pontos de atenção</p>
           <ul className="mt-1.5 space-y-1">
             {analysis.weaknesses.map((w, i) => (
-              <li key={i} className="text-xs text-[var(--muted-foreground-lovable)]">
+              <li key={i} className="text-xs text-[var(--muted-foreground)]">
                 {w}
               </li>
             ))}
@@ -120,9 +120,9 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
         </div>
       )}
 
-      <div className="mt-4 border-t border-[var(--border-lovable)] pt-3">
-        <p className="text-xs font-medium text-[var(--muted-foreground-lovable)]">💡 Recomendação</p>
-        <p className="mt-1.5 text-xs leading-relaxed text-[var(--muted-foreground-lovable)]">
+      <div className="mt-4 border-t border-[var(--border)] pt-3">
+        <p className="text-xs font-medium text-[var(--muted-foreground)]">💡 Recomendação</p>
+        <p className="mt-1.5 text-xs leading-relaxed text-[var(--muted-foreground)]">
           {analysis.recommendation}
         </p>
       </div>

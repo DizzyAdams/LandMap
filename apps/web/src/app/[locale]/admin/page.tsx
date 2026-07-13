@@ -53,13 +53,13 @@ export default function AdminDashboardPage() {
           label: 'Visitas Simuladas',
           value: SIMULATED_VIEWS.toLocaleString('pt-BR'),
           sub: 'exemplo · dados de demonstração',
-          color: 'border-l-[var(--ring-lovable)]',
+          color: 'border-l-[var(--ring)]',
         },
         {
           label: 'Taxa de Conversão',
           value: `${SIMULATED_CONVERSION}%`,
           sub: 'exemplo · dados de demonstração',
-          color: 'border-l-[var(--ring-lovable)]',
+          color: 'border-l-[var(--ring)]',
         },
       ]
     : [];
@@ -67,13 +67,13 @@ export default function AdminDashboardPage() {
   return (
     <div className="mx-auto max-w-7xl space-y-6">
       <header className="flex items-center gap-3">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent-lovable)] text-[var(--primary)]">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-[var(--primary)]">
           <Sparkles className="h-5 w-5" />
         </div>
         <div>
           <p className="text-sm font-medium text-[var(--primary)]">Painel Administrativo</p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Dashboard</h1>
-          <p className="mt-1 text-[var(--muted-foreground-lovable)]">Resumo geral do LandMap</p>
+          <p className="mt-1 text-[var(--muted-foreground)]">Resumo geral do LandMap</p>
         </div>
       </header>
 
@@ -82,24 +82,24 @@ export default function AdminDashboardPage() {
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
-              className="h-28 animate-pulse rounded-xl border border-[var(--border-lovable)] bg-[var(--muted-lovable)]"
+              className="h-28 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--muted)]"
             />
           ))}
         </div>
       ) : (
-        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
           {/* Stats cards */}
           <div className="grid gap-4 sm:grid-cols-2">
             {cards.map((card) => (
               <div
                 key={card.label}
-                className={`rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-5 border-l-4 ${card.color}`}
+                className={`rounded-xl border border-[var(--border)] bg-[var(--card)] p-5 border-l-4 ${card.color}`}
               >
-                <p className="text-xs text-[var(--muted-foreground-lovable)]">{card.label}</p>
+                <p className="text-xs text-[var(--muted-foreground)]">{card.label}</p>
                 <p className="mt-1 text-2xl font-semibold text-[var(--foreground)]">
                   {card.value}
                 </p>
-                <p className="mt-1 text-[11px] text-[var(--muted-foreground-lovable)]">{card.sub}</p>
+                <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">{card.sub}</p>
               </div>
             ))}
           </div>
@@ -119,9 +119,9 @@ export default function AdminDashboardPage() {
             ].map((item) => (
               <div
                 key={item.label}
-                className="rounded-lg border border-[var(--border-lovable)] bg-[var(--muted-lovable)] p-4"
+                className="rounded-lg border border-[var(--border)] bg-[var(--muted)] p-4"
               >
-                <p className="text-[11px] text-[var(--muted-foreground-lovable)]">{item.label}</p>
+                <p className="text-[11px] text-[var(--muted-foreground)]">{item.label}</p>
                 <p className="mt-1 text-sm font-medium text-[var(--foreground)]">{item.value}</p>
               </div>
             ))}

@@ -26,7 +26,7 @@ export function SocialProof({ propertyId }: SocialProofProps) {
   if (viewers === 0) return null;
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-lovable)] bg-[var(--muted-lovable)] px-3 py-1.5 text-xs text-[var(--muted-foreground-lovable)]">
+    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1.5 text-xs text-[var(--muted-foreground)]">
       <Eye className="h-3.5 w-3.5 text-[var(--primary)]" aria-hidden />
       <span>
         <strong className="font-medium text-[var(--foreground)]">{viewers}</strong> pessoas estão vendo este imóvel agora

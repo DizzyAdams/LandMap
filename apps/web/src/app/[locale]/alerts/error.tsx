@@ -23,7 +23,7 @@ export default function AlertsError({
       <Logo className="h-10 w-10" />
       <span className="mt-8 text-8xl font-bold tracking-tight text-[var(--primary)]">500</span>
       <h1 className="mt-2 text-xl font-medium text-[var(--foreground)]">Algo deu errado</h1>
-      <p className="mt-2 max-w-md text-center text-sm text-[var(--muted-foreground-lovable)]">
+      <p className="mt-2 max-w-md text-center text-sm text-[var(--muted-foreground)]">
         Não foi possível carregar seus alertas. Tente novamente.
       </p>
       <div className="mt-8 flex items-center gap-3">
@@ -36,7 +36,7 @@ export default function AlertsError({
         </button>
         <Link
           href={`/${locale}`}
-          className="inline-flex h-10 items-center rounded-lg border border-[var(--border-lovable)] px-5 text-sm text-[var(--foreground)] transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
+          className="inline-flex h-10 items-center rounded-lg border border-[var(--border)] px-5 text-sm text-[var(--foreground)] transition hover:border-[var(--primary)]/60 hover:text-[var(--primary)]"
         >
           Voltar ao início
         </Link>

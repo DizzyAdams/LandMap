@@ -39,7 +39,7 @@ export function CompareButton({ id, className }: { id: string; className?: strin
         e.stopPropagation();
         toggleCompareId(id);
       }}
-      className={`flex items-center justify-center rounded-full p-2 transition-colors ${selected ? 'bg-[var(--primary)] text-white' : 'hover:bg-black/5 text-[var(--muted-foreground-lovable)]'}`}
+      className={`flex items-center justify-center rounded-full p-2 transition-colors ${selected ? 'bg-[var(--primary)] text-white' : 'hover:bg-black/5 text-[var(--muted-foreground)]'}`}
       aria-label={selected ? 'Remover da comparação' : 'Adicionar à comparação'}
       title={selected ? 'Remover da comparação' : 'Adicionar à comparação'}
     >

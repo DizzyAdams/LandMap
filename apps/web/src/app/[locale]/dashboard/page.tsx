@@ -112,12 +112,12 @@ function TrendBadge({ trend, label }: { trend: RegionInsight['trend']; label: st
 function MetricCard({ label, value, hint }: { label: string; value: string; hint?: string }) {
   return (
     <Card variant="default" className="bg-[var(--card)]">
-      <p className="text-xs text-[var(--muted-foreground-lovable)]">{label}</p>
+      <p className="text-xs text-[var(--muted-foreground)]">{label}</p>
       <p className="mt-2 font-display text-2xl font-bold tracking-tight text-[var(--foreground)]">
         {value}
       </p>
       {hint && (
-        <p className="mt-1 text-[11px] text-[var(--muted-foreground-lovable)]">{hint}</p>
+        <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">{hint}</p>
       )}
     </Card>
   );
@@ -167,7 +167,7 @@ export default function DashboardPage() {
           <h1 className="text-4xl font-semibold tracking-tight text-gradient">
             Dashboard de valorização
           </h1>
-          <p className="mt-3 max-w-2xl text-sm text-[var(--muted-foreground-lovable)]">
+          <p className="mt-3 max-w-2xl text-sm text-[var(--muted-foreground)]">
             Mapa de calor, ranking de regiões e notas automáticas de potencial —
             decisão de terreno com confiança.
           </p>
@@ -224,7 +224,7 @@ export default function DashboardPage() {
             </div>
             <Link
               href={`/${locale}/regions`}
-              className="text-sm text-[var(--muted-foreground-lovable)] transition hover:text-[var(--foreground)]"
+              className="text-sm text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]"
             >
               Ver todas →
             </Link>
@@ -239,7 +239,7 @@ export default function DashboardPage() {
                   <h3 className="font-display text-lg font-bold tracking-tight">
                     {r.name}
                   </h3>
-                  <p className="mt-0.5 text-xs text-[var(--muted-foreground-lovable)]">
+                  <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">
                     {r.city}
                   </p>
                 </div>
@@ -256,7 +256,7 @@ export default function DashboardPage() {
                 {r.notes.map((note) => (
                   <li
                     key={note}
-                    className="flex gap-2 text-sm text-[var(--muted-foreground-lovable)]"
+                    className="flex gap-2 text-sm text-[var(--muted-foreground)]"
                   >
                     <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-[var(--primary)]" />
                     {note}
@@ -264,8 +264,8 @@ export default function DashboardPage() {
                 ))}
               </ul>
 
-              <div className="mt-4 flex items-center justify-between border-t border-[var(--border-lovable)] pt-3">
-                <span className="text-xs text-[var(--muted-foreground-lovable)]">
+              <div className="mt-4 flex items-center justify-between border-t border-[var(--border)] pt-3">
+                <span className="text-xs text-[var(--muted-foreground)]">
                   Confiança
                 </span>
                 <Badge variant="default">{r.confidence}</Badge>
@@ -279,21 +279,21 @@ export default function DashboardPage() {
       <section className="mx-auto max-w-6xl px-6 pb-20">
         <Reveal>
           <h2 className="text-2xl font-bold tracking-tight">Índices e sinais</h2>
-          <p className="mt-1 text-sm text-[var(--muted-foreground-lovable)]">
+          <p className="mt-1 text-sm text-[var(--muted-foreground)]">
             Valorização m² · Índice de desenvolvimento · Segurança
           </p>
         </Reveal>
 
         <Stagger className="mt-6 grid gap-4 md:grid-cols-2">
           <Card variant="default" className="bg-[var(--card)]">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground-lovable)]">
+            <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Notas automáticas de potencial
             </h3>
             <ul className="mt-3 grid gap-2 sm:grid-cols-2">
               {MACRO_NOTES.map((note) => (
                 <li
                   key={note}
-                  className="flex items-center gap-2 rounded-lg border border-[var(--border-lovable)] bg-[var(--surface-2)] px-3 py-2 text-sm"
+                  className="flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface-2)] px-3 py-2 text-sm"
                 >
                   <span className="text-emerald-400">✓</span>
                   {note}
@@ -303,10 +303,10 @@ export default function DashboardPage() {
           </Card>
 
           <Card variant="default" className="bg-[var(--card)]">
-            <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground-lovable)]">
+            <h3 className="font-display text-sm font-semibold uppercase tracking-wide text-[var(--muted-foreground)]">
               Radar de oportunidades
             </h3>
-            <p className="mt-3 text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="mt-3 text-sm text-[var(--muted-foreground)]">
               Alertas inteligentes de valorização e queda de preço direto no seu
               bolso — não perca janelas.
             </p>

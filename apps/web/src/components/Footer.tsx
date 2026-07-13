@@ -9,7 +9,7 @@ export function Footer() {
   const locale = useActiveLocale();
 
   return (
-    <footer aria-label="Rodapé do LandMap" className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-[var(--muted-foreground-lovable)]">
+    <footer aria-label="Rodapé do LandMap" className="mx-auto w-full max-w-6xl px-6 py-12 text-xs text-[var(--muted-foreground)]">
       <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--primary)]/40 to-transparent" />
       <div className="pt-12">
         <div className="flex flex-col items-start justify-between gap-8 sm:flex-row">
@@ -24,18 +24,18 @@ export function Footer() {
         </div>
 
         <nav aria-label="Navegação do rodapé" className="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-3">
-          <Link href={localeHref('/', locale)} className="transition hover:text-[var(--muted-foreground-lovable)]">Início</Link>
-          <Link href={localeHref('/search', locale)} className="transition hover:text-[var(--muted-foreground-lovable)]">Buscar</Link>
-          <Link href={localeHref('/map', locale)} className="transition hover:text-[var(--muted-foreground-lovable)]">Mapa</Link>
-          <Link href={localeHref('/compare', locale)} className="transition hover:text-[var(--muted-foreground-lovable)]">Comparar</Link>
-          <Link href={localeHref('/favorites', locale)} className="transition hover:text-[var(--muted-foreground-lovable)]">Favoritos</Link>
+          <Link href={localeHref('/', locale)} className="transition hover:text-[var(--muted-foreground)]">Início</Link>
+          <Link href={localeHref('/search', locale)} className="transition hover:text-[var(--muted-foreground)]">Buscar</Link>
+          <Link href={localeHref('/map', locale)} className="transition hover:text-[var(--muted-foreground)]">Mapa</Link>
+          <Link href={localeHref('/compare', locale)} className="transition hover:text-[var(--muted-foreground)]">Comparar</Link>
+          <Link href={localeHref('/favorites', locale)} className="transition hover:text-[var(--muted-foreground)]">Favoritos</Link>
           <Link href={localeHref('/chat', locale)} className="transition hover:text-[var(--primary)]">Chat IA</Link>
         </nav>
       </div>
 
       <div className="mt-10 flex items-center justify-between border-t hairline pt-6">
         <p>© {year} LandMap — Sovereign Intelligence.</p>
-        <p className="text-[var(--muted-foreground-lovable)]">Free AI · MiniMax via Puter</p>
+        <p className="text-[var(--muted-foreground)]">Free AI · MiniMax via Puter</p>
       </div>
       </div>
     </footer>

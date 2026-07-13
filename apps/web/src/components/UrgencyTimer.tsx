@@ -37,10 +37,10 @@ export function UrgencyTimer({ expiresInMinutes = 1440 }: UrgencyTimerProps) {
           ? 'border-[var(--destructive)]/50 bg-[var(--destructive)]/30 text-[var(--destructive)]'
           : isUrgent
             ? 'border-[var(--warning)]/40 bg-[var(--warning)]/20 text-[var(--warning)]'
-            : 'border-[var(--border-lovable)] bg-[var(--muted-lovable)] text-[var(--muted-foreground-lovable)]'
+            : 'border-[var(--border)] bg-[var(--muted)] text-[var(--muted-foreground)]'
       }`}
     >
-      <Activity className={`h-3.5 w-3.5 ${isExpired || isUrgent ? 'text-[var(--destructive)]' : 'text-[var(--muted-foreground-lovable)]'}`} aria-hidden />
+      <Activity className={`h-3.5 w-3.5 ${isExpired || isUrgent ? 'text-[var(--destructive)]' : 'text-[var(--muted-foreground)]'}`} aria-hidden />
       {isExpired ? (
         <span className="font-medium text-[var(--destructive)]">Oferta encerrada</span>
       ) : (

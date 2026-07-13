@@ -118,28 +118,28 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
             <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
               Documentação da API
             </h1>
-            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
               Referência completa dos endpoints REST do LandMap
             </p>
           </div>
-          <p className="text-xs text-[var(--muted-foreground-lovable)]">Base URL: <code className="text-[var(--muted-foreground-lovable)]">http://localhost:4000</code></p>
+          <p className="text-xs text-[var(--muted-foreground)]">Base URL: <code className="text-[var(--muted-foreground)]">http://localhost:4000</code></p>
         </Reveal>
 
         {/* Auth + Rate limit card */}
         <Stagger className="mt-8 grid gap-4 sm:grid-cols-2">
           <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-[var(--foreground)]">Autenticação</h2>
-            <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">
+            <p className="mt-2 text-xs text-[var(--muted-foreground)]">
               Endpoints marcados com <span className="text-amber-400">🔒 Auth</span> exigem o header{' '}
-              <code className="text-[var(--muted-foreground-lovable)]">Authorization: Bearer seu_token</code>.
+              <code className="text-[var(--muted-foreground)]">Authorization: Bearer seu_token</code>.
             </p>
           </SpotlightCard>
           <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-[var(--foreground)]">Rate Limiting</h2>
-            <p className="mt-2 text-xs text-[var(--muted-foreground-lovable)]">
-              Gratuito: <span className="text-[var(--muted-foreground-lovable)]">100 req/min</span>
-              {' · '}Profissional: <span className="text-[var(--muted-foreground-lovable)]">1.000 req/min</span>
-              {' · '}Enterprise: <span className="text-[var(--muted-foreground-lovable)]">Sob consulta</span>
+            <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+              Gratuito: <span className="text-[var(--muted-foreground)]">100 req/min</span>
+              {' · '}Profissional: <span className="text-[var(--muted-foreground)]">1.000 req/min</span>
+              {' · '}Enterprise: <span className="text-[var(--muted-foreground)]">Sob consulta</span>
             </p>
           </SpotlightCard>
         </Stagger>
@@ -148,26 +148,26 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
         {CATEGORIES.map((cat) => (
           <Reveal key={cat.title} className="mt-12">
             <h2 className="text-lg font-medium text-[var(--foreground)]">{cat.title}</h2>
-            <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-4 p-4">
+            <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 mt-4 p-4">
             <Stagger className="space-y-2">
               {cat.endpoints.map((ep) => (
                 <details
                   key={`${ep.method}-${ep.path}`}
-                  className="group rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.25)]"
+                  className="group rounded-xl border border-[var(--border)] bg-[var(--card)]/40 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.25)]"
                 >
                   <summary className="flex cursor-pointer items-center gap-3 px-5 py-3.5">
                     <span
-                      className={`shrink-0 rounded-md px-2 py-0.5 font-mono text-[11px] font-semibold ${methodColors[ep.method] ?? 'text-[var(--muted-foreground-lovable)]'} bg-neutral-200`}
+                      className={`shrink-0 rounded-md px-2 py-0.5 font-mono text-[11px] font-semibold ${methodColors[ep.method] ?? 'text-[var(--muted-foreground)]'} bg-neutral-200`}
                     >
                       {ep.method}
                     </span>
-                    <code className="text-xs text-[var(--muted-foreground-lovable)] font-mono">{ep.path}</code>
+                    <code className="text-xs text-[var(--muted-foreground)] font-mono">{ep.path}</code>
                     {ep.auth && (
                       <span className="text-[10px] text-amber-500 uppercase tracking-wide">🔒 Auth</span>
                     )}
-                    <span className="ml-auto text-xs text-[var(--muted-foreground-lovable)]">{ep.desc}</span>
+                    <span className="ml-auto text-xs text-[var(--muted-foreground)]">{ep.desc}</span>
                     <svg
-                      className="h-4 w-4 shrink-0 text-[var(--muted-foreground-lovable)] transition group-open:rotate-180"
+                      className="h-4 w-4 shrink-0 text-[var(--muted-foreground)] transition group-open:rotate-180"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -175,18 +175,18 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                     </svg>
                   </summary>
-                  <div className="border-t border-[var(--border-lovable)] px-5 py-4 space-y-3">
+                  <div className="border-t border-[var(--border)] px-5 py-4 space-y-3">
                     {ep.params && (
                       <div>
-                        <p className="text-xs font-medium text-[var(--muted-foreground-lovable)]">Parâmetros</p>
-                        <code className="mt-1 block rounded-md bg-[var(--card)] px-3 py-2 font-mono text-xs text-[var(--muted-foreground-lovable)]">
+                        <p className="text-xs font-medium text-[var(--muted-foreground)]">Parâmetros</p>
+                        <code className="mt-1 block rounded-md bg-[var(--card)] px-3 py-2 font-mono text-xs text-[var(--muted-foreground)]">
                           {ep.params}
                         </code>
                       </div>
                     )}
                     <div>
-                      <p className="text-xs font-medium text-[var(--muted-foreground-lovable)]">Exemplo</p>
-                      <pre className="mt-1 overflow-x-auto rounded-md bg-[var(--card)] p-3 text-xs text-[var(--muted-foreground-lovable)]">
+                      <p className="text-xs font-medium text-[var(--muted-foreground)]">Exemplo</p>
+                      <pre className="mt-1 overflow-x-auto rounded-md bg-[var(--card)] p-3 text-xs text-[var(--muted-foreground)]">
                         <code>{ep.example}</code>
                       </pre>
                     </div>

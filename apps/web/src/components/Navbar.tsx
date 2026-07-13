@@ -95,7 +95,7 @@ export function Navbar() {
   }, [marketOpen]);
 
   return (
-    <header className="sticky top-3 z-50 mx-3 flex w-full max-w-5xl items-center justify-between gap-3 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]/85 px-4 py-2.5 backdrop-blur-xl [backdrop-filter:saturate(150%)] shadow-[0_8px_40px_-12px_rgba(0,53,148,0.18)] md:mx-auto">
+    <header className="sticky top-3 z-50 mx-3 flex w-full max-w-5xl items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)]/85 px-4 py-2.5 backdrop-blur-xl [backdrop-filter:saturate(150%)] shadow-[0_8px_40px_-12px_rgba(0,53,148,0.18)] md:mx-auto">
       <Link
         href={`/${locale}`}
         aria-label="LandMap - ir para a página inicial"
@@ -106,7 +106,7 @@ export function Navbar() {
 
       <nav
         aria-label="Navegação principal"
-        className="hidden items-center gap-1 text-sm text-[var(--muted-foreground-lovable)] md:flex"
+        className="hidden items-center gap-1 text-sm text-[var(--muted-foreground)] md:flex"
       >
         {primaryLinks.map((link) => {
           const href = `/${locale}/${link.href}`;
@@ -119,7 +119,7 @@ export function Navbar() {
               className={`rounded-full px-3 py-1.5 transition ${focusRing} ${
                 isActive
                   ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-medium'
-                  : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
+                  : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]'
               }`}
             >
               {link.labelKey}
@@ -138,7 +138,7 @@ export function Navbar() {
             className={`inline-flex items-center gap-1 rounded-full px-3 py-1.5 transition ${focusRing} ${
               marketOpen || marketActive
                 ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-medium'
-                : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
+                : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]'
             }`}
           >
             Mercado
@@ -162,7 +162,7 @@ export function Navbar() {
             <div
               role="menu"
               aria-label="Mercado"
-              className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]/95 p-2 backdrop-blur-xl shadow-[0_24px_60px_-24px_rgba(0,53,148,0.22)]"
+              className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-[var(--border)] bg-[var(--card)]/95 p-2 backdrop-blur-xl shadow-[0_24px_60px_-24px_rgba(0,53,148,0.22)]"
             >
               {marketLinks.map((link) => {
                 const href = `/${locale}/${link.href}`;
@@ -176,7 +176,7 @@ export function Navbar() {
                     className={`block rounded-xl px-3 py-2 text-sm transition ${focusRing} ${
                       isActive 
                       ? 'bg-[var(--primary)]/10 text-[var(--primary)]' 
-                      : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
+                      : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]'
                     }`}
                   >
                     {link.labelKey}
@@ -193,7 +193,7 @@ export function Navbar() {
           <NotificationCenter />
         </span>
 
-        <span className="hidden items-center gap-0.5 rounded-full border border-[var(--border-lovable)] bg-[var(--card)] p-0.5 md:flex">
+        <span className="hidden items-center gap-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] p-0.5 md:flex">
           {locales.map((l) => (
             <Button
               key={l.code}
@@ -201,7 +201,7 @@ export function Navbar() {
               aria-label={`Mudar idioma para ${l.label}`}
               aria-pressed={locale === l.code}
               className={`!px-2.5 !py-0.5 !text-xs ${
-                locale === l.code ? '' : 'text-[var(--muted-foreground-lovable)]'
+                locale === l.code ? '' : 'text-[var(--muted-foreground)]'
               }`}
               onClick={() => switchLocale(l.code)}
             >
@@ -223,7 +223,7 @@ export function Navbar() {
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
           aria-label={mobileOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
-          className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] text-[var(--muted-foreground-lovable)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] md:hidden ${focusRing}`}
+          className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] md:hidden ${focusRing}`}
         >
           {mobileOpen ? (
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden>
@@ -239,7 +239,7 @@ export function Navbar() {
 
       <div
         id="mobile-nav"
-        className={`absolute inset-x-3 top-[calc(100%+0.5rem)] z-50 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-2 backdrop-blur-xl shadow-[var(--shadow-card)] md:hidden ${
+        className={`absolute inset-x-3 top-[calc(100%+0.5rem)] z-50 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-2 backdrop-blur-xl shadow-[var(--shadow-card)] md:hidden ${
           mobileOpen ? 'block' : 'hidden'
         }`}
       >
@@ -253,14 +253,14 @@ export function Navbar() {
                 href={href}
                 aria-current={isActive ? 'page' : undefined}
                 className={`rounded-xl px-3 py-2.5 text-sm transition ${focusRing} ${
-                  isActive ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-medium' : 'text-[var(--muted-foreground-lovable)] hover:bg-[var(--muted-lovable)] hover:text-[var(--foreground)]'
+                  isActive ? 'bg-[var(--primary)]/10 text-[var(--primary)] font-medium' : 'text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]'
                 }`}
               >
                 {link.labelKey}
               </Link>
             );
           })}
-          <div className="mt-2 flex items-center justify-end gap-2 border-t border-[var(--border-lovable)] px-1 pt-3">
+          <div className="mt-2 flex items-center justify-end gap-2 border-t border-[var(--border)] px-1 pt-3">
             <span className="flex items-center gap-1">
               {locales.map((l) => (
                 <Button
@@ -269,7 +269,7 @@ export function Navbar() {
                   aria-label={`Mudar idioma para ${l.label}`}
                   aria-pressed={locale === l.code}
                   className={`!px-3 !py-1 !text-xs ${
-                    locale === l.code ? '' : 'text-[var(--muted-foreground-lovable)]'
+                    locale === l.code ? '' : 'text-[var(--muted-foreground)]'
                   }`}
                   onClick={() => switchLocale(l.code)}
                 >

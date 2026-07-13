@@ -61,7 +61,7 @@ function RulerGauge({ score, label, color }: { score: number; label: string; col
       <span className="-mt-12 text-sm font-semibold tabular-nums" style={{ color }}>
         {Math.round(score)}
       </span>
-      <span className="text-[11px] uppercase tracking-wide text-[var(--muted-foreground-lovable)]">{label}</span>
+      <span className="text-[11px] uppercase tracking-wide text-[var(--muted-foreground)]">{label}</span>
     </div>
   );
 }
@@ -74,7 +74,7 @@ const RULER_COLORS: Record<string, string> = {
 
 function Pulse({ on }: { on: boolean }) {
   return (
-    <span className="inline-flex items-center gap-2 text-xs text-[var(--muted-foreground-lovable)]">
+    <span className="inline-flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
       <span
         className={`h-2 w-2 rounded-full ${on ? 'bg-[var(--primary)]' : 'bg-neutral-600'}`}
         style={{ boxShadow: on ? '0 0 10px rgba(52,211,153,0.9)' : 'none' }}
@@ -130,20 +130,20 @@ export function LiveDashboard() {
       <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-24">
         <div className="flex items-end justify-between">
           <div>
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-1 text-xs uppercase tracking-wide text-[var(--muted-foreground-lovable)]">
+            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-1 text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
               <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
               Live Intelligence
             </span>
             <h1 className="mt-5 text-4xl font-semibold tracking-tight text-gradient">
               Mercado em tempo real
             </h1>
-            <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+            <p className="mt-2 text-sm text-[var(--muted-foreground)]">
               Streaming contínuo de KPIs, réguas de investimento e pulsar de cidades.
             </p>
           </div>
           <div className="text-right">
             <Pulse on={live} />
-            <p className="mt-1 text-[11px] text-[var(--muted-foreground-lovable)]">{updatedAt || '—'}</p>
+            <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">{updatedAt || '—'}</p>
           </div>
         </div>
 
@@ -161,9 +161,9 @@ export function LiveDashboard() {
         </div>
 
         {kpi && (
-          <section className="mt-10 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
-            <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Réguas de investimento</h2>
-            <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+          <section className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
+            <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Réguas de investimento</h2>
+            <p className="mt-1 text-xs text-[var(--muted-foreground)]">
               Diferentes lentes analíticas sobre o mesmo mercado: crescimento, risco e probabilidade.
             </p>
             <div className="mt-6 flex flex-wrap justify-around gap-6">
@@ -173,7 +173,7 @@ export function LiveDashboard() {
             </div>
             <div className="mt-6 space-y-3">
               {kpi.rulers.map((r) => (
-                <p key={r.ruler} className="text-sm text-[var(--muted-foreground-lovable)]">
+                <p key={r.ruler} className="text-sm text-[var(--muted-foreground)]">
                   <span className="font-medium" style={{ color: RULER_COLORS[r.ruler] ?? '#34d399' }}>
                     {r.label}:
                   </span>{' '}
@@ -184,11 +184,11 @@ export function LiveDashboard() {
           </section>
         )}
 
-        <section className="mt-10 rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-6">
+        <section className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Pulsar de cidades</h2>
+            <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Pulsar de cidades</h2>
             {topCity.city !== '-' && (
-              <span className="text-xs text-[var(--muted-foreground-lovable)]">
+              <span className="text-xs text-[var(--muted-foreground)]">
                 maior inventário: <span className="text-[var(--primary)]">{topCity.city}/{topCity.state}</span>
               </span>
             )}
@@ -199,7 +199,7 @@ export function LiveDashboard() {
               const pct = (c.count / max) * 100;
               return (
                 <div key={`${c.city}-${c.state}`} className="flex items-center gap-3">
-                  <span className="w-32 shrink-0 truncate text-xs text-[var(--muted-foreground-lovable)]">
+                  <span className="w-32 shrink-0 truncate text-xs text-[var(--muted-foreground)]">
                     {c.city}/{c.state}
                   </span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--card)]">
@@ -209,11 +209,11 @@ export function LiveDashboard() {
                       transition={{ duration: 0.7, ease: 'easeOut' }}
                     />
                   </div>
-                  <span className="w-10 text-right text-xs tabular-nums text-[var(--muted-foreground-lovable)]">{c.count}</span>
+                  <span className="w-10 text-right text-xs tabular-nums text-[var(--muted-foreground)]">{c.count}</span>
                 </div>
               );
             })}
-            {cities.length === 0 && <p className="text-xs text-[var(--muted-foreground-lovable)]">Aguardando dados do stream…</p>}
+            {cities.length === 0 && <p className="text-xs text-[var(--muted-foreground)]">Aguardando dados do stream…</p>}
           </div>
         </section>
       </div>
@@ -235,12 +235,12 @@ function StatCard({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-5"
+      className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-5"
     >
       <p className="text-2xl font-semibold tabular-nums">
         {format ? <Counter value={value} format={format} /> : <AnimatedNumber value={value} />}
       </p>
-      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">{label}</p>
+      <p className="mt-1 text-xs text-[var(--muted-foreground)]">{label}</p>
     </motion.div>
   );
 }

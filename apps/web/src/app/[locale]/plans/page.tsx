@@ -91,11 +91,11 @@ export default function PlansPage() {
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-[var(--background)] pb-32 text-[var(--foreground)]">
-      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--border-lovable)] bg-[var(--background)]/90 px-4 py-3 backdrop-blur">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--border)] bg-[var(--background)]/90 px-4 py-3 backdrop-blur">
         <Link
           href={lh('/intro')}
           aria-label="Voltar"
-          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-[var(--muted-lovable)]"
+          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-[var(--muted)]"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
@@ -127,7 +127,7 @@ export default function PlansPage() {
               className={
                 isSelected
                   ? 'relative rounded-2xl border p-5 text-left transition-all border-[var(--primary)] bg-[color:color-mix(in_srgb,var(--primary)_5%,transparent)] shadow-[var(--shadow-elegant)]'
-                  : 'relative rounded-2xl border p-5 text-left transition-all border-[var(--border-lovable)] bg-[var(--card)] hover:border-[color:color-mix(in_srgb,var(--primary)_40%,transparent)]'
+                  : 'relative rounded-2xl border p-5 text-left transition-all border-[var(--border)] bg-[var(--card)] hover:border-[color:color-mix(in_srgb,var(--primary)_40%,transparent)]'
               }
             >
               {p.highlight && (
@@ -143,7 +143,7 @@ export default function PlansPage() {
                   className={
                     isSelected
                       ? 'grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-[var(--primary)] bg-[var(--primary)]'
-                      : 'grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-[var(--border-lovable)]'
+                      : 'grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-[var(--border)]'
                   }
                 >
                   {isSelected && <Check className="h-3.5 w-3.5 text-[var(--primary-foreground)]" />}
@@ -185,7 +185,7 @@ export default function PlansPage() {
         </Link>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[var(--border-lovable)] bg-[var(--background)]/95 px-6 py-4 backdrop-blur">
+      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[var(--border)] bg-[var(--background)]/95 px-6 py-4 backdrop-blur">
         <button
           type="button"
           onClick={() => router.push(lh('/auth') + '?mode=request')}

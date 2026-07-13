@@ -76,7 +76,7 @@ export function RealtimeValuator({
   return (
     <div className="surface rounded-xl p-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium text-[var(--muted-foreground-lovable)]">Simulador de valor ao vivo</h2>
+        <h2 className="text-sm font-medium text-[var(--muted-foreground)]">Simulador de valor ao vivo</h2>
         {result && !error && (
           <span
             className="chip pulse-primary"
@@ -89,7 +89,7 @@ export function RealtimeValuator({
           </span>
         )}
       </div>
-      <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+      <p className="mt-1 text-xs text-[var(--muted-foreground)]">
         Estimativa instantânea pelo modelo calibrado — ajuste os parâmetros.
       </p>
 
@@ -97,7 +97,7 @@ export function RealtimeValuator({
         <p className="ledger-num text-3xl font-semibold tabular-nums text-[var(--primary)]">
           {error ? '—' : brl.format(value)}
         </p>
-        <p className="mt-1 text-xs text-[var(--muted-foreground-lovable)]">
+        <p className="mt-1 text-xs text-[var(--muted-foreground)]">
           {result && !error ? (
             <>
               {brl.format(result.pricePerM2)}/m² ·{' '}
@@ -120,9 +120,9 @@ export function RealtimeValuator({
 
       <div className="mt-5 space-y-4">
         <div>
-          <div className="flex items-center justify-between text-xs text-[var(--muted-foreground-lovable)]">
+          <div className="flex items-center justify-between text-xs text-[var(--muted-foreground)]">
             <label htmlFor="rt-area">Área</label>
-            <span className="ledger-num tabular-nums text-[var(--muted-foreground-lovable)]">{area} m²</span>
+            <span className="ledger-num tabular-nums text-[var(--muted-foreground)]">{area} m²</span>
           </div>
           <input
             id="rt-area"

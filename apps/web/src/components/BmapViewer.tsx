@@ -401,7 +401,7 @@ export default function BmapViewer() {
   }
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)]">
+    <div className="relative w-full overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)]">
       <Script
         src={MAPLIBRE_JS}
         strategy="afterInteractive"
@@ -431,12 +431,12 @@ export default function BmapViewer() {
                 }}
                 placeholder={t('searchPlaceholder')}
                 aria-label={t('searchPlaceholder')}
-                className="w-full rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2.5 text-sm text-[var(--foreground)] outline-none backdrop-blur-md transition focus:border-[var(--primary)]"
+                className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2.5 text-sm text-[var(--foreground)] outline-none backdrop-blur-md transition focus:border-[var(--primary)]"
               />
               {suggestions.length > 0 && (
                 <ul
                   role="listbox"
-                  className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] text-sm shadow-xl backdrop-blur-md"
+                  className="absolute z-20 mt-1 w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card)] text-sm shadow-xl backdrop-blur-md"
                 >
                   {suggestions.map((s, i) => (
                     <li key={s.id} role="option" aria-selected={i === activeIdx}>
@@ -447,7 +447,7 @@ export default function BmapViewer() {
                         className={`block w-full px-4 py-2 text-left transition ${
                           i === activeIdx
                             ? 'bg-[var(--primary)]/10 text-emerald-200'
-                            : 'text-neutral-300 hover:bg-[var(--card)] hover:border-[var(--border-lovable)]'
+                            : 'text-neutral-300 hover:bg-[var(--card)] hover:border-[var(--border)]'
                         }`}
                       >
                         {s.label}
@@ -458,7 +458,7 @@ export default function BmapViewer() {
               )}
             </div>
             <div className="mt-3 flex items-center gap-3">
-              <label className="text-xs text-[var(--muted-foreground-lovable)]">{t('size')}</label>
+              <label className="text-xs text-[var(--muted-foreground)]">{t('size')}</label>
               <input
                 type="range"
                 min={0.5}
@@ -469,7 +469,7 @@ export default function BmapViewer() {
                 aria-label={t('size')}
                 className="flex-1 accent-[var(--primary)]"
               />
-              <span className="w-12 text-right text-xs text-[var(--muted-foreground-lovable)]">
+              <span className="w-12 text-right text-xs text-[var(--muted-foreground)]">
                 {sizeKm} {t('km')}
               </span>
               <button
@@ -507,7 +507,7 @@ export default function BmapViewer() {
             <div
               role="tablist"
               aria-label={t('title')}
-              className="flex gap-1 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] p-1 backdrop-blur-md"
+              className="flex gap-1 rounded-xl border border-[var(--border)] bg-[var(--card)] p-1 backdrop-blur-md"
             >
               {(['3d', 'investor', 'solar', 'thermal'] as const).map((id) => (
                 <button
@@ -567,8 +567,8 @@ export default function BmapViewer() {
             suffix={` ${t('km2')}`}
           />
           {layer === '3d' && (
-            <div className="pointer-events-auto rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-3 py-2 backdrop-blur-md">
-              <div className="mb-1 text-[10px] uppercase tracking-wider text-[var(--muted-foreground-lovable)]">
+            <div className="pointer-events-auto rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 py-2 backdrop-blur-md">
+              <div className="mb-1 text-[10px] uppercase tracking-wider text-[var(--muted-foreground)]">
                 {t('layers.d3')} · altura
               </div>
               <div
@@ -578,7 +578,7 @@ export default function BmapViewer() {
                     'linear-gradient(90deg,#0f766e,#34d399,#22d3ee,#a78bfa)',
                 }}
               />
-              <div className="mt-1 flex w-28 justify-between text-[10px] text-[var(--muted-foreground-lovable)]">
+              <div className="mt-1 flex w-28 justify-between text-[10px] text-[var(--muted-foreground)]">
                 <span>0m</span>
                 <span>120m+</span>
               </div>
@@ -618,7 +618,7 @@ export default function BmapViewer() {
       {loading && (
         <div className="absolute inset-0 z-20 flex items-center justify-center bg-[var(--card)]">
           <span
-            className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border-lovable)] border-t-[var(--primary)]"
+            className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]"
             aria-hidden
           />
           <span className="sr-only">{t('building')}</span>
@@ -630,12 +630,12 @@ export default function BmapViewer() {
         </div>
       )}
       {!libReady && !loading && (
-        <div className="absolute inset-0 z-20 flex items-center justify-center text-sm text-[var(--muted-foreground-lovable)]">
+        <div className="absolute inset-0 z-20 flex items-center justify-center text-sm text-[var(--muted-foreground)]">
           {t('loadingMap')}
         </div>
       )}
 
-      <p className="px-4 py-2 text-[11px] text-[var(--muted-foreground-lovable)]">{t('source')}</p>
+      <p className="px-4 py-2 text-[11px] text-[var(--muted-foreground)]">{t('source')}</p>
     </div>
   );
 }
@@ -650,12 +650,12 @@ function Stat({
   suffix?: string;
 }) {
   return (
-    <div className="pointer-events-auto rounded-xl border border-[var(--border-lovable)] bg-[var(--card)] px-4 py-2 backdrop-blur-md">
+    <div className="pointer-events-auto rounded-xl border border-[var(--border)] bg-[var(--card)] px-4 py-2 backdrop-blur-md">
       <div className="text-lg font-semibold tabular-nums text-gradient">
         {value}
         {suffix}
       </div>
-      <div className="text-[11px] text-[var(--muted-foreground-lovable)]">{label}</div>
+      <div className="text-[11px] text-[var(--muted-foreground)]">{label}</div>
     </div>
   );
 }

@@ -13,10 +13,10 @@ export default function ComparePage({ searchParams }: { searchParams: { ids?: st
         ) : (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {ids.map(id => (
-              <div key={id} className="border border-[var(--border-lovable)] p-4 rounded-xl bg-[var(--card)]">
+              <div key={id} className="border border-[var(--border)] p-4 rounded-xl bg-[var(--card)]">
                 <p className="text-sm font-medium">Imóvel {id}</p>
                 {/* Aqui seria feito o fetch dos dados reais do imóvel e exibido o diff */}
-                <p className="text-xs text-[var(--muted-foreground-lovable)] mt-2">Detalhes carregados do banco de dados.</p>
+                <p className="text-xs text-[var(--muted-foreground)] mt-2">Detalhes carregados do banco de dados.</p>
               </div>
             ))}
           </div>

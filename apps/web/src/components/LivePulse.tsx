@@ -48,7 +48,7 @@ export default function LivePulse({ priceM2, roi }: { priceM2: number; roi: numb
       </div>
 
       <div className="flex items-center gap-1 text-sm font-medium tabular-nums">
-        <span className="text-[var(--muted-foreground-lovable)]">{t('live.priceM2')}:</span>
+        <span className="text-[var(--muted-foreground)]">{t('live.priceM2')}:</span>
         <span className={priceUp ? 'text-emerald-300' : 'text-rose-300'}>
           {brl.format(live.priceM2)}
         </span>
@@ -58,7 +58,7 @@ export default function LivePulse({ priceM2, roi }: { priceM2: number; roi: numb
       </div>
 
       <div className="flex items-center gap-1 text-sm font-medium tabular-nums">
-        <span className="text-[var(--muted-foreground-lovable)]">{t('live.roi')}:</span>
+        <span className="text-[var(--muted-foreground)]">{t('live.roi')}:</span>
         <span className={roiUp ? 'text-emerald-300' : 'text-rose-300'}>
           {live.roi}%
         </span>

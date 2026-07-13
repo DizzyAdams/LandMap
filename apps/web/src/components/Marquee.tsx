@@ -20,7 +20,7 @@ const ITEMS = [
 export function Marquee() {
   return (
     <div className="relative overflow-hidden border-y hairline py-3" aria-hidden>
-      <div className="marquee-track flex w-max gap-10 whitespace-nowrap text-[11px] uppercase tracking-[0.2em] text-[var(--muted-foreground-lovable)]">
+      <div className="marquee-track flex w-max gap-10 whitespace-nowrap text-[11px] uppercase tracking-[0.2em] text-[var(--muted-foreground)]">
         {[0, 1].map((k) => (
           <div key={k} className="flex shrink-0 gap-10">
             {ITEMS.map((t, i) => (

@@ -41,14 +41,14 @@ export default function CalculatorPage() {
         <h1 className="mt-3 text-2xl font-semibold tracking-tight text-gradient sm:text-3xl">
           Simulador de financiamento
         </h1>
-        <p className="mt-2 text-sm text-[var(--muted-foreground-lovable)]">
+        <p className="mt-2 text-sm text-[var(--muted-foreground)]">
           Calcule a parcela mensal e o total de juros do seu financiamento imobiliário.
         </p>
 
-        <div className="rounded-2xl border border-[var(--border-lovable)] bg-[var(--card)] p-4 mt-8">
-          <div className="space-y-4 rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-5">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 mt-8">
+          <div className="space-y-4 rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5">
           <label className="block">
-            <span className="text-xs text-[var(--muted-foreground-lovable)]">Preço do imóvel</span>
+            <span className="text-xs text-[var(--muted-foreground)]">Preço do imóvel</span>
             <input
               type="number"
               value={preco}
@@ -57,7 +57,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-[var(--muted-foreground-lovable)]">Entrada (%)</span>
+            <span className="text-xs text-[var(--muted-foreground)]">Entrada (%)</span>
             <input
               type="number"
               value={entradaPct}
@@ -68,7 +68,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-[var(--muted-foreground-lovable)]">Taxa de juros anual (%)</span>
+            <span className="text-xs text-[var(--muted-foreground)]">Taxa de juros anual (%)</span>
             <input
               type="number"
               value={taxaAnual}
@@ -78,7 +78,7 @@ export default function CalculatorPage() {
             />
           </label>
           <label className="block">
-            <span className="text-xs text-[var(--muted-foreground-lovable)]">Prazo (meses)</span>
+            <span className="text-xs text-[var(--muted-foreground)]">Prazo (meses)</span>
             <input
               type="number"
               value={prazo}
@@ -97,16 +97,16 @@ export default function CalculatorPage() {
         {result && (
           <>
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              <div className="panel rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
-                <p className="text-xs text-[var(--muted-foreground-lovable)]">Parcela mensal</p>
+              <div className="panel rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
+                <p className="text-xs text-[var(--muted-foreground)]">Parcela mensal</p>
                 <p className="mt-1 text-xl font-medium text-[var(--primary)]">{fmt(result.parcela)}</p>
               </div>
-              <div className="panel rounded-xl border border-[var(--border-lovable)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
-                <p className="text-xs text-[var(--muted-foreground-lovable)]">Total de juros</p>
+              <div className="panel rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-4 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.35)]">
+                <p className="text-xs text-[var(--muted-foreground)]">Total de juros</p>
                 <p className="mt-1 text-xl font-medium text-[var(--foreground)]">{fmt(result.totalJuros)}</p>
               </div>
             </div>
-            <p className="mt-4 text-xs text-[var(--muted-foreground-lovable)]">
+            <p className="mt-4 text-xs text-[var(--muted-foreground)]">
               Simulação de referência. Taxas, prazos e encargos são exemplos — confirme as
               condições com seu banco.
             </p>
