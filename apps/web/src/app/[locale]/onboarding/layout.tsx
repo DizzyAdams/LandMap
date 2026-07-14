@@ -4,25 +4,25 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
   const { locale } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
   return {
-    title: 'LandMap — Inteligência de terrenos',
+    title: 'Onboarding — LandMap',
     description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
     openGraph: {
-      title: 'LandMap — Inteligência de terrenos',
+      title: 'Onboarding — LandMap',
       description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
-      url: `/${locale}/map`,
+      url: `/${locale}/onboarding`,
       type: 'website',
       locale: locale,
-      images: [{ url: `${siteUrl}/og-image.svg`, width: 1200, height: 630, alt: 'LandMap — Inteligência de terrenos' }],
+      images: [{ url: `${siteUrl}/og-image.svg`, width: 1200, height: 630, alt: 'Onboarding — LandMap' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'LandMap — Inteligência de terrenos',
+      title: 'Onboarding — LandMap',
       description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
       images: [`${siteUrl}/og-image.svg`],
     },
   };
 }
 
-export default function MapLayout({ children }: { children: React.ReactNode }) {
+export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }

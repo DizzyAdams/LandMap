@@ -15,16 +15,6 @@ import {
 
 const SLIDES = [
   {
-    icon: ShieldCheck,
-    title: 'Decisão com confiança',
-    body: 'Dados cruzados de fontes verificadas, com nível de confiança em cada registro.',
-  },
-  {
-    icon: BellRing,
-    title: 'Radar de oportunidades',
-    body: 'Alertas inteligentes de valorização e queda de preço direto no seu bolso — não perca janelas.',
-  },
-  {
     icon: MapPinned,
     title: 'Todo o Brasil no mapa',
     body: 'Explore terrenos e regiões nas principais cidades com preço por m², filtros e camadas de calor.',
@@ -33,6 +23,16 @@ const SLIDES = [
     icon: TrendingUp,
     title: 'Valorização em tempo real',
     body: 'Veja tendências de subida, estabilidade ou queda por bairro e o histórico de preço da região.',
+  },
+  {
+    icon: BellRing,
+    title: 'Radar de oportunidades',
+    body: 'Alertas inteligentes de valorização e queda de preço direto no seu bolso — não perca janelas.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Decisão com confiança',
+    body: 'Dados cruzados de fontes verificadas, com nível de confiança em cada registro.',
   },
 ];
 
@@ -46,28 +46,31 @@ export default function OnboardingPage() {
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-[var(--background)] px-6 py-6 text-[var(--foreground)]">
       <header className="flex items-center justify-between">
-        <Image
-          src="/landmap-lovabale-logo.png"
-          alt="LandMap"
-          width={110}
-          height={28}
-          priority
-        />
+        <div className="flex items-center">
+          <Image
+            src="/landmap-lovabale-logo.png"
+            alt="LandMap"
+            width={0}
+            height={0}
+            className="h-12 w-auto object-contain"
+            priority
+          />
+        </div>
         <Link
-          href={lh('/dashboard')}
-          className="text-sm text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)] hover:text-[var(--foreground)]"
+          href={lh('/plans')}
+          className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
         >
           Pular
         </Link>
       </header>
 
       <main className="flex flex-1 flex-col items-center justify-center text-center">
-        <div key={i} className="flex flex-col items-center">
-          <div className="mb-8 grid h-24 w-24 place-items-center rounded-3xl bg-[color:color-mix(in_srgb,var(--primary)_10%,transparent)]">
-            <Icon className="h-11 w-11 text-[var(--primary)]" />
+        <div key={i} className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex flex-col items-center">
+          <div className="mb-8 grid h-24 w-24 place-items-center rounded-3xl bg-primary/10">
+            <Icon className="h-11 w-11 text-primary" />
           </div>
           <h1 className="text-3xl font-bold leading-tight tracking-tight">{SLIDES[i].title}</h1>
-          <p className="mt-4 max-w-sm text-base text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)]">
+          <p className="mt-4 max-w-sm text-base text-[var(--muted-foreground)]">
             {SLIDES[i].body}
           </p>
         </div>
@@ -113,7 +116,7 @@ export default function OnboardingPage() {
 
       <Link
         href={lh('/auth')}
-        className="flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)] transition-colors hover:text-[var(--foreground)]"
+        className="flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)]"
       >
         Já tenho conta
       </Link>

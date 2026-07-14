@@ -25,6 +25,12 @@
     "react-dom": "18.3.1"
   },
   "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-links": "^8.6.14",
+    "@storybook/blocks": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@tailwindcss/postcss": "^4.0.0",
     "@testing-library/jest-dom": "6.6.0",
     "@testing-library/react": "16.0.0",
     "@types/node": "22.0.0",
@@ -34,14 +40,9 @@
     "eslint-config-next": "14.2.0",
     "jsdom": "25.0.0",
     "postcss": "8.4.0",
-    "tailwindcss": "4.0.0",
-    "@tailwindcss/postcss": "^4.0.0",
-    "typescript": "5.5.4",
     "storybook": "^8.6.14",
-    "@storybook/react": "^8.6.14",
-    "@storybook/react-vite": "^8.6.14",
-    "@storybook/addon-essentials": "^8.6.14",
-    "@storybook/addon-links": "^8.6.14",
-    "@storybook/blocks": "^8.6.14"
+    "tailwindcss": "4.0.0",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.5.4"
   }
 }

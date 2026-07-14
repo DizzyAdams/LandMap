@@ -31,14 +31,11 @@ export async function generateMetadata({
   params: Promise<{ locale?: string }>;
 }) {
   const { locale } = await params;
-  const messages = await getMessages();
-  const title = (messages.landmap as any)?.title || 'LandMap';
-  const description = (messages.landmap as any)?.tagline || 'Inteligência imobiliária aberta.';
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
 
   return {
-    title,
-    description,
+    title: 'LandMap — Inteligência de terrenos',
+    description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
     metadataBase: new URL(siteUrl),
     manifest: '/manifest.json',
     icons: [
@@ -46,8 +43,8 @@ export async function generateMetadata({
       { url: '/icons/icon-512.svg', sizes: '512x512', type: 'image/svg+xml' },
     ],
     openGraph: {
-      title,
-      description,
+      title: 'LandMap — Inteligência de terrenos',
+      description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
       url: `/${locale}`,
       siteName: 'LandMap',
       type: 'website',
@@ -57,14 +54,14 @@ export async function generateMetadata({
           url: `${siteUrl}/og-image.svg`,
           width: 1200,
           height: 630,
-          alt: title,
+          alt: 'LandMap — Inteligência de terrenos',
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
-      description,
+      title: 'LandMap — Inteligência de terrenos',
+      description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
       images: [`${siteUrl}/og-image.svg`],
       creator: '@landmap',
     },
