@@ -58,7 +58,7 @@ export default function OnboardingPage() {
         </div>
         <Link
           href={lh('/plans')}
-          className="text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+          className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)]"
         >
           Pular
         </Link>
@@ -70,7 +70,7 @@ export default function OnboardingPage() {
             <Icon className="h-11 w-11 text-primary" />
           </div>
           <h1 className="text-3xl font-bold leading-tight tracking-tight">{SLIDES[i].title}</h1>
-          <p className="mt-4 max-w-sm text-base text-[var(--muted-foreground)]">
+          <p className="mt-4 max-w-sm text-base text-[var(--foreground)]/60">
             {SLIDES[i].body}
           </p>
         </div>
@@ -116,7 +116,7 @@ export default function OnboardingPage() {
 
       <Link
         href={lh('/auth')}
-        className="flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium text-[var(--muted-foreground)] transition-colors hover:text-[var(--foreground)]"
+        className="flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium text-[var(--foreground)]/60 transition-colors hover:text-[var(--foreground)]"
       >
         Já tenho conta
       </Link>
