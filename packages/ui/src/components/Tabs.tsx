@@ -3,6 +3,7 @@
 import React, { forwardRef, useRef, useState } from 'react';
 import { cn } from '../lib/index';
 
+// Lovable shadcn-style Tabs
 export interface TabItem {
   id: string;
   label: React.ReactNode;
@@ -68,11 +69,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
                 onClick={() => setActive(t.id)}
                 className={cn(
                   'whitespace-nowrap rounded-t px-3 py-2 text-sm outline-none transition',
-                  'border-b-2 -mb-px focus-visible:shadow-[var(--ring)]',
-                  'motion-reduce:transition-none',
+                  'border-b-2 -mb-px focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ring)]',
                   selected
-                    ? 'border-[var(--emerald)] text-[var(--text-strong)]'
-                    : 'border-transparent text-[var(--muted)] hover:text-[var(--text)]',
+                    ? 'border-[var(--primary)] text-[var(--foreground)]'
+                    : 'border-transparent text-[var(--muted-foreground)] hover:text-[var(--foreground)]',
                 )}
               >
                 {t.label}
@@ -85,7 +85,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
           role="tabpanel"
           aria-labelledby={`tab-${current}`}
           tabIndex={0}
-          className="pt-5 outline-none focus-visible:shadow-[var(--ring)] rounded"
+          className="pt-5 outline-none focus-visible:ring-1 focus-visible:ring-[var(--ring)] rounded"
         >
           {children(current)}
         </div>
