@@ -44,7 +44,7 @@ export function SkylineCanvas({ className = '' }: { className?: string }) {
 
   return (
     <div className={`relative overflow-hidden ${className}`} aria-hidden>
-      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-blue-700/5 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[var(--primary)]/5 to-transparent" />
       <svg viewBox={`0 0 ${W} 260`} className="h-full w-full motion-reduce:animate-none" fill="none" role="presentation">
         <defs>
           <linearGradient id="sk-fill" x1="0" y1="0" x2="0" y2="1">

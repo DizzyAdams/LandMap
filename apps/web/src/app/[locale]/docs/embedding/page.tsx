@@ -50,14 +50,14 @@ export default async function EmbeddingDocsPage({ params }: { params: Promise<{ 
               </p>
             </div>
             <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-500/10 text-blue-400 text-sm font-bold">2</div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--primary)]/10 text-[var(--primary)] text-sm font-bold">2</div>
               <h3 className="mt-3 text-sm font-medium text-[var(--foreground)]">Vetorização</h3>
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                 Os tokens são convertidos em vetores numéricos (embeddings) de alta dimensão.
               </p>
             </div>
             <div className="rounded-xl border border-[var(--border)] bg-[var(--card)]/40 p-5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-purple-500/10 text-purple-400 text-sm font-bold">3</div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--accent)]/10 text-[var(--accent-foreground)] text-sm font-bold">3</div>
               <h3 className="mt-3 text-sm font-medium text-[var(--foreground)]">Similaridade</h3>
               <p className="mt-1 text-xs text-[var(--muted-foreground)]">
                 A busca calcula similaridade por cosseno entre o vetor da consulta e os vetores indexados.

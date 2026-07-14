@@ -28,7 +28,7 @@ export function PriceAnchoring({
     <div className="flex flex-col gap-1">
       <div className="flex items-baseline gap-2">
         <span className="text-sm text-[var(--muted-foreground)] line-through">{fmt(originalPrice)}</span>
-        <span className="rounded bg-emerald-950/40 px-1.5 py-0.5 text-[10px] font-medium text-[var(--primary)]">
+        <span className="rounded bg-[var(--primary)]/10 px-1.5 py-0.5 text-[10px] font-medium text-[var(--primary)]">
           -{savingsPercent}%
         </span>
       </div>

@@ -5,7 +5,7 @@ export default function NotFound() {
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center px-6">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0 bg-[var(--background)]" />
         <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
 
       </div>
@@ -17,7 +17,7 @@ export default function NotFound() {
       </p>
       <Link
         href="/"
-        className="glow-primary mt-8 inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+        className="mt-8 inline-flex h-10 items-center rounded-lg bg-[var(--primary)] px-5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-glow)]"
       >
         Voltar ao início
       </Link>

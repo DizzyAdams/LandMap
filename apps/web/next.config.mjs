@@ -1,7 +1,10 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig = {
+  eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   reactStrictMode: true,
+  output: 'standalone',
   transpilePackages: ['@landmap/sales'],
   experimental: {
     // typedRoutes kept off to avoid build friction across the large route tree

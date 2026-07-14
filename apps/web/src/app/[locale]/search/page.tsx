@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       description: 'Encontre imóveis para compra, aluguel ou lançamento no Brasil.',
       url: `/${locale}/search`,
       locale: locale,
+      images: [{ url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app'}/og-image.svg`, width: 1200, height: 630, alt: 'Buscar Imóveis | LandMap' }],
     },
   };
 }
@@ -160,7 +161,7 @@ export default async function SearchPage({
         {error ? (
           <div
             role="alert"
-            className="rounded-xl border border-red-500/30 bg-red-500/10 p-4 text-sm text-red-200"
+            className="rounded-xl border border-[var(--destructive)]/30 bg-[var(--destructive)]/10 p-4 text-sm text-[var(--destructive)]"
           >
             {error}
           </div>

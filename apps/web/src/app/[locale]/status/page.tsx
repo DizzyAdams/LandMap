@@ -24,8 +24,8 @@ const SERVICES: Omit<Service, 'lastCheck'>[] = [
 
 const statusConfig: Record<ServiceStatus, { color: string; label: string }> = {
   UP: { color: 'text-[var(--primary)]', label: 'Operacional' },
-  DOWN: { color: 'text-red-400', label: 'Indisponível' },
-  DEGRADED: { color: 'text-amber-400', label: 'Degradado' },
+  DOWN: { color: 'text-[var(--destructive)]', label: 'Indisponível' },
+  DEGRADED: { color: 'text-[var(--warning)]', label: 'Degradado' },
 };
 
 export default function StatusPage() {
@@ -64,7 +64,7 @@ export default function StatusPage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
             <span
               className={`h-2 w-2 rounded-full ${
-                overall === 'UP' ? 'bg-[var(--primary)]' : 'bg-amber-400'
+                overall === 'UP' ? 'bg-[var(--primary)]' : 'bg-[var(--warning)]'
               }`}
             />
             <span className={`text-xs font-medium ${overallConfig.color}`}>
@@ -96,8 +96,8 @@ export default function StatusPage() {
                       service.status === 'UP'
                         ? 'bg-[var(--primary)]'
                         : service.status === 'DEGRADED'
-                          ? 'bg-amber-400'
-                          : 'bg-red-400'
+                          ? 'bg-[var(--warning)]'
+                          : 'bg-[var(--destructive)]'
                     }`}
                   />
                   <span className="text-sm text-[var(--foreground)]">{service.name}</span>

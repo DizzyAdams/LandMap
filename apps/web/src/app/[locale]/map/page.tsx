@@ -177,7 +177,7 @@ export default function MapPage() {
     <main className="relative min-h-screen text-[var(--foreground)]">
       {/* Brand chip - bottom left */}
       <div className="pointer-events-none fixed bottom-4 left-4 z-[999] md:bottom-6 md:left-6">
-        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-[var(--border)]/40 bg-white/90 px-3 py-1.5 shadow-sm backdrop-blur">
+        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-[var(--border)]/40 bg-[var(--card)]/90 px-3 py-1.5 shadow-sm backdrop-blur">
           <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
           <span className="font-display text-xs font-bold tracking-tight text-[var(--primary)]">LandMap</span>
         </div>
@@ -186,7 +186,7 @@ export default function MapPage() {
       {/* Loading overlay */}
       {loading && (
         <div className="pointer-events-none fixed inset-0 z-[100] grid place-items-center">
-          <div className="flex items-center gap-2.5 rounded-full bg-white/90 px-5 py-2.5 text-sm font-medium text-[var(--foreground)]/75 shadow-sm backdrop-blur">
+          <div className="flex items-center gap-2.5 rounded-full bg-[var(--card)]/90 px-5 py-2.5 text-sm font-medium text-[var(--foreground)]/75 shadow-sm backdrop-blur">
             <span className="inline-block h-2 w-2 animate-ping rounded-full bg-[var(--primary)]" />
             Carregando inteligência territorial…
           </div>

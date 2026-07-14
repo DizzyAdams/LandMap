@@ -29,7 +29,7 @@ export default function EnergyPanel({ data }: { data: WorldAnalysis }) {
         {energyKpis.map((kpi) => (
           <div key={kpi.label} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
             <div className="text-xs text-[var(--muted-foreground)] mb-1">{kpi.label}</div>
-            <div className={kpi.gold ? 'text-[var(--gold-soft)] text-xl font-bold' : 'text-emerald-300 text-xl font-bold'}>
+            <div className={kpi.gold ? 'text-[var(--gold-soft)] text-xl font-bold' : 'text-[var(--success)] text-xl font-bold'}>
               {kpi.value}
             </div>
           </div>
@@ -45,7 +45,7 @@ export default function EnergyPanel({ data }: { data: WorldAnalysis }) {
             <li key={roof.id} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
               <div className="flex items-center justify-between gap-2 mb-2">
                 <span className="truncate font-medium text-[var(--foreground)]">{roof.id}</span>
-                <span className="shrink-0 rounded-full bg-amber-400/15 text-[var(--gold-soft)] text-[10px] font-medium px-2 py-0.5">
+                <span className="shrink-0 rounded-full bg-[var(--gold)]/15 text-[var(--gold-soft)] text-[10px] font-medium px-2 py-0.5">
                   {roof.kwProxy} kWp
                 </span>
               </div>
@@ -83,8 +83,8 @@ export default function EnergyPanel({ data }: { data: WorldAnalysis }) {
                 kpi.gold
                   ? 'text-[var(--gold-soft)] text-xl font-bold'
                   : kpi.accent
-                    ? 'text-emerald-300 text-xl font-bold'
-                    : 'text-neutral-100 text-xl font-bold'
+                    ? 'text-[var(--success)] text-xl font-bold'
+                    : 'text-[var(--foreground)] text-xl font-bold'
               }
             >
               {kpi.value}
@@ -102,7 +102,7 @@ export default function EnergyPanel({ data }: { data: WorldAnalysis }) {
             <li key={cell.id} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
               <div className="flex items-center justify-between gap-2 mb-2">
                 <span className="truncate font-medium text-[var(--foreground)]">{cell.id}</span>
-                <span className="shrink-0 rounded-full bg-rose-500/15 text-rose-300 text-[10px] font-medium px-2 py-0.5">
+                <span className="shrink-0 rounded-full bg-[var(--destructive)]/15 text-[var(--destructive)] text-[10px] font-medium px-2 py-0.5">
                   {cell.heatIndex} {t('thermal.heat')}
                 </span>
               </div>

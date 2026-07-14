@@ -1,0 +1,36 @@
+# LandMap API — standalone Docker (Coolify)
+FROM node:20-alpine AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/api/package.json ./packages/api/
+COPY packages/db/ ./packages/db/
+COPY packages/config/ ./packages/config/
+COPY packages/geo/ ./packages/geo/
+COPY packages/llm/ ./packages/llm/
+COPY packages/integrations/ ./packages/integrations/
+COPY packages/invest/ ./packages/invest/
+COPY packages/sales/ ./packages/sales/
+COPY packages/seo/ ./packages/seo/
+RUN corepack enable && pnpm install --frozen-lockfile --filter @landmap/api...
+
+FROM node:20-alpine AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=deps /app/packages ./packages
+COPY .env.example .env
+RUN corepack enable && pnpm -r --filter './packages/*' run build
+
+FROM node:20-alpine AS runner
+WORKDIR /app
+RUN addgroup --system --gid 1001 api && adduser --system --uid 1001 api
+COPY --from=builder /app/packages ./packages
+COPY --from=builder /app/node_modules ./node_modules
+# properties.json is read at runtime relative to cwd (packages/api)
+COPY packages/api/src/data ./packages/api/data
+USER api
+WORKDIR /app/packages/api
+EXPOSE 4000
+ENV NODE_ENV=production
+ENV PORT=4000
+CMD ["node", "dist/serve.js"]

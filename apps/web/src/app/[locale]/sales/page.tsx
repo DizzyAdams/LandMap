@@ -58,27 +58,27 @@ const STAGE_ORDER: PipelineStage[] = [
 ];
 
 const TIER_COLOR: Record<LeadTier, string> = {
-  hot: 'text-red-300 border-red-800/60 bg-red-950/40',
-  warm: 'text-amber-300 border-amber-800/60 bg-amber-950/40',
-  cold: 'text-sky-300 border-sky-800/60 bg-sky-950/40',
+  hot: 'text-[var(--destructive)] border-[var(--destructive)]/60 bg-[var(--destructive)]/15',
+  warm: 'text-[var(--warning)] border-[var(--warning)]/60 bg-[var(--warning)]/15',
+  cold: 'text-[var(--muted-foreground)] border-[var(--border)] bg-[var(--muted)]',
 };
 
 const STAGE_COLOR: Record<PipelineStage, string> = {
   captured: 'text-[var(--muted-foreground)]',
-  contacted: 'text-sky-300',
-  qualified: 'text-cyan-300',
-  scheduled: 'text-amber-300',
-  proposal: 'text-violet-300',
-  negotiation: 'text-fuchsia-300',
-  closed_won: 'text-emerald-300',
-  closed_lost: 'text-red-300',
+  contacted: 'text-[var(--primary)]',
+  qualified: 'text-[var(--success)]',
+  scheduled: 'text-[var(--warning)]',
+  proposal: 'text-[var(--ring)]',
+  negotiation: 'text-[var(--accent-foreground)]',
+  closed_won: 'text-[var(--success)]',
+  closed_lost: 'text-[var(--destructive)]',
 };
 
 const LEVEL_COLOR: Record<EventLevel, string> = {
-  info: 'border-l-sky-500/60',
-  success: 'border-l-emerald-400/60',
-  warn: 'border-l-amber-500/60',
-  escalation: 'border-l-red-500/60',
+  info: 'border-l-[var(--primary)]/60',
+  success: 'border-l-[var(--success)]/60',
+  warn: 'border-l-[var(--warning)]/60',
+  escalation: 'border-l-[var(--destructive)]/60',
 };
 
 const CHANNEL_LABEL: Record<SalesChannel, string> = {
@@ -329,7 +329,7 @@ function ActivityView({ events }: { events: AgentEvent[] }) {
       {events.slice(0, 30).map((e) => (
         <div
           key={e.id}
-          className={`rounded-lg border-l-2 border border-white/10 bg-[var(--muted)] px-4 py-3 ${LEVEL_COLOR[e.level]}`}
+          className={`rounded-lg border-l-2 border border-[var(--border)] bg-[var(--muted)] px-4 py-3 ${LEVEL_COLOR[e.level]}`}
         >
           <div className="flex items-center justify-between gap-3">
             <p className="text-sm text-[var(--foreground)]">{e.title}</p>
@@ -379,7 +379,7 @@ function ForecastView({ state }: { state: SalesState }) {
               <span className={`w-24 shrink-0 text-xs ${STAGE_COLOR[f.stage]}`}>{STAGE_LABEL[f.stage]}</span>
               <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--muted)]">
                 <div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-700 to-blue-500"
+                  className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--primary-glow)]"
                   style={{ width: `${(f.value / max) * 100}%` }}
                 />
               </div>

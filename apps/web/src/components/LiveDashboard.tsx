@@ -76,7 +76,7 @@ function Pulse({ on }: { on: boolean }) {
   return (
     <span className="inline-flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
       <span
-        className={`h-2 w-2 rounded-full ${on ? 'bg-[var(--primary)]' : 'bg-neutral-600'}`}
+        className={`h-2 w-2 rounded-full ${on ? 'bg-[var(--primary)]' : 'bg-[var(--muted-foreground)]/40'}`}
         style={{ boxShadow: on ? '0 0 10px rgba(52,211,153,0.9)' : 'none' }}
       />
       {on ? 'AO VIVO' : 'conectando…'}
@@ -125,7 +125,7 @@ export function LiveDashboard() {
   );
 
   return (
-    <main className="relative min-h-screen bg-[#050505] text-[var(--foreground)]">
+    <main className="relative min-h-screen bg-[var(--background)] text-[var(--foreground)]">
 
       <div className="relative mx-auto max-w-6xl px-6 pt-28 pb-24">
         <div className="flex items-end justify-between">
@@ -148,7 +148,7 @@ export function LiveDashboard() {
         </div>
 
         {error && (
-          <div className="mt-6 rounded-lg border border-red-900/50 bg-red-950/30 p-4 text-sm text-red-300">
+          <div className="mt-6 rounded-lg border border-[var(--destructive)]/30 bg-[var(--destructive)]/10 p-4 text-sm text-[var(--destructive)]">
             {error} — verifique se a API está em <code>http://localhost:4000</code>.
           </div>
         )}
@@ -204,7 +204,7 @@ export function LiveDashboard() {
                   </span>
                   <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--card)]">
                     <motion.div
-                      className="h-full rounded-full bg-gradient-to-r from-blue-700 to-blue-500"
+                      className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--primary-glow)]"
                       animate={{ width: `${pct}%` }}
                       transition={{ duration: 0.7, ease: 'easeOut' }}
                     />

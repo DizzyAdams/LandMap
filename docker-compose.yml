@@ -1,0 +1,32 @@
+# LandMap — dev stack (API + PostgreSQL)
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: landmap
+      POSTGRES_PASSWORD: landmap
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      dockerfile: Dockerfile.api
+      context: .
+    ports:
+      - 4000:4000
+    environment:
+      DATABASE_URL: postgresql://postgres:landmap@postgres:5432/landmap
+      PORT: "4000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+  pgdata:

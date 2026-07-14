@@ -17,7 +17,8 @@ import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
 import { createSalesRouter } from './routes/sales.js';
 import { createIntegrationsRouter } from './routes/integrations.js';
-import allPropertiesData from './data/properties.json'
+import { loadProperties } from './loadJson.js';
+const allPropertiesData = loadProperties();
 import { createGeoRouter, createGeoSource } from '@landmap/geo';
 
 

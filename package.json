@@ -10,6 +10,7 @@
     "url": "https://github.com/forrydev/LandMap.git"
   },
   "scripts": {
+    "deploy-now": "npx vercel deploy --prod --yes",
     "build": "pnpm -r run build",
     "lint": "pnpm -r run lint",
     "typecheck": "pnpm -r run typecheck",

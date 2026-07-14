@@ -1,0 +1,10 @@
+# Cloudflare Tunnel config — expõe API self-hosted publicamente
+# Uso: cloudflared tunnel --config cloudflared.yml run
+tunnel: landmap-api
+credentials-file: /root/.cloudflared/landmap-api.json
+
+ingress:
+  - hostname: api.seudominio.com
+    service: http://localhost:4000
+  # fallback: rejeita tudo que não é api.seudominio.com
+  - service: http_status:404

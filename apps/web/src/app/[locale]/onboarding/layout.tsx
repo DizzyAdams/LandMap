@@ -4,20 +4,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
   const { locale } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
   return {
-    title: 'Onboarding — LandMap',
-    description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+    title: 'Conheça o LandMap',
+    description: 'Como o LandMap ajuda você a decidir sobre terrenos com dados.',
     openGraph: {
-      title: 'Onboarding — LandMap',
-      description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+      title: 'Conheça o LandMap',
+      description: 'Como o LandMap ajuda você a decidir sobre terrenos com dados.',
       url: `/${locale}/onboarding`,
       type: 'website',
       locale: locale,
-      images: [{ url: `${siteUrl}/og-image.svg`, width: 1200, height: 630, alt: 'Onboarding — LandMap' }],
+      images: [{ url: `${siteUrl}/og-image.svg`, width: 1200, height: 630, alt: 'Conheça o LandMap' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Onboarding — LandMap',
-      description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+      title: 'Conheça o LandMap',
+      description: 'Como o LandMap ajuda você a decidir sobre terrenos com dados.',
       images: [`${siteUrl}/og-image.svg`],
     },
   };

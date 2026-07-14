@@ -35,7 +35,7 @@ const KPI_DATA: KpiItem[] = [
 function LoadingOverlay() {
   return (
     <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-      <div className="rounded-full bg-white/90 px-5 py-2.5 shadow-sm backdrop-blur">
+      <div className="rounded-full bg-[var(--card)]/90 px-5 py-2.5 shadow-sm backdrop-blur">
         <span className="flex items-center gap-3 text-sm font-medium text-[var(--foreground)]/75">
           <span className="relative flex h-3 w-3">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary)] opacity-75" />
@@ -52,7 +52,7 @@ function LoadingOverlay() {
 function ErrorOverlay() {
   return (
     <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-      <div className="pointer-events-auto max-w-sm rounded-2xl border border-destructive/20 bg-white p-5 shadow-sm">
+      <div className="pointer-events-auto max-w-sm rounded-2xl border border-destructive/20 bg-[var(--card)] p-5 shadow-sm">
         <h3 className="text-sm font-semibold text-destructive">
           Falha ao carregar o mapa
         </h3>
@@ -75,7 +75,7 @@ function KpiBar() {
           return (
             <div
               key={kpi.label}
-              className="rounded-xl border border-[var(--border)]/40 bg-white/90 px-3 py-2.5 shadow-sm backdrop-blur transition hover:bg-white"
+              className="rounded-xl border border-[var(--border)]/40 bg-[var(--card)]/90 px-3 py-2.5 shadow-sm backdrop-blur transition hover:bg-[var(--card)]"
             >
               <div className="flex items-center gap-1.5">
                 <Icon
@@ -101,7 +101,7 @@ function KpiBar() {
 function BrandChip() {
   return (
     <div className="pointer-events-none absolute bottom-4 left-4 z-10 md:bottom-6 md:left-6">
-      <div className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-[var(--border)]/40 bg-white/90 px-3.5 py-1.5 shadow-sm backdrop-blur">
+      <div className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-[var(--border)]/40 bg-[var(--card)]/90 px-3.5 py-1.5 shadow-sm backdrop-blur">
         <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
         <span className="font-display text-xs font-bold tracking-tight text-[var(--primary)]">
           LandMap

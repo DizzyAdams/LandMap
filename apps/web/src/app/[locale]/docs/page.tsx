@@ -96,10 +96,10 @@ const CATEGORIES: Array<{ title: string; endpoints: Endpoint[] }> = [
 ];
 
 const methodColors: Record<string, string> = {
-  GET: 'text-[var(--primary)]',
-  POST: 'text-blue-400',
-  PUT: 'text-amber-400',
-  DELETE: 'text-red-400',
+  GET: 'text-[var(--success)]',
+  POST: 'text-[var(--primary)]',
+  PUT: 'text-[var(--warning)]',
+  DELETE: 'text-[var(--destructive)]',
 };
 
 export default async function DocsPage({ params }: { params: Promise<{ locale?: string }> }) {
@@ -111,7 +111,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
         <Reveal className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--muted)] px-3 py-1 text-xs font-medium text-[var(--muted-foreground)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_var(--ring)]" />
               Dados abertos
             </span>
             <span className="kicker mt-5 block">Referência da API</span>
@@ -130,7 +130,7 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
           <SpotlightCard className="p-5">
             <h2 className="text-sm font-medium text-[var(--foreground)]">Autenticação</h2>
             <p className="mt-2 text-xs text-[var(--muted-foreground)]">
-              Endpoints marcados com <span className="text-amber-400">🔒 Auth</span> exigem o header{' '}
+              Endpoints marcados com <span className="text-[var(--warning)]">🔒 Auth</span> exigem o header{' '}
               <code className="text-[var(--muted-foreground)]">Authorization: Bearer seu_token</code>.
             </p>
           </SpotlightCard>
@@ -153,17 +153,17 @@ export default async function DocsPage({ params }: { params: Promise<{ locale?: 
               {cat.endpoints.map((ep) => (
                 <details
                   key={`${ep.method}-${ep.path}`}
-                  className="group rounded-xl border border-[var(--border)] bg-[var(--card)]/40 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_rgba(0,53,148,0.25)]"
+                  className="group rounded-xl border border-[var(--border)] bg-[var(--card)]/40 transition hover:border-[var(--primary)]/40 hover:shadow-[0_0_40px_-12px_var(--ring)]"
                 >
                   <summary className="flex cursor-pointer items-center gap-3 px-5 py-3.5">
                     <span
-                      className={`shrink-0 rounded-md px-2 py-0.5 font-mono text-[11px] font-semibold ${methodColors[ep.method] ?? 'text-[var(--muted-foreground)]'} bg-neutral-200`}
+                      className={`shrink-0 rounded-md px-2 py-0.5 font-mono text-[11px] font-semibold ${methodColors[ep.method] ?? 'text-[var(--muted-foreground)]'} bg-[var(--muted)]`}
                     >
                       {ep.method}
                     </span>
                     <code className="text-xs text-[var(--muted-foreground)] font-mono">{ep.path}</code>
                     {ep.auth && (
-                      <span className="text-[10px] text-amber-500 uppercase tracking-wide">🔒 Auth</span>
+                      <span className="text-[10px] text-[var(--warning)] uppercase tracking-wide">🔒 Auth</span>
                     )}
                     <span className="ml-auto text-xs text-[var(--muted-foreground)]">{ep.desc}</span>
                     <svg

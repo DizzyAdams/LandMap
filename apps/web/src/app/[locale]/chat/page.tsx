@@ -202,7 +202,7 @@ Liste até 3 opções com justificativa clara. Responda em português de forma o
                 <div
                   className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
                     msg.role === 'user'
-                      ? 'bg-neutral-700 text-[var(--muted-foreground)]'
+                      ? 'bg-[var(--primary)] text-[var(--primary-foreground)]'
                       : 'border border-[var(--border)] bg-[var(--muted)] text-[var(--foreground)]'
                   }`}
                 >

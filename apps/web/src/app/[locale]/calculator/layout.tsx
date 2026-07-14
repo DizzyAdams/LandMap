@@ -10,6 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
       description: 'Simule seu financiamento imobiliário.',
       url: `/${locale}/calculator`,
       locale: locale,
+      images: [{ url: `${process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app'}/og-image.svg`, width: 1200, height: 630, alt: 'Simulador de Financiamento | LandMap' }],
     },
   };
 }

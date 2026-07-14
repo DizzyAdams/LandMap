@@ -50,7 +50,7 @@ export default function InvestorPanel({ data }: { data: WorldAnalysis['investmen
         {kpis.map((kpi) => (
           <div key={kpi.label} className="rounded-lg border border-[var(--border)] bg-[var(--card)] p-3">
             <div className="text-xs text-[var(--muted-foreground)] mb-1">{kpi.label}</div>
-            <div className={kpi.accent ? 'text-gradient text-xl font-bold' : 'text-emerald-300 text-xl font-bold'}>
+            <div className={kpi.accent ? 'text-gradient text-xl font-bold' : 'text-[var(--success)] text-xl font-bold'}>
               {kpi.value}
             </div>
           </div>

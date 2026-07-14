@@ -244,7 +244,7 @@ export default function AlertsPage() {
             {alerts.length > 0 && (
               <button
                 onClick={handleClear}
-                className="text-xs text-red-400 transition hover:text-red-300"
+                className="text-xs text-[var(--destructive)] transition hover:text-[var(--destructive)]"
               >
                 Limpar todos
               </button>

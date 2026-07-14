@@ -106,7 +106,7 @@ export default function PricingPage() {
               }`}
             >
               {plan.highlight && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-[var(--primary)]/40 bg-gradient-to-r from-blue-700/20 to-blue-500/20 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-[var(--primary)]">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-[var(--primary)]/40 bg-[var(--primary)]/10 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-[var(--primary)]">
                   Mais Popular
                 </span>
               )}

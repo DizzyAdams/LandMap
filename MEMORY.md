@@ -6,7 +6,7 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-13 (branch `main`, head `5cd2ef0`).
+Última atualização: 2026-07-14 (branch `main` — Design Audit Lovable 100% concluído).
 
 > **2026-07-13 — Migração Lovable COMPLETA. Alinhamento final: assets, manifest, metadata, OG, ícones + drift tokens.** Commit `5b93677` + `5cd2ef0`:
 > - `tokens.ts` re-alinhado ao indigo Lovable (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis)
@@ -18,6 +18,12 @@
 > - Tmp files de extração removidos; docs de referência CTO adicionados
 > - Typecheck/lint/build verde; deploy `landmapprod-ds2bm7n00` (alias `landmapprod.vercel.app`) READY
 > - Todas as 19 rotas × 3 locales servindo 200 com tokens Lovable
+
+> **2026-07-14 — Auditoria de Design Lovable (100% igual).** Varredura estática (`Select-String` em `apps/web/src`) + comparação ao vivo (`compare_live.py` / `validate_real.py`):
+> - **Paridade conteúdo/estrutura vs Lovable: 0 frases faltando** em TODAS as telas compartilhadas (home/map, regions, favorites, compare, dashboard, admin, plans, auth, onboarding). Telas exclusivas LandMap (search, insights, sales, world, live, studio, calculator, chat, status, terrenos, property, etc.) **não existem no Lovable** → sem referência para igualar.
+> - **Tokens de design: `globals.css` já 100% Lovable** (light/indigo `oklch`). `validate_real.py` = **160/160 (100%)** em produção (22 rotas × HTTP/título/meta/OG/fontes/CSS/sem-erro + 6 estáticos).
+> - **Migração de cores hardcoded → tokens Lovable:** 89 ocorrências de cores fora do padrão (`emerald/cyan/gold/amber/red/blue/violet`, `#050505`, `bg-white`, `neutral-*`, `black/5`) em ~50 arquivos migradas para `var(--primary)/--success/--destructive/--warning/--muted/--card/--background/--ring`. typecheck + lint verdes. Regra `DESIGN.md` §4 seguida (status = tokens semânticos; nunca emerald/cyan/violet como marca).
+> - **Exceção documentada (NÃO é drift):** a paleta "World 3D" / Sovereign data-viz (`SkylineCanvas`, `AtlasLanding`, `HeroTerritory`, `InvestmentCard`, `PropertyThumb`, `BmapViewer`, `EnergyPanel`, `LivePulse`) usa intencionalmente os tokens legados `--emerald/--cyan/--gold` + SVGs próprios. São features LandMap-únicas (ausentes no Lovable) — mantidas como palette de feature, não como desvio.
 
 > **2026-07-12 — Spec LandMap aplicado + deployado.** Commit `d8521c5` aplica o
 > spec `landmap-design.zip` (azul institutional `#003594`, fundo claro, verde só

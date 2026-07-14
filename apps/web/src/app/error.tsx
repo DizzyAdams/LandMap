@@ -13,7 +13,7 @@ export default function Error({
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center px-6">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0 bg-[var(--background)]" />
         <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
 
       </div>
@@ -27,13 +27,13 @@ export default function Error({
       <div className="mt-8 flex items-center gap-3">
         <button
           onClick={reset}
-          className="glow-primary inline-flex h-10 items-center rounded-lg bg-white px-5 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+          className="inline-flex h-10 items-center rounded-lg bg-[var(--primary)] px-5 text-sm font-semibold text-[var(--primary-foreground)] transition hover:bg-[var(--primary-glow)]"
         >
           Tentar novamente
         </button>
         <Link
           href="/"
-          className="inline-flex h-10 items-center rounded-lg border border-[var(--border)] px-5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--border)] hover:text-[var(--foreground)]"
+          className="inline-flex h-10 items-center rounded-lg border border-[var(--border)] px-5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--ring)] hover:text-[var(--foreground)]"
         >
           Voltar ao início
         </Link>

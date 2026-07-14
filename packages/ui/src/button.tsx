@@ -52,17 +52,17 @@ const variantMap: Record<
     },
   },
   outline: {
-    base: { backgroundColor: 'transparent', border: '1px solid var(--border-strong)', color: 'var(--text)' },
-    hover: { backgroundColor: 'var(--surface-2)', borderColor: 'var(--muted-2)', color: 'var(--text-strong)' },
+    base: { backgroundColor: 'transparent', border: '1px solid var(--border)', color: 'var(--foreground)' },
+    hover: { backgroundColor: 'var(--muted)', borderColor: 'var(--border)', color: 'var(--foreground)' },
   },
   ghost: {
-    base: { backgroundColor: 'transparent', color: 'var(--muted)' },
-    hover: { backgroundColor: 'var(--surface-2)', color: 'var(--text-strong)' },
+    base: { backgroundColor: 'transparent', color: 'var(--muted-foreground)' },
+    hover: { backgroundColor: 'var(--muted)', color: 'var(--foreground)' },
   },
   // Explicit, rarely-used high-contrast white. Never the default.
   hero: {
-    base: { backgroundColor: 'var(--text-strong)', color: 'var(--bg)' },
-    hover: { backgroundColor: 'var(--accent-dim)' },
+    base: { backgroundColor: 'var(--foreground)', color: 'var(--background)' },
+    hover: { backgroundColor: 'var(--secondary)' },
   },
   // Sovereign champagne gold — premium investor / capital accent (on tokens).
   gold: {
@@ -145,7 +145,7 @@ export function buttonVariants({
   className?: string;
 } = {}) {
   const base =
-    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-md)] text-sm font-medium outline-none transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0';
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-md)] text-sm font-medium outline-none transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[var(--ring)] disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0';
   const sizes: Record<NonNullable<ButtonProps['size']>, string> = {
     sm: 'h-8 rounded-md px-3 text-xs',
     md: 'h-9 px-4 py-2',
@@ -153,12 +153,12 @@ export function buttonVariants({
   };
   const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
     default:
-      'bg-[var(--primary)] text-[var(--primary-foreground)] shadow hover:bg-primary/90',
+      'bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] hover:bg-[var(--primary-glow)]',
     outline:
-      'bg-transparent border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--surface-2)] hover:border-[var(--muted-2)] hover:text-[var(--text-strong)]',
+      'bg-transparent border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]',
     ghost:
-      'bg-transparent text-[var(--muted)] hover:bg-[var(--surface-2)] hover:text-[var(--text-strong)]',
-    hero: 'bg-[var(--text-strong)] text-[var(--bg)] hover:bg-[var(--accent-dim)]',
+      'bg-transparent text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]',
+    hero: 'bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--secondary)]',
     gold:
       'bg-[linear-gradient(90deg,var(--gold-soft),var(--gold)_55%,var(--gold-deep))] text-[var(--bg)] shadow-[var(--glow-gold)] hover:bg-[linear-gradient(90deg,var(--gold-bright),var(--gold)_55%,var(--gold-deep))] hover:-translate-y-px hover:shadow-[var(--glow-sovereign)]',
   };

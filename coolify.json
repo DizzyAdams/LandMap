@@ -1,0 +1,25 @@
+{
+  "name": "LandMap API",
+  "type": "docker",
+  "build": {
+    "dockerfile": "Dockerfile.api",
+    "context": "."
+  },
+  "ports": [
+    {
+      "port": 4000,
+      "protocol": "http",
+      "forward": true
+    }
+  ],
+  "env": {
+    "PORT": "4000",
+    "DATABASE_URL": "",
+    "NEXT_PUBLIC_SITE_URL": ""
+  },
+  "healthcheck": {
+    "path": "/health",
+    "method": "GET",
+    "expected_status": 200
+  }
+}

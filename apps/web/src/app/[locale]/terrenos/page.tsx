@@ -77,7 +77,7 @@ function KpiCard({
     >
       <p
         className={`tabular-nums text-2xl font-semibold tabular-nums ${
-          accent === 'up' ? 'text-emerald-300' : accent === 'down' ? 'text-red-400' : 'text-[var(--muted-foreground)]'
+          accent === 'up' ? 'text-[var(--success)]' : accent === 'down' ? 'text-[var(--destructive)]' : 'text-[var(--muted-foreground)]'
         }`}
       >
         {value}
@@ -285,8 +285,8 @@ export default function TerrenosPage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <Sparkline data={series} width={200} height={52} color="#34d399" aria-label={`Tendência de terrenos em ${data.city}`} />
-                      <p className={`mt-1 text-sm font-medium ${trendPct >= 0 ? 'text-emerald-300' : 'text-red-400'}`}>
+                      <Sparkline data={series} width={200} height={52} color="var(--success)" aria-label={`Tendência de terrenos em ${data.city}`} />
+                      <p className={`mt-1 text-sm font-medium ${trendPct >= 0 ? 'text-[var(--success)]' : 'text-[var(--destructive)]'}`}>
                         {trendPct >= 0 ? '▲' : '▼'} {Math.abs(trendPct)}% em 12m
                       </p>
                     </div>
@@ -328,7 +328,7 @@ export default function TerrenosPage() {
                         </span>
                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--card)]">
                           <motion.div
-                            className="h-full rounded-full bg-gradient-to-r from-blue-700 to-blue-500"
+                            className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--primary-glow)]"
                             initial={{ width: 0 }}
                             animate={{ width: `${(n.avgPriceM2 / maxNb) * 100}%` }}
                             transition={{ duration: 0.7, ease: 'easeOut' }}
@@ -357,7 +357,7 @@ export default function TerrenosPage() {
                         </span>
                         <div className="h-2 flex-1 overflow-hidden rounded-full bg-[var(--card)]">
                           <motion.div
-                            className="h-full rounded-full bg-gradient-to-r from-violet-400 to-blue-500"
+                            className="h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-[var(--ring)]"
                             initial={{ width: 0 }}
                             animate={{ width: `${(t.count / maxTag) * 100}%` }}
                             transition={{ duration: 0.7, ease: 'easeOut' }}

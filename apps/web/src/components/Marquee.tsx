@@ -26,7 +26,7 @@ export function Marquee() {
             {ITEMS.map((t, i) => (
               <span key={i} className="flex items-center gap-10">
                 <span>{t}</span>
-                <span className="h-1 w-1 rounded-full bg-gradient-to-br from-blue-700 to-blue-500" />
+                <span className="h-1 w-1 rounded-full bg-gradient-to-br from-[var(--primary)] to-[var(--primary-glow)]" />
               </span>
             ))}
           </div>

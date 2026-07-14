@@ -109,7 +109,7 @@ Seja honesto e objetivo. Destaque aspectos como localização, potencial de valo
 
       {analysis.weaknesses.length > 0 && (
         <div className="mt-3">
-          <p className="text-xs font-medium text-amber-400">⚠️ Pontos de atenção</p>
+          <p className="text-xs font-medium text-[var(--warning)]">⚠️ Pontos de atenção</p>
           <ul className="mt-1.5 space-y-1">
             {analysis.weaknesses.map((w, i) => (
               <li key={i} className="text-xs text-[var(--muted-foreground)]">

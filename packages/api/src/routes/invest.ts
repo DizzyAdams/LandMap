@@ -4,7 +4,8 @@ import type { Property } from '@landmap/db';
 import { z } from 'zod';
 import { analyze, estimateMonthlyRent } from '@landmap/invest';
 import type { InvestmentAssumptions, InvestmentResult } from '@landmap/invest';
-import allPropertiesData from '../data/properties.json';
+import { loadProperties } from '../loadJson.js';
+const allPropertiesData = loadProperties();
 
 const allProperties = allPropertiesData as unknown as Property[];
 

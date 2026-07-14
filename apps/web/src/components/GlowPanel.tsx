@@ -16,7 +16,7 @@ interface GlowPanelProps {
  */
 export function GlowPanel({ children, className, as: Tag = 'div' }: GlowPanelProps) {
   return (
-    <Tag className={cn('terminal relative border border-neutral-800', className)}>
+    <Tag className={cn('terminal relative border border-[var(--border)]', className)}>
       <div className="relative z-[1]">{children}</div>
     </Tag>
   );

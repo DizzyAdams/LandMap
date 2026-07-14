@@ -105,7 +105,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
             <Card variant="default">
               <p className="text-xs text-[var(--muted-foreground)]">Localização</p>
               <a
-                className="mt-2 block text-sm text-[var(--muted-foreground)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
+                className="mt-2 block text-sm text-[var(--muted-foreground)] underline decoration-[var(--border)] underline-offset-4 transition hover:text-[var(--foreground)]"
                 href={`https://www.google.com/maps/search/?api=1&q=${mapQuery}`}
                 target="_blank"
                 rel="noreferrer"
@@ -113,7 +113,7 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
                 Abrir no mapa
               </a>
               <Link
-                className="mt-4 block text-xs text-[var(--muted-foreground)] underline decoration-neutral-700 underline-offset-4 transition hover:text-[var(--foreground)]"
+                className="mt-4 block text-xs text-[var(--muted-foreground)] underline decoration-[var(--border)] underline-offset-4 transition hover:text-[var(--foreground)]"
                 href={`/${resolved.locale}/map?q=${encodeURIComponent(property.city)}`}
               >
                 Ver mapa da cidade

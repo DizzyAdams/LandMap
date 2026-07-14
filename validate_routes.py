@@ -11,7 +11,11 @@ import json
 import sys
 from urllib.parse import urljoin
 
-BASE = "https://landmapprod.vercel.app"
+import os
+BASE = os.environ.get("VAL_BASE_URL", sys.argv[1] if len(sys.argv) > 1 else "https://landmapprod.vercel.app")
+if not BASE.startswith("http"):
+    BASE = "http://" + BASE
+print(f"Configured BASE URL: {BASE}")
 
 # ── Routes to check ──────────────────────────────────────────────────
 HOME_ROUTES = ["/pt-BR", "/en-US", "/es-ES"]

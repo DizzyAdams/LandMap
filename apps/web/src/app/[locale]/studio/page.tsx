@@ -91,7 +91,7 @@ export default function StudioPage() {
             </Button>
 
             {runError && (
-              <div className="mt-4 rounded-xl border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-300">{runError}</div>
+              <div className="mt-4 rounded-xl border border-[var(--destructive)]/40 bg-[var(--destructive)]/10 p-3 text-sm text-[var(--destructive)]">{runError}</div>
             )}
 
             {runResult && (
@@ -100,7 +100,7 @@ export default function StudioPage() {
                   <div key={step.id} className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3">
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-medium text-[var(--foreground)]">{step.id}</span>
-                      <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${step.status === 'ok' ? 'bg-[var(--primary)]/15 text-emerald-300' : 'bg-red-500/15 text-red-300'}`}>{step.status}</span>
+                      <span className={`rounded-full px-2 py-0.5 text-[10px] uppercase ${step.status === 'ok' ? 'bg-[var(--primary)]/15 text-[var(--success)]' : 'bg-[var(--destructive)]/15 text-[var(--destructive)]'}`}>{step.status}</span>
                     </div>
                     <pre className="mt-2 max-h-48 overflow-auto whitespace-pre-wrap break-words text-xs text-[var(--muted-foreground)]">{typeof step.output === 'string' ? step.output : JSON.stringify(step.output, null, 2)}</pre>
                   </div>

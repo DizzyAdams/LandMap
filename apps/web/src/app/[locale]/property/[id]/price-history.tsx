@@ -87,8 +87,8 @@ export function PriceHistory({ history }: PriceHistoryProps) {
             cx={xScale(i)}
             cy={yScale(p.price)}
             r={3}
-            fill="#050505"
-            stroke="#a3a3a3"
+            fill="var(--primary)"
+            stroke="var(--border)"
             strokeWidth={1.5}
           />
         ))}

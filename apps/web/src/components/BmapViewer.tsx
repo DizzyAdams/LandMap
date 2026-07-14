@@ -446,7 +446,7 @@ export default function BmapViewer() {
                         onMouseEnter={() => setActiveIdx(i)}
                         className={`block w-full px-4 py-2 text-left transition ${
                           i === activeIdx
-                            ? 'bg-[var(--primary)]/10 text-emerald-200'
+                            ? 'bg-[var(--primary)]/10 text-[var(--success)]'
                             : 'text-neutral-300 hover:bg-[var(--card)] hover:border-[var(--border)]'
                         }`}
                       >
@@ -518,7 +518,7 @@ export default function BmapViewer() {
                   onClick={() => setLayer(id)}
                   className={
                     layer === id
-                      ? 'rounded-lg bg-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-emerald-300'
+                      ? 'rounded-lg bg-[var(--primary)]/20 px-3 py-1 text-xs font-medium text-[var(--success)]'
                       : 'rounded-lg px-3 py-1 text-xs text-neutral-400 transition hover:bg-[var(--card)] hover:text-neutral-200'
                   }
                 >
@@ -539,8 +539,8 @@ export default function BmapViewer() {
             <span
               className={
                 source === 'overpass'
-                  ? 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/[0.08] px-3 py-1 text-[11px] font-medium text-emerald-200 backdrop-blur-md'
-                  : 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/[0.08] px-3 py-1 text-[11px] font-medium text-amber-200 backdrop-blur-md'
+                  ? 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--primary)]/30 bg-[var(--primary)]/[0.08] px-3 py-1 text-[11px] font-medium text-[var(--success)] backdrop-blur-md'
+                  : 'pointer-events-auto inline-flex items-center gap-1.5 rounded-full border border-[var(--warning)]/30 bg-[var(--warning)]/[0.08] px-3 py-1 text-[11px] font-medium text-[var(--warning)] backdrop-blur-md'
               }
               title={source === 'overpass' ? 'Geometria real do OpenStreetMap' : 'Modelo procedural (OSM indisponível)'}
             >
@@ -548,7 +548,7 @@ export default function BmapViewer() {
                 className={`h-1.5 w-1.5 rounded-full ${
                   source === 'overpass'
                     ? 'bg-[var(--primary)] shadow-[0_0_8px_rgba(52,211,153,0.9)]'
-                    : 'bg-amber-400 shadow-[0_0_8px_rgba(245,158,11,0.9)]'
+                    : 'bg-[var(--warning)] shadow-[0_0_8px_var(--ring)]'
                 }`}
               />
               {source === 'overpass' ? 'Dados reais · OSM' : 'Modelo gerado'}
@@ -625,7 +625,7 @@ export default function BmapViewer() {
         </div>
       )}
       {notice && !loading && (
-        <div className="pointer-events-none absolute bottom-20 left-1/2 z-20 -translate-x-1/2 rounded-lg border border-amber-500/30 bg-amber-950/40 px-3 py-1.5 text-xs text-amber-200 backdrop-blur-md">
+        <div className="pointer-events-none absolute bottom-20 left-1/2 z-20 -translate-x-1/2 rounded-lg border border-[var(--warning)]/30 bg-[var(--warning)]/10 px-3 py-1.5 text-xs text-[var(--warning)] backdrop-blur-md">
           {notice}
         </div>
       )}

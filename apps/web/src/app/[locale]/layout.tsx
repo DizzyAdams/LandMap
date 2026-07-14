@@ -33,9 +33,29 @@ export async function generateMetadata({
   const { locale } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
 
+  // Localized home title/description (1:1 with Lovable + our message files).
+  const SEO: Record<string, { title: string; description: string }> = {
+    'pt-BR': {
+      title: 'LandMap — Inteligência de terrenos',
+      description:
+        'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+    },
+    'en-US': {
+      title: 'LandMap — Land intelligence',
+      description:
+        'LandMap: appreciation map, region ranking and price-per-m² history for smarter land decisions in Brazil.',
+    },
+    'es-ES': {
+      title: 'LandMap — Inteligencia de terrenos',
+      description:
+        'LandMap: mapa de valorización, ranking de regiones e historial de precio por m² para decisiones de terreno en Brasil.',
+    },
+  };
+  const seo = SEO[locale || 'pt-BR'] || SEO['pt-BR'];
+
   return {
-    title: 'LandMap — Inteligência de terrenos',
-    description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+    title: seo.title,
+    description: seo.description,
     metadataBase: new URL(siteUrl),
     manifest: '/manifest.json',
     icons: [
@@ -43,8 +63,8 @@ export async function generateMetadata({
       { url: '/icons/icon-512.svg', sizes: '512x512', type: 'image/svg+xml' },
     ],
     openGraph: {
-      title: 'LandMap — Inteligência de terrenos',
-      description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+      title: seo.title,
+      description: seo.description,
       url: `/${locale}`,
       siteName: 'LandMap',
       type: 'website',
@@ -54,14 +74,14 @@ export async function generateMetadata({
           url: `${siteUrl}/og-image.svg`,
           width: 1200,
           height: 630,
-          alt: 'LandMap — Inteligência de terrenos',
+          alt: seo.title,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'LandMap — Inteligência de terrenos',
-      description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
+      title: seo.title,
+      description: seo.description,
       images: [`${siteUrl}/og-image.svg`],
       creator: '@landmap',
     },

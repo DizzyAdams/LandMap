@@ -8,16 +8,18 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/index.js",
+    "serve": "tsx src/serve.ts",
     "lint": "tsc --noEmit",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@hono/node-server": "^1.19.14",
     "@landmap/config": "workspace:*",
     "@landmap/db": "workspace:*",
     "@landmap/geo": "workspace:*",
-    "@landmap/llm": "workspace:*",
     "@landmap/integrations": "workspace:*",
     "@landmap/invest": "workspace:*",
+    "@landmap/llm": "workspace:*",
     "@landmap/sales": "workspace:*",
     "hono": "4.6.0",
     "zod": "3.24.0"

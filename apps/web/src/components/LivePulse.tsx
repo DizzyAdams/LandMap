@@ -38,7 +38,7 @@ export default function LivePulse({ priceM2, roi }: { priceM2: number; roi: numb
   const roiUp = live.roi >= roi;
 
   return (
-    <div className="inline-flex items-center gap-3 rounded-lg border border-[var(--primary)]900/50 bg-emerald-950/20 px-3 py-1.5 text-[var(--foreground)] backdrop-blur-md">
+    <div className="inline-flex items-center gap-3 rounded-lg border border-[var(--primary)]/50 bg-[var(--success)]/15 px-3 py-1.5 text-[var(--foreground)] backdrop-blur-md">
       <div className="flex items-center gap-1.5">
         <span className="relative flex h-2 w-2">
           <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--primary)] opacity-75 ring-2 ring-[var(--primary)]/30" />
@@ -49,7 +49,7 @@ export default function LivePulse({ priceM2, roi }: { priceM2: number; roi: numb
 
       <div className="flex items-center gap-1 text-sm font-medium tabular-nums">
         <span className="text-[var(--muted-foreground)]">{t('live.priceM2')}:</span>
-        <span className={priceUp ? 'text-emerald-300' : 'text-rose-300'}>
+        <span className={priceUp ? 'text-[var(--success)]' : 'text-[var(--destructive)]'}>
           {brl.format(live.priceM2)}
         </span>
         <span className={priceUp ? 'text-[var(--primary)]' : 'text-rose-400'}>
@@ -59,7 +59,7 @@ export default function LivePulse({ priceM2, roi }: { priceM2: number; roi: numb
 
       <div className="flex items-center gap-1 text-sm font-medium tabular-nums">
         <span className="text-[var(--muted-foreground)]">{t('live.roi')}:</span>
-        <span className={roiUp ? 'text-emerald-300' : 'text-rose-300'}>
+        <span className={roiUp ? 'text-[var(--success)]' : 'text-[var(--destructive)]'}>
           {live.roi}%
         </span>
         <span className={roiUp ? 'text-[var(--primary)]' : 'text-rose-400'}>

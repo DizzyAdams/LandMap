@@ -134,7 +134,7 @@ function MiniStat({
   value: string;
   tone: 'emerald' | 'danger';
 }) {
-  const color = tone === 'emerald' ? 'var(--emerald-bright)' : '#ff8a8a';
+  const color = tone === 'emerald' ? 'var(--emerald-bright)' : 'var(--destructive)';
   return (
     <div
       style={{

@@ -4,7 +4,7 @@ export default function RootLoading() {
   return (
     <div className="relative flex min-h-screen flex-col">
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[#050505]" />
+        <div className="absolute inset-0 bg-[var(--background)]" />
         <div className="absolute inset-0 cadastre-grid opacity-[0.04]" />
 
       </div>
@@ -35,7 +35,7 @@ export default function RootLoading() {
       <section className="mx-auto w-full max-w-6xl px-6 pb-16">
         <div className="grid gap-px overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--card)] sm:grid-cols-3">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-[#050505] p-6">
+            <div key={i} className="bg-[var(--background)] p-6">
               <div className="mb-2 h-7 w-24 animate-pulse rounded bg-[var(--card)]" />
               <div className="h-3 w-32 animate-pulse rounded bg-[var(--card)]" />
             </div>

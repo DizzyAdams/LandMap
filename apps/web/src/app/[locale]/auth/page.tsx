@@ -281,22 +281,22 @@ export default function AuthPage() {
                     <div className="flex items-center gap-2">
                       <span
                         className={`flex h-3.5 w-3.5 items-center justify-center rounded-full ${
-                          pwLenMet ? 'bg-emerald-100 text-emerald-700' : 'bg-[var(--muted)] text-[var(--muted-foreground)]'
+                          pwLenMet ? 'bg-[var(--success)]/15 text-[var(--success)]' : 'bg-[var(--muted)] text-[var(--muted-foreground)]'
                         }`}
                       />
-                      <span className={pwLenMet ? 'text-emerald-600' : 'text-[var(--muted-foreground)]'}>
+                      <span className={pwLenMet ? 'text-[var(--success)]' : 'text-[var(--muted-foreground)]'}>
                         Mínimo 8 caracteres
                       </span>
                     </div>
                     <div className="flex items-center gap-2">
                       <span
                         className={`flex h-3.5 w-3.5 items-center justify-center rounded-full ${
-                          pwSpecialMet ? 'bg-emerald-100 text-emerald-700' : 'bg-[var(--muted)] text-[var(--muted-foreground)]'
+                          pwSpecialMet ? 'bg-[var(--success)]/15 text-[var(--success)]' : 'bg-[var(--muted)] text-[var(--muted-foreground)]'
                         }`}
                       />
                       <span
                         className={
-                          pwSpecialMet ? 'text-emerald-600' : 'text-[var(--muted-foreground)]'
+                          pwSpecialMet ? 'text-[var(--success)]' : 'text-[var(--muted-foreground)]'
                         }
                       >
                         Ao menos 1 caractere especial
@@ -305,7 +305,7 @@ export default function AuthPage() {
                   </div>
                 )}
               </label>
-              {error && <p className="text-sm text-red-600">{error}</p>}
+              {error && <p className="text-sm text-[var(--destructive)]">{error}</p>}
               <label className="flex items-start gap-2">
                 <input
                   type="checkbox"

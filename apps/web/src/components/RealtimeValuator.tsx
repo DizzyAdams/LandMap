@@ -102,7 +102,7 @@ export function RealtimeValuator({
             <>
               {brl.format(result.pricePerM2)}/m² ·{' '}
               <span
-                className="cursor-help border-b border-dotted border-neutral-600"
+                className="cursor-help border-b border-dotted border-[var(--border)]"
                 title={
                   result.engine === 'torch'
                     ? 'Refinador PyTorch treinado em 1.500 imóveis reais — corrige o prior em numpy'
