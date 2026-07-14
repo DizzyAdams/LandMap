@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { Layers } from '../../../../components/lovable/icons';
 
 type WebhookConfig = {
   url: string;
@@ -47,14 +48,19 @@ export default function AdminWebhooksPage() {
   }
 
   return (
-    <div>
-      <p className="text-sm font-medium text-[var(--primary)]">Integrações</p>
-      <h2 className="mt-2 text-lg font-medium text-[var(--foreground)]">Webhooks</h2>
-      <p className="mt-1 text-xs text-[var(--muted-foreground)]">
-        Configurar URLs de callback para eventos do LandMap
-      </p>
+    <div className="mx-auto max-w-7xl space-y-6">
+      <header className="flex items-center gap-3">
+        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--accent)] text-[var(--primary)]">
+          <Layers className="h-5 w-5" />
+        </div>
+        <div>
+          <p className="text-sm font-medium text-[var(--primary)]">Integrações</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Webhooks</h1>
+          <p className="mt-1 text-[var(--muted-foreground)]">Configurar URLs de callback para eventos do LandMap</p>
+        </div>
+      </header>
 
-      <div className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 max-w-lg">
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 max-w-lg">
         <div className="space-y-5">
           {/* URL input */}
           <label className="block">

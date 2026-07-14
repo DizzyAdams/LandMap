@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
-import { Star, GitCompare } from '../../../components/lovable/icons';
+import { Star, GitCompare, MapPinned } from '../../../components/lovable/icons';
 
 type Region = {
   id: string;
@@ -50,7 +50,10 @@ export default function RegionsPage() {
     <div className="mx-auto max-w-7xl space-y-6">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
-          <p className="text-sm font-medium text-[var(--primary)]">Regiões monitoradas</p>
+          <p className="flex items-center gap-1.5 text-sm font-medium text-[var(--primary)]">
+            <MapPinned className="h-4 w-4" />
+            Regiões monitoradas
+          </p>
           <h1 className="mt-1 text-3xl font-bold tracking-tight">Bairros de Fortaleza</h1>
           <p className="mt-1 text-[var(--muted-foreground)]">
             Preços médios anunciados e observados, faixa estimada e confiança dos dados.

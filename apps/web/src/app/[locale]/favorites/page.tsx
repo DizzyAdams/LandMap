@@ -3,10 +3,12 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
+import { Card, EmptyState } from '@landmap/ui';
 import {
   Building2,
   MapPin,
   Star,
+  X,
 } from '../../../components/lovable/icons';
 
 type FavoriteRegion = {
@@ -117,22 +119,19 @@ export default function FavoritesPage() {
       </header>
 
       {/* Regiões favoritas */}
-      <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+      <section>
         <div className="flex items-center gap-2">
           <MapPin className="h-5 w-5" />
           <h2 className="text-base font-semibold">Regiões favoritas</h2>
         </div>
         <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
           {regions.length === 0 ? (
-            <p className="col-span-full text-sm text-[var(--muted-foreground)]">
-              Nenhuma região favoritada ainda.
-            </p>
+            <div className="col-span-full">
+              <EmptyState title="Nenhuma região favoritada ainda." />
+            </div>
           ) : (
             regions.map((region) => (
-              <div
-                key={region.id}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4"
-              >
+              <Card key={region.id}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <p className="font-semibold text-[var(--foreground)]">{region.name}</p>
@@ -144,9 +143,9 @@ export default function FavoritesPage() {
                     type="button"
                     onClick={() => removeRegion(region.id)}
                     aria-label="Remover região dos favoritos"
-                    className="rounded-md p-2 text-warning transition-colors hover:bg-[var(--muted)] hover:text-warning"
+                    className="rounded-md p-2 text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--destructive)]"
                   >
-                    <Star className="h-4 w-4" fill="currentColor" />
+                    <X className="h-4 w-4" />
                   </button>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
@@ -155,30 +154,26 @@ export default function FavoritesPage() {
                     {region.dataPoints} dados
                   </span>
                 </div>
-              </div>
+              </Card>
             ))
           )}
         </div>
       </section>
 
-
       {/* Terrenos favoritos */}
-      <section className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4">
+      <section>
         <div className="flex items-center gap-2">
           <Building2 className="h-5 w-5" />
           <h2 className="text-base font-semibold">Terrenos favoritos</h2>
         </div>
         <div className="mt-3 grid gap-3 md:grid-cols-2">
           {properties.length === 0 ? (
-            <p className="col-span-full text-sm text-[var(--muted-foreground)]">
-              Nenhum terreno favoritado ainda.
-            </p>
+            <div className="col-span-full">
+              <EmptyState title="Nenhum terreno favoritado ainda." />
+            </div>
           ) : (
             properties.map((property) => (
-              <div
-                key={property.id}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4"
-              >
+              <Card key={property.id}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <div className="flex items-center gap-1.5">
@@ -196,9 +191,9 @@ export default function FavoritesPage() {
                     type="button"
                     onClick={() => removeProperty(property.id)}
                     aria-label="Remover terreno dos favoritos"
-                    className="rounded-md p-2 text-warning transition-colors hover:bg-[var(--muted)] hover:text-warning"
+                    className="rounded-md p-2 text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--destructive)]"
                   >
-                    <Star className="h-4 w-4" fill="currentColor" />
+                    <X className="h-4 w-4" />
                   </button>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
@@ -212,7 +207,7 @@ export default function FavoritesPage() {
                 <div className="mt-2 flex items-center gap-0.5">
                   <ConfidenceStars value={property.confidence} />
                 </div>
-              </div>
+              </Card>
             ))
           )}
         </div>
@@ -220,4 +215,3 @@ export default function FavoritesPage() {
     </div>
   );
 }
-

@@ -4,12 +4,10 @@ import type { Metadata } from 'next';
 import { Badge, Card, Button } from '@landmap/ui';
 import { Reveal, Stagger } from '../../../../components/Motion';
 import { SpotlightCard } from '../../../../components/SpotlightCard';
+import { MapPinned } from '../../../../components/lovable/icons';
 import { getProperty, type Property } from '../../../../lib/api';
 import { localeHref } from '../../../../lib/locale';
 import { formatBRL } from '../../../../lib/format';
-import { SocialProof } from '../../../../components/SocialProof';
-import { UrgencyTimer } from '../../../../components/UrgencyTimer';
-import { PriceAnchoring } from '../../../../components/PriceAnchoring';
 
 export const dynamic = 'force-dynamic';
 
@@ -61,24 +59,17 @@ export default async function PropertyPage({ params }: { params: Promise<{ local
 
   const priceText = formatBRL(property.price);
   const mapQuery = encodeURIComponent(`${property.title} ${property.city} ${property.state}`);
-  const originalPrice = Math.round(property.price * 1.2); // mock original price 20% higher
 
   return (
     <main className="min-h-screen text-[var(--foreground)]">
       <section className="mx-auto max-w-6xl px-6 py-16">
-        {/* Dark patterns row */}
-        <div className="mb-6 flex flex-wrap items-center gap-3">
-          <SocialProof propertyId={property.id} />
-          <UrgencyTimer expiresInMinutes={1440} />
-          <PriceAnchoring originalPrice={originalPrice} currentPrice={property.price} />
-        </div>
-
         <Reveal>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div>
               <div className="mb-2"><p className="text-sm font-medium text-[var(--primary)]">Imóvel</p></div>
               <h1 className="text-2xl font-semibold tracking-tight">{property.title}</h1>
-              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
+              <p className="mt-2 flex items-center gap-1.5 text-sm text-[var(--muted-foreground)]">
+                <MapPinned className="h-4 w-4" />
                 {property.city}, {property.state} · {property.areaM2} m²
                 {property.bedrooms ? ` · ${property.bedrooms} quarto(s)` : ''}
               </p>

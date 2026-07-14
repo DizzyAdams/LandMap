@@ -264,6 +264,62 @@ export function BarChart({ size = 24, ...p }: IconProps) {
   );
 }
 
+export function Flame({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M12 3q1 4 4 6.5t3 5.5a1 1 0 0 1-14 0 5 5 0 0 1 1-3 1 1 0 0 0 5 0c0-2-1.5-3-1.5-5q0-2 2.5-4" />
+    </svg>
+  );
+}
+
+export function Gem({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M10.5 3 8 9l4 13 4-13-2.5-6" />
+      <path d="M17 3a2 2 0 0 1 1.6.8l3 4a2 2 0 0 1 .013 2.382l-7.99 10.986a2 2 0 0 1-3.247 0l-7.99-10.986A2 2 0 0 1 2.4 7.8l2.998-3.997A2 2 0 0 1 7 3z" />
+      <path d="M2 9h20" />
+    </svg>
+  );
+}
+
+export function Award({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526" />
+      <circle cx="12" cy="8" r="6" />
+    </svg>
+  );
+}
+
+export function Satellite({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="m13.5 6.5-3.148-3.148a1.205 1.205 0 0 0-1.704 0L6.352 5.648a1.205 1.205 0 0 0 0 1.704L9.5 10.5" />
+      <path d="M16.5 7.5 19 5" />
+      <path d="m17.5 10.5 3.148 3.148a1.205 1.205 0 0 1 0 1.704l-2.296 2.296a1.205 1.205 0 0 1-1.704 0L13.5 14.5" />
+      <path d="M9 21a6 6 0 0 0-6-6" />
+      <path d="M9.352 10.648a1.205 1.205 0 0 0 0 1.704l2.296 2.296a1.205 1.205 0 0 0 1.704 0l4.296-4.296a1.205 1.205 0 0 0 0-1.704l-2.296-2.296a1.205 1.205 0 0 0-1.704 0z" />
+    </svg>
+  );
+}
+
+export function TrendingDown({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M16 17h6v-6" />
+      <path d="m22 17-8.5-8.5-5 5L2 7" />
+    </svg>
+  );
+}
+
+export function Minus({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M5 12h14" />
+    </svg>
+  );
+}
+
 export function ArrowUpDown({ size = 24, ...p }: IconProps) {
   return (
     <svg {...base(size)} {...p} aria-hidden>

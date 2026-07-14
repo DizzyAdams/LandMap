@@ -48,17 +48,18 @@ export default async function LocaleHomePage() {
       <section className="mx-auto grid max-w-[1200px] grid-cols-1 gap-14 px-6 lg:px-24 pb-24 pt-24 sm:pt-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>
           <span className="inline-flex items-center gap-2 rounded-full border border-[var(--primary)]/20 bg-[color:color-mix(in_srgb,var(--primary)_10%,transparent)] px-3 py-1 text-xs font-medium text-[var(--primary)]">
-            Inteligência imobiliária aberta
+            Inteligência de terrenos
           </span>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-balance mt-5 text-[var(--foreground)]">
-            Veja o território imobiliário como{' '}
+            Veja cada terreno como{' '}
             <span className="text-[var(--primary)]">dados</span>.
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)] sm:text-lg">
-            Busca por cidade e tipo, mapa interativo, chat com IA e cálculo de
-            investimento. 1.500 imóveis em 10 cidades - sem custo e sem login.
+            Mapa de valorização, ranking de regiões e histórico de preço por m²
+            para decisões de terreno no Brasil. 1.500 terrenos em 10 cidades — sem
+            custo e sem login.
           </p>
 
           <div className="mt-8 flex flex-wrap items-center gap-3">
@@ -66,7 +67,7 @@ export default async function LocaleHomePage() {
               href="./search"
               className={cn(buttonVariants({ variant: 'default' }), 'group h-12 px-6 rounded-full')}
             >
-              Explorar imóveis
+              Explorar terrenos
               <span aria-hidden className="transition-transform duration-300 group-hover:translate-x-0.5">→</span>
             </Link>
             <Link
@@ -78,7 +79,7 @@ export default async function LocaleHomePage() {
           </div>
 
           <div className="mt-10 grid grid-cols-3 gap-4 border-t border-[var(--border)] pt-6">
-            <Metric value={1500} suffix="+" label="Imóveis catalogados" />
+            <Metric value={1500} suffix="+" label="Terrenos catalogados" />
             <Metric value={10} label="Cidades mapeadas" />
             <Metric value={6} label="Modalidades" />
           </div>
@@ -95,7 +96,7 @@ export default async function LocaleHomePage() {
                 Live
               </span>
             </div>
-            
+
             <div className="space-y-4">
               {TERMINAL_ROWS.map((r) => (
                 <div key={r.city} className="flex items-center justify-between border-b border-[var(--border)] pb-3 last:border-0 last:pb-0">
@@ -117,7 +118,7 @@ export default async function LocaleHomePage() {
         <div className="flex items-end justify-between gap-4">
           <div>
             <p className="eyebrow">Destaque no cadastro</p>
-            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight">Imóveis em destaque</h2>
+            <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight">Terrenos em destaque</h2>
           </div>
           <Link href="./search" className="group shrink-0 text-sm text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]">
             <span className="link-underline">Ver todos</span>
@@ -158,7 +159,7 @@ export default async function LocaleHomePage() {
             </table>
           </div>
         ) : (
-          <p className="mt-8 text-sm text-[var(--muted-foreground)]">Nenhum imóvel encontrado no momento.</p>
+          <p className="mt-8 text-sm text-[var(--muted-foreground)]">Nenhum terreno encontrado no momento.</p>
         )}
       </Reveal>
 
@@ -176,9 +177,9 @@ export default async function LocaleHomePage() {
         <Stagger className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { href: './sales', title: 'Agente de Vendas', desc: 'Esquadrão de 11 agentes: prospecção → fechamento.', tag: '11 agentes' },
-            { href: './chat', title: 'Chat RAG (IA grátis)', desc: 'Pergunte sobre imóveis. MiniMax via Puter.js.', tag: 'LLM' },
+            { href: './chat', title: 'Chat RAG (IA grátis)', desc: 'Pergunte sobre terrenos. MiniMax via Puter.js.', tag: 'LLM' },
             { href: './map', title: 'Mapa Interativo', desc: 'Leaflet com pins, clusters e geocodificação.', tag: 'Geo' },
-            { href: './compare', title: 'Comparador', desc: 'Diff de preço, área e quartos entre imóveis.', tag: 'Diff' },
+            { href: './compare', title: 'Comparador', desc: 'Diff de preço, área e quartos entre terrenos.', tag: 'Diff' },
             { href: './studio', title: 'Studio (IA & Design)', desc: 'Geração de copy e variações de marca.', tag: 'GenAI' },
             { href: './favorites', title: 'Favoritos & Alertas', desc: 'Salve e receba alertas por filtro.', tag: 'Sync' },
             { href: './insights', title: 'Insights de Investimento', desc: 'Métricas PURAS: cap rate, cash-on-cash, IRR.', tag: 'Invest' },
@@ -201,8 +202,8 @@ export default async function LocaleHomePage() {
       <Reveal className="border-t border-[var(--border)] bg-[var(--muted)]/50">
         <div className="mx-auto max-w-[1200px] px-6 lg:px-24 py-16">
           <p className="text-sm font-medium text-[var(--primary)]">Plataforma aberta</p>
-          <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight sm:text-3xl">Dados, busca, mapa e IA - sem custo.</h2>
-          <p className="mt-2 max-w-md text-sm text-[var(--muted-foreground)]">API REST, schema.org, RAG local, CRM - tudo open-source.</p>
+          <h2 className="mt-2 text-[1.75rem] font-semibold tracking-tight sm:text-3xl">Dados, mapa, ranking e IA — sem custo.</h2>
+          <p className="mt-2 max-w-md text-sm text-[var(--muted-foreground)]">API REST, schema.org, RAG local, CRM — tudo open-source.</p>
           <div className="mt-6">
             <Link
               href="./search"

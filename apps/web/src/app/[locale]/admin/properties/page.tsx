@@ -216,7 +216,7 @@ export default function AdminPropertiesPage() {
 
       {/* Edit modal */}
       {editId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--foreground)]/40 backdrop-blur-sm">
           <form
             onSubmit={handleSave}
             className="w-full max-w-lg rounded-xl border border-[var(--border)] bg-[var(--card)] p-6 shadow-2xl"

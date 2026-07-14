@@ -1,150 +1,218 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 import {
   TrendingUp,
   MapPin,
   Activity,
   Building2,
   ShieldCheck,
+  LineChart,
+  BarChart,
+  ArrowUpDown,
+  BellRing,
+  LandMapWordmark,
 } from '../../../components/lovable/icons';
+import {
+  Card,
+  MetricStat,
+  Sparkline,
+  Progress,
+  Badge,
+  StatPill,
+  Skeleton,
+  EmptyState,
+} from '@landmap/ui';
 
-/* ── Dynamically import the map to avoid SSR issues (Leaflet needs `window`) ── */
-const MapView = dynamic(() => import('./MapView'), {
-  ssr: false,
-  loading: () => null,
-});
-
-/* ── Types ── */
+/* ── KPI cards — preserve existing PT-BR copy exactly ── */
 type KpiItem = {
   label: string;
   value: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement> & { size?: number }>;
+  tone: 'emerald' | 'cyan' | 'violet' | 'gold' | 'neutral';
+  hint?: string;
 };
 
 const KPI_DATA: KpiItem[] = [
-  { label: 'Valorização média', value: '↑ 2,4%', icon: TrendingUp },
-  { label: 'Preço médio/m²', value: 'R$ 7.200', icon: MapPin },
-  { label: 'Bairros monitorados', value: '24', icon: Activity },
-  { label: 'Imóveis ativos', value: '1.847', icon: Building2 },
-  { label: 'Confiança dos dados', value: '94%', icon: ShieldCheck },
+  { label: 'Valorização média', value: '↑ 2,4%', icon: TrendingUp, tone: 'emerald', hint: 'vs. mês anterior' },
+  { label: 'Preço médio/m²', value: 'R$ 7.200', icon: MapPin, tone: 'violet', hint: 'média nacional' },
+  { label: 'Bairros monitorados', value: '24', icon: Activity, tone: 'neutral', hint: 'em 6 cidades' },
+  { label: 'Imóveis ativos', value: '1.847', icon: Building2, tone: 'cyan', hint: 'ativos agora' },
+  { label: 'Confiança dos dados', value: '94%', icon: ShieldCheck, tone: 'gold', hint: 'índice de qualidade' },
 ];
 
-/* ── Loading overlay ── */
-function LoadingOverlay() {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-      <div className="rounded-full bg-[var(--card)]/90 px-5 py-2.5 shadow-sm backdrop-blur">
-        <span className="flex items-center gap-3 text-sm font-medium text-[var(--foreground)]/75">
-          <span className="relative flex h-3 w-3">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[var(--primary)] opacity-75" />
-            <span className="relative inline-flex h-3 w-3 rounded-full bg-[var(--primary)]" />
-          </span>
-          Carregando inteligência territorial…
-        </span>
-      </div>
-    </div>
-  );
-}
+/* ── Demo series for charts (this view has no backend fetch of its own) ── */
+const REGION_TREND = [12, 18, 15, 22, 28, 24, 33, 31, 38, 44];
 
-/* ── Error overlay ── */
-function ErrorOverlay() {
-  return (
-    <div className="pointer-events-none absolute inset-0 z-20 flex items-center justify-center">
-      <div className="pointer-events-auto max-w-sm rounded-2xl border border-destructive/20 bg-[var(--card)] p-5 shadow-sm">
-        <h3 className="text-sm font-semibold text-destructive">
-          Falha ao carregar o mapa
-        </h3>
-        <p className="mt-1 text-sm text-[var(--foreground)]/70">
-          Não foi possível carregar o mapa. Verifique sua conexão e tente
-          novamente.
-        </p>
-      </div>
-    </div>
-  );
-}
+type RegionRow = { city: string; price: string; delta: number };
 
-/* ── KPI bar ── */
-function KpiBar() {
-  return (
-    <div className="pointer-events-none absolute inset-x-0 top-0 z-10 px-4 pt-4 md:px-6">
-      <div className="pointer-events-auto mx-auto grid max-w-[1400px] grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-5">
-        {KPI_DATA.map((kpi) => {
-          const Icon = kpi.icon;
-          return (
-            <div
-              key={kpi.label}
-              className="rounded-xl border border-[var(--border)]/40 bg-[var(--card)]/90 px-3 py-2.5 shadow-sm backdrop-blur transition hover:bg-[var(--card)]"
-            >
-              <div className="flex items-center gap-1.5">
-                <Icon
-                  size={14}
-                  className="text-[var(--primary)]"
-                />
-                <span className="truncate text-[11px] font-medium uppercase tracking-wider text-[var(--muted-foreground)]">
-                  {kpi.label}
-                </span>
-              </div>
-              <p className="mt-1 text-lg font-bold tracking-tight text-[var(--foreground)]">
-                {kpi.value}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+/* Mirrors the "Últimas transações" copy used on the home screen. */
+const RECENT: RegionRow[] = [
+  { city: 'São Paulo', price: 'R$ 1,2M', delta: 4.2 },
+  { city: 'Curitiba', price: 'R$ 860k', delta: 2.8 },
+  { city: 'Florianópolis', price: 'R$ 1,4M', delta: 5.1 },
+  { city: 'Belo Horizonte', price: 'R$ 720k', delta: -1.3 },
+  { city: 'Recife', price: 'R$ 640k', delta: 3.4 },
+];
 
-/* ── Brand chip ── */
-function BrandChip() {
-  return (
-    <div className="pointer-events-none absolute bottom-4 left-4 z-10 md:bottom-6 md:left-6">
-      <div className="pointer-events-auto inline-flex items-center gap-2 rounded-full border border-[var(--border)]/40 bg-[var(--card)]/90 px-3.5 py-1.5 shadow-sm backdrop-blur">
-        <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
-        <span className="font-display text-xs font-bold tracking-tight text-[var(--primary)]">
-          LandMap
-        </span>
-      </div>
-    </div>
-  );
-}
+const DISTRIBUTION = [
+  { label: 'Residencial', pct: 62 },
+  { label: 'Comercial', pct: 24 },
+  { label: 'Industrial', pct: 14 },
+];
 
-/* ── Page ── */
 export default function DashboardPage() {
+  const locale = useLocale();
+  const lh = (p: string) => `/${locale}${p}`;
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Simulate async map initialization
-    const timer = setTimeout(() => setLoading(false), 800);
+    // Simulate async data load for this view.
+    const timer = setTimeout(() => setLoading(false), 600);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <main className="relative h-screen w-screen overflow-hidden text-[var(--foreground)]">
-      {/* Leaflet attribution hidden via CSS */}
-      <style>{`
-        .leaflet-control-attribution { display: none !important; }
-      `}</style>
+    <main className="min-h-[100dvh] bg-background text-[var(--foreground)]">
+      {/* Header */}
+      <header className="sticky top-0 z-10 border-b border-[var(--border)] bg-background/90 backdrop-blur">
+        <div className="mx-auto flex max-w-[1200px] items-center justify-between px-6 py-4">
+          <div className="flex items-center gap-3">
+            <Link href={lh('/')} aria-label="Início" className="transition hover:opacity-80">
+              <LandMapWordmark />
+            </Link>
+            <span className="hidden text-sm text-[var(--muted-foreground)] sm:inline">Painel</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <StatPill icon={<BellRing size={13} />} value="3" label="alertas" tone="emerald" />
+            <Link
+              href={lh('/map')}
+              className="inline-flex h-9 items-center rounded-full border border-[var(--border)] px-4 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)]"
+            >
+              Abrir mapa
+            </Link>
+          </div>
+        </div>
+      </header>
 
-      {/* Full-screen map */}
-      <div className="absolute inset-0 z-0">
-        <MapView onError={(msg: string) => { setError(msg); setLoading(false); }} />
+      <div className="mx-auto max-w-[1200px] px-6 py-8">
+        <div className="mb-6">
+          <p className="eyebrow">Inteligência de terrenos</p>
+          <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
+            Visão geral do mercado
+          </h1>
+        </div>
+
+        {/* Stat cards row */}
+        {loading ? (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {KPI_DATA.map((k) => (
+              <Skeleton key={k.label} className="h-[92px] rounded-xl" />
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+            {KPI_DATA.map((kpi) => {
+              const Icon = kpi.icon;
+              return (
+                <MetricStat
+                  key={kpi.label}
+                  label={kpi.label}
+                  value={kpi.value}
+                  tone={kpi.tone}
+                  hint={kpi.hint}
+                  icon={<Icon size={14} />}
+                />
+              );
+            })}
+          </div>
+        )}
+
+        {/* Charts + distribution */}
+        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+          <Card className="lg:col-span-2">
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <LineChart size={16} className="text-[var(--primary)]" />
+                <h2 className="text-sm font-semibold">Valorização por região</h2>
+              </div>
+              <Link
+                href={lh('/regions')}
+                className="text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]"
+              >
+                Ver regiões
+              </Link>
+            </div>
+            <div className="flex flex-wrap items-end gap-6">
+              <Sparkline data={REGION_TREND} width={280} height={64} />
+              <div className="flex flex-col gap-1">
+                <StatPill icon={<TrendingUp size={12} />} value="+2,4%" tone="emerald" />
+                <Badge variant="success">Em alta</Badge>
+              </div>
+            </div>
+          </Card>
+
+          <Card>
+            <div className="mb-4 flex items-center gap-2">
+              <BarChart size={16} className="text-[var(--primary)]" />
+              <h2 className="text-sm font-semibold">Distribuição por tipo</h2>
+            </div>
+            <div className="space-y-4">
+              {DISTRIBUTION.map((d) => (
+                <div key={d.label}>
+                  <div className="mb-1 flex items-center justify-between text-xs">
+                    <span className="text-[var(--muted-foreground)]">{d.label}</span>
+                    <span className="font-medium text-[var(--foreground)]">{d.pct}%</span>
+                  </div>
+                  <Progress value={d.pct} />
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* Recent list */}
+        <div className="mt-6">
+          <Card>
+            <div className="mb-4 flex items-center gap-2">
+              <ArrowUpDown size={16} className="text-[var(--primary)]" />
+              <h2 className="text-sm font-semibold">Últimas transações</h2>
+            </div>
+            {loading ? (
+              <Skeleton className="h-40 rounded-lg" />
+            ) : RECENT.length > 0 ? (
+              <ul>
+                {RECENT.map((r) => (
+                  <li
+                    key={r.city}
+                    className="flex items-center justify-between border-b border-[var(--border)] py-3 last:border-0 last:pb-0"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="grid h-8 w-8 place-items-center rounded-full bg-[var(--muted)]">
+                        <Building2 size={14} className="text-[var(--muted-foreground)]" />
+                      </span>
+                      <span className="text-sm font-medium text-[var(--foreground)]">{r.city}</span>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <span className="text-sm font-semibold text-[var(--foreground)]">{r.price}</span>
+                      <Badge variant={r.delta >= 0 ? 'success' : 'destructive'}>
+                        {r.delta >= 0 ? '▲' : '▼'} {Math.abs(r.delta).toFixed(1)}%
+                      </Badge>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <EmptyState
+                title="Nenhuma transação recente"
+                description="Os dados aparecem aqui assim que houver atividade."
+              />
+            )}
+          </Card>
+        </div>
       </div>
-
-      {/* KPI bar — top */}
-      <KpiBar />
-
-      {/* Loading overlay */}
-      {loading && !error && <LoadingOverlay />}
-
-      {/* Error overlay */}
-      {error && <ErrorOverlay />}
-
-      {/* Brand chip — bottom left */}
-      <BrandChip />
     </main>
   );
 }

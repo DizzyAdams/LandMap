@@ -295,6 +295,10 @@
 /* ─── Shared CSS tokens (light mode defaults, lovable_styles.css reference) ─── */
 :root {
   --radius: 0.625rem;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --background: oklch(100% 0 0);
   --foreground: oklch(18% .06 265);
   --card: oklch(100% 0 0);

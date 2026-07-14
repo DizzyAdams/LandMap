@@ -24,7 +24,15 @@ type CityData = {
   avgPrice: number;
 };
 
-const COLORS = ['#6366f1', '#8b5cf6', '#06b6d4', '#22d3ee', '#a78bfa', '#34d399', '#f59e0b'];
+const COLORS = [
+  'var(--chart-1)',
+  'var(--chart-2)',
+  'var(--chart-3)',
+  'var(--chart-4)',
+  'var(--chart-5)',
+  'var(--chart-2)',
+  'var(--chart-3)',
+];
 
 export default function AdminAnalyticsPage() {
   const [stats, setStats] = useState<StatsData | null>(null);
@@ -98,7 +106,7 @@ export default function AdminAnalyticsPage() {
             <BarChart
               labels={typeEntries.map(([k]) => typeLabels[k] ?? k)}
               values={typeEntries.map(([, v]) => v)}
-              color="#6366f1"
+              color="var(--primary)"
               height={200}
             />
           </ChartCard>
@@ -109,7 +117,7 @@ export default function AdminAnalyticsPage() {
               labels={top.map((c) => c.city)}
               values={top.map((c) => Math.round(c.avgPrice / 1000))}
               suffix="k"
-              color="#06b6d4"
+              color="var(--chart-3)"
               height={200}
             />
           </ChartCard>
@@ -128,7 +136,7 @@ export default function AdminAnalyticsPage() {
             <BarChart
               labels={stats.priceRanges.map((r) => r.label)}
               values={stats.priceRanges.map((r) => r.count)}
-              color="#8b5cf6"
+              color="var(--chart-5)"
               height={200}
             />
           </ChartCard>
