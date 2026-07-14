@@ -15,9 +15,9 @@ const sizeMap = {
 };
 
 const toneMap = {
-  running: 'bg-[color:color-mix(in_srgb,var(--emerald)_20%,transparent)] text-[var(--emerald-bright)]',
-  paused: 'bg-[color:color-mix(in_srgb,var(--gold)_20%,transparent)] text-[var(--gold-soft)]',
-  idle: 'bg-[var(--surface-3)] text-[var(--text)]',
+  running: 'bg-[color:color-mix(in_srgb,var(--primary)_20%,transparent)] text-[var(--primary)]',
+  paused: 'bg-[color:color-mix(in_srgb,var(--warning)_20%,transparent)] text-[var(--warning)]',
+  idle: 'bg-[var(--card)] text-[var(--foreground)]',
 };
 
 /** Initials avatar with a status tint. */
