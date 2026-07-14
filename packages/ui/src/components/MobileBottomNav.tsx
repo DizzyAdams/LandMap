@@ -97,7 +97,7 @@ export function MobileBottomNav() {
   return (
     <nav
       aria-label="Navegação principal (mobile)"
-      className="fixed inset-x-0 bottom-0 z-50 flex items-stretch border-t border-[var(--border-strong)] bg-[var(--bg)]/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
+      className="fixed inset-x-0 bottom-0 z-50 flex items-stretch border-t border-[var(--border)] bg-[var(--background)]/90 pb-[env(safe-area-inset-bottom)] backdrop-blur-md md:hidden"
     >
       {ITEMS.map((item) => {
         const active = isActive(item.href);
@@ -110,7 +110,7 @@ export function MobileBottomNav() {
               'flex min-h-[56px] flex-1 flex-col items-center justify-center gap-1 outline-none transition-colors',
               'focus-visible:outline-none focus-visible:shadow-[var(--ring)]',
               'motion-reduce:transition-none',
-              active ? 'text-[var(--emerald-bright)]' : 'text-[var(--muted)] hover:text-[var(--accent-dim)]',
+              active ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)] hover:text-[var(--muted-foreground)]',
             )}
           >
             {item.icon}

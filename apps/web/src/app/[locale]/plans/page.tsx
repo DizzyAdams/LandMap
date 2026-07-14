@@ -27,7 +27,7 @@ const PLANS: Plan[] = [
       'Mapa de calor básico',
       'Ranking das regiões mais valorizadas',
       'Ranking das regiões em queda',
-      'Histórico de preço por mês',
+      'Histórico de preço por m²',
       'Busca por bairro, cidade e região',
       'Salvar até 10 áreas favoritas',
       'Tendência: subindo, estável ou caindo',

@@ -13,7 +13,7 @@ export interface SparklineProps {
 /** Tiny inline SVG sparkline. */
 export const Sparkline = forwardRef<SVGSVGElement, SparklineProps>(
   (
-    { data, width = 80, height = 24, color = 'var(--emerald)', strokeWidth = 1.5, className, 'aria-label': ariaLabel, ...props },
+    { data, width = 80, height = 24, color = 'var(--primary)', strokeWidth = 1.5, className, 'aria-label': ariaLabel, ...props },
     ref,
   ) => {
     if (data.length < 2) return null;

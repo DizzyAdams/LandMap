@@ -34,12 +34,12 @@ export interface MetricStatProps extends React.HTMLAttributes<HTMLDivElement> {
 // pipeline is turned on. Colors reference the brand CSS vars (with rgba
 // fallbacks) already defined in packages/ui/src/styles.css and globals.css.
 const toneStyle: Record<MetricTone, React.CSSProperties> = {
-  emerald: { color: 'var(--emerald-bright)', borderColor: 'color-mix(in srgb, var(--emerald) 35%, transparent)', background: 'color-mix(in srgb, var(--emerald) 8%, transparent)' },
-  cyan: { color: 'var(--cyan)', borderColor: 'color-mix(in srgb, var(--cyan) 35%, transparent)', background: 'color-mix(in srgb, var(--cyan) 8%, transparent)' },
-  violet: { color: 'var(--violet)', borderColor: 'color-mix(in srgb, var(--violet) 35%, transparent)', background: 'color-mix(in srgb, var(--violet) 8%, transparent)' },
-  gold: { color: 'var(--gold-soft)', borderColor: 'color-mix(in srgb, var(--gold) 35%, transparent)', background: 'color-mix(in srgb, var(--gold) 8%, transparent)' },
-  neutral: { color: 'var(--muted)', borderColor: 'color-mix(in srgb, var(--accent) 12%, transparent)', background: 'color-mix(in srgb, var(--accent) 4%, transparent)' },
-  danger: { color: 'var(--danger)', borderColor: 'color-mix(in srgb, var(--danger) 35%, transparent)', background: 'color-mix(in srgb, var(--danger) 8%, transparent)' },
+  emerald: { color: 'var(--primary)', borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)', background: 'color-mix(in srgb, var(--primary) 8%, transparent)' },
+  cyan: { color: 'var(--primary)', borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)', background: 'color-mix(in srgb, var(--primary) 8%, transparent)' },
+  violet: { color: 'var(--accent)', borderColor: 'color-mix(in srgb, var(--accent) 35%, transparent)', background: 'color-mix(in srgb, var(--accent) 8%, transparent)' },
+  gold: { color: 'var(--warning)', borderColor: 'color-mix(in srgb, var(--warning) 35%, transparent)', background: 'color-mix(in srgb, var(--warning) 8%, transparent)' },
+  neutral: { color: 'var(--muted-foreground)', borderColor: 'color-mix(in srgb, var(--accent) 12%, transparent)', background: 'color-mix(in srgb, var(--accent) 4%, transparent)' },
+  danger: { color: 'var(--destructive)', borderColor: 'color-mix(in srgb, var(--destructive) 35%, transparent)', background: 'color-mix(in srgb, var(--destructive) 8%, transparent)' },
 };
 
 function resolveTone(props: Pick<MetricStatProps, 'tone' | 'thresholds' | 'numeric'>): MetricTone {
@@ -76,7 +76,7 @@ export const MetricStat = React.forwardRef<HTMLDivElement, MetricStatProps>(
           flexDirection: 'column',
           gap: 6,
           padding: '14px 16px',
-          borderRadius: 'var(--radius-lg, 16px)',
+          borderRadius: 12,
           border: `1px solid ${t.borderColor}`,
           background: t.background,
           ...style,
@@ -88,7 +88,7 @@ export const MetricStat = React.forwardRef<HTMLDivElement, MetricStatProps>(
             display: 'flex',
             alignItems: 'center',
             gap: 6,
-            color: 'var(--muted, #a3a3a3)',
+            color: 'var(--muted-foreground, #a3a3a3)',
           }}
         >
           {icon ? (
@@ -110,7 +110,7 @@ export const MetricStat = React.forwardRef<HTMLDivElement, MetricStatProps>(
           {value}
         </div>
         {hint ? (
-          <div style={{ fontSize: 12, color: 'var(--muted-2, #737373)', fontVariantNumeric: 'tabular-nums' }}>
+          <div style={{ fontSize: 12, color: 'var(--muted-foreground, #737373)', fontVariantNumeric: 'tabular-nums' }}>
             {hint}
           </div>
         ) : null}

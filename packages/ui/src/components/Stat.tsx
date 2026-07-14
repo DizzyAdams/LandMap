@@ -15,26 +15,26 @@ export const Stat = forwardRef<HTMLDivElement, StatProps>(
     <div
       ref={ref}
       className={cn(
-        'rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--surface-2)] p-5 transition',
-        'hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)] hover:shadow-[var(--elevation-2)]',
+        'rounded-lg border border-[var(--border)] bg-[var(--accent)] p-5 transition',
+        'hover:border-[var(--border)] hover:bg-[var(--card)] hover:shadow-sm',
         'motion-reduce:transition-none',
         className,
       )}
     >
-      <p className="text-xs text-[var(--text-muted)]">{label}</p>
-      <p className="mt-2 text-2xl font-semibold tabular-nums text-[var(--text-strong)]">{value}</p>
+      <p className="text-xs text-[var(--muted-foreground)]">{label}</p>
+      <p className="mt-2 text-2xl font-semibold tabular-nums text-[var(--foreground)]">{value}</p>
       {trend !== undefined && (
         <p
           className={cn(
             'mt-1 inline-flex items-center gap-1 text-xs font-medium',
-            trend >= 0 ? 'text-[var(--emerald)]' : 'text-[var(--danger)]',
+            trend >= 0 ? 'text-[var(--primary)]' : 'text-[var(--destructive)]',
           )}
         >
           <span aria-hidden>{trend >= 0 ? '+' : '-'}</span>
           {Math.abs(trend)}%
         </p>
       )}
-      {hint && <p className="mt-1 text-[11px] text-[var(--text-muted)]">{hint}</p>}
+      {hint && <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">{hint}</p>}
     </div>
   ),
 );

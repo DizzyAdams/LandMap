@@ -10,11 +10,11 @@ export interface StatPillProps extends React.HTMLAttributes<HTMLSpanElement> {
 }
 
 const tones: Record<NonNullable<StatPillProps['tone']>, string> = {
-  emerald: 'border-[var(--emerald-tint)] bg-[var(--emerald-tint)] text-[var(--emerald-bright)]',
-  cyan: 'border-[var(--cyan-tint)] bg-[var(--cyan-tint)] text-[var(--cyan)]',
-  violet: 'border-[var(--violet-tint)] bg-[var(--violet-tint)] text-[var(--violet)]',
-  gold: 'border-[var(--gold-tint)] bg-[var(--gold-tint)] text-[var(--gold-soft)]',
-  neutral: 'border-[var(--border)] bg-[var(--surface-3)] text-[var(--accent-dim)]',
+  emerald: 'border-[color-mix(in_srgb,var(--primary)_10%,transparent)] bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-[var(--primary)]',
+  cyan: 'border-[color-mix(in_srgb,var(--primary)_10%,transparent)] bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-[var(--primary)]',
+  violet: 'border-[color-mix(in_srgb,var(--accent)_10%,transparent)] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-[var(--accent)]',
+  gold: 'border-[color-mix(in_srgb,var(--warning)_10%,transparent)] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)]',
+  neutral: 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]',
 };
 
 /** Compact, highlighted metric pill that reuses the brand accent tokens. */
@@ -35,13 +35,13 @@ export const StatPill = forwardRef<HTMLSpanElement, StatPillProps>(
           {icon}
         </span>
       ) : null}
-      {label ? <span className="text-[var(--muted)]">{label}</span> : null}
-      <span className="font-semibold tabular-nums text-[var(--text-strong)]">{value}</span>
+      {label ? <span className="text-[var(--muted-foreground)]">{label}</span> : null}
+      <span className="font-semibold tabular-nums text-[var(--foreground)]">{value}</span>
       {trend !== undefined && (
         <span
           className={cn(
             'inline-flex items-center gap-0.5 tabular-nums',
-            trend >= 0 ? 'text-[var(--emerald-bright)]' : 'text-[var(--danger)]',
+            trend >= 0 ? 'text-[var(--primary)]' : 'text-[var(--destructive)]',
           )}
         >
           <span aria-hidden>{trend >= 0 ? '▲' : '▼'}</span>

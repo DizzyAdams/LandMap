@@ -62,18 +62,18 @@ export function Stepper({
 
         const circle = cn(
           'grid h-8 w-8 shrink-0 place-items-center rounded-full border text-xs font-semibold transition-colors motion-reduce:transition-none',
-          state === 'done' && 'border-[var(--emerald-tint)] bg-[var(--emerald-tint)] text-[var(--emerald-bright)]',
+          state === 'done' && 'border-[color-mix(in_srgb,var(--primary)_10%,transparent)] bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-[var(--primary)]',
           state === 'active' &&
-            'border-transparent bg-gradient-to-r from-[var(--primary)] to-cyan-400 text-[var(--bg)] shadow-[var(--glow-emerald)]',
-          state === 'upcoming' && 'bg-[var(--surface-2)] border-[var(--border)] text-[var(--muted)]',
+            'border-transparent bg-gradient-to-r from-[var(--primary)] to-[var(--primary)]/70 text-[var(--primary-foreground)] shadow-sm',
+          state === 'upcoming' && 'bg-[var(--card)] border-[var(--border)] text-[var(--muted-foreground)]',
         );
 
         const labelEl = (
           <span className={cn('flex flex-col', vertical ? 'ml-3' : 'mt-2 text-center')}>
-            <span className={cn('text-xs font-medium', state === 'active' ? 'text-[var(--text-strong)]' : 'text-[var(--muted)]')}>
+            <span className={cn('text-xs font-medium', state === 'active' ? 'text-[var(--foreground)]' : 'text-[var(--muted-foreground)]')}>
               {step.label}
             </span>
-            {step.description && <span className="text-[11px] text-[var(--muted)]">{step.description}</span>}
+            {step.description && <span className="text-[11px] text-[var(--muted-foreground)]">{step.description}</span>}
           </span>
         );
 
@@ -122,7 +122,7 @@ export function Stepper({
             aria-hidden
             className={cn(
               vertical ? 'ml-4 my-2 h-6 w-px' : 'mx-2 h-px flex-1',
-              i < current ? 'bg-gradient-to-r from-[var(--primary)] to-cyan-400' : 'bg-[var(--border-strong)]',
+              i < current ? 'bg-gradient-to-r from-[var(--primary)] to-[var(--primary)]/70' : 'bg-[var(--border)]',
             )}
           />
         );
