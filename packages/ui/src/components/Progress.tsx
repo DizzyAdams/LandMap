@@ -11,7 +11,7 @@ export interface ProgressProps {
 export function Progress({ value, className, barClassName }: ProgressProps) {
   const pct = Math.max(0, Math.min(100, value));
   return (
-    <div className={cn('h-1.5 w-full overflow-hidden rounded-full bg-[var(--surface-3)]', className)}>
+    <div className={cn('h-1.5 w-full overflow-hidden rounded-full bg-[var(--muted)]', className)}>
       <div
         className={cn(
           'h-full rounded-full bg-gradient-to-r from-[var(--primary)] to-cyan-400 transition-all duration-500 motion-reduce:transition-none',
