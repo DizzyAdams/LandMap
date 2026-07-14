@@ -1,0 +1,26 @@
+{
+  "chunk": "onboarding",
+  "file": "lovable_chunk_onboarding.js",
+  "size_bytes": 3634,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./button-Cctgrcjc.js",
+    "./dist-uVrDPB1T.js",
+    "./jsx-runtime-Blx5QhbK.js",
+    "./link-DEwX4sNB.js",
+    "./logo-C7rxAA8V.js",
+    "./trending-up-DcxbiPo_.js",
+    "./useNavigate-B9NytbkM.js"
+  ],
+  "svg_icons": [
+    "`},{icon:d,title:`",
+    "`},{icon:p,title:`",
+    "`},{icon:s,title:`",
+    "`}]]),m=e(t()),h=n(),g=[{icon:f,title:`"
+  ],
+  "data_structures_preview": []
+}

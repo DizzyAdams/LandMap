@@ -1,0 +1,25 @@
+{
+  "chunk": "favorites",
+  "file": "lovable_chunk_favorites.js",
+  "size_bytes": 4039,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./building-2-Cd11ZteK.js",
+    "./button-Cctgrcjc.js",
+    "./index-DxhHPzjf.js",
+    "./jsx-runtime-Blx5QhbK.js",
+    "./landmap-format-9a--Y2ye.js",
+    "./map-pin-DKg9QPkq.js",
+    "./star-D452QTFE.js",
+    "./use-auth-BRLLoENq.js",
+    "./useMutation-c6b5nXHy.js"
+  ],
+  "svg_icons": [
+    "`icon`"
+  ],
+  "data_structures_preview": []
+}

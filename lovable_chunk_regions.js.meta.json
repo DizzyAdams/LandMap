@@ -1,0 +1,26 @@
+{
+  "chunk": "regions",
+  "file": "lovable_chunk_regions.js",
+  "size_bytes": 3783,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./button-Cctgrcjc.js",
+    "./dist-uVrDPB1T.js",
+    "./index-DxhHPzjf.js",
+    "./jsx-runtime-Blx5QhbK.js",
+    "./landmap-format-9a--Y2ye.js",
+    "./star-D452QTFE.js",
+    "./table-QFlarETH.js",
+    "./use-auth-BRLLoENq.js",
+    "./useMutation-c6b5nXHy.js",
+    "./useNavigate-B9NytbkM.js"
+  ],
+  "svg_icons": [
+    "`icon`"
+  ],
+  "data_structures_preview": []
+}

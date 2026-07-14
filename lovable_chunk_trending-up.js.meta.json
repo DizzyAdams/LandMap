@@ -1,0 +1,15 @@
+{
+  "chunk": "trending-up",
+  "file": "lovable_chunk_trending-up.js",
+  "size_bytes": 163,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./dist-uVrDPB1T.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

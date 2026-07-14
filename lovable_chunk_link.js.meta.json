@@ -1,0 +1,16 @@
+{
+  "chunk": "link",
+  "file": "lovable_chunk_link.js",
+  "size_bytes": 22701,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./jsx-runtime-Blx5QhbK.js",
+    "./useNavigate-B9NytbkM.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

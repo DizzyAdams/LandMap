@@ -1,0 +1,16 @@
+{
+  "chunk": "use-auth",
+  "file": "lovable_chunk_use-auth.js",
+  "size_bytes": 632,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./index-DxhHPzjf.js",
+    "./jsx-runtime-Blx5QhbK.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

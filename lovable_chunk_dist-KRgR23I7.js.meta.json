@@ -1,0 +1,20 @@
+{
+  "chunk": "dist-KRgR23I7",
+  "file": "lovable_chunk_dist-KRgR23I7.js",
+  "size_bytes": 4736,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./dist-uVrDPB1T.js",
+    "./jsx-runtime-Blx5QhbK.js"
+  ],
+  "svg_icons": [
+    "`svg`"
+  ],
+  "data_structures_preview": [
+    "n = {...t}"
+  ]
+}

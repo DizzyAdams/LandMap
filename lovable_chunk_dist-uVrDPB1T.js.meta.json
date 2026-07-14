@@ -1,0 +1,18 @@
+{
+  "chunk": "dist-uVrDPB1T",
+  "file": "lovable_chunk_dist-uVrDPB1T.js",
+  "size_bytes": 27980,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./jsx-runtime-Blx5QhbK.js"
+  ],
+  "svg_icons": [
+    "`,children:l,iconNode:u,...d},f)=>(0,n.createElement)(`",
+    "`http://www.w3.org/2000/svg`"
+  ],
+  "data_structures_preview": []
+}

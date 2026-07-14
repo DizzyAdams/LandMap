@@ -1,0 +1,26 @@
+{
+  "chunk": "auth",
+  "file": "lovable_chunk_auth.js",
+  "size_bytes": 9279,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [
+    "useSearch"
+  ],
+  "api_calls": [],
+  "imports": [
+    "./button-Cctgrcjc.js",
+    "./dist-uVrDPB1T.js",
+    "./index-DxhHPzjf.js",
+    "./input-ChyqBZ8B.js",
+    "./jsx-runtime-Blx5QhbK.js",
+    "./link-DEwX4sNB.js",
+    "./logo-C7rxAA8V.js",
+    "./select-CgSBCNYU.js",
+    "./tabs-BUtzxd64.js",
+    "./useNavigate-B9NytbkM.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

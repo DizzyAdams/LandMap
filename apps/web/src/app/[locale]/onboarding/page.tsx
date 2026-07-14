@@ -1,37 +1,38 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
+import { buttonVariants } from '@landmap/ui';
 import {
+  ShieldCheck,
+  BellRing,
   MapPinned,
   TrendingUp,
-  BellRing,
-  ShieldCheck,
   ArrowRight,
-  LandMapWordmark,
 } from '../../../components/lovable/icons';
 
 const SLIDES = [
   {
-    icon: MapPinned,
-    title: 'Mapeie qualquer território',
-    body: 'Visualize 1.500 imóveis em 10 cidades com sobreposições de preço, zoneamento e infraestrutura.',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Entenda a valorização',
-    body: 'Séries históricas, delta de mercado e projeção de IA por bairro e tipologia.',
+    icon: ShieldCheck,
+    title: 'Decisão com confiança',
+    body: 'Dados cruzados de fontes verificadas, com nível de confiança em cada registro.',
   },
   {
     icon: BellRing,
-    title: 'Receba alertas inteligentes',
-    body: 'Avise quando um imóvel bater seu filtro de preço, localização ou oportunidade.',
+    title: 'Radar de oportunidades',
+    body: 'Alertas inteligentes de valorização e queda de preço direto no seu bolso — não perca janelas.',
   },
   {
-    icon: ShieldCheck,
-    title: 'Dados soberanos e abertos',
-    body: 'Sem amarras, sem custo e sem login para explorar. Sua inteligência, sua decisão.',
+    icon: MapPinned,
+    title: 'Todo o Brasil no mapa',
+    body: 'Explore terrenos e regiões nas principais cidades com preço por m², filtros e camadas de calor.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Valorização em tempo real',
+    body: 'Veja tendências de subida, estabilidade ou queda por bairro e o histórico de preço da região.',
   },
 ];
 
@@ -45,7 +46,13 @@ export default function OnboardingPage() {
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-[var(--background)] px-6 py-6 text-[var(--foreground)]">
       <header className="flex items-center justify-between">
-        <LandMapWordmark />
+        <Image
+          src="/landmap-lovabale-logo.png"
+          alt="LandMap"
+          width={110}
+          height={28}
+          priority
+        />
         <Link
           href={lh('/dashboard')}
           className="text-sm text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)] hover:text-[var(--foreground)]"
@@ -66,46 +73,50 @@ export default function OnboardingPage() {
         </div>
       </main>
 
-      <div className="mb-6 flex justify-center gap-2">
-        {SLIDES.map((_, n) => (
-          <button
-            key={n}
-            aria-label={`Ir para slide ${n + 1}`}
-            onClick={() => setI(n)}
-            className={`h-1.5 rounded-full ${
-              n === i
-                ? 'w-8 bg-[var(--primary)]'
-                : 'w-1.5 bg-[color:color-mix(in_srgb,var(--foreground)_15%,transparent)]'
-            }`}
-          />
-        ))}
-      </div>
-
-      <div className="flex flex-col gap-3">
+      <div className="mb-6 flex items-center justify-between">
+        <div className="flex gap-2">
+          {SLIDES.map((_, n) => (
+            <button
+              key={n}
+              aria-label={`Ir para slide ${n + 1}`}
+              onClick={() => setI(n)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${
+                n === i
+                  ? 'w-8 bg-[var(--primary)]'
+                  : 'w-1.5 bg-[color:color-mix(in_srgb,var(--foreground)_15%,transparent)]'
+              }`}
+            />
+          ))}
+        </div>
         {last ? (
           <Link
             href={lh('/auth')}
-            className="inline-flex h-12 w-full items-center justify-center gap-1 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]"
+            className={buttonVariants({
+              variant: 'default',
+              className:
+                'inline-flex items-center justify-center gap-2 rounded-md h-9 px-4 py-2 text-sm font-medium cursor-pointer transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+            })}
           >
-            Começar
-            <ArrowRight className="ml-1 h-4 w-4" />
+            Ver planos
+            <ArrowRight className="h-4 w-4" />
           </Link>
         ) : (
           <button
             onClick={() => setI((v) => Math.min(SLIDES.length - 1, v + 1))}
-            className="inline-flex h-12 w-full items-center justify-center gap-1 rounded-full bg-[var(--primary)] px-6 text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]"
+            className="inline-flex items-center justify-center gap-2 rounded-md h-9 px-4 py-2 text-sm font-medium cursor-pointer transition-colors bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0"
           >
             Continuar
-            <ArrowRight className="ml-1 h-4 w-4" />
+            <ArrowRight className="h-4 w-4" />
           </button>
         )}
-        <Link
-          href={lh('/auth')}
-          className="inline-flex h-12 w-full items-center justify-center rounded-full text-sm font-semibold text-[color:color-mix(in_srgb,var(--foreground)_70%,transparent)] transition hover:bg-[var(--muted)]"
-        >
-          Já tenho conta
-        </Link>
       </div>
+
+      <Link
+        href={lh('/auth')}
+        className="flex items-center justify-center gap-2 rounded-md py-2 text-sm font-medium text-[color:color-mix(in_srgb,var(--foreground)_62%,transparent)] transition-colors hover:text-[var(--foreground)]"
+      >
+        Já tenho conta
+      </Link>
     </div>
   );
 }

@@ -1,0 +1,18 @@
+{
+  "chunk": "landmap-format",
+  "file": "lovable_chunk_landmap-format.js",
+  "size_bytes": 11078,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./dist-CIOVZQx4.js",
+    "./dist-uVrDPB1T.js",
+    "./index-DxhHPzjf.js",
+    "./jsx-runtime-Blx5QhbK.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

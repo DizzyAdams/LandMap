@@ -1,0 +1,22 @@
+{
+  "chunk": "plans",
+  "file": "lovable_chunk_plans.js",
+  "size_bytes": 5235,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./button-Cctgrcjc.js",
+    "./check-DpgHz7qx.js",
+    "./dist-uVrDPB1T.js",
+    "./jsx-runtime-Blx5QhbK.js",
+    "./link-DEwX4sNB.js",
+    "./logo-C7rxAA8V.js",
+    "./sparkles-BYg7_t1S.js",
+    "./useNavigate-B9NytbkM.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

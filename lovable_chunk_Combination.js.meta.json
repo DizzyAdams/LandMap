@@ -1,0 +1,22 @@
+{
+  "chunk": "Combination",
+  "file": "lovable_chunk_Combination.js",
+  "size_bytes": 48286,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [
+    "useMedium"
+  ],
+  "api_calls": [],
+  "imports": [
+    "./dist-KRgR23I7.js",
+    "./dist-uVrDPB1T.js",
+    "./index-DxhHPzjf.js",
+    "./jsx-runtime-Blx5QhbK.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": [
+    "n = {...t}"
+  ]
+}

@@ -15,6 +15,7 @@ const base: React.CSSProperties = {
   whiteSpace: 'nowrap',
   borderRadius: 'var(--radius-md)',
   fontWeight: 500,
+  gap: 8,
   transition:
     'background-color 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease, opacity 0.15s ease, box-shadow 0.2s ease, transform 0.15s ease',
   outline: 'none',
@@ -144,15 +145,15 @@ export function buttonVariants({
   className?: string;
 } = {}) {
   const base =
-    'inline-flex items-center justify-center whitespace-nowrap rounded-[var(--radius-md)] font-medium outline-none transition-[background-color,border-color,color,box-shadow,transform,opacity] focus-visible:shadow-[var(--ring)] disabled:opacity-50 disabled:pointer-events-none';
+    'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[var(--radius-md)] text-sm font-medium outline-none transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0';
   const sizes: Record<NonNullable<ButtonProps['size']>, string> = {
-    sm: 'h-9 px-3 text-sm',
-    md: 'h-10 px-4 text-sm',
-    lg: 'h-11 px-5 text-base',
+    sm: 'h-8 rounded-md px-3 text-xs',
+    md: 'h-9 px-4 py-2',
+    lg: 'h-10 rounded-md px-8',
   };
   const variants: Record<NonNullable<ButtonProps['variant']>, string> = {
     default:
-      'bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] hover:bg-[var(--primary-glow)] hover:-translate-y-px hover:shadow-[var(--shadow-glow)]',
+      'bg-[var(--primary)] text-[var(--primary-foreground)] shadow hover:bg-primary/90',
     outline:
       'bg-transparent border border-[var(--border-strong)] text-[var(--text)] hover:bg-[var(--surface-2)] hover:border-[var(--muted-2)] hover:text-[var(--text-strong)]',
     ghost:

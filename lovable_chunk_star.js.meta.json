@@ -1,0 +1,15 @@
+{
+  "chunk": "star",
+  "file": "lovable_chunk_star.js",
+  "size_bytes": 460,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./dist-uVrDPB1T.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}

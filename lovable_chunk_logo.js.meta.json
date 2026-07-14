@@ -1,0 +1,16 @@
+{
+  "chunk": "logo",
+  "file": "lovable_chunk_logo.js",
+  "size_bytes": 724,
+  "components": [],
+  "ptbr_texts": [],
+  "classnames": [],
+  "hooks": [],
+  "api_calls": [],
+  "imports": [
+    "./dist-uVrDPB1T.js",
+    "./jsx-runtime-Blx5QhbK.js"
+  ],
+  "svg_icons": [],
+  "data_structures_preview": []
+}
