@@ -6,9 +6,18 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-13 (branch `main`, status sujo — não commitado).
+Última atualização: 2026-07-13 (branch `main`, head `5cd2ef0`).
 
-> **2026-07-13 — Final: assets, manifest, metadata, OG image e drift de tokens Lovable.** O `tokens.ts` foi re-alinhado ao indigo Lovable (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis). Nova `metadata` export no root `layout.tsx` (favicon `.svg` + OG image + Twitter card). Manifest PWA atualizado para cores Lovable. Icons (`icon-192/512.svg`) passaram de dark `#050505` para indigo Lovable. Tmp files de extração removidos. Docs `audit-lovable-color-schema.md` e `design-cto-lovable.md` adicionados como referência. Build local: 63 páginas (19 rotas × 3 locales + APIs) OK.
+> **2026-07-13 — Migração Lovable COMPLETA. Alinhamento final: assets, manifest, metadata, OG, ícones + drift tokens.** Commit `5b93677` + `5cd2ef0`:
+> - `tokens.ts` re-alinhado ao indigo Lovable (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis)
+> - Root `layout.tsx`: `metadata` export com favicon.svg, OG image, twitter card
+> - `[locale]/layout.tsx`: OG image atualizado de `.png` → `.svg`
+> - Manifest PWA: background/theme → Lovable (white/indigo)
+> - Icons: dark `#050505` → indigo Lovable; apple-touch-icon adicionado
+> - Assets: `favicon.svg`, `og-image.svg` (SVG brand indigo)
+> - Tmp files de extração removidos; docs de referência CTO adicionados
+> - Typecheck/lint/build verde; deploy `landmapprod-ds2bm7n00` (alias `landmapprod.vercel.app`) READY
+> - Todas as 19 rotas × 3 locales servindo 200 com tokens Lovable
 
 > **2026-07-12 — Spec LandMap aplicado + deployado.** Commit `d8521c5` aplica o
 > spec `landmap-design.zip` (azul institutional `#003594`, fundo claro, verde só
