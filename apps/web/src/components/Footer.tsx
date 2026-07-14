@@ -25,11 +25,10 @@ export function Footer() {
 
         <nav aria-label="Navegação do rodapé" className="grid grid-cols-2 gap-x-10 gap-y-2 sm:grid-cols-3">
           <Link href={localeHref('/', locale)} className="transition hover:text-[var(--muted-foreground)]">Início</Link>
-          <Link href={localeHref('/search', locale)} className="transition hover:text-[var(--muted-foreground)]">Buscar</Link>
           <Link href={localeHref('/map', locale)} className="transition hover:text-[var(--muted-foreground)]">Mapa</Link>
           <Link href={localeHref('/compare', locale)} className="transition hover:text-[var(--muted-foreground)]">Comparar</Link>
           <Link href={localeHref('/favorites', locale)} className="transition hover:text-[var(--muted-foreground)]">Favoritos</Link>
-          <Link href={localeHref('/chat', locale)} className="transition hover:text-[var(--primary)]">Chat IA</Link>
+          <Link href={localeHref('/plans', locale)} className="transition hover:text-[var(--primary)]">Planos</Link>
         </nav>
       </div>
 

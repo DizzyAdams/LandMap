@@ -16,22 +16,15 @@ const locales = [
 ];
 
 const primaryLinks = [
-  { href: 'search', labelKey: 'Buscar' },
-  { href: 'sales', labelKey: 'Vendas' },
-  { href: 'pricing', labelKey: 'Preços' },
+  { href: 'plans', labelKey: 'Planos' },
 ];
 
 const marketLinks = [
-  { href: 'dashboard', labelKey: 'Dashboard' },
-  { href: 'terrenos', labelKey: 'Terrenos' },
-  { href: 'map', labelKey: 'Mapa' },
-  { href: 'world', labelKey: 'Mundo 3D' },
-  { href: 'live', labelKey: 'Live' },
-  { href: 'insights', labelKey: 'Insights' },
-  { href: 'studio', labelKey: 'Studio' },
-  { href: 'alerts', labelKey: 'Alertas' },
+  { href: 'regions', labelKey: 'Regiões' },
   { href: 'favorites', labelKey: 'Favoritos' },
   { href: 'compare', labelKey: 'Comparar' },
+  { href: 'dashboard', labelKey: 'Dashboard' },
+  { href: 'map', labelKey: 'Mapa' },
 ];
 
 // Every navigable destination, used by the mobile sheet.
@@ -98,14 +91,14 @@ export function Navbar() {
     <header className="sticky top-3 z-50 mx-3 flex w-full max-w-5xl items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)]/85 px-4 py-2.5 backdrop-blur-xl [backdrop-filter:saturate(150%)] shadow-[0_8px_40px_-12px_rgba(0,53,148,0.18)] md:mx-auto">
       <Link
         href={`/${locale}`}
-        aria-label="LandMap - ir para a página inicial"
+        aria-label="LandMap - ir para a pÃ¡gina inicial"
         className={`group flex items-center gap-2 text-sm font-semibold tracking-tight ${focusRing}`}
       >
         <Logo className="h-5 w-5 transition group-hover:scale-110" />
       </Link>
 
       <nav
-        aria-label="Navegação principal"
+        aria-label="NavegaÃ§Ã£o principal"
         className="hidden items-center gap-1 text-sm text-[var(--muted-foreground)] md:flex"
       >
         {primaryLinks.map((link) => {
@@ -222,7 +215,7 @@ export function Navbar() {
           onClick={() => setMobileOpen((v) => !v)}
           aria-expanded={mobileOpen}
           aria-controls="mobile-nav"
-          aria-label={mobileOpen ? 'Fechar menu de navegação' : 'Abrir menu de navegação'}
+          aria-label={mobileOpen ? 'Fechar menu de navegaÃ§Ã£o' : 'Abrir menu de navegaÃ§Ã£o'}
           className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)] transition hover:border-[var(--primary)] hover:text-[var(--primary)] md:hidden ${focusRing}`}
         >
           {mobileOpen ? (
@@ -243,7 +236,7 @@ export function Navbar() {
           mobileOpen ? 'block' : 'hidden'
         }`}
       >
-        <nav aria-label="Navegação principal (mobile)" className="flex flex-col gap-0.5">
+        <nav aria-label="NavegaÃ§Ã£o principal (mobile)" className="flex flex-col gap-0.5">
           {allLinks.map((link) => {
             const href = `/${locale}/${link.href}`;
             const isActive = pathname === href || pathname.startsWith(href + '/');

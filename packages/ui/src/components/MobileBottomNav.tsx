@@ -25,8 +25,8 @@ const ICON_PROPS = {
 
 const ITEMS: NavItem[] = [
   {
-    href: 'search',
-    label: 'Buscar',
+    href: 'plans',
+    label: 'Planos',
     icon: (
       <svg {...ICON_PROPS}>
         <circle cx="11" cy="11" r="7" />
@@ -70,8 +70,8 @@ const ITEMS: NavItem[] = [
     ),
   },
   {
-    href: 'chat',
-    label: 'Chat',
+    href: 'admin',
+    label: 'Admin',
     icon: (
       <svg {...ICON_PROPS}>
         <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12Z" />

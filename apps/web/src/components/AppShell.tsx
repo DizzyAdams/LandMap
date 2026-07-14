@@ -9,14 +9,12 @@ const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 
 const navItems = [
-  { href: 'map', label: 'Mapa', icon: 'map' },
-  { href: 'dashboard', label: 'Dashboard', icon: 'grid', emBreve: true },
-  { href: 'compare', label: 'Comparador', icon: 'compare' },
+  { href: 'regions', label: 'Regiões', icon: 'regions' },
   { href: 'favorites', label: 'Favoritos', icon: 'star' },
-  { href: 'alerts', label: 'Alertas', icon: 'bell' },
-  { href: 'insights', label: 'Relatórios', icon: 'file' },
-  { href: 'studio', label: 'IA LandMap', icon: 'sparkles' },
-  { href: 'pricing', label: 'Configurações', icon: 'settings' },
+  { href: 'compare', label: 'Comparar', icon: 'compare' },
+  { href: 'dashboard', label: 'Dashboard', icon: 'grid' },
+  { href: 'map', label: 'Mapa', icon: 'map' },
+  { href: 'admin', label: 'Admin', icon: 'settings' },
 ];
 
 function Icon({ name }: { name: string }) {
@@ -30,6 +28,7 @@ function Icon({ name }: { name: string }) {
     case 'file': return (<svg {...common}><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z" /><path d="M14 3v5h5" /></svg>);
     case 'sparkles': return (<svg {...common}><path d="M12 3l1.8 4.2L18 9l-4.2 1.8L12 15l-1.8-4.2L6 9l4.2-1.8Z" /><path d="M19 14l.9 2.1L22 17l-2.1.9L19 20l-.9-2.1L16 17l2.1-.9Z" /></svg>);
     case 'settings': return (<svg {...common}><circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-2.7 1.1V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 7 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.6 1.6 0 0 0 3 14.6H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 7L4.5 7a2 2 0 1 1 2.8-2.8l.1.1A1.6 1.6 0 0 0 10 3.6V3a2 2 0 1 1 4 0v.1A1.6 1.6 0 0 0 17 4.6a1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1Z" /></svg>);
+    case 'regions': return (<svg {...common}><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg>);
     default: return null;
   }
 }

@@ -647,7 +647,7 @@ function MapView({
             <li key={`${item.latitude}-${item.longitude}-${item.id}`}>
               <SpotlightCard>
                 <Link
-                  href={`/${locale}/property/${item.id}`}
+                  href={`/${locale}/regions`}
                   className="block rounded-xl p-4 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
                 >
                   <div className="flex items-start gap-2">

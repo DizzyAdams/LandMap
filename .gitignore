@@ -55,3 +55,7 @@ probe_html.txt
 .env*
 
 __pycache__/
+
+# cached Lovable reference chunks (audit only)
+reference/assets/
+

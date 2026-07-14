@@ -35,10 +35,10 @@ export default function CompareError({
           Tentar novamente
         </button>
         <Link
-          href={`/${locale}/search`}
+          href={`/${locale}/regions`}
           className="inline-flex h-10 items-center rounded-lg border border-[var(--border)] px-5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--border)] hover:text-[var(--foreground)]"
         >
-          Voltar para busca
+          Voltar para Regiões
         </Link>
       </div>
     </div>

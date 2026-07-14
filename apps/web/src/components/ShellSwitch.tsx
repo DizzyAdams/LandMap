@@ -9,7 +9,7 @@ import { MobileBottomNav } from '@landmap/ui';
 
 // Rotas que usam o shell publico (Navbar/Footer). O resto usa o AppShell
 // autenticado do spec landmap-design.zip (sidebar 68px + header + bottom nav).
-const PUBLIC_ROUTES = ['', '/auth', '/plans', '/onboarding', '/intro'];
+const PUBLIC_ROUTES = ['', '/auth', '/plans', '/onboarding'];
 
 export function ShellSwitch({ children }: { children: ReactNode }) {
   const pathname = usePathname() || '';
@@ -20,7 +20,7 @@ export function ShellSwitch({ children }: { children: ReactNode }) {
   // landing (/), auth, plans, intro/onboarding -> shell publico
   const usePublic =
     !seg[1] ||
-    ['auth', 'plans', 'onboarding', 'intro'].includes(seg[1]);
+    ['auth', 'plans', 'onboarding'].includes(seg[1]);
 
   if (usePublic) {
     return (
