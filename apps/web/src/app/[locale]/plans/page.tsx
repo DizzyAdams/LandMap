@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
 import { ArrowLeft, Check, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
 
 type Plan = {
@@ -86,11 +85,16 @@ export default function PlansPage() {
   const locale = useLocale();
   const router = useRouter();
   const lh = (p: string) => `/${locale}${p}`;
-  const [selected, setSelected] = useState<string>('plus');
-  const selectedPlan = PLANS.find((p) => p.id === selected) ?? PLANS[1];
+
+  const handleSelect = (id: string) => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('landmap:selected_plan', id);
+    }
+    router.push(lh('/auth') + '?mode=request');
+  };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-[var(--background)] pb-32 text-[var(--foreground)]">
+    <div className="mx-auto flex min-h-screen flex-col bg-[var(--background)] text-[var(--foreground)]">
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-[var(--border)] bg-[var(--background)]/90 px-4 py-3 backdrop-blur">
         <Link
           href={lh('/intro')}
@@ -116,86 +120,75 @@ export default function PlansPage() {
         </p>
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 px-6">
-        {PLANS.map((p) => {
-          const isSelected = selected === p.id;
-          return (
-            <button
-              key={p.id}
-              type="button"
-              onClick={() => setSelected(p.id)}
-              className={
-                isSelected
-                  ? 'relative rounded-2xl border p-5 text-left transition-all border-[var(--primary)] bg-[color:color-mix(in_srgb,var(--primary)_5%,transparent)] shadow-[var(--shadow-elegant)]'
-                  : 'relative rounded-2xl border p-5 text-left transition-all border-[var(--border)] bg-[var(--card)] hover:border-[color:color-mix(in_srgb,var(--primary)_40%,transparent)]'
-              }
-            >
-              {p.highlight && (
-                <span className="absolute -top-2 right-4 rounded-full bg-[var(--primary)] px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--primary-foreground)]">
+      <div className="mt-8 grid gap-6 px-6 pb-12 sm:grid-cols-2 lg:grid-cols-4">
+        {PLANS.map((p) => (
+          <div
+            key={p.id}
+            className={
+              p.highlight
+                ? 'relative flex flex-col rounded-2xl border-2 border-[var(--primary)] bg-[var(--card)] p-5 shadow-lg'
+                : 'relative flex flex-col rounded-2xl border border-[var(--border)] bg-[var(--card)] p-5'
+            }
+          >
+            {p.highlight && (
+              <span className="absolute -top-3 right-4 rounded-full bg-[var(--primary)] px-3 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-[var(--primary-foreground)]">
+                {p.tag}
+              </span>
+            )}
+
+            <div className="mb-4">
+              <h3 className="text-lg font-bold">{p.name}</h3>
+              {!p.highlight && (
+                <span className="mt-1 inline-block rounded-full border border-[var(--border)] px-2.5 py-0.5 text-[10px] font-medium text-[color:color-mix(in_srgb,var(--foreground)_60%,transparent)]">
                   {p.tag}
                 </span>
               )}
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <h3 className="truncate text-lg font-bold">{p.name}</h3>
-                </div>
-                <div
-                  className={
-                    isSelected
-                      ? 'grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-[var(--primary)] bg-[var(--primary)]'
-                      : 'grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 border-[var(--border)]'
-                  }
+            </div>
+
+            <div className="mb-5 flex items-baseline gap-1">
+              <span className="text-xs text-[color:color-mix(in_srgb,var(--foreground)_50%,transparent)]">
+                R$
+              </span>
+              <span className="text-3xl font-bold tracking-tight">{formatBRL(p.price)}</span>
+              <span className="text-sm text-[color:color-mix(in_srgb,var(--foreground)_50%,transparent)]">
+                /mês
+              </span>
+            </div>
+
+            <ul className="mb-6 flex-1 space-y-2.5">
+              {p.features.map((f) => (
+                <li
+                  key={f}
+                  className="flex items-start gap-2 text-sm text-[color:color-mix(in_srgb,var(--foreground)_75%,transparent)]"
                 >
-                  {isSelected && <Check className="h-3.5 w-3.5 text-[var(--primary-foreground)]" />}
-                </div>
-              </div>
-              <div className="mt-3 flex items-baseline gap-1">
-                <span className="text-xs text-[color:color-mix(in_srgb,var(--foreground)_50%,transparent)]">
-                  R$
-                </span>
-                <span className="text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
-                <span className="text-sm text-[color:color-mix(in_srgb,var(--foreground)_50%,transparent)]">
-                  /mês
-                </span>
-              </div>
-              {isSelected && (
-                <ul className="mt-4 space-y-2 border-t border-[color:color-mix(in_srgb,var(--foreground)_12%,transparent)] pt-4">
-                  {p.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-2 text-sm text-[color:color-mix(in_srgb,var(--foreground)_75%,transparent)]"
-                    >
-                      <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--primary)]" />
-                      <span>{f}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-[var(--primary)]" />
+                  <span>{f}</span>
+                </li>
+              ))}
+            </ul>
+
+            <button
+              type="button"
+              onClick={() => handleSelect(p.id)}
+              className={
+                p.highlight
+                  ? 'inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]'
+                  : 'inline-flex h-11 w-full items-center justify-center rounded-lg border border-[var(--border)] bg-[var(--card)] text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--muted)]'
+              }
+            >
+              {`Assinar — R$ ${formatBRL(p.price)}/mês`}
             </button>
-          );
-        })}
+          </div>
+        ))}
       </div>
 
-      <div className="mt-6 px-6 text-center">
+      <div className="pb-8 text-center">
         <Link
           href={lh('/auth')}
           className="text-sm text-[color:color-mix(in_srgb,var(--foreground)_60%,transparent)] hover:text-[var(--foreground)]"
         >
           Já tem conta? <span className="font-medium text-[var(--primary)]">Entrar</span>
         </Link>
-      </div>
-
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-[var(--border)] bg-[var(--background)]/95 px-6 py-4 backdrop-blur">
-        <button
-          type="button"
-          onClick={() => router.push(lh('/auth') + '?mode=request')}
-          className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-semibold shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)]"
-        >
-          {`Assinar ${selectedPlan.name} — R$ ${formatBRL(selectedPlan.price)}/mês`}
-        </button>
-        <p className="mt-2 text-center text-[11px] text-[color:color-mix(in_srgb,var(--foreground)_40%,transparent)]">
-          Pagamento não ativado — fluxo de demonstração.
-        </p>
       </div>
     </div>
   );

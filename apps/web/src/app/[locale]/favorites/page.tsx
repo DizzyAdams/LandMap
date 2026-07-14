@@ -7,7 +7,6 @@ import {
   Building2,
   MapPin,
   Star,
-  Trash2,
 } from '../../../components/lovable/icons';
 
 type FavoriteRegion = {
@@ -145,9 +144,9 @@ export default function FavoritesPage() {
                     type="button"
                     onClick={() => removeRegion(region.id)}
                     aria-label="Remover região dos favoritos"
-                    className="rounded-md p-2 text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+                    className="rounded-md p-2 text-warning transition-colors hover:bg-[var(--muted)] hover:text-warning"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Star className="h-4 w-4" fill="currentColor" />
                   </button>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
@@ -197,9 +196,9 @@ export default function FavoritesPage() {
                     type="button"
                     onClick={() => removeProperty(property.id)}
                     aria-label="Remover terreno dos favoritos"
-                    className="rounded-md p-2 text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--foreground)]"
+                    className="rounded-md p-2 text-warning transition-colors hover:bg-[var(--muted)] hover:text-warning"
                   >
-                    <Trash2 className="h-4 w-4" />
+                    <Star className="h-4 w-4" fill="currentColor" />
                   </button>
                 </div>
                 <div className="mt-3 flex items-center justify-between">

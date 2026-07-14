@@ -57,7 +57,7 @@ export default function OnboardingPage() {
           />
         </div>
         <Link
-          href={lh('/plans')}
+          href={lh('/auth')}
           className="text-sm text-[var(--foreground)]/60 hover:text-[var(--foreground)]"
         >
           Pular
@@ -100,7 +100,7 @@ export default function OnboardingPage() {
                 'inline-flex items-center justify-center gap-2 rounded-md h-9 px-4 py-2 text-sm font-medium cursor-pointer transition-colors [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
             })}
           >
-            Ver planos
+            Começar
             <ArrowRight className="h-4 w-4" />
           </Link>
         ) : (

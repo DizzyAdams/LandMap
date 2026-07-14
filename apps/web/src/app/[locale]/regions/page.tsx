@@ -35,6 +35,16 @@ export default function RegionsPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
   const [regions] = useState<Region[]>(REGIONS);
+  const [favoritedIds, setFavoritedIds] = useState<Set<string>>(new Set());
+
+  const toggleFavorite = (id: string) => {
+    setFavoritedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
 
   return (
     <div className="mx-auto max-w-7xl space-y-6">
@@ -60,6 +70,9 @@ export default function RegionsPage() {
           <table className="w-full caption-bottom text-sm">
             <thead className="[&_tr]:border-b">
               <tr>
+                <th className="h-10 w-10 px-2 text-left align-middle font-medium text-[var(--muted-foreground)]">
+                  <span className="sr-only">Favoritar</span>
+                </th>
                 <th className="h-10 px-2 text-left align-middle font-medium text-[var(--muted-foreground)]">
                   Bairro
                 </th>
@@ -83,6 +96,23 @@ export default function RegionsPage() {
                   key={region.id}
                   className="border-b transition-colors hover:bg-[var(--muted)]"
                 >
+                  <td className="p-2 align-middle">
+                    <button
+                      type="button"
+                      onClick={() => toggleFavorite(region.id)}
+                      aria-label={favoritedIds.has(region.id) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}
+                      className="inline-flex items-center justify-center rounded-md p-1 transition-colors hover:bg-[var(--muted)]"
+                    >
+                      <Star
+                        className={`h-4 w-4 ${
+                          favoritedIds.has(region.id)
+                            ? 'text-warning'
+                            : 'text-[var(--muted-foreground)]'
+                        }`}
+                        fill={favoritedIds.has(region.id) ? 'currentColor' : 'none'}
+                      />
+                    </button>
+                  </td>
                   <td className="p-2 align-middle font-medium">{region.name}</td>
                   <td className="p-2 align-middle text-right tabular-nums font-semibold">
                     {fmtBRL(region.avgObservedPrice)}

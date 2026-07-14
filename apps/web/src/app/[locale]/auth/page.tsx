@@ -180,6 +180,14 @@ export default function AuthPage() {
                 required
                 icon={<Lock size={16} />}
               />
+              <div className="text-right">
+                <Link
+                  href={lh('/auth?mode=recovery')}
+                  className="text-xs font-medium text-[var(--primary)] hover:underline"
+                >
+                  Esqueceu a senha?
+                </Link>
+              </div>
               <button
                 type="submit"
                 className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] text-sm font-semibold"
@@ -298,6 +306,23 @@ export default function AuthPage() {
                 )}
               </label>
               {error && <p className="text-sm text-red-600">{error}</p>}
+              <label className="flex items-start gap-2">
+                <input
+                  type="checkbox"
+                  required
+                  className="mt-0.5 h-4 w-4 rounded border-[var(--border)] text-[var(--primary)]"
+                />
+                <span className="text-xs text-[var(--muted-foreground)]">
+                  Aceito os{' '}
+                  <Link href={lh('/terms')} className="text-[var(--primary)] underline underline-offset-2">
+                    Termos de Uso
+                  </Link>{' '}
+                  e{' '}
+                  <Link href={lh('/privacy')} className="text-[var(--primary)] underline underline-offset-2">
+                    Política de Privacidade
+                  </Link>
+                </span>
+              </label>
               <button
                 type="submit"
                 className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] text-sm font-semibold"
