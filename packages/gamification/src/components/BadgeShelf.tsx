@@ -14,7 +14,7 @@ export interface BadgeShelfProps {
   className?: string;
 }
 
-const tierTone: Record<GamificationTier, 'default' | 'success' | 'warning' | 'info' | 'danger'> = {
+const tierTone: Record<GamificationTier, 'default' | 'success' | 'warning' | 'info' | 'destructive'> = {
   bronze: 'default',
   silver: 'info',
   gold: 'warning',
