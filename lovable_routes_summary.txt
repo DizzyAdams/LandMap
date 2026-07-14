@@ -1,0 +1,77 @@
+======================================================================
+LOVABLE ROUTES EXTRACTION SUMMARY
+Base URL: https://landmap-insight.lovable.app
+Date: 2026-07-13T22:01:12.048051
+======================================================================
+
+--- /regions ---
+  HTML: lovable_regions.html (15712 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_regions_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_regions_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_regions_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /favorites ---
+  HTML: lovable_favorites.html (15829 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_favorites_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_favorites_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_favorites_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /compare ---
+  HTML: lovable_compare.html (15626 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_compare_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_compare_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_compare_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /dashboard ---
+  HTML: lovable_dashboard.html (15867 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_dashboard_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_dashboard_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_dashboard_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /admin ---
+  HTML: lovable_admin.html (16186 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_admin_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_admin_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_admin_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /plans ---
+  HTML: lovable_plans.html (23557 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_plans_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_plans_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_plans_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /auth ---
+  HTML: lovable_auth.html (14659 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_auth_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_auth_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_auth_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports
+
+--- /map ---
+  HTML: lovable_map.html (15184 bytes)
+  Components: none found
+  API endpoints: none found
+  JS chunks: 3
+    Chunk lovable_chunk_map_0_~flock.js: 21296 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_map_1_events.js: 44148 bytes, 0 imports, 0 exports
+    Chunk lovable_chunk_map_2_index-DxhHPzjf.js: 610886 bytes, 0 imports, 0 exports

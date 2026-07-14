@@ -1,0 +1,426 @@
+{
+  "/regions": {
+    "route": "/regions",
+    "url": "https://landmap-insight.lovable.app/regions",
+    "html_file": "lovable_regions.html",
+    "html_size_bytes": 15712,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_regions_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_regions_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_regions_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/favorites": {
+    "route": "/favorites",
+    "url": "https://landmap-insight.lovable.app/favorites",
+    "html_file": "lovable_favorites.html",
+    "html_size_bytes": 15829,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_favorites_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_favorites_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_favorites_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/compare": {
+    "route": "/compare",
+    "url": "https://landmap-insight.lovable.app/compare",
+    "html_file": "lovable_compare.html",
+    "html_size_bytes": 15626,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_compare_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_compare_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_compare_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/dashboard": {
+    "route": "/dashboard",
+    "url": "https://landmap-insight.lovable.app/dashboard",
+    "html_file": "lovable_dashboard.html",
+    "html_size_bytes": 15867,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_dashboard_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_dashboard_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_dashboard_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/admin": {
+    "route": "/admin",
+    "url": "https://landmap-insight.lovable.app/admin",
+    "html_file": "lovable_admin.html",
+    "html_size_bytes": 16186,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_admin_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_admin_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_admin_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/plans": {
+    "route": "/plans",
+    "url": "https://landmap-insight.lovable.app/plans",
+    "html_file": "lovable_plans.html",
+    "html_size_bytes": 23557,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_plans_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_plans_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_plans_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/auth": {
+    "route": "/auth",
+    "url": "https://landmap-insight.lovable.app/auth",
+    "html_file": "lovable_auth.html",
+    "html_size_bytes": 14659,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_auth_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_auth_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_auth_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  },
+  "/map": {
+    "route": "/map",
+    "url": "https://landmap-insight.lovable.app/map",
+    "html_file": "lovable_map.html",
+    "html_size_bytes": 15184,
+    "components_found": [],
+    "api_endpoints_found": [],
+    "datas_found": [],
+    "js_chunks": [
+      "https://landmap-insight.lovable.app/~flock.js",
+      "https://landmap-insight.lovable.app/__l5e/events.js",
+      "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js"
+    ],
+    "chunk_details": [
+      {
+        "url": "https://landmap-insight.lovable.app/~flock.js",
+        "file": "lovable_chunk_map_0_~flock.js",
+        "size_bytes": 21296,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "CLSThresholds",
+          "Cannot find module",
+          "Error sending web vital:",
+          "FCPThresholds",
+          "INPThresholds",
+          "LCPThresholds",
+          "TTFBThresholds"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/__l5e/events.js",
+        "file": "lovable_chunk_map_1_events.js",
+        "size_bytes": 44148,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": [
+          "Unknown error"
+        ]
+      },
+      {
+        "url": "https://landmap-insight.lovable.app/assets/index-DxhHPzjf.js",
+        "file": "lovable_chunk_map_2_index-DxhHPzjf.js",
+        "size_bytes": 610886,
+        "imports": [],
+        "exports": [],
+        "api_endpoints": [],
+        "ui_strings": []
+      }
+    ]
+  }
+}
