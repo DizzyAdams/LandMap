@@ -54,7 +54,7 @@ export async function generateMetadata({
       locale: locale || 'pt-BR',
       images: [
         {
-          url: `${siteUrl}/og-image.png`,
+          url: `${siteUrl}/og-image.svg`,
           width: 1200,
           height: 630,
           alt: title,
@@ -65,7 +65,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title,
       description,
-      images: [`${siteUrl}/og-image.png`],
+      images: [`${siteUrl}/og-image.svg`],
       creator: '@landmap',
     },
     robots: {

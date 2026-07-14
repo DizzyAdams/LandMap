@@ -14,11 +14,9 @@ import { getLocale } from 'next-intl/server';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'LandMap — Inteligência de terrenos',
-  description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
   icons: {
     icon: '/favicon.svg',
-    apple: '/favicon.svg',
+    apple: '/icons/icon-192.svg',
   },
   openGraph: {
     title: 'LandMap — Inteligência de terrenos',
