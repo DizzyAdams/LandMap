@@ -28,10 +28,10 @@ export default function ComparePage({
           </p>
         </div>
         <Link
-          href={lh('/search')}
+          href={lh('/regions')}
           className="inline-flex items-center justify-center gap-2 rounded-md bg-[var(--primary)] px-4 py-2 text-sm font-medium text-[var(--primary-foreground)] transition-colors hover:bg-[var(--primary)]/90"
         >
-          Ir para busca
+          Ver regiões
         </Link>
       </header>
 
@@ -54,8 +54,8 @@ export default function ComparePage({
       )}
 
       <div>
-        <Link href={lh('/search')} className="text-sm text-[var(--primary)] hover:underline">
-          Voltar para busca
+        <Link href={lh('/regions')} className="text-sm text-[var(--primary)] hover:underline">
+          Voltar para regiões
         </Link>
       </div>
     </div>

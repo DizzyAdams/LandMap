@@ -8,7 +8,7 @@ import { Logo } from './Logo';
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
 
-const navItems = [
+const navItems: { href: string; label: string; icon: string; emBreve?: boolean }[] = [
   { href: 'regions', label: 'Regiões', icon: 'regions' },
   { href: 'favorites', label: 'Favoritos', icon: 'star' },
   { href: 'compare', label: 'Comparar', icon: 'compare' },

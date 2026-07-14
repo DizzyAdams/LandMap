@@ -101,7 +101,7 @@ export default function PlansPage() {
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background pb-28">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-background/90 px-4 py-3 backdrop-blur">
         <Link
-          href={lh('/intro')}
+          href={lh('/onboarding')}
           aria-label="Voltar"
           className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
         >

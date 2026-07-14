@@ -134,7 +134,7 @@ export function AtlasLanding({ plots }: { plots: AtlasPlot[] }) {
           </p>
 
           <div className="atlas-cta">
-            <Link href="./search" className="atlas-btn atlas-btn--solid">
+            <Link href="./regions" className="atlas-btn atlas-btn--solid">
               Explorar imóveis
               <span aria-hidden>→</span>
             </Link>
@@ -165,7 +165,7 @@ export function AtlasLanding({ plots }: { plots: AtlasPlot[] }) {
 
           <div className="atlas-plots">
             {plots.map((p) => (
-              <Link key={p.id} href={`./property/${p.id}`} className="atlas-plot">
+              <Link key={p.id} href="./regions" className="atlas-plot">
                 <span className="atlas-tag">{p.type}</span>
                 <span className="coord">{datum(p.id)}</span>
                 <div className="name">{p.title}</div>

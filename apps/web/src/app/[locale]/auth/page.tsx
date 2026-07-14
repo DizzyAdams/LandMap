@@ -82,12 +82,12 @@ export default function AuthPage() {
     return `(${ddd}) ${local}`;
   };
 
-  const guest = () => router.push(lh('/intro'));
+  const guest = () => router.push(lh('/onboarding'));
 
   const onLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoginLoading(true);
-    window.setTimeout(() => router.push(lh('/intro')), 400);
+    window.setTimeout(() => router.push(lh('/onboarding')), 400);
   };
 
   const onSignup = (e: React.FormEvent) => {
@@ -313,15 +313,8 @@ export default function AuthPage() {
                   className="mt-0.5 h-4 w-4 rounded border-[var(--border)] text-[var(--primary)]"
                 />
                 <span className="text-xs text-[var(--muted-foreground)]">
-                  Aceito os{' '}
-                  <Link href={lh('/terms')} className="text-[var(--primary)] underline underline-offset-2">
-                    Termos de Uso
-                  </Link>{' '}
-                  e{' '}
-                  <Link href={lh('/privacy')} className="text-[var(--primary)] underline underline-offset-2">
-                    Política de Privacidade
-                  </Link>
-                </span>
+                  Aceito os Termos de Uso e a Política de Privacidade.
+                              </span>
               </label>
               <button
                 type="submit"
@@ -348,7 +341,7 @@ export default function AuthPage() {
           </button>
 
           <Link
-            href={lh('/intro')}
+            href={lh('/')}
             className="mt-8 block text-center text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
           >
             ← Voltar para o site
