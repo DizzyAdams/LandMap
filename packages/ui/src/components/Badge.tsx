@@ -1,32 +1,30 @@
-﻿import React, { forwardRef } from 'react';
+import React from 'react';
 import { cn } from '../lib/index';
 
-export type BadgeProps = React.HTMLAttributes<HTMLSpanElement> & {
-  variant?: 'default' | 'success' | 'warning' | 'danger' | 'info';
+// Lovable shadcn-style Badge — aligned to design-cto-lovable.md
+export type BadgeProps = React.HTMLAttributes<HTMLDivElement> & {
+  variant?: 'default' | 'secondary' | 'destructive' | 'outline' | 'success' | 'warning' | 'info';
 };
 
 const variants: Record<NonNullable<BadgeProps['variant']>, string> = {
-  default: 'bg-[var(--surface-3)] text-[var(--accent-dim)] border-[var(--border)]',
-  success: 'bg-[var(--emerald-tint)] text-[var(--emerald-bright)] border-[var(--emerald-tint)]',
-  warning: 'bg-[var(--gold-tint)] text-[var(--gold-soft)] border-[var(--gold-tint)]',
-  danger: 'bg-[color:color-mix(in_srgb,var(--danger)_10%,transparent)] text-[var(--danger)] border-[color:color-mix(in_srgb,var(--danger)_30%,transparent)]',
-  info: 'bg-[var(--cyan-tint)] text-[var(--cyan)] border-[var(--cyan-tint)]',
+  default: 'bg-[var(--primary)]/10 text-[var(--primary)] border-transparent',
+  secondary: 'bg-[var(--secondary)] text-[var(--secondary-foreground)]',
+  destructive: 'bg-[var(--destructive)]/10 text-[var(--destructive)]',
+  success: 'bg-[var(--success)]/10 text-[var(--success)] border-transparent',
+  warning: 'bg-[var(--warning)]/10 text-[var(--warning)] border-transparent',
+  info: 'bg-[var(--primary)]/10 text-[var(--primary)] border-transparent',
+  outline: 'text-[var(--foreground)] border-[var(--border)]',
 };
 
-export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
-  ({ variant = 'default', className, children, ...props }, ref) => (
-    <span
-      ref={ref}
-      className={cn(
-        'inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-xs font-medium',
-        variants[variant],
-        className,
-      )}
-      {...props}
-    >
-      {children}
-    </span>
-  ),
+export const Badge = ({ variant = 'default', className, children, ...props }: BadgeProps) => (
+  <div
+    className={cn(
+      'inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--ring)] focus:ring-offset-2',
+      variants[variant],
+      className,
+    )}
+    {...props}
+  >
+    {children}
+  </div>
 );
-
-Badge.displayName = 'Badge';

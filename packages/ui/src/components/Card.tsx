@@ -1,16 +1,19 @@
 ﻿import React, { forwardRef } from 'react';
 import { cn } from '../lib/index';
 
+// Lovable shadcn-style Card — aligned to design-cto-lovable.md
+// https://landmap-insight.lovable.app (referencia maxima do CTO)
+
 export type CardProps = React.HTMLAttributes<HTMLDivElement> & {
   variant?: 'default' | 'interactive' | 'highlight';
 };
 
 const variants: Record<NonNullable<CardProps['variant']>, string> = {
-  default: 'bg-[var(--surface-2)] border-[var(--border)]',
+  default: 'bg-[var(--card)] border-[var(--border)]',
   interactive:
-    'bg-[var(--surface-2)] border-[var(--border)] cursor-pointer transition-[transform,border-color,background-color,box-shadow] hover:border-[var(--border-strong)] hover:bg-[var(--surface-3)] hover:-translate-y-px active:scale-[0.995]',
+    'bg-[var(--card)] border-[var(--border)] cursor-pointer transition-all hover:border-[var(--ring)] hover:bg-[var(--accent)] hover:-translate-y-px active:scale-[0.995]',
   highlight:
-    'border-[var(--border-strong)] bg-[var(--surface-3)] shadow-[inset_0_0_0_1px_var(--border-subtle)]',
+    'border-[var(--ring)] bg-[var(--accent)] shadow-sm',
 };
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
@@ -18,8 +21,8 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
     <div
       ref={ref}
       className={cn(
-        'rounded-[var(--radius-md)] p-5 outline-none transition',
-        'focus-visible:shadow-[var(--ring)]',
+        'rounded-xl border p-5 shadow-sm outline-none transition',
+        'focus-visible:ring-1 focus-visible:ring-[var(--ring)]',
         'motion-reduce:transition-none motion-reduce:hover:translate-y-0 motion-reduce:active:scale-100',
         variants[variant],
         className,
