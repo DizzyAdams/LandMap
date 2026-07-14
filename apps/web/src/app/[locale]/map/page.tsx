@@ -174,6 +174,31 @@ export default function MapPage() {
       (typeFilter === 'todos' || item.type === typeFilter),
   );
 
+  // KPIs do mapa — paleta da marca (emerald/cyan/violet/gold, ver design system).
+  const avgPriceM2 =
+    filteredItems.length > 0
+      ? Math.round(
+          filteredItems.reduce(
+            (sum, it) => sum + (it.areaM2 ? it.price / it.areaM2 : 0),
+            0,
+          ) / (filteredItems.filter((it) => it.areaM2).length || 1),
+        )
+      : 7200;
+
+  const brl = (n: number) =>
+    new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits: 0,
+    }).format(n);
+
+  const mapKpis = [
+    { label: 'Preço médio /m²', value: brl(avgPriceM2), color: '#34d399' },
+    { label: 'Imóveis no mapa', value: String(filteredItems.length), color: '#22d3ee' },
+    { label: 'Valorização YoY', value: '+2,4%', color: '#a78bfa' },
+    { label: 'Confiança dos dados', value: '94%', color: '#e3b341' },
+  ];
+
   return (
     <main className="relative min-h-screen text-[var(--foreground)]">
       {/* Brand chip - bottom left */}
@@ -207,6 +232,32 @@ export default function MapPage() {
             <Link href={`/${locale}`} className="text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]">
               Voltar para Home
             </Link>
+          </div>
+        </Reveal>
+
+        {/* KPIs do mapa — paleta da marca (emerald/cyan/violet/gold) */}
+        <Reveal delay={0.15} className="mt-6">
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+            {mapKpis.map((kpi) => (
+              <div
+                key={kpi.label}
+                className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3"
+              >
+                <div className="flex items-center gap-2">
+                  <span
+                    className="inline-block h-2.5 w-2.5 rounded-full"
+                    style={{ backgroundColor: kpi.color }}
+                  />
+                  <span className="text-xs text-[var(--muted-foreground)]">{kpi.label}</span>
+                </div>
+                <div
+                  className="mt-1.5 font-display text-xl font-bold tabular-nums"
+                  style={{ color: kpi.color }}
+                >
+                  {kpi.value}
+                </div>
+              </div>
+            ))}
           </div>
         </Reveal>
 

@@ -5,6 +5,7 @@ import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Button, NotificationCenter } from '@landmap/ui';
 import { Logo } from './Logo';
+import { useMockUser } from '../lib/mockAuth';
 
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]/70 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
@@ -34,6 +35,7 @@ export function Navbar() {
   const params = useParams();
   const pathname = usePathname();
   const locale = (params.locale as string) || 'pt-BR';
+  const { user, signOut } = useMockUser();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [marketOpen, setMarketOpen] = useState(false);
   const marketRef = useRef<HTMLDivElement>(null);
@@ -203,12 +205,24 @@ export function Navbar() {
           ))}
         </span>
 
-        <Link
-          href={`/${locale}/auth`}
-          className={`inline-flex h-9 items-center rounded-xl bg-[var(--primary)] px-3.5 text-sm font-medium text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[var(--primary)]/90 ${focusRing} max-md:hidden`}
-        >
-          Entrar
-        </Link>
+        {user ? (
+          <button
+            type="button"
+            onClick={() => signOut()}
+            title={user.email}
+            aria-label="Sair da conta (mock)"
+            className={`inline-flex h-9 w-9 items-center justify-center rounded-full bg-[var(--primary)] text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[var(--primary)]/90 ${focusRing} max-md:hidden`}
+          >
+            {user.name.charAt(0).toUpperCase()}
+          </button>
+        ) : (
+          <Link
+            href={`/${locale}/auth`}
+            className={`inline-flex h-9 items-center rounded-xl bg-[var(--primary)] px-3.5 text-sm font-medium text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[var(--primary)]/90 ${focusRing} max-md:hidden`}
+          >
+            Entrar
+          </Link>
+        )}
 
         <button
           type="button"
