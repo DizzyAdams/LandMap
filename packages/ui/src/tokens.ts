@@ -26,11 +26,12 @@ export const colors = {
   danger: 'oklch(58% 0.22 27)',     // --danger (= --destructive)
 
   /* ── Primary brand ramp (LandMap azul #003594) ── */
-  primary: '#003594',
-  primaryBright: '#1e5fd0',
-  primarySoft: '#3b6fc4',
+  // Aligned to Lovable primary (indigo) — was legacy #003594 blue spec (drift).
+  primary: 'oklch(34% .18 265)',
+  primaryBright: 'oklch(50% .18 265)',
+  primarySoft: 'oklch(55% .15 265)',
   primaryForeground: 'oklch(99% 0.005 250)',
-  primaryGlow: '#1e5fd0',
+  primaryGlow: 'oklch(55% .2 265)',
   secondary: 'oklch(24% 0.1 265)',
   secondaryForeground: 'oklch(99% 0.005 250)',
   destructive: 'oklch(58% 0.22 27)',
@@ -43,7 +44,8 @@ export const colors = {
   foreground: 'oklch(18% 0.06 265)',
   card: 'oklch(100% 0 0)',
   cardForeground: 'oklch(18% 0.06 265)',
-  ring: '0 0 0 1px #003594, 0 0 0 3px rgba(0, 53, 148, 0.25)',
+  // Aligned to Lovable --ring (indigo color, used by focus-visible:ring-[var(--ring)]).
+  ring: 'oklch(50% .18 265)',
 
   /* ── Bioluminescent / sovereign accents (brand palette) ── */
   brand: {
@@ -58,9 +60,9 @@ export const colors = {
   },
   emerald: '#34d399',
   emeraldBright: '#6ee7b7',
-  emeraldTint: 'rgba(0, 53, 148, 0.10)',
+  emeraldTint: 'rgba(52, 211, 153, 0.12)',
   cyan: '#22d3ee',
-  cyanTint: 'rgba(0, 53, 148, 0.10)',
+  cyanTint: 'rgba(34, 211, 238, 0.12)',
   gold: '#d4af37',
   goldSoft: '#e8c873',
   goldBright: '#f4e2a1',
@@ -75,7 +77,7 @@ export const colors = {
     mutedForeground: 'oklch(48% 0.04 265)',
     border: 'oklch(92% 0.015 250)',
     input: 'oklch(94% 0.012 250)',
-    ring: '#1e5fd0',
+    ring: 'oklch(50% .18 265)',
     radius: '0.625rem',
   },
 

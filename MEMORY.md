@@ -6,7 +6,9 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
-Última atualização: 2026-07-13 (branch `main`, head `8626aa0`).
+Última atualização: 2026-07-13 (branch `main`, status sujo — não commitado).
+
+> **2026-07-13 — Final: assets, manifest, metadata, OG image e drift de tokens Lovable.** O `tokens.ts` foi re-alinhado ao indigo Lovable (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis). Nova `metadata` export no root `layout.tsx` (favicon `.svg` + OG image + Twitter card). Manifest PWA atualizado para cores Lovable. Icons (`icon-192/512.svg`) passaram de dark `#050505` para indigo Lovable. Tmp files de extração removidos. Docs `audit-lovable-color-schema.md` e `design-cto-lovable.md` adicionados como referência. Build local: 63 páginas (19 rotas × 3 locales + APIs) OK.
 
 > **2026-07-12 — Spec LandMap aplicado + deployado.** Commit `d8521c5` aplica o
 > spec `landmap-design.zip` (azul institutional `#003594`, fundo claro, verde só

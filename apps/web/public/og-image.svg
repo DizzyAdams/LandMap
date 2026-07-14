@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="oklch(20% .08 265)"/>
+      <stop offset="55%" stop-color="oklch(30% .15 265)"/>
+      <stop offset="100%" stop-color="oklch(50% .2 265)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="60" y="60" width="1080" height="510" rx="24" fill="oklch(100% 0 0 / .08)" stroke="oklch(100% 0 0 / .15)" stroke-width="1"/>
+  <text x="130" y="260" font-family="'Space Grotesk',sans-serif" font-size="72" font-weight="700" fill="#ffffff">LandMap</text>
+  <text x="130" y="330" font-family="'DM Sans',sans-serif" font-size="32" font-weight="400" fill="oklch(96% .01 250)">Inteligência imobiliária</text>
+  <text x="130" y="390" font-family="'DM Sans',sans-serif" font-size="22" font-weight="400" fill="oklch(72% .03 250)">Mapa de valorização • Ranking de regiões • Preço por m²</text>
+  <rect x="900" y="180" width="200" height="200" rx="24" fill="oklch(62% .2 265)" opacity="0.3"/>
+  <rect x="920" y="200" width="160" height="160" rx="20" fill="oklch(62% .2 265)" opacity="0.5"/>
+  <rect x="940" y="220" width="120" height="120" rx="16" fill="oklch(62% .2 265)" opacity="0.8"/>
+  <text x="1000" y="310" font-family="'Space Grotesk',sans-serif" font-size="40" font-weight="700" fill="#ffffff" text-anchor="middle">LM</text>
+</svg>

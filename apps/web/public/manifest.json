@@ -1,11 +1,11 @@
 {
   "name": "LandMap",
   "short_name": "LandMap",
-  "description": "Real estate market intelligence data",
+  "description": "LandMap \u2014 Intelig\u00eancia de terrenos",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#050505",
+  "background_color": "oklch(100% 0 0)",
+  "theme_color": "oklch(34% .18 265)",
   "icons": [
     {
       "src": "/icons/icon-192.svg",

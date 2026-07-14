@@ -44,7 +44,7 @@ O usado de fato (linhas atuais ~160): `linear-gradient(180deg,var(--text-strong)
 |---|---|---|
 | `apps/web/src/app/globals.css` `:root` | **fonte da verdade** completa | tem `--surface`, `--accent`, `--accent-dim`, `--danger`, `--primary` + tokens Lovable |
 | `packages/ui/src/styles.css` `:root` | mirror | **tem** `--surface`/`--accent`/`--accent-dim`/`--danger`/`--primary` + Lovable (✅ sincronizado) |
-| `packages/ui/src/tokens.ts` | mirror JS (flat, 1:1 com CSS) | espelha `:root` 1:1: `surface`/`accent`/`danger`/`primary`/`lovable` + `colors.semantic`/`colors.brand` (✅ sincronizado em 2026-07-12) |
+| `packages/ui/src/tokens.ts` | mirror JS (flat, 1:1 com CSS) | espelha `:root` 1:1: `surface`/`accent`/`danger`/`primary`/`lovable` + `colors.semantic`/`colors.brand`. **Re-alinhado ao Lovable indigo em 2026-07-13** (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis — ver `docs/audit-lovable-color-schema.md`) |
 
 Paleta de marca (bioluminescente): `--emerald:#34d399`, `--emerald-bright:#6ee7b7`, `--cyan:#22d3ee`, `--violet:#a78bfa`. Camada Sovereign gold (capital/investidor): `--gold:#d4af37`, `--gold-soft:#e8c873`, `--gold-bright:#f4e2a1`, `--gold-deep:#a67c00` (glows `--glow-gold`/`--glow-sovereign`).
 > Nota de cor: `#34d399` = **emerald-400** do Tailwind, NÃO emerald-500 (`#10b981`).
