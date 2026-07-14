@@ -1,150 +1,86 @@
 :root {
-  /* LandMap "fora do comum" dark-premium tokens (mirrors apps/web globals.css) */
-  --bg: #050505;
-  --surface: #0a0a0a;          /* surface-1 alias (back-compat) */
-  --surface-1: #0a0a0a;
-  --surface-2: #0f0f0f;
-  --surface-3: #141414;
+  /* ── Lovable light theme tokens (mirror apps/web globals.css) ── */
+  --radius: 0.625rem;
+  --background: oklch(100% 0 0);
+  --foreground: oklch(18% .06 265);
+  --card: oklch(100% 0 0);
+  --card-foreground: oklch(18% .06 265);
+  --popover: oklch(100% 0 0);
+  --popover-foreground: oklch(18% .06 265);
+  --primary: oklch(34% .18 265);
+  --primary-foreground: oklch(99% .005 250);
+  --primary-glow: oklch(55% .2 265);
+  --secondary: oklch(24% .1 265);
+  --secondary-foreground: oklch(99% .005 250);
+  --accent: oklch(88% .06 250);
+  --accent-foreground: oklch(28% .14 265);
+  --muted: oklch(96% .01 250);
+  --muted-foreground: oklch(48% .04 265);
+  --destructive: oklch(58% .22 27);
+  --destructive-foreground: oklch(98% .01 27);
+  --success: oklch(60% .15 155);
+  --success-foreground: oklch(99% .005 155);
+  --warning: oklch(78% .15 78);
+  --warning-foreground: oklch(22% .05 78);
+  --border: oklch(92% .015 250);
+  --input: oklch(94% .012 250);
+  --ring: oklch(50% .18 265);
+  --chart-1: oklch(34% .18 265);
+  --chart-2: oklch(55% .2 265);
+  --chart-3: oklch(72% .13 245);
+  --chart-4: oklch(24% .1 265);
+  --chart-5: oklch(78% .15 78);
+  --sidebar: oklch(22% .1 265);
+  --sidebar-foreground: oklch(96% .01 250);
+  --sidebar-primary: oklch(55% .2 265);
+  --sidebar-primary-foreground: oklch(99% .005 250);
+  --sidebar-accent: oklch(28% .11 265);
+  --sidebar-accent-foreground: oklch(99% .005 250);
+  --sidebar-border: oklch(30% .09 265);
+  --sidebar-ring: oklch(55% .2 265);
+  --gradient-brand: linear-gradient(135deg, oklch(24% .1 265), oklch(34% .18 265));
+  --gradient-hero: linear-gradient(140deg, oklch(20% .08 265) 0%, oklch(30% .15 265) 55%, oklch(50% .2 265) 100%);
+  --gradient-accent: linear-gradient(135deg, oklch(34% .18 265), oklch(62% .18 250));
+  --shadow-elegant: 0 20px 40px -20px oklab(24% -.00871557 -.0996195/.4);
+  --shadow-glow: 0 0 40px oklab(55% -.0174311 -.199239/.35);
+  --shadow-card: 0 1px 3px oklab(24% -.00871557 -.0996195/.12), 0 8px 24px -12px oklab(24% -.00871557 -.0996195/.15);
 
-  --border: #1a1a1a;
-  --border-strong: #262626;
-
-  --text: #f5f5f5;
-  --text-strong: #ffffff;
-  --muted: #a3a3a3;
-  --muted-2: #737373;
-
-  --emerald: #34d399;
-  --emerald-bright: #6ee7b7;
-  --cyan: #22d3ee;
-  --violet: #a78bfa;
-
-  /* ── Sovereign gold (capital / investor accent — Gulf & sovereign-fund feel) ── */
+  /* ── Sovereign gold (capital / investor accent) ── */
   --gold: #d4af37;
   --gold-soft: #e8c873;
   --gold-bright: #f4e2a1;
   --gold-deep: #a67c00;
-
-  --accent: #ffffff;
-  --accent-dim: #e5e5e5;
-  --danger: #ff4d4d;
-
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-
-  /* ── Focus ring (unified, token-driven — reused by Button & Card) ── */
-  --ring: 0 0 0 1px var(--emerald), 0 0 0 3px rgba(52, 211, 153, 0.25);
-
-  --glow-emerald: 0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25);
-  --glow-dual: 0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32);
-  /* ── Sovereign gold glows ── */
   --glow-gold: 0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38);
   --glow-sovereign: 0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28);
 
-  /* ── Layered surfaces ── */
+  /* ── Brand accent tints ── */
+  --emerald: #34d399;
+  --emerald-bright: #6ee7b7;
+  --emerald-tint: color-mix(in srgb, var(--primary) 10%, transparent);
+  --cyan: #22d3ee;
+  --cyan-tint: color-mix(in srgb, var(--primary) 10%, transparent);
+  --violet: #a78bfa;
+  --violet-tint: color-mix(in srgb, var(--accent) 10%, transparent);
+
+  /* ── Legacy dark tokens (back-compat for gamification/etc.) ── */
+  --bg: #050505;
+  --surface-1: #0a0a0a;
+  --surface-2: #0f0f0f;
+  --surface-3: #141414;
   --surface-4: #1a1a1a;
   --surface-inset: #070707;
+  --text: #f5f5f5;
+  --text-strong: #ffffff;
+  --muted-2: #737373;
+  --accent-dim: #e5e5e5;
+  --danger: #ff4d4d;
+  --border-strong: #262626;
   --border-subtle: rgba(255, 255, 255, 0.06);
   --border-strong-2: #333333;
-
-  /* ── AA-compliant text ramp ── */
   --text-muted: #c9c9c9;
   --text-faint: #8a8a8a;
-
-  /* ── Typography scale (rem) ── */
   --fs-display: 3.5rem;
   --fs-h1: 2.25rem;
   --fs-h2: 1.75rem;
   --fs-h3: 1.375rem;
-  --fs-h4: 1.125rem;
-  --fs-body: 1rem;
-  --fs-sm: 0.875rem;
-  --fs-xs: 0.75rem;
-
-  /* ── Spacing scale (8px base) ── */
-  --space-1: 4px;  --space-2: 8px;  --space-3: 12px; --space-4: 16px;
-  --space-5: 24px; --space-6: 32px; --space-7: 40px; --space-8: 48px;
-  --space-9: 64px; --space-10: 80px; --space-11: 96px; --space-12: 128px;
-
-  /* ── Layout containers ── */
-  --container: 1200px;
-  --container-narrow: 720px;
-
-  /* ── Elevation ramp ── */
-  --elevation-1: 0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(0,0,0,0.3);
-  --elevation-2: 0 4px 12px -2px rgba(0,0,0,0.5), 0 2px 6px -2px rgba(0,0,0,0.4);
-  --elevation-3: 0 12px 32px -8px rgba(0,0,0,0.6), 0 4px 12px -4px rgba(0,0,0,0.5);
-
-  /* ── Semantic accent tints ── */
-  --emerald-tint: rgba(52, 211, 153, 0.12);
-  --cyan-tint: rgba(34, 211, 238, 0.12);
-  --gold-tint: rgba(212, 175, 55, 0.12);
-  --violet-tint: rgba(167, 139, 250, 0.12);
-  /* Lovable reference design tokens (light / indigo) — ADDITIVE only. */
-  --background: oklch(100% 0 0);
-  --foreground: oklch(18% 0.06 265);
-  --card: oklch(100% 0 0);
-  --card-foreground: oklch(18% 0.06 265);
-  --primary: oklch(34% 0.18 265);
-  --primary-foreground: oklch(99% 0.005 250);
-  --primary-glow: oklch(55% 0.2 265);
-  --secondary: oklch(24% 0.1 265);
-  --secondary-foreground: oklch(99% 0.005 250);
-  --destructive: oklch(58% 0.22 27);
-  --destructive-foreground: oklch(98% 0.01 27);
-  --success: oklch(60% 0.15 155);
-  --success-foreground: oklch(99% 0.005 155);
-  --warning: oklch(78% 0.15 78);
-  --warning-foreground: oklch(22% 0.05 78);
-  --sidebar: oklch(22% 0.1 265);
-  --sidebar-foreground: oklch(96% 0.01 250);
-  --sidebar-primary: oklch(55% 0.2 265);
-  --sidebar-primary-foreground: oklch(99% 0.005 250);
-  --gradient-brand: linear-gradient(135deg, oklch(24% 0.1 265), oklch(34% 0.18 265));
-  --gradient-hero: linear-gradient(140deg, oklch(20% 0.08 265) 0%, oklch(30% 0.15 265) 55%, oklch(50% 0.2 265) 100%);
-  --gradient-accent: linear-gradient(135deg, oklch(34% 0.18 265), oklch(62% 0.18 250));
-  --shadow-elegant: 0 20px 40px -20px rgba(24, 24, 40, 0.4);
-  --shadow-card: 0 1px 3px rgba(24, 24, 40, 0.12), 0 8px 24px -12px rgba(24, 24, 40, 0.15);
-  --accent-lovable: oklch(88% 0.06 250);
-  --muted-lovable: oklch(96% 0.01 250);
-  --muted-foreground-lovable: oklch(48% 0.04 265);
-  --border-lovable: oklch(92% 0.015 250);
-  --input-lovable: oklch(94% 0.012 250);
-  --ring-lovable: oklch(50% 0.18 265);
-  --radius-lovable: 0.625rem;
-  --font-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
-  --font-geist-sans: 'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif;
-  --font-geist-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-
 }
-
-/* ─── Skeleton shimmer (loading placeholders) ─── */
-.skeleton {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--surface-2);
-  border-radius: var(--radius-md);
-}
-.skeleton::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  transform: translateX(-100%);
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.07) 50%,
-    transparent 100%
-  );
-  animation: skeleton-shimmer 1.6s ease-in-out infinite;
-}
-@keyframes skeleton-shimmer {
-  100% { transform: translateX(100%); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .skeleton::after { animation: none; }
-}
-
