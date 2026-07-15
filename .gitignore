@@ -51,9 +51,37 @@ validate*.log
 .bugprobe/
 probe_html.txt
 
+# ─── Parity / audit helper scripts (não fazem parte do app) ───
+scripts/_*.cjs
+scripts/_*.py
+scripts/parity_*.py
+scripts/parity_*.json
+scripts/*_probe.py
+scripts/*_probe_result.json
+scripts/flow_validation.py
+scripts/flow_validation_result.json
+scripts/prod_validation.py
+scripts/prod_validation_result.json
+scripts/run_parity_onecall.py
+scripts/anim_probe.py
+scripts/anim_probe_result.json
+scripts/countup_probe.py
+scripts/countup_probe_result.json
+archive_landmap_only_*/
+lovable-parity.md
+sprint-kpis-alerts.md
+
+# ─── Local process pids ───
+.parity_srv_pid
+.pw_prod_pid
+.pw_server_pid
+
+# ─── Deploy log local ───
+apps/web/deploy_log.txt
+apps/web/public/landmap-logo-transparent.png
+
 .vercel
 .env*
-
 __pycache__/
 
 # cached Lovable reference chunks (audit only)

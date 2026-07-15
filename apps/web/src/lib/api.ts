@@ -272,6 +272,60 @@ export function getKpi() {
   return apiFetch<KpiResponse>('/kpi');
 }
 
+/* ─── Oportunidades & KPIs de mercado (core: lib/opportunities.ts) ─── */
+
+export type OpportunitySeverity = 'baixa' | 'media' | 'alta';
+
+export type OpportunityType =
+  | 'preco_abaixo_media'
+  | 'valorizacao_yoy'
+  | 'nova_oferta'
+  | 'zona_quente'
+  | 'alto_score';
+
+export interface Opportunity {
+  id: string;
+  type: OpportunityType;
+  severity: OpportunitySeverity;
+  title: string;
+  description: string;
+  city: string;
+  state: string;
+  neighborhood?: string;
+  latitude?: number;
+  longitude?: number;
+  price?: number;
+  pricePerM2?: number;
+  deltaPct?: number;
+  score: number;
+  createdAt: string;
+}
+
+export interface KpiSnapshot {
+  total: number;
+  avgPricePerSqm: number;
+  medianPricePerSqm: number;
+  avgPrice: number;
+  avgAppreciationYoy: number;
+  availabilityRate: number;
+  confidence: number;
+  byType: Record<string, number>;
+  byModality: Record<string, number>;
+  topCities: { city: string; state: string; count: number; avgPrice: number }[];
+  generatedAt: string;
+}
+
+export interface OpportunitiesResponse {
+  opportunities: Opportunity[];
+  kpis: KpiSnapshot;
+}
+
+/** GET /opportunities — alertas de oportunidade derivados do dataset (core). */
+export function getOpportunities(city?: string) {
+  const qs = city ? `?city=${encodeURIComponent(city)}` : '';
+  return apiFetch<OpportunitiesResponse>(`/opportunities${qs}`);
+}
+
 /* ─── LangFlow-style workflow engine ─── */
 
 export type WorkflowDefinition = {

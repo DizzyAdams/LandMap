@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useParams, usePathname } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Logo } from './Logo';
+import { useTranslations } from 'next-intl';
 
 const focusRing =
   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
@@ -13,6 +14,7 @@ const navItems: { href: string; label: string; icon: string; emBreve?: boolean }
   { href: 'favorites', label: 'Favoritos', icon: 'star' },
   { href: 'compare', label: 'Comparar', icon: 'compare' },
   { href: 'dashboard', label: 'Dashboard', icon: 'grid' },
+  { href: 'search', label: 'Buscar', icon: 'search' },
   { href: 'map', label: 'Mapa', icon: 'map' },
   { href: 'admin', label: 'Admin', icon: 'settings' },
 ];

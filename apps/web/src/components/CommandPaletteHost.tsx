@@ -7,18 +7,13 @@ import { useActiveLocale, localeHref } from '../lib/locale';
 
 const NAV = [
   { href: '', label: 'Início' },
-  { href: 'search', label: 'Buscar' },
+  { href: 'onboarding', label: 'Conheça o LandMap' },
+  { href: 'plans', label: 'Planos' },
   { href: 'map', label: 'Mapa' },
-  { href: 'studio', label: 'Studio' },
-  { href: 'live', label: 'Live' },
-  { href: 'sales', label: 'Vendas' },
-  { href: 'insights', label: 'Insights' },
-  { href: 'pricing', label: 'Preços' },
-  { href: 'alerts', label: 'Alertas' },
   { href: 'favorites', label: 'Favoritos' },
   { href: 'compare', label: 'Comparar' },
-  { href: 'calculator', label: 'Calculadora' },
-  { href: 'chat', label: 'Chat IA' },
+  { href: 'dashboard', label: 'Dashboard' },
+  { href: 'regions', label: 'Regiões' },
 ];
 
 /**

@@ -6,6 +6,9 @@
 > projeto: o que está rodando, o que está em andamento (WIP), débitos técnicos e
 > próximos passos. Mantenha este arquivo atualizado a cada sessão.
 
+> **Design source of truth = `DESIGN.md`** (fonte autoritativa de UI/UX, tokens e fontes — mantenha este arquivo e `CLAUDE.md` em sincronia com ele).
+
+
 Última atualização: 2026-07-14 (branch `main` — Design Audit Lovable 100% concluído).
 
 > **2026-07-13 — Migração Lovable COMPLETA. Alinhamento final: assets, manifest, metadata, OG, ícones + drift tokens.** Commit `5b93677` + `5cd2ef0`:
@@ -66,7 +69,7 @@ Stack mono-repo pnpm. Licença MIT.
 | Item | Estado |
 |------|--------|
 | App web (19 rotas + APIs) | ✅ build/typecheck/lint/testes verdes |
-| **Spec LandMap (azul #003594, claro)** | ✅ **commit `d8521c5` + deploy `landmapprod-3iwouhmy0` (alias `landmapprod.vercel.app`) READY** |
+| **Spec LandMap (azul #003594, claro) — ⚠️ RETIRADO em 2026-07-13/14 (substituído pelo indigo Lovable, ver DESIGN.md)** | ✅ **commit `d8521c5` + deploy `landmapprod-3iwouhmy0` (alias `landmapprod.vercel.app`) READY** (histórico) |
 | AppShell autenticado + /onboarding + /regions | ✅ commit `d8521c5` |
 | Dataset | ✅ 1.500 imóveis reais + 1.500 markdowns (10 cidades) |
 | Sales cockpit (6 agentes) | ✅ feature completa + commit `975170d` |
@@ -85,7 +88,7 @@ Workspace (`pnpm-workspace.yaml`): `packages/*` + `apps/*`.
 
 ### apps/
 - **`apps/web` (`@landmap/web`)** — Next.js 14 (App Router `src/app`), `next-intl`
-  3.20 (pt-BR/en-US/es-ES), React 18, Tailwind v4.0.0 (ver aviso), fontes Geist.
+  3.20 (pt-BR/en-US/es-ES), React 18, Tailwind v4.0.0 (ver aviso), fontes **DM Sans + Space Grotesk + JetBrains Mono** via Google Fonts `<link>` (ver DESIGN.md).
   É o app consumidor. Páginas em `src/app/[locale]/...`; middleware em `src/middleware.ts`.
 - **`apps/docs`** — Storybook / Style Guide.
 
@@ -173,8 +176,8 @@ build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arqu
 
 3. **Drift de design tokens.** 3 fontes devem sincronizar: `apps/web/src/app/globals.css`
    `:root` (fonte da verdade), `packages/ui/src/styles.css`, `packages/ui/src/tokens.ts`.
-   Paleta de marca bioluminescente: `--emerald:#34d399` (emerald-400, NÃO 500),
-   `--cyan:#22d3ee`, `--violet:#a78bfa`; camada Sovereign gold: `--gold:#d4af37`, etc.
+   **Paleta de marca (Lovable indigo `oklch`, hue ≈ 265):** `--primary`/`--accent`/`--muted`/`--ring`/gradientes em `globals.css` `:root`/`.dark` (ver DESIGN.md).
+   ⚠️ **RETIRADA em 2026-07-13/14:** a paleta *bioluminescente* (`--emerald:#34d399`, `--cyan:#22d3ee`, `--violet:#a78bfa`, Sovereign `--gold`) foi substituída pelo indigo Lovable; `emerald/cyan/gold` sobrevivem apenas na feature "World 3D"/Sovereign data-viz (feature palette documentada, não drift).
    Regra: em v4 **nunca** `@apply <classe-custom>`.
 
 4. **Histórico de fricção já resolvida (para não reverter):** AI-slop removido
@@ -226,7 +229,7 @@ Ledger de tarefas: `.hermes/todos.md`.
 **Fontes de dados:** OpenStreetMap (ODbL) via Overpass; terreno AWS Terrain Tiles; © CARTO.
 
 **Próximo passo recomendado:** nada pendente — feature completa, commitada e em produção.
-Para re-deploy: `vercel deploy --prod` (build remoto Linux; o `geist` quebra apenas no build LOCAL Windows).
+Para re-deploy: `vercel deploy --prod` (build remoto Linux). `next/font`/Geist foram **retirados em 2026-07-13/14**; as fontes agora vêm de um Google Fonts `<link>` (DM Sans/Space Grotesk/JetBrains Mono), sem o crash ESM de Windows+Node 24 — ver DESIGN.md §8.
 
 - **`@landmap/scraper`** — ingestão Apify/cheerio no pipeline LLM.
 - **`@landmap/seo`** — geradores schema.org + coverage CLI + AEO.

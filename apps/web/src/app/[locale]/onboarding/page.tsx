@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
@@ -46,13 +45,10 @@ export default function OnboardingPage() {
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
       <header className="flex items-center justify-between px-6 py-6">
         <div className="flex items-center">
-          <Image
-            src="/landmap-lovabale-logo.png"
+          <img
+            src="/landmap-logo-transparent.png"
             alt="LandMap"
-            width={0}
-            height={0}
             className="h-12 w-auto object-contain"
-            priority
           />
         </div>
         <Link
@@ -104,7 +100,7 @@ export default function OnboardingPage() {
         {last ? (
           <Link
             href={lh('/plans')}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition hover:bg-primary/90"
+            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
           >
             Ver planos
             <ArrowRight className="h-4 w-4" />
@@ -112,7 +108,7 @@ export default function OnboardingPage() {
         ) : (
           <button
             onClick={() => setI((v) => Math.min(SLIDES.length - 1, v + 1))}
-            className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition hover:bg-primary/90"
+            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
           >
             Continuar
             <ArrowRight className="h-4 w-4" />
@@ -120,7 +116,7 @@ export default function OnboardingPage() {
         )}
         <Link
           href={lh('/auth')}
-          className="flex w-full items-center justify-center rounded-md py-2 text-sm font-medium text-foreground/60 transition-colors hover:text-foreground"
+          className="flex w-full items-center justify-center rounded-md py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-accent hover:text-accent-foreground"
         >
           Já tenho conta
         </Link>

@@ -5,9 +5,24 @@
 > `docs/design-system-audit.md`, `ARCHITECTURE.md` e no **`MEMORY.md`** (memória mestra
 > do projeto: estado vivo, WIP, débitos técnicos e próximos passos — leia junto).
 
+> **Design source of truth = `DESIGN.md`** (fonte autoritativa de UI/UX, tokens e fontes — este arquivo e `MEMORY.md` devem estar em sincronia com ele).
+
+## 🔒 ULTIMATE DESIGN STANDARD (BLOQUEADO — 2026-07-15)
+> STANDARD DEFINITIVO do LandMap = clone fiel do Lovable `landmap-insight.lovable.app`.
+> **PARIDADE 100% ALCANÇADA E VALIDADA** (Lovable live vs deploy prod `landmapprod` em todas as 9 rotas).
+> Regras OBRIGATÓRIAS para QUALQUER nova página/feature (kpis, alertas no mapa, etc.):
+> 1. Tokens: usar **só** `apps/web/src/app/globals.css` `:root`/`.dark` (`--primary`/`--accent`/`--muted`/`--ring`, indigo Lovable oklch hue≈265). NUNCA hardcodar hex fora dos tokens.
+> 2. Fontes: DM Sans (`--font-sans`) + Space Grotesk (`--font-display`) + JetBrains Mono (`--font-mono`) via Google Fonts `<link>` no root layout. NÃO usar `next/font`.
+> 3. Mono-dark premium (Linear/Vercel/Stripe): hierarquia forte, **zero gradientes baratos**, animações clean + `prefers-reduced-motion` safe.
+> 4. Componentes: preferir `@landmap/ui` (`Card`, `Badge`, `Button`/`buttonVariants`, `Sparkline`, `Progress`). Classes custom utilitárias (`packages/ui`): `.surface`/`.glass`/`.aurora`/`.glow-*`.
+> 5. Estrutura: rotas em `apps/web/src/app/[locale]` com prefixo locale; i18n `apps/web/messages/{pt-BR,en-US,es-ES}.json`.
+> 6. Auth: rotas protegidas (regions/favorites/compare/dashboard/admin/map/kpis) usam `<RequireAuth>` (`apps/web/src/components/RequireAuth.tsx`, mock Google via localStorage) → redireciona p/ `/auth` se sem sessão. Manter este gate.
+> 7. **NUNCA quebrar a parity com o Lovable.** Qualquer UI nova deve ser indistinguível do padrão Lovable/indigo.
+
+
 ## Stack & estrutura
 - **Monorepo pnpm** (`packageManager: pnpm@9.6.0`, `node >= 20`). Workspace: `apps/*`, `packages/*`.
-- **apps/web** (`@landmap/web`): Next.js 14.2 (App Router, `src/app`), `next-intl` 3.20 (i18n pt-BR/en-US/es-ES), React 18, Tailwind **v4.0.0** instalado mas **ainda sem pipeline PostCSS/Tailwind config** (ver aviso abaixo). Fontes: `geist` (`GeistSans`/`GeistMono`).
+- **apps/web** (`@landmap/web`): Next.js 14.2 (App Router, `src/app`), `next-intl` 3.20 (i18n pt-BR/en-US/es-ES), React 18, Tailwind **v4.0.0** com pipeline PostCSS/Tailwind **ativo** (ver ✅ abaixo). Fontes: **DM Sans + Space Grotesk + JetBrains Mono** via Google Fonts `<link>` (ver DESIGN.md).
 - **packages/ui** (`@landmap/ui`): componentes React + design tokens. Build com `tsup`. Exporta `./styles.css` e tokens JS (`tokens.ts`).
 - Outros pacotes: `@landmap/api` (Hono), `@landmap/llm` (LangGraph/RAG/PgVector), `@landmap/db`, `@landmap/config`, `@landmap/sales`.
 - Diagramas/planos: `docs/`, `landmap-complete-plan.md`, `ARCHITECTURE.md`.
@@ -23,7 +38,7 @@
 - `tailwindcss@4.0.0` + `@tailwindcss/postcss` em `apps/web/postcss.config.mjs`; `apps/web/src/app/globals.css` usa `@import "tailwindcss";` e `@source '../../../../packages/ui/src/**/*.{ts,tsx}'` para gerar as classes dos componentes do `@landmap/ui`.
 - Utilitários Tailwind e tokens CSS **estão sendo compilados**. Regra v4 que permanece: **NUNCA** use `@apply` com uma classe custom (só utilities / `@utility`).
 - Ao adicionar classes Tailwind em componentes de `packages/ui`, elas são escaneadas via o `@source` acima — valide com `pnpm build` / `next build`.
-- Tokens unificados adicionados nesta sessão: `--ring` (anel de foco emerald, reutilizado por `Button`/`Card`), tints (`--emerald-tint` etc.) e `--border-subtle` também espelhados em `globals.css :root`. `buttonVariants()` exportado por `@landmap/ui` p/ estilizar `<Link>` como botão.
+- Tokens unificados adicionados nesta sessão: `--ring` (anel de foco **indigo Lovable**, reutilizado por `Button`/`Card`), tints (`--emerald-tint`/`--cyan-tint` etc. — **hoje restritos à feature World 3D/Sovereign**, ver DESIGN.md §8) e `--border-subtle` também espelhados em `globals.css :root`. `buttonVariants()` exportado por `@landmap/ui` p/ estilizar `<Link>` como botão.
 
 ### 1. `@apply` com classe custom não-registrada (ERA BLOQUEADOR no v4 — ✅ RESOLVIDO)
 `globals.css` (linhas ~61-71): `.btn-primary`/`.btn-ghost` usavam `@apply btn` (classe custom) → erro em v4.
@@ -46,18 +61,20 @@ O usado de fato (linhas atuais ~160): `linear-gradient(180deg,var(--text-strong)
 | `packages/ui/src/styles.css` `:root` | mirror | **tem** `--surface`/`--accent`/`--accent-dim`/`--danger`/`--primary` + Lovable (✅ sincronizado) |
 | `packages/ui/src/tokens.ts` | mirror JS (flat, 1:1 com CSS) | espelha `:root` 1:1: `surface`/`accent`/`danger`/`primary`/`lovable` + `colors.semantic`/`colors.brand`. **Re-alinhado ao Lovable indigo em 2026-07-13** (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis — ver `docs/audit-lovable-color-schema.md`) |
 
-Paleta de marca (bioluminescente): `--emerald:#34d399`, `--emerald-bright:#6ee7b7`, `--cyan:#22d3ee`, `--violet:#a78bfa`. Camada Sovereign gold (capital/investidor): `--gold:#d4af37`, `--gold-soft:#e8c873`, `--gold-bright:#f4e2a1`, `--gold-deep:#a67c00` (glows `--glow-gold`/`--glow-sovereign`).
-> Nota de cor: `#34d399` = **emerald-400** do Tailwind, NÃO emerald-500 (`#10b981`).
+**Paleta de marca (Lovable indigo `oklch`, hue ≈ 265):** `--primary`, `--accent`, `--muted`, `--ring`, gradientes, sombras e tokens de sidebar em `apps/web/src/app/globals.css` `:root`/`.dark` (ver DESIGN.md).
+> ⚠️ **RETIRADA em 2026-07-13/14:** a paleta *bioluminescente* (`--emerald:#34d399`, `--cyan:#22d3ee`, `--violet:#a78bfa`, Sovereign `--gold`) foi **substituída** pelo indigo Lovable. A única exceção intencional é a feature de data-viz **"World 3D" / Sovereign** (`SkylineCanvas`, `BmapViewer`, `EnergyPanel`, `LivePulse`, `InvestmentCard`, etc.), que mantém `--emerald/--cyan/--gold` como *feature palette* documentada (não é drift).
 
-### 3. Drift de token nos componentes `@landmap/ui` (✅ RESOLVIDO em Button/Progress)
+### 3. Drift de token nos componentes `@landmap/ui` (✅ RESOLVIDO em Button/Progress — CONTEXTO LEGADO, ver nota)
+> ⚠️ **CONTEXTO LEGADO:** os valores `emerald/cyan` abaixo descrevem a paleta *bioluminescente* pré-2026-07-13. Desde a migração Lovable, o **marca** é indigo `oklch` (hue ≈ 265); `emerald/cyan/gold` sobrevivem apenas na feature de data-viz "World 3D"/Sovereign (ver DESIGN.md §8).
 - `Button.tsx` (primary): era `from-emerald-500` → **corrigido para `from-emerald-400`** (marca `#34d399`). `text-[#050505]` OK.
 - `Progress.tsx`: era `from-emerald-500 to-teal-300` → **corrigido para `from-emerald-400 to-cyan-400`** (teal não está na paleta).
 - `Sparkline.tsx`: default `color='#34d399'` → OK (bate com `--emerald`).
 - `Card/Badge/Input/etc.`: usam `white/5`, `neutral-*` (padrão Tailwind) em vez de tokens `--surface-1`/`--border`. Aceitável, mas idealmente consumir os tokens.
 
-## Fontes (Geist)
-- `[locale]/layout.tsx` seta `className={`${GeistSans.variable} ${GeistMono.variable}`}` no `<html>` → define `--font-geist-sans`/`--font-geist-mono`. `globals.css` consome essas vars (corpo + `.font-mono`).
-- `apps/web/src/app/layout.tsx` (root) usa `Inter` (`next/font/google`) e **não** define as vars Geist. Como o `<html>` renderizado vem do `[locale]/layout`, as vars Geist ficam ativas. ✅ **RESOLVIDO**: o `<html>` duplicado entre root e `[locale]` (causa do React #423 / `HierarchyRequestError` em hidratação, detectado pelo `.bugprobe`) foi corrigido — o html/body agora é só do root `app/layout.tsx`.
+## Fontes (DM Sans + Space Grotesk + JetBrains Mono)
+- Carregadas via Google Fonts `<link>` no root `app/layout.tsx` (DM Sans 400/500/600/700, Space Grotesk 500/600/700, JetBrains Mono 400/500/600). `next/font` é **intencionalmente NÃO usado** — em Windows + Node 24 quebra o loader ESM (`ERR_UNSUPPORTED_ESM_URL_SCHEME`).
+- `globals.css` define `--font-sans` (DM Sans), `--font-display` (Space Grotesk), `--font-mono` (JetBrains Mono) no `@theme`, então `.font-sans`/`.font-display`/`.font-mono` funcionam. ✅ **RESOLVIDO** (histórico): o `<html>` duplicado entre root e `[locale]` (React #423 / `HierarchyRequestError` em hidratação, detectado pelo `.bugprobe`) foi corrigido — o html/body agora é só do root `app/layout.tsx`.
+- ⚠️ O *family* anterior **Geist** (`--font-geist-sans`/`-mono`) foi **retirado em 2026-07-13/14** — a família é agora a do Lovable (DM Sans/Space Grotesk/JetBrains Mono), não Geist (ver DESIGN.md §8).
 
 ## Classes utilitárias custom (raw CSS, funcionam sem Tailwind)
 Usadas no app (ex.: `[locale]/layout.tsx` usa `.aurora`, `.grain`): `.surface`, `.glass`, `.grid-bg`, `.aurora`, `.grain`, `.text-gradient`, `.text-aurora`, `.glow-emerald`, `.glow-dual`, `.hairline`, `.orb-float`, `.ring-spin`, `.marquee-track`. Todas são seletores CSS puros — não dependem do pipeline Tailwind.
