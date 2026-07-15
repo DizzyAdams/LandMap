@@ -237,7 +237,7 @@ function MapPageInner() {
           </div>
         </Reveal>
 
-        {/* KPIs do mapa — paleta da marca (emerald/cyan/violet/gold) */}
+        {/* KPIs do mapa — tokens semânticos da marca (indigo Lovable) */}
         <Reveal delay={0.15} className="mt-6">
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {mapKpis.map((kpi) => (
