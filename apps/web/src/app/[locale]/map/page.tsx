@@ -1,6 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { RequireAuth } from '../../../components/RequireAuth';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -470,13 +472,6 @@ function MapPageInner() {
           showHeat={showHeat}
         />
       </section>
-
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-        crossOrigin=""
-      />
     </main>
   );
 }
@@ -510,12 +505,6 @@ function MapView({
   useEffect(() => {
     if (!mapRef.current) return;
     if (mapInstance.current) return;
-
-    const L = (window as any).L;
-    if (!L) {
-      console.warn('Leaflet not loaded yet');
-      return;
-    }
 
     const map = L.map(mapRef.current, {
       center: [-15.7939, -47.8828],
@@ -556,9 +545,6 @@ function MapView({
   useEffect(() => {
     const map = mapInstance.current;
     if (!map) return;
-
-    const L = (window as any).L;
-    if (!L) return;
 
     // Clear existing markers
     markersRef.current.forEach((m) => map.removeLayer(m));
