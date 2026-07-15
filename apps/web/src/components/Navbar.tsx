@@ -22,6 +22,10 @@ const primaryLinks = [
 
 const marketLinks = [
   { href: 'regions', labelKey: 'Regiões' },
+  { href: 'cities', labelKey: 'Cidades' },
+  { href: 'neighborhoods', labelKey: 'Bairros' },
+  { href: 'market', labelKey: 'Mercado' },
+  { href: 'valorization', labelKey: 'Valorização' },
   { href: 'favorites', labelKey: 'Favoritos' },
   { href: 'compare', labelKey: 'Comparar' },
   { href: 'dashboard', labelKey: 'Dashboard' },
@@ -31,6 +35,10 @@ const marketLinks = [
   { href: 'live', labelKey: 'Ao vivo' },
   { href: 'studio', labelKey: 'Studio' },
   { href: 'calculator', labelKey: 'Calculadora' },
+  { href: 'alerts', labelKey: 'Alertas' },
+  { href: 'resources', labelKey: 'Recursos' },
+  { href: 'developers', labelKey: 'Desenvolvedores' },
+  { href: 'pricing', labelKey: 'Preços' },
   { href: 'assistant', labelKey: 'Assistente IA' },
   { href: 'chat', labelKey: 'LandBot' },
   { href: 'writer', labelKey: 'Redator IA' },

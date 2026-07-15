@@ -450,6 +450,15 @@ export function MessageSquare({ size = 24, ...p }: IconProps) {
   );
 }
 
+export function Code2({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M16 18 22 12l-6-6" />
+      <path d="M8 6 2 12l6 6" />
+    </svg>
+  );
+}
+
 export function LandMapWordmark({ className = '' }: { className?: string }) {
   return (
     <span className={`font-display text-xl font-bold tracking-tight text-[var(--foreground)] ${className}`}>
