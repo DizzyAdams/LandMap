@@ -407,5 +407,35 @@
   },
   "auth": {
     "redirecting": "Redirecionando para o login…"
+  },
+  "kpis": {
+    "eyebrow": "Inteligência de mercado",
+    "title": "KPIs e oportunidades",
+    "subtitle": "Indicadores derivados de 1.500+ imóveis e alertas de oportunidade por região.",
+    "viewMap": "Ver no mapa",
+    "totalProperties": "Imóveis catalogados",
+    "catalogHint": "Amostra completa",
+    "avgPricePerM2": "Preço/m² médio",
+    "medianHint": "Mediana de mercado",
+    "appreciationYoy": "Valorização a.a.",
+    "confidence": "Confiança",
+    "confidenceHint": "Cobertura de dados",
+    "availabilityRate": "Disponibilidade",
+    "avgPrice": "Preço médio",
+    "medianPricePerM2": "Mediana/m²",
+    "opportunities": "Oportunidades",
+    "opportunitiesHint": "Alertas ativos",
+    "topCities": "Cidades em destaque",
+    "units": "imóveis",
+    "opportunitiesTitle": "Alertas de oportunidade",
+    "alerts": "alertas",
+    "noOpportunities": "Nenhuma oportunidade no momento.",
+    "loadError": "Não foi possível carregar os KPIs.",
+    "score": "score",
+    "severity": {
+      "baixa": "Baixa",
+      "media": "Média",
+      "alta": "Alta"
+    }
   }
 }

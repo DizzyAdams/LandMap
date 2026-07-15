@@ -407,5 +407,35 @@
   },
   "auth": {
     "redirecting": "Redirecting to sign in…"
+  },
+  "kpis": {
+    "eyebrow": "Market intelligence",
+    "title": "KPIs & opportunities",
+    "subtitle": "Indicators derived from 1,500+ properties and opportunity alerts by region.",
+    "viewMap": "View on map",
+    "totalProperties": "Cataloged properties",
+    "catalogHint": "Full sample",
+    "avgPricePerM2": "Avg price/m²",
+    "medianHint": "Market median",
+    "appreciationYoy": "YoY appreciation",
+    "confidence": "Confidence",
+    "confidenceHint": "Data coverage",
+    "availabilityRate": "Availability",
+    "avgPrice": "Avg price",
+    "medianPricePerM2": "Median/m²",
+    "opportunities": "Opportunities",
+    "opportunitiesHint": "Active alerts",
+    "topCities": "Top cities",
+    "units": "properties",
+    "opportunitiesTitle": "Opportunity alerts",
+    "alerts": "alerts",
+    "noOpportunities": "No opportunities right now.",
+    "loadError": "Could not load KPIs.",
+    "score": "score",
+    "severity": {
+      "baixa": "Low",
+      "media": "Medium",
+      "alta": "High"
+    }
   }
 }

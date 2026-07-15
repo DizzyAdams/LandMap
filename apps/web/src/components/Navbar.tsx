@@ -25,6 +25,7 @@ const marketLinks = [
   { href: 'favorites', labelKey: 'Favoritos' },
   { href: 'compare', labelKey: 'Comparar' },
   { href: 'dashboard', labelKey: 'Dashboard' },
+  { href: 'kpis', labelKey: 'KPIs' },
   { href: 'map', labelKey: 'Mapa' },
 ];
 
