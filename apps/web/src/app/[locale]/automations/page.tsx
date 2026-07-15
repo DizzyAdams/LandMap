@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Workflow, Plus, BellRing, Zap } from '../../../components/lovable/icons';
+import { ArrowLeft, Workflow, Plus, BellRing, Zap, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge, Stat, Button } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 type Rule = {
   id: string;
@@ -44,7 +44,9 @@ export default function AutomationsPage() {
           </div>
           <h1 className="mt-3 text-3xl font-bold tracking-tight">Regras que rodam sozinhas</h1>
           <p className="mt-2 text-sm text-foreground/60">Dispare notificações e tarefas sem intervenção manual.</p>
-        </div>
+          </div>
+
+          <ApiNotice variant="api" className="mt-4" />
         <Button className="h-9 shrink-0 !px-3 text-xs">
           <Plus className="h-4 w-4" />
           Nova regra

@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
-import { ArrowLeft, GitBranch, Sparkles } from '../../../components/lovable/icons';
+import { ArrowLeft, GitBranch, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge, Segmented, Button } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 const STAGES = [
   { value: 'scout', label: 'Scout' },
@@ -45,6 +45,8 @@ export default function PipelinePage() {
         <h1 className="mt-3 text-3xl font-bold tracking-tight">Funil autônomo</h1>
         <p className="mt-2 text-sm text-foreground/60">Visualize e conecte cada estágio do seu pipeline.</p>
       </div>
+
+      <ApiNotice variant="api" className="mt-4" />
 
       <Card className="mt-6">
         <Segmented aria-label="Estágio" options={STAGES} value={stage} onChange={setStage} />

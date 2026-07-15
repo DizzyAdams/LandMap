@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Sparkles, MessageSquare, PenLine, BookOpen, Workflow, Bot, Star } from '../../../components/lovable/icons';
+import { ArrowLeft, Sparkles, MessageSquare, PenLine, BookOpen, Workflow, Bot, Star, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge, Stat } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 const FEATURES = [
   { href: 'chat', icon: MessageSquare, title: 'LandBot', desc: 'Converse com a IA sobre qualquer região.' },
@@ -40,6 +40,8 @@ export default function AssistantPage() {
           Chat, RAG, automações e agentes — tudo com o padrão de design LandMap.
         </p>
       </div>
+
+      <ApiNotice variant="api" className="mt-4" />
 
       <section className="mt-6 grid grid-cols-3 gap-3">
         <Stat label="Modelos ativos" value="6" />

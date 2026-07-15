@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Bot, Sparkles } from '../../../components/lovable/icons';
+import { ArrowLeft, Bot, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 type Agent = {
   id: string;
@@ -46,6 +46,8 @@ export default function AgentsPage() {
         <h1 className="mt-3 text-3xl font-bold tracking-tight">Agentes IA LandMap</h1>
         <p className="mt-2 text-sm text-foreground/60">Especialistas autônomos para cada etapa do seu funil.</p>
       </div>
+
+      <ApiNotice variant="api" className="mt-4" />
 
       <Reveal className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
         {AGENTS.map((a) => (

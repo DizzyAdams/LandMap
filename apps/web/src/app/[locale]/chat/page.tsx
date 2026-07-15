@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
-import { ArrowLeft, Sparkles, Send, User } from '../../../components/lovable/icons';
-import { Card, Button } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
-
+import { ArrowLeft, Sparkles, Send, User, LandMapWordmark } from '../../../components/lovable/icons';
+import { Reveal } from '../../../components/Motion';
+import { Card, Badge, Button } from '@landmap/ui';
+import { ApiNotice } from '../../../components/ApiNotice';
 type Msg = { id: string; role: 'user' | 'ai'; text: string };
 
 const SUGGESTIONS = [
@@ -54,6 +54,8 @@ export default function ChatPage() {
         </div>
         <h1 className="mt-3 text-2xl font-bold tracking-tight">Assistente imobiliário</h1>
       </div>
+
+      <ApiNotice variant="api" className="mt-4" />
 
       <div className="mt-6 flex flex-1 flex-col gap-3">
         {messages.map((m) => (

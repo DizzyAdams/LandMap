@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
-import { ArrowLeft, BookOpen, Search, FileText } from '../../../components/lovable/icons';
+import { ArrowLeft, BookOpen, Search, FileText, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Tabs, Accordion, Input } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { Card, Badge, Tabs, Accordion, Input, Button } from '@landmap/ui';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 type Doc = { id: string; title: string; source: string; snippet: string };
 
@@ -47,6 +47,8 @@ export default function RagPage() {
           Respostas fundamentadas nos documentos oficiais da LandMap.
         </p>
       </div>
+
+      <ApiNotice variant="api" className="mt-4" />
 
       <Card className="mt-6">
         <div className="flex items-center gap-2">

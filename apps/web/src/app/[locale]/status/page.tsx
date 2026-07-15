@@ -2,10 +2,10 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Sparkles, ShieldCheck, Activity } from '../../../components/lovable/icons';
+import { ArrowLeft, Sparkles, ShieldCheck, Activity, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge, Stat } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 type Service = {
   name: string;
@@ -52,6 +52,8 @@ export default function StatusPage() {
           Acompanhe a saúde dos serviços LandMap em tempo real.
         </p>
       </div>
+
+      <ApiNotice variant="datadog" className="mt-4" />
 
       <section className="mt-6 grid grid-cols-3 gap-3">
         <Stat label="Uptime global" value="99,9%" />

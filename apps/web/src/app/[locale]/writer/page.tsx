@@ -3,10 +3,10 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useState } from 'react';
-import { ArrowLeft, Sparkles, PenLine } from '../../../components/lovable/icons';
+import { ArrowLeft, Sparkles, PenLine, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Input, Button, Segmented } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { Card, Badge, Segmented, Button, Input } from '@landmap/ui';
+import { ApiNotice } from '../../../components/ApiNotice';
 
 type Tone = 'professional' | 'warm' | 'investor';
 
@@ -52,6 +52,8 @@ export default function WriterPage() {
           Gere textos de anúncio otimizados a partir de uma cidade e um tom.
         </p>
       </div>
+
+      <ApiNotice variant="api" className="mt-4" />
 
       <Card className="mt-6 space-y-4">
         <label className="block text-sm">
