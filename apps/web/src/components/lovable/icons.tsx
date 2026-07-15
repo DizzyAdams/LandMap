@@ -360,6 +360,96 @@ export function Trash2({ size = 24, ...p }: IconProps) {
   );
 }
 
+export function Bot({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <rect width="18" height="12" x="3" y="6" rx="2" />
+      <path d="M12 6V3M8 9v1M16 9v1M9 18h6M12 14v4" />
+    </svg>
+  );
+}
+
+export function Workflow({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <rect width="8" height="8" x="3" y="3" rx="2" />
+      <rect width="8" height="8" x="13" y="13" rx="2" />
+      <path d="M7 11v2a2 2 0 0 0 2 2h6" />
+    </svg>
+  );
+}
+
+export function Zap({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+    </svg>
+  );
+}
+
+export function Send({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
+  );
+}
+
+export function Plug({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M9 2v6M15 2v6M7 8h10v2a5 5 0 0 1-10 0Z" />
+      <path d="M12 15v7" />
+    </svg>
+  );
+}
+
+export function BookOpen({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M12 7c0-1.7-1.3-3-3-3H4v16h5c1.7 0 3-1.3 3-3Z" />
+      <path d="M12 7c0-1.7 1.3-3 3-3h5v16h-5c-1.7 0-3-1.3-3-3Z" />
+    </svg>
+  );
+}
+
+export function FileText({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z" />
+      <path d="M14 2v6h6M8 13h8M8 17h8M8 9h2" />
+    </svg>
+  );
+}
+
+export function GitBranch({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <circle cx="6" cy="6" r="2.5" />
+      <circle cx="6" cy="18" r="2.5" />
+      <circle cx="18" cy="7" r="2.5" />
+      <path d="M6 8.5v7M18 9.5a6 6 0 0 1-6 6H6" />
+    </svg>
+  );
+}
+
+export function PenLine({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M12 20h9" />
+      <path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z" />
+    </svg>
+  );
+}
+
+export function MessageSquare({ size = 24, ...p }: IconProps) {
+  return (
+    <svg {...base(size)} {...p} aria-hidden>
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+  );
+}
+
 export function LandMapWordmark({ className = '' }: { className?: string }) {
   return (
     <span className={`font-display text-xl font-bold tracking-tight text-[var(--foreground)] ${className}`}>
@@ -367,3 +457,4 @@ export function LandMapWordmark({ className = '' }: { className?: string }) {
     </span>
   );
 }
+
