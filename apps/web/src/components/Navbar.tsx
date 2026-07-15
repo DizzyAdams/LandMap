@@ -26,6 +26,12 @@ const marketLinks = [
   { href: 'compare', labelKey: 'Comparar' },
   { href: 'dashboard', labelKey: 'Dashboard' },
   { href: 'kpis', labelKey: 'KPIs' },
+  { href: 'insights', labelKey: 'Insights' },
+  { href: 'sales', labelKey: 'Terrenos' },
+  { href: 'live', labelKey: 'Ao vivo' },
+  { href: 'studio', labelKey: 'Studio' },
+  { href: 'calculator', labelKey: 'Calculadora' },
+  { href: 'status', labelKey: 'Status' },
   { href: 'map', labelKey: 'Mapa' },
 ];
 
