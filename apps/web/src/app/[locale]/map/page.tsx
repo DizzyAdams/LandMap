@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { RequireAuth } from '../../../components/RequireAuth';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { EmptyState } from '@landmap/ui';
@@ -61,7 +62,7 @@ function getMarkerColor(type?: string): string {
   return MARKER_COLORS[type || ''] || '#737373';
 }
 
-export default function MapPage() {
+function MapPageInner() {
   const [query, setQuery] = useState('');
   const [items, setItems] = useState<Property[]>([]);
   const [loading, setLoading] = useState(false);
@@ -720,5 +721,13 @@ function MapView({
         </ul>
       </div>
     </div>
+  );
+}
+
+export default function MapPage() {
+  return (
+    <RequireAuth>
+      <MapPageInner />
+    </RequireAuth>
   );
 }

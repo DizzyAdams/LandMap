@@ -1,23 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { RequireAuth } from '../../../components/RequireAuth';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
 import { Card, EmptyState } from '@landmap/ui';
-import {
-  Building2,
-  MapPin,
-  Star,
-  X,
-} from '../../../components/lovable/icons';
-
-type FavoriteRegion = {
-  id: string;
-  name: string;
-  avgObservedPrice: number;
-  confidence: number;
-  dataPoints: number;
-};
+import { Building2, MapPin, Star, X } from '../../../components/lovable/icons';
+import { useFavorites } from '../../../lib/favorites';
+import { REGIONS, fmtBRL } from '../../../lib/regions-data';
 
 type FavoriteProperty = {
   id: string;
@@ -28,46 +17,11 @@ type FavoriteProperty = {
   confidence: number;
 };
 
-const FAVORITE_REGIONS: FavoriteRegion[] = [
-  { id: 'r1', name: 'Meireles', avgObservedPrice: 9500, confidence: 5, dataPoints: 1840 },
-  { id: 'r2', name: 'Aldeota', avgObservedPrice: 8200, confidence: 5, dataPoints: 1520 },
-  { id: 'r3', name: 'Dionísio Torres', avgObservedPrice: 7800, confidence: 4, dataPoints: 1310 },
-  { id: 'r4', name: 'Cocó', avgObservedPrice: 7500, confidence: 4, dataPoints: 1120 },
-];
-
-const FAVORITE_PROPERTIES: FavoriteProperty[] = [
-  {
-    id: 'p1',
-    address: 'Av. Beira Mar, 2500 — Meireles',
-    totalPrice: 1850000,
-    pricePerSqm: 9200,
-    regionName: 'Meireles',
-    confidence: 5,
-  },
-  {
-    id: 'p2',
-    address: 'Rua Silva Paulet, 1200 — Aldeota',
-    totalPrice: 1320000,
-    pricePerSqm: 8100,
-    regionName: 'Aldeota',
-    confidence: 4,
-  },
-  {
-    id: 'p3',
-    address: 'Av. Washington Soares, 800 — Dionísio Torres',
-    totalPrice: 980000,
-    pricePerSqm: 7600,
-    regionName: 'Dionísio Torres',
-    confidence: 3,
-  },
-];
-
-const fmtBRL = (v: number) =>
-  v.toLocaleString('pt-BR', {
-    style: 'currency',
-    currency: 'BRL',
-    maximumFractionDigits: 0,
-  });
+const PROPERTY_LOOKUP: Record<string, FavoriteProperty> = {
+  p1: { id: 'p1', address: 'Av. Beira Mar, 2500 — Meireles', totalPrice: 1850000, pricePerSqm: 9200, regionName: 'Meireles', confidence: 5 },
+  p2: { id: 'p2', address: 'Rua Silva Paulet, 1200 — Aldeota', totalPrice: 1320000, pricePerSqm: 8100, regionName: 'Aldeota', confidence: 4 },
+  p3: { id: 'p3', address: 'Av. Washington Soares, 800 — Dionísio Torres', totalPrice: 980000, pricePerSqm: 7600, regionName: 'Dionísio Torres', confidence: 3 },
+};
 
 const fmtPerSqm = (v: number) => `${fmtBRL(v)} /m²`;
 
@@ -78,9 +32,7 @@ function ConfidenceStars({ value }: { value: number }) {
         <Star
           key={i}
           className={`h-4 w-4 ${
-            i < value
-              ? 'text-[var(--primary)]'
-              : 'text-[var(--muted-foreground)]'
+            i < value ? 'text-[var(--primary)]' : 'text-[var(--muted-foreground)]'
           }`}
           fill={i < value ? 'currentColor' : 'none'}
         />
@@ -89,20 +41,28 @@ function ConfidenceStars({ value }: { value: number }) {
   );
 }
 
-export default function FavoritesPage() {
+function FavoritesPageInner() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
+  const { ids, hydrated, toggle } = useFavorites();
 
-  const [regions, setRegions] = useState<FavoriteRegion[]>(FAVORITE_REGIONS);
-  const [properties, setProperties] = useState<FavoriteProperty[]>(FAVORITE_PROPERTIES);
+  const regions = REGIONS.filter((r) => ids.includes(r.id));
+  const properties = ids.map((id) => PROPERTY_LOOKUP[id]).filter(Boolean) as FavoriteProperty[];
 
-  const removeRegion = (id: string) =>
-    setRegions((prev) => prev.filter((r) => r.id !== id));
-  const removeProperty = (id: string) =>
-    setProperties((prev) => prev.filter((p) => p.id !== id));
+  if (!hydrated) {
+    return (
+      <div className="mx-auto max-w-7xl space-y-8">
+        <header>
+          <p className="text-sm font-medium text-[var(--primary)]">Meus favoritos</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight">Terrenos e regiões salvos</h1>
+        </header>
+        <EmptyState title="Carregando seus favoritos…" />
+      </div>
+    );
+  }
 
   return (
-    <div className="mx-auto max-w-7xl space-y-8">
+    <div className="mx-auto max-w-7xl space-y-8 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500">
       <header className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-sm font-medium text-[var(--primary)]">Meus favoritos</p>
@@ -121,13 +81,16 @@ export default function FavoritesPage() {
       {/* Regiões favoritas */}
       <section>
         <div className="flex items-center gap-2">
-          <MapPin className="h-5 w-5" />
+          <Star className="h-5 w-5" />
           <h2 className="text-base font-semibold">Regiões favoritas</h2>
         </div>
-        <div className="mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-3 grid gap-3 md:grid-cols-2">
           {regions.length === 0 ? (
             <div className="col-span-full">
-              <EmptyState title="Nenhuma região favoritada ainda." />
+              <EmptyState
+                title="Nenhuma região favoritada ainda."
+                description="Toque na estrela em Regiões para salvar bairros aqui."
+              />
             </div>
           ) : (
             regions.map((region) => (
@@ -141,7 +104,7 @@ export default function FavoritesPage() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => removeRegion(region.id)}
+                    onClick={() => toggle(region.id)}
                     aria-label="Remover região dos favoritos"
                     className="rounded-md p-2 text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--destructive)]"
                   >
@@ -189,7 +152,7 @@ export default function FavoritesPage() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => removeProperty(property.id)}
+                    onClick={() => toggle(property.id)}
                     aria-label="Remover terreno dos favoritos"
                     className="rounded-md p-2 text-[var(--muted-foreground)] transition-colors hover:bg-[var(--muted)] hover:text-[var(--destructive)]"
                   >
@@ -213,5 +176,13 @@ export default function FavoritesPage() {
         </div>
       </section>
     </div>
+  );
+}
+
+export default function FavoritesPage() {
+  return (
+    <RequireAuth>
+      <FavoritesPageInner />
+    </RequireAuth>
   );
 }

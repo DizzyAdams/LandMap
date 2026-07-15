@@ -41,6 +41,7 @@
     "title": "Busca inteligente",
     "placeholder": "Pesquise por tipo, bairro ou oportunidade...",
     "noResults": "Nenhum resultado encontrado.",
+    "empty": "Nenhum imóvel encontrado.",
     "filters": "Filtros diretamente por tipologia, modalidade, local e faixa de preço.",
     "type": "Tipo",
     "modality": "Modalidade",
@@ -67,29 +68,13 @@
     "keyboardHint": "Pressione Ctrl+K ou / para focar a busca"
   },
   "property": {
-    "title": "Imóvel",
-    "backToSearch": "Voltar para busca",
-    "bedrooms": "quartos",
-    "bedroom": "quarto",
-    "pricePerM2": "Preço por m²",
-    "share": "Compartilhar",
-    "shareWhatsApp": "WhatsApp",
-    "shareEmail": "Email",
-    "shareCopy": "Copiar link",
-    "shareTwitter": "Twitter / X",
-    "shareCopied": "Link copiado!",
-    "forSale": "Venda",
-    "forRent": "Aluguel",
-    "launch": "Lançamento",
-    "available": "Disponível",
-    "unavailable": "Indisponível",
-    "details": "Detalhes",
-    "location": "Localização",
-    "priceHistory": "Histórico de preços",
-    "gallery": "Galeria",
-    "recommendations": "Recomendações",
-    "neighborhood": "Bairro",
-    "zone": "Zona"
+    "eyebrow": "Imóvel",
+    "title": "Ficha do imóvel",
+    "description": "Detalhe completo do imóvel: preço, m², histórico de valorização, similaridade e JSON-LD.",
+    "cta": "Buscar imóveis",
+    "f1": "Preço e preço por m²",
+    "f2": "Histórico de valorização",
+    "f3": "Imóveis similares"
   },
   "map": {
     "title": "Mapa mundial",
@@ -159,23 +144,22 @@
     "upTo": "Até"
   },
   "chat": {
-    "title": "Chat",
-    "subtitle": "Faça perguntas sobre imóveis e dados de mercado.",
-    "placeholder": "Digite sua pergunta...",
-    "send": "Enviar",
-    "welcome": "Olá! Como posso ajudar com dados imobiliários hoje?"
+    "eyebrow": "Assistente",
+    "title": "Chat com IA",
+    "description": "Pergunte sobre qualquer região, bairro ou indicador e receba respostas fundamentadas nos dados.",
+    "cta": "Abrir chat",
+    "f1": "Perguntas em linguagem natural",
+    "f2": "Respostas fundamentadas em dados",
+    "f3": "Histórico de conversas"
   },
   "calculator": {
-    "title": "Calculadora",
-    "subtitle": "Simule financiamentos, parcelas e cenários de investimento.",
-    "propertyPrice": "Preço do imóvel",
-    "downPayment": "Entrada",
-    "interestRate": "Taxa de juros (%)",
-    "termMonths": "Prazo (meses)",
-    "calculate": "Calcular",
-    "monthlyPayment": "Parcela mensal",
-    "totalPayment": "Pagamento total",
-    "totalInterest": "Juros totais"
+    "eyebrow": "Calculadora",
+    "title": "Calculadora de retorno",
+    "description": "Estime o retorno sobre investimento em imóveis com base em preço por m² e valorização histórica.",
+    "cta": "Calcular",
+    "f1": "Entrada e financiamento",
+    "f2": "Projeção de valorização",
+    "f3": "ROI e payback"
   },
   "admin": {
     "title": "Admin",
@@ -202,12 +186,13 @@
     "guides": "Guias"
   },
   "status": {
-    "title": "Status do Sistema",
-    "subtitle": "Verifique o status atual dos serviços LandMap.",
-    "operational": "Operacional",
-    "degraded": "Degradado",
-    "downtime": "Indisponível",
-    "allSystems": "Todos os Sistemas Operacionais"
+    "eyebrow": "Status",
+    "title": "Status dos serviços",
+    "description": "Acompanhe a disponibilidade da API, ingest de dados e integrações em tempo real.",
+    "cta": "Ver regiões",
+    "f1": "Disponibilidade da API",
+    "f2": "Ingest de dados",
+    "f3": "Integrações externas"
   },
   "offline": {
     "title": "Offline",
@@ -241,72 +226,13 @@
     "of": "de"
   },
   "world": {
-    "title": "Mundo 3D",
-    "subtitle": "Desenhe uma caixa, receba a cidade em 3D. Terreno, prédios e ruas reais em escala 1:1 a partir de dados abertos (OpenStreetMap).",
-    "searchPlaceholder": "Busque uma cidade (ex: São Paulo)",
-    "build": "Construir mundo 3D",
-    "building": "Construindo mundo…",
-    "size": "Tamanho da caixa",
-    "spin": "Girar",
-    "stop": "Parar",
-    "day": "Dia",
-    "night": "Noite",
-    "km": "km",
-    "km2": "km²",
-    "buildings": "prédios reconstruídos",
-    "roads": "km de ruas",
-    "trees": "árvores posicionadas",
-    "area": "km² mapeados",
-    "source": "Dados: OpenStreetMap (ODbL) · terreno AWS Terrain · © CARTO",
-    "fallback": "Overpass indisponível — mundo gerado proceduralmente.",
-    "loadingMap": "Carregando motor 3D…",
-    "mapError": "Não foi possível carregar o mapa 3D.",
-    "hint": "Busque uma cidade, ajuste o tamanho da caixa e clique em “Construir mundo 3D”, ou clique direto no mapa para reconstruir qualquer ponto em 3D.",
-    "backHome": "Voltar para Home",
-    "investor": {
-      "title": "Oportunidades para Fundos",
-      "fundReady": "Imóveis fund-ready",
-      "avgCap": "Cap rate médio",
-      "totalTicket": "Ticket total estimado",
-      "export": "Exportar JSON",
-      "copied": "Copiado!",
-      "score": "Score",
-      "capRate": "Cap rate",
-      "roi": "ROI a.a.",
-      "ticket": "Ticket",
-      "priceM2": "Preço/m²",
-      "badge": "Fund-ready"
-    },
-    "energy": {
-      "title": "Energia Renovável",
-      "totalMwp": "MWp potenciais",
-      "co2": "tCO₂/ano evitadas",
-      "score": "Score renovável",
-      "topSolar": "Maiores telhados solares",
-      "roof": "Cobertura",
-      "kwp": "kWp"
-    },
-    "thermal": {
-      "title": "Zoneamento Térmico",
-      "avg": "Calor médio",
-      "green": "Arrefecimento verde",
-      "hottest": "Zonas mais quentes",
-      "heat": "Calor",
-      "buildings": "Prédios",
-      "legendCool": "Fresco",
-      "legendHot": "Quente"
-    },
-    "live": {
-      "label": "Ao vivo",
-      "priceM2": "Preço/m²",
-      "roi": "ROI a.a."
-    },
-    "layers": {
-      "d3": "3D",
-      "investor": "Investidor",
-      "solar": "Solar",
-      "thermal": "Térmico"
-    }
+    "eyebrow": "Mundo 3D",
+    "title": "Inteligência territorial em 3D",
+    "description": "Visualize cidades em 3D com extrusão de prédios, análise de investimento, energia e térmica em tempo real.",
+    "cta": "Explorar mapa",
+    "f1": "Extrusão 3D de prédios via OpenStreetMap",
+    "f2": "Painéis de investimento, energia e térmica",
+    "f3": "LivePulse de valorização em tempo real"
   },
   "integrations": {
     "title": "Integrações",
@@ -433,5 +359,53 @@
     "fieldCambioPair": "Par (ex: USD-BRL)",
     "fieldCnpj": "CNPJ",
     "fieldGeo": "Endereço"
+  },
+  "insights": {
+    "eyebrow": "Insights",
+    "title": "Insights de mercado",
+    "description": "Relatórios automáticos de valorização, risco e oportunidade por região, gerados a partir de 1.500 datasets.",
+    "cta": "Ver regiões",
+    "f1": "Ranking de valorização por cidade",
+    "f2": "Alertas de queda de preço",
+    "f3": "Notas automáticas sobre o potencial da área"
+  },
+  "sales": {
+    "eyebrow": "Vendas",
+    "title": "Pipeline de vendas",
+    "description": "Acompanhe leads, oportunidades e conversões em um CRM leve integrado ao mapa de imóveis.",
+    "cta": "Abrir dashboard",
+    "f1": "Leads por pontuação e origem",
+    "f2": "Oportunidades e pipeline",
+    "f3": "Integração com Twenty CRM"
+  },
+  "terrenos": {
+    "eyebrow": "Terrenos",
+    "title": "Terrenos e loteamentos",
+    "description": "Busque terrenos e loteamentos com histórico de preço por m² e potencial de construção.",
+    "cta": "Buscar terrenos",
+    "f1": "Filtro por cidade e UF",
+    "f2": "Histórico de preço por m²",
+    "f3": "Potencial de construção"
+  },
+  "studio": {
+    "eyebrow": "Studio",
+    "title": "Studio criativo",
+    "description": "Gere apresentações, mapas e relatórios em marca a partir dos seus dados de território.",
+    "cta": "Abrir studio",
+    "f1": "Apresentações em marca",
+    "f2": "Mapas e relatórios",
+    "f3": "Exportação em PDF/PNG"
+  },
+  "live": {
+    "eyebrow": "Live",
+    "title": "Dados em tempo real",
+    "description": "Acompanhe sinais de mercado ao vivo: novos anúncios, mudanças de preço e calor de demanda.",
+    "cta": "Ver ao vivo",
+    "f1": "Novos anúncios por minuto",
+    "f2": "Mudanças de preço",
+    "f3": "Calor de demanda por região"
+  },
+  "auth": {
+    "redirecting": "Redirecionando para o login…"
   }
 }

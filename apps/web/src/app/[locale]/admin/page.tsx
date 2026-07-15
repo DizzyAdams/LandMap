@@ -1,8 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { RequireAuth } from '../../../components/RequireAuth';
 import { LANDMAP_API_BASE } from '../../../lib/api';
 import { Sparkles } from '../../../components/lovable/icons';
+import { Stagger } from '../../../components/Motion';
 
 type AdminStats = {
   totalProperties: number;
@@ -23,7 +25,7 @@ const SIMULATED_LEADS = 47;
 const SIMULATED_VIEWS = 1283;
 const SIMULATED_CONVERSION = 3.2;
 
-export default function AdminDashboardPage() {
+function AdminDashboardPageInner() {
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -78,18 +80,18 @@ export default function AdminDashboardPage() {
       </header>
 
       {loading ? (
-        <div className="grid gap-4 sm:grid-cols-2">
+        <Stagger className="grid gap-4 sm:grid-cols-2" stagger={0.08} y={20}>
           {[1, 2, 3, 4].map((i) => (
             <div
               key={i}
               className="h-28 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--muted)]"
             />
           ))}
-        </div>
+        </Stagger>
       ) : (
         <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
           {/* Stats cards */}
-          <div className="grid gap-4 sm:grid-cols-2">
+          <Stagger className="grid gap-4 sm:grid-cols-2" stagger={0.08} y={20}>
             {cards.map((card) => (
               <div
                 key={card.label}
@@ -102,11 +104,11 @@ export default function AdminDashboardPage() {
                 <p className="mt-1 text-[11px] text-[var(--muted-foreground)]">{card.sub}</p>
               </div>
             ))}
-          </div>
+          </Stagger>
 
           {/* Secondary stats */}
           {stats && (
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Stagger className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4" stagger={0.06} y={16}>
             {[
               { label: 'Preço médio', value: formatBRL(stats.avgPrice) },
               { label: 'Preço mediano', value: formatBRL(stats.medPrice) },
@@ -125,7 +127,7 @@ export default function AdminDashboardPage() {
                 <p className="mt-1 text-sm font-medium text-[var(--foreground)]">{item.value}</p>
               </div>
             ))}
-          </div>
+          </Stagger>
           )}
         </div>
       )}
@@ -139,4 +141,12 @@ function formatBRL(value: number) {
     currency: 'BRL',
     maximumFractionDigits: 0,
   }).format(value);
+}
+
+export default function AdminDashboardPage() {
+  return (
+    <RequireAuth>
+      <AdminDashboardPageInner />
+    </RequireAuth>
+  );
 }

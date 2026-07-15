@@ -41,6 +41,7 @@
     "title": "Smart search",
     "placeholder": "Search by type, neighborhood or opportunity...",
     "noResults": "No results found.",
+    "empty": "No properties found.",
     "filters": "Filters directly by type, modality, location and price range.",
     "type": "Type",
     "modality": "Modality",
@@ -67,29 +68,13 @@
     "keyboardHint": "Press Ctrl+K or / to focus search"
   },
   "property": {
-    "title": "Property",
-    "backToSearch": "Back to search",
-    "bedrooms": "bedrooms",
-    "bedroom": "bedroom",
-    "pricePerM2": "Price per m²",
-    "share": "Share",
-    "shareWhatsApp": "WhatsApp",
-    "shareEmail": "Email",
-    "shareCopy": "Copy link",
-    "shareTwitter": "Twitter / X",
-    "shareCopied": "Link copied!",
-    "forSale": "For sale",
-    "forRent": "For rent",
-    "launch": "Launch",
-    "available": "Available",
-    "unavailable": "Unavailable",
-    "details": "Details",
-    "location": "Location",
-    "priceHistory": "Price history",
-    "gallery": "Gallery",
-    "recommendations": "Recommendations",
-    "neighborhood": "Neighborhood",
-    "zone": "Zone"
+    "eyebrow": "Property",
+    "title": "Property detail",
+    "description": "Full property detail: price, m², appreciation history, similarity and JSON-LD.",
+    "cta": "Search properties",
+    "f1": "Price & price-per-m²",
+    "f2": "Appreciation history",
+    "f3": "Similar properties"
   },
   "map": {
     "title": "World map",
@@ -159,23 +144,22 @@
     "upTo": "Up to"
   },
   "chat": {
-    "title": "Chat",
-    "subtitle": "Ask questions about properties and market data.",
-    "placeholder": "Type your question...",
-    "send": "Send",
-    "welcome": "Hello! How can I help you with real estate data today?"
+    "eyebrow": "Assistant",
+    "title": "AI chat",
+    "description": "Ask about any region, neighborhood or metric and get answers grounded in the data.",
+    "cta": "Open chat",
+    "f1": "Natural-language questions",
+    "f2": "Answers grounded in data",
+    "f3": "Conversation history"
   },
   "calculator": {
-    "title": "Calculator",
-    "subtitle": "Simulate financing, monthly payments and investment scenarios.",
-    "propertyPrice": "Property price",
-    "downPayment": "Down payment",
-    "interestRate": "Interest rate (%)",
-    "termMonths": "Term (months)",
-    "calculate": "Calculate",
-    "monthlyPayment": "Monthly payment",
-    "totalPayment": "Total payment",
-    "totalInterest": "Total interest"
+    "eyebrow": "Calculator",
+    "title": "Return calculator",
+    "description": "Estimate real-estate ROI based on price-per-m² and historical appreciation.",
+    "cta": "Calculate",
+    "f1": "Down payment & financing",
+    "f2": "Appreciation projection",
+    "f3": "ROI & payback"
   },
   "admin": {
     "title": "Admin",
@@ -202,12 +186,13 @@
     "guides": "Guides"
   },
   "status": {
-    "title": "System Status",
-    "subtitle": "Check the current status of LandMap services.",
-    "operational": "Operational",
-    "degraded": "Degraded",
-    "downtime": "Downtime",
-    "allSystems": "All Systems Operational"
+    "eyebrow": "Status",
+    "title": "Service status",
+    "description": "Monitor API availability, data ingest and external integrations in real time.",
+    "cta": "View regions",
+    "f1": "API availability",
+    "f2": "Data ingest",
+    "f3": "External integrations"
   },
   "offline": {
     "title": "Offline",
@@ -241,72 +226,13 @@
     "of": "of"
   },
   "world": {
-    "title": "3D World",
-    "subtitle": "Draw a box, get the city in 3D. Real terrain, buildings and streets at 1:1 scale from open data (OpenStreetMap).",
-    "searchPlaceholder": "Search a city (e.g. São Paulo)",
-    "build": "Build 3D world",
-    "building": "Building world…",
-    "size": "Box size",
-    "spin": "Spin",
-    "stop": "Stop",
-    "day": "Day",
-    "night": "Night",
-    "km": "km",
-    "km2": "km²",
-    "buildings": "buildings rebuilt",
-    "roads": "km of streets",
-    "trees": "trees placed",
-    "area": "km² mapped",
-    "source": "Data: OpenStreetMap (ODbL) · terrain AWS Terrain · © CARTO",
-    "fallback": "Overpass unavailable — world generated procedurally.",
-    "loadingMap": "Loading 3D engine…",
-    "mapError": "Could not load the 3D map.",
-    "hint": "Search a city, adjust the box size and click “Build 3D world”, or click the map directly to rebuild any spot in 3D.",
-    "backHome": "Back to Home",
-    "investor": {
-      "title": "Fund opportunities",
-      "fundReady": "Fund-ready assets",
-      "avgCap": "Avg cap rate",
-      "totalTicket": "Est. total ticket",
-      "export": "Export JSON",
-      "copied": "Copied!",
-      "score": "Score",
-      "capRate": "Cap rate",
-      "roi": "ROI p.a.",
-      "ticket": "Ticket",
-      "priceM2": "Price/m²",
-      "badge": "Fund-ready"
-    },
-    "energy": {
-      "title": "Renewable energy",
-      "totalMwp": "Potential MWp",
-      "co2": "tCO₂/yr avoided",
-      "score": "Renewable score",
-      "topSolar": "Top solar roofs",
-      "roof": "Roof",
-      "kwp": "kWp"
-    },
-    "thermal": {
-      "title": "Thermal zoning",
-      "avg": "Avg heat",
-      "green": "Green cooling",
-      "hottest": "Hottest zones",
-      "heat": "Heat",
-      "buildings": "Buildings",
-      "legendCool": "Cool",
-      "legendHot": "Hot"
-    },
-    "live": {
-      "label": "Live",
-      "priceM2": "Price/m²",
-      "roi": "ROI p.a."
-    },
-    "layers": {
-      "d3": "3D",
-      "investor": "Investor",
-      "solar": "Solar",
-      "thermal": "Thermal"
-    }
+    "eyebrow": "3D World",
+    "title": "3D territorial intelligence",
+    "description": "Explore cities in 3D with building extrusion, investment, energy and thermal analysis in real time.",
+    "cta": "Explore map",
+    "f1": "3D building extrusion via OpenStreetMap",
+    "f2": "Investment, energy & thermal panels",
+    "f3": "Real-time appreciation LivePulse"
   },
   "integrations": {
     "title": "Integrations",
@@ -433,5 +359,53 @@
     "fieldCambioPair": "Pair (e.g. USD-BRL)",
     "fieldCnpj": "CNPJ",
     "fieldGeo": "Address"
+  },
+  "insights": {
+    "eyebrow": "Insights",
+    "title": "Market insights",
+    "description": "Automated appreciation, risk and opportunity reports per region, generated from 1,500 datasets.",
+    "cta": "View regions",
+    "f1": "Appreciation ranking by city",
+    "f2": "Price-drop alerts",
+    "f3": "Automatic notes on area potential"
+  },
+  "sales": {
+    "eyebrow": "Sales",
+    "title": "Sales pipeline",
+    "description": "Track leads, opportunities and conversions in a lightweight CRM integrated with the property map.",
+    "cta": "Open dashboard",
+    "f1": "Leads by score and source",
+    "f2": "Opportunities & pipeline",
+    "f3": "Twenty CRM integration"
+  },
+  "terrenos": {
+    "eyebrow": "Lands",
+    "title": "Lots & land plots",
+    "description": "Search lots and land plots with price-per-m² history and construction potential.",
+    "cta": "Search lands",
+    "f1": "Filter by city and state",
+    "f2": "Price-per-m² history",
+    "f3": "Construction potential"
+  },
+  "studio": {
+    "eyebrow": "Studio",
+    "title": "Creative studio",
+    "description": "Generate on-brand presentations, maps and reports from your territorial data.",
+    "cta": "Open studio",
+    "f1": "On-brand presentations",
+    "f2": "Maps & reports",
+    "f3": "PDF/PNG export"
+  },
+  "live": {
+    "eyebrow": "Live",
+    "title": "Real-time data",
+    "description": "Follow live market signals: new listings, price changes and demand heat.",
+    "cta": "View live",
+    "f1": "New listings per minute",
+    "f2": "Price changes",
+    "f3": "Demand heat by region"
+  },
+  "auth": {
+    "redirecting": "Redirecting to sign in…"
   }
 }

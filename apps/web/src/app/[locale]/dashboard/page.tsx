@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { RequireAuth } from '../../../components/RequireAuth';
 import { useState, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import {
@@ -63,7 +64,7 @@ const DISTRIBUTION = [
   { label: 'Industrial', pct: 14 },
 ];
 
-export default function DashboardPage() {
+function DashboardPageInner() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
   const [loading, setLoading] = useState(true);
@@ -98,7 +99,7 @@ export default function DashboardPage() {
       </header>
 
       <div className="mx-auto max-w-[1200px] px-6 py-8">
-        <div className="mb-6">
+        <div className="mb-6 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500">
           <p className="eyebrow">Inteligência de terrenos</p>
           <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">
             Visão geral do mercado
@@ -107,13 +108,13 @@ export default function DashboardPage() {
 
         {/* Stat cards row */}
         {loading ? (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150 sm:grid-cols-3 lg:grid-cols-5">
             {KPI_DATA.map((k) => (
               <Skeleton key={k.label} className="h-[92px] rounded-xl" />
             ))}
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          <div className="grid grid-cols-2 gap-3 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150 sm:grid-cols-3 lg:grid-cols-5">
             {KPI_DATA.map((kpi) => {
               const Icon = kpi.icon;
               return (
@@ -131,7 +132,7 @@ export default function DashboardPage() {
         )}
 
         {/* Charts + distribution */}
-        <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-4 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300 lg:grid-cols-3">
           <Card className="lg:col-span-2">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -174,7 +175,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent list */}
-        <div className="mt-6">
+        <div className="mt-6 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-500">
           <Card>
             <div className="mb-4 flex items-center gap-2">
               <ArrowUpDown size={16} className="text-[var(--primary)]" />
@@ -214,5 +215,13 @@ export default function DashboardPage() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function DashboardPage() {
+  return (
+    <RequireAuth>
+      <DashboardPageInner />
+    </RequireAuth>
   );
 }

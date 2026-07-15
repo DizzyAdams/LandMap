@@ -5,38 +5,27 @@ import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Check, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
+import { Stagger } from '../../../components/Motion';
 
 type Plan = {
   id: string;
   name: string;
-  tag: string;
   price: number;
   features: string[];
   highlight?: boolean;
 };
 
+// Espelha a Lovable: 4 planos (Access, Plus, Pro, Business). Plus destacado; só Plus lista features.
 const PLANS: Plan[] = [
   {
     id: 'access',
     name: 'LandMap Access',
-    tag: 'Comece com o essencial',
     price: 69.9,
-    features: [
-      'Acesso a todas as cidades do Brasil',
-      'Mapa de valorização e desvalorização',
-      'Mapa de calor básico',
-      'Ranking das regiões mais valorizadas',
-      'Ranking das regiões em queda',
-      'Histórico de preço por m²',
-      'Busca por bairro, cidade e região',
-      'Salvar até 10 áreas favoritas',
-      'Tendência: subindo, estável ou caindo',
-    ],
+    features: [],
   },
   {
     id: 'plus',
     name: 'LandMap Plus',
-    tag: 'Mais popular',
     price: 119.9,
     highlight: true,
     features: [
@@ -53,29 +42,14 @@ const PLANS: Plan[] = [
   {
     id: 'pro',
     name: 'LandMap Pro',
-    tag: 'Para profissionais',
     price: 249.9,
-    features: [
-      'Tudo do Plus',
-      'Acompanhar áreas monitoradas (salvas)',
-      'Salvar até 50 regiões favoritas',
-      'Histórico completo da área',
-      'Relatório mensal geral',
-      'Avaliação do seu terreno',
-    ],
+    features: [],
   },
   {
     id: 'business',
     name: 'LandMap Business',
-    tag: 'Para equipes',
     price: 699.9,
-    features: [
-      'Tudo do Pro',
-      'Até 5 usuários',
-      'Painel de equipe',
-      'Relatório com marca da empresa',
-      'Histórico de análise da equipe',
-    ],
+    features: [],
   },
 ];
 
@@ -101,7 +75,7 @@ export default function PlansPage() {
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background pb-28">
       <header className="sticky top-0 z-10 flex items-center justify-between bg-background/90 px-4 py-3 backdrop-blur">
         <Link
-          href={lh('/onboarding')}
+          href={lh('/auth')}
           aria-label="Voltar"
           className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
         >
@@ -124,7 +98,7 @@ export default function PlansPage() {
         </p>
       </div>
 
-      <div className="mt-6 flex flex-col gap-3 px-6">
+      <Stagger className="mt-6 flex flex-col gap-3 px-6" stagger={0.1} y={24}>
         {PLANS.map((p) => {
           const isSel = p.id === selected;
           return (
@@ -140,7 +114,7 @@ export default function PlansPage() {
             >
               {p.highlight && (
                 <span className="absolute -top-2 right-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground">
-                  {p.tag}
+                  MAIS POPULAR
                 </span>
               )}
 
@@ -181,7 +155,7 @@ export default function PlansPage() {
             </button>
           );
         })}
-      </div>
+      </Stagger>
 
       <div className="mt-6 px-6 text-center">
         <Link
