@@ -1,10 +1,6 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "nextjs",
-  "installCommand": "pnpm install",
-  "buildCommand": "pnpm -r --filter './packages/*' run build && cd apps/web && pnpm run build",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "buildCommand": "pnpm --filter @landmap/web run build",
   "outputDirectory": "apps/web/.next",
-  "env": {
-    "NEXT_PUBLIC_SITE_URL": "https://landmapprod.vercel.app"
-  }
+  "framework": "nextjs"
 }

@@ -39,7 +39,13 @@
   --color-warning-foreground: var(--warning-foreground);
 }
 
-/* ─── Entry/exit animation utilities (port from lovable_styles.css tailwindcss-animate) ─── */
+/* ─── Entry/exit animation utilities (Tailwind v4-compatible hand-rolled
+   equivalent of tailwindcss-animate) ───
+   NOTE: the published `tailwindcss-animate` v1.0.7 is a v3 plugin and does not
+   emit correct `animation-fill-mode` under Tailwind v4, which left `animate-in`
+   elements stuck at their base opacity (hero h1/p stayed invisible). We declare
+   the utilities ourselves with `animation-fill-mode: both` and a `to { opacity:1
+   }` end-state so entrances END VISIBLE. ─── */
 @keyframes enter {
   from {
     opacity: var(--tw-enter-opacity, 1);
@@ -47,10 +53,17 @@
       scale3d(var(--tw-enter-scale, 1), var(--tw-enter-scale, 1), 1)
       rotate(var(--tw-enter-rotate, 0));
   }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale3d(1, 1, 1) rotate(0);
+  }
 }
 @keyframes exit {
+  from {
+    opacity: 1;
+  }
   to {
-    opacity: var(--tw-exit-opacity, 1);
+    opacity: var(--tw-exit-opacity, 0);
     transform: translate3d(var(--tw-exit-translate-x, 0), var(--tw-exit-translate-y, 0), 0)
       scale3d(var(--tw-exit-scale, 1), var(--tw-exit-scale, 1), 1)
       rotate(var(--tw-exit-rotate, 0));
@@ -58,12 +71,23 @@
 }
 @utility animate-in {
   animation-name: enter;
-  animation-duration: var(--tw-animate-duration, 150ms);
+  animation-duration: var(--tw-animate-duration, 500ms);
+  animation-fill-mode: both;
   --tw-enter-opacity: initial;
   --tw-enter-scale: initial;
   --tw-enter-rotate: initial;
   --tw-enter-translate-x: initial;
   --tw-enter-translate-y: initial;
+}
+@utility animate-out {
+  animation-name: exit;
+  animation-duration: var(--tw-animate-duration, 500ms);
+  animation-fill-mode: both;
+  --tw-exit-opacity: initial;
+  --tw-exit-scale: initial;
+  --tw-exit-rotate: initial;
+  --tw-exit-translate-x: initial;
+  --tw-exit-translate-y: initial;
 }
 @utility fade-in {
   --tw-enter-opacity: 0;
@@ -73,6 +97,9 @@
 }
 @utility slide-in-from-bottom-4 {
   --tw-enter-translate-y: 16px;
+}
+@utility slide-in-from-bottom-8 {
+  --tw-enter-translate-y: 32px;
 }
 @utility slide-in-from-bottom-10 {
   --tw-enter-translate-y: 40px;

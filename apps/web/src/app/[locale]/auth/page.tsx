@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { Eye, EyeOff, LandMapWordmark, Lock, Mail, User } from '../../../components/lovable/icons';
+import { Reveal } from '../../../components/Motion';
 import { useMockUser } from '../../../lib/mockAuth';
 
 /** Ícone "G" oficial do Google (multicolor). */
@@ -97,7 +98,7 @@ export default function AuthPage() {
     return `(${ddd}) ${local}`;
   };
 
-  const guest = () => router.push(lh('/onboarding'));
+  const guest = () => router.push(lh('/plans'));
 
   const { signIn: signInGoogle } = useMockUser();
   const [googleLoading, setGoogleLoading] = useState(false);
@@ -105,7 +106,7 @@ export default function AuthPage() {
     setGoogleLoading(true);
     try {
       await signInGoogle();
-      router.push(lh('/onboarding'));
+      router.push(lh('/plans'));
     } finally {
       setGoogleLoading(false);
     }
@@ -115,7 +116,7 @@ export default function AuthPage() {
   const onLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setLoginLoading(true);
-    window.setTimeout(() => router.push(lh('/onboarding')), 400);
+    window.setTimeout(() => router.push(lh('/plans')), 400);
   };
 
   const onSignup = (e: React.FormEvent) => {
@@ -161,7 +162,7 @@ export default function AuthPage() {
       </aside>
 
       <main className="flex items-center justify-center bg-[var(--background)] p-6 md:p-12">
-        <div className="w-full max-w-md">
+        <Reveal className="w-full max-w-md" y={24}>
           <div className="mb-8 lg:hidden">
             <LandMapWordmark />
           </div>
@@ -394,8 +395,8 @@ export default function AuthPage() {
           >
             ← Voltar para o site
           </Link>
-        </div>
-      </main>
+        </Reveal>
+        </main>
     </div>
   );
 }
