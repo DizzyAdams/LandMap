@@ -15,8 +15,18 @@ type Plan = {
   highlight?: boolean;
 };
 
-// Espelha a Lovable: 4 planos (Access, Plus, Pro, Business). Plus destacado; só Plus lista features.
+// Espelha a Lovable: 4 planos (Access, Plus, Pro, Business) + plano Free. Plus destacado; só Plus lista features.
 const PLANS: Plan[] = [
+  {
+    id: 'free',
+    name: 'LandMap Free',
+    price: 0,
+    features: [
+      'Acesso ao mapa de valoração',
+      'Até 3 áreas favoritas',
+      'Comparação básica entre regiões',
+    ],
+  },
   {
     id: 'access',
     name: 'LandMap Access',
@@ -134,9 +144,15 @@ export default function PlansPage() {
               </div>
 
               <div className="mt-3 flex items-baseline gap-1">
-                <span className="text-xs text-foreground/50">R$</span>
-                <span className="text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
-                <span className="text-sm text-foreground/50">/mês</span>
+                {p.price === 0 ? (
+                  <span className="text-2xl font-bold tracking-tight">Grátis</span>
+                ) : (
+                  <>
+                    <span className="text-xs text-foreground/50">R$</span>
+                    <span className="text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
+                    <span className="text-sm text-foreground/50">/mês</span>
+                  </>
+                )}
               </div>
 
               {isSel && p.features.length > 0 && (
@@ -172,7 +188,9 @@ export default function PlansPage() {
           onClick={() => handleSelect(selected)}
           className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition hover:bg-primary/90"
         >
-          Assinar {selectedPlan.name} — R$ {formatBRL(selectedPlan.price)}/mês
+          {selectedPlan.price === 0
+            ? 'Começar grátis'
+            : `Assinar ${selectedPlan.name} — R$ ${formatBRL(selectedPlan.price)}/mês`}
         </button>
         <p className="mt-2 text-center text-[11px] text-foreground/40">
           Pagamento não ativado — fluxo de demonstração.
