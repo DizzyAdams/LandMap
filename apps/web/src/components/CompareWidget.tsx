@@ -24,7 +24,7 @@ export function CompareWidget() {
 
   return (
     <div className="fixed bottom-24 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-10 fade-in duration-300">
-      <div className="glass flex items-center gap-4 rounded-full border border-[var(--border)] px-4 py-2 shadow-xl shadow-black/20 bg-[var(--surface-1)]">
+      <div className="glass flex items-center gap-4 rounded-full border border-[var(--border)] px-4 py-2 shadow-xl shadow-black/20 bg-[var(--card)]">
         <span className="text-sm font-medium text-[var(--foreground)]">
           {ids.length} {ids.length === 1 ? 'imóvel selecionado' : 'imóveis selecionados'}
         </span>

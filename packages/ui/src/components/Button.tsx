@@ -2,10 +2,9 @@ import React from 'react';
 import { cn } from '../lib/index';
 
 // `primary` is the Lovable indigo action.
-// `gold` is the sovereign champagne action — the capital / investor accent.
 // `hero` keeps an explicit, opt-in high-contrast white for rare cases (never the default).
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'primary' | 'gold' | 'ghost' | 'outline' | 'hero';
+  variant?: 'primary' | 'ghost' | 'outline' | 'hero';
   size?: 'sm' | 'md' | 'lg';
 };
 
@@ -20,9 +19,6 @@ export const Button = ({ variant = 'primary', size = 'md', className, ...props }
     // Lovable indigo primary action
     primary:
       'bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] hover:bg-[var(--primary-glow)]',
-    // Sovereign champagne-gold action: gold gradient, near-black text, gold glow lift on hover
-    gold:
-      'bg-gradient-to-r from-[var(--warning)] to-[var(--warning)]/70 text-[#1a1206] shadow-[0_0_0_1px_color-mix(in_srgb,var(--warning)_30%,transparent),0_10px_40px_-12px_color-mix(in_srgb,var(--warning)_55%,transparent)] hover:-translate-y-px hover:shadow-[0_0_0_1px_color-mix(in_srgb,var(--warning)_55%,transparent),0_16px_54px_-12px_color-mix(in_srgb,var(--warning)_70%,transparent)]',
     // Rarely-used high-contrast hero (explicit opt-in, not the default)
     hero: 'bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--secondary)]',
     ghost: 'bg-transparent text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]',

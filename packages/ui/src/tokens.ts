@@ -47,28 +47,6 @@ export const colors = {
   // Aligned to Lovable --ring (indigo color, used by focus-visible:ring-[var(--ring)]).
   ring: 'oklch(50% .18 265)',
 
-  /* ── Bioluminescent / sovereign accents (brand palette) ── */
-  brand: {
-    emerald: '#34d399',
-    emeraldBright: '#6ee7b7',
-    cyan: '#22d3ee',
-    violet: '#a78bfa',
-    gold: '#d4af37',
-    goldSoft: '#e8c873',
-    goldBright: '#f4e2a1',
-    goldDeep: '#a67c00',
-  },
-  emerald: '#34d399',
-  emeraldBright: '#6ee7b7',
-  emeraldTint: 'rgba(52, 211, 153, 0.12)',
-  cyan: '#22d3ee',
-  cyanTint: 'rgba(34, 211, 238, 0.12)',
-  gold: '#d4af37',
-  goldSoft: '#e8c873',
-  goldBright: '#f4e2a1',
-  goldDeep: '#a67c00',
-  violet: '#a78bfa',
-
   /* ── Lovable reference design tokens (light / indigo) ── */
   lovable: {
     accent: 'oklch(88% 0.06 250)',
@@ -97,14 +75,6 @@ export const radii = {
 } as const;
 
 export const shadows = {
-  glow:
-    '0 0 0 1px rgba(52,211,153,0.15), 0 8px 40px -12px rgba(52,211,153,0.25)',
-  glowDual:
-    '0 0 0 1px rgba(52,211,153,0.22), 0 12px 60px -12px rgba(34,211,238,0.38), 0 10px 48px -12px rgba(52,211,153,0.32)',
-  glowGold:
-    '0 0 0 1px rgba(212,175,55,0.28), 0 10px 48px -12px rgba(212,175,55,0.38)',
-  glowSovereign:
-    '0 0 0 1px rgba(212,175,55,0.22), 0 14px 70px -14px rgba(212,175,55,0.40), 0 10px 50px -12px rgba(52,211,153,0.28)',
   elegant: '0 20px 40px -20px rgba(24, 24, 40, 0.4)',
   card: '0 1px 3px rgba(24, 24, 40, 0.12), 0 8px 24px -12px rgba(24, 24, 40, 0.15)',
   elevation1: '0 1px 2px rgba(0,0,0,0.4), 0 1px 1px rgba(0,0,0,0.3)',

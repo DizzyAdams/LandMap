@@ -5,7 +5,7 @@ export interface StatPillProps extends React.HTMLAttributes<HTMLSpanElement> {
   label?: React.ReactNode;
   value: React.ReactNode;
   trend?: number;
-  tone?: 'emerald' | 'cyan' | 'violet' | 'gold' | 'neutral';
+  tone?: 'emerald' | 'cyan' | 'violet' | 'gold' | 'warning' | 'neutral';
   icon?: React.ReactNode;
 }
 
@@ -14,6 +14,7 @@ const tones: Record<NonNullable<StatPillProps['tone']>, string> = {
   cyan: 'border-[color-mix(in_srgb,var(--primary)_10%,transparent)] bg-[color-mix(in_srgb,var(--primary)_10%,transparent)] text-[var(--primary)]',
   violet: 'border-[color-mix(in_srgb,var(--accent)_10%,transparent)] bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-[var(--accent)]',
   gold: 'border-[color-mix(in_srgb,var(--warning)_10%,transparent)] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)]',
+  warning: 'border-[color-mix(in_srgb,var(--warning)_10%,transparent)] bg-[color-mix(in_srgb,var(--warning)_10%,transparent)] text-[var(--warning)]',
   neutral: 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]',
 };
 

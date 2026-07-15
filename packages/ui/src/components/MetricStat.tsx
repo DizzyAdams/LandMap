@@ -6,6 +6,7 @@ export type MetricTone =
   | 'cyan'
   | 'violet'
   | 'gold'
+  | 'warning'
   | 'neutral'
   | 'danger';
 
@@ -38,6 +39,7 @@ const toneStyle: Record<MetricTone, React.CSSProperties> = {
   cyan: { color: 'var(--primary)', borderColor: 'color-mix(in srgb, var(--primary) 35%, transparent)', background: 'color-mix(in srgb, var(--primary) 8%, transparent)' },
   violet: { color: 'var(--accent)', borderColor: 'color-mix(in srgb, var(--accent) 35%, transparent)', background: 'color-mix(in srgb, var(--accent) 8%, transparent)' },
   gold: { color: 'var(--warning)', borderColor: 'color-mix(in srgb, var(--warning) 35%, transparent)', background: 'color-mix(in srgb, var(--warning) 8%, transparent)' },
+  warning: { color: 'var(--warning)', borderColor: 'color-mix(in srgb, var(--warning) 35%, transparent)', background: 'color-mix(in srgb, var(--warning) 8%, transparent)' },
   neutral: { color: 'var(--muted-foreground)', borderColor: 'color-mix(in srgb, var(--accent) 12%, transparent)', background: 'color-mix(in srgb, var(--accent) 4%, transparent)' },
   danger: { color: 'var(--destructive)', borderColor: 'color-mix(in srgb, var(--destructive) 35%, transparent)', background: 'color-mix(in srgb, var(--destructive) 8%, transparent)' },
 };

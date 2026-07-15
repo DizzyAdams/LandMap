@@ -170,7 +170,7 @@ export function OnboardingTour({
   return (
     <div className="fixed inset-0 z-[120]" role="dialog" aria-modal="true" aria-label={label} onKeyDown={onKeyDown}>
       {/* Dim overlay; spotlight cutout via huge box-shadow on the target ring. */}
-      <div className="absolute inset-0 bg-black/65 backdrop-blur-[2px]" onClick={skip} aria-hidden />
+      <div className="absolute inset-0 bg-[var(--background)]/65 backdrop-blur-[2px]" onClick={skip} aria-hidden />
 
       {rect && (
         <div

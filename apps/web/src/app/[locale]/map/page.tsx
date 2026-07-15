@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
 import { RequireAuth } from '../../../components/RequireAuth';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
@@ -22,20 +20,21 @@ type HeatPoint = {
   avgPrice?: number;
 };
 
-/** Interpola emerald → cyan → violet conforme o peso (0–1). */
+/** Interpola --success → --primary → --warning conforme o peso (0–1). */
 function weightColor(w: number): string {
   const t = Math.max(0, Math.min(1, w));
-  const emerald = [52, 211, 153];
-  const cyan = [34, 211, 238];
-  const violet = [167, 139, 250];
+  // Pontos na paleta semântica da marca (rgb coincidentes com os tokens oklch de DESIGN.md §3.1).
+  const success = [45, 200, 140]; // --success
+  const primary = [78, 52, 224]; // --primary
+  const warning = [230, 180, 40]; // --warning
   const lerp = (a: number, b: number, k: number) => Math.round(a + (b - a) * k);
   let rgb: [number, number, number];
   if (t < 0.5) {
     const k = t / 0.5;
-    rgb = [lerp(emerald[0], cyan[0], k), lerp(emerald[1], cyan[1], k), lerp(emerald[2], cyan[2], k)];
+    rgb = [lerp(success[0], primary[0], k), lerp(success[1], primary[1], k), lerp(success[2], primary[2], k)];
   } else {
     const k = (t - 0.5) / 0.5;
-    rgb = [lerp(cyan[0], violet[0], k), lerp(cyan[1], violet[1], k), lerp(cyan[2], violet[2], k)];
+    rgb = [lerp(primary[0], warning[0], k), lerp(primary[1], warning[1], k), lerp(primary[2], warning[2], k)];
   }
   return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
 }
@@ -54,14 +53,14 @@ type Property = {
 };
 
 const MARKER_COLORS: Record<string, string> = {
-  apartamento: '#3b82f6', // blue
-  casa: '#22c55e',        // green
-  terreno: '#f97316',     // orange
-  comercial: '#a855f7',   // purple
+  apartamento: 'var(--primary)',
+  casa: 'var(--success)',
+  terreno: 'var(--warning)',
+  comercial: 'var(--chart-2)',
 };
 
 function getMarkerColor(type?: string): string {
-  return MARKER_COLORS[type || ''] || '#737373';
+  return MARKER_COLORS[type || ''] || 'var(--muted-foreground)';
 }
 
 function MapPageInner() {
@@ -177,7 +176,7 @@ function MapPageInner() {
       (typeFilter === 'todos' || item.type === typeFilter),
   );
 
-  // KPIs do mapa — paleta da marca (emerald/cyan/violet/gold, ver design system).
+  // KPIs do mapa — paleta semântica da marca (indigo/success/warning/chart).
   const avgPriceM2 =
     filteredItems.length > 0
       ? Math.round(
@@ -196,10 +195,10 @@ function MapPageInner() {
     }).format(n);
 
   const mapKpis = [
-    { label: 'Preço médio /m²', value: brl(avgPriceM2), color: '#34d399' },
-    { label: 'Imóveis no mapa', value: String(filteredItems.length), color: '#22d3ee' },
-    { label: 'Valorização YoY', value: '+2,4%', color: '#a78bfa' },
-    { label: 'Confiança dos dados', value: '94%', color: '#e3b341' },
+    { label: 'Preço médio /m²', value: brl(avgPriceM2), color: 'var(--primary)' },
+    { label: 'Imóveis no mapa', value: String(filteredItems.length), color: 'var(--success)' },
+    { label: 'Valorização YoY', value: '+2,4%', color: 'var(--chart-2)' },
+    { label: 'Confiança dos dados', value: '94%', color: 'var(--warning)' },
   ];
 
   return (
@@ -506,34 +505,76 @@ function MapView({
     if (!mapRef.current) return;
     if (mapInstance.current) return;
 
-    const map = L.map(mapRef.current, {
-      center: [-15.7939, -47.8828],
-      zoom: 4,
-      zoomControl: true,
-    });
+    let cancelled = false;
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
-      maxZoom: 19,
-    }).addTo(map);
-
-    mapInstance.current = map;
-
-    // Expose a flyTo so the parent combobox can recenter the map.
-    if (flyToRef) {
-      flyToRef.current = (lat: number, lng: number) => {
-        map.flyTo([lat, lng], 13, { duration: 0.8 });
-      };
+    // Carrega Leaflet (JS+CSS) dinamicamente via CDN — evita quebrar o SSR
+    // (Leaflet referencia `window` na importação estática).
+    function loadLeaflet(): Promise<any> {
+      return new Promise((resolve, reject) => {
+        if ((window as any).L) return resolve((window as any).L);
+        const cssId = 'leaflet-css';
+        if (!document.getElementById(cssId)) {
+          const link = document.createElement('link');
+          link.id = cssId;
+          link.rel = 'stylesheet';
+          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+          document.head.appendChild(link);
+        }
+        const s = document.createElement('script');
+        s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+        s.crossOrigin = '';
+        s.onload = () => resolve((window as any).L);
+        s.onerror = () => reject(new Error('Falha ao carregar Leaflet'));
+        document.head.appendChild(s);
+      });
     }
 
-    // Reverse-geocode on click (real-estate context  in the parent).
-    if (onMapClick) {
-      map.on('click', (e: any) => onMapClick(e.latlng.lat, e.latlng.lng));
-    }
+    loadLeaflet()
+      .then((L) => {
+        if (cancelled || !mapRef.current || mapInstance.current) return;
+
+        const map = L.map(mapRef.current, {
+          center: [-15.7939, -47.8828],
+          zoom: 4,
+          zoomControl: true,
+        });
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
+          maxZoom: 19,
+        }).addTo(map);
+
+        // Corrige ícones default do Leaflet (caminho de imagem quebrado em bundlers)
+        const iconProto = (L.Icon.Default as any).prototype as any;
+        delete iconProto._getIconUrl;
+        L.Icon.Default.mergeOptions({
+          iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+          iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+          shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+        });
+
+        mapInstance.current = map;
+        setTimeout(() => map.invalidateSize(), 200);
+
+        if (flyToRef) {
+          flyToRef.current = (lat: number, lng: number) => {
+            map.flyTo([lat, lng], 13, { duration: 0.8 });
+          };
+        }
+        if (onMapClick) {
+          map.on('click', (e: any) => onMapClick(e.latlng.lat, e.latlng.lng));
+        }
+      })
+      .catch(() => {
+        /* silencioso: mapa reaparece no próximo mount */
+      });
 
     return () => {
-      map.remove();
-      mapInstance.current = null;
+      cancelled = true;
+      if (mapInstance.current) {
+        mapInstance.current.remove();
+        mapInstance.current = null;
+      }
     };
     // Map is initialized exactly once on mount. flyToRef is a stable ref and
     // onMapClick is read at event time via the closure; re-running this effect
@@ -545,6 +586,8 @@ function MapView({
   useEffect(() => {
     const map = mapInstance.current;
     if (!map) return;
+    const L = (window as any).L;
+    if (!L) return;
 
     // Clear existing markers
     markersRef.current.forEach((m) => map.removeLayer(m));
@@ -565,12 +608,12 @@ function MapView({
       const icon = L.divIcon({
         className: '',
         html: `<div style="
-          width: 14px; height: 14px;
-          background: ${color};
-          border: 2px solid #fff;
-          border-radius: 50%;
-          box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-        "></div>`,
+            width: 14px; height: 14px;
+            background: ${color};
+            border: 2px solid var(--background);
+            border-radius: 50%;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+          "></div>`,
         iconSize: [14, 14],
         iconAnchor: [7, 7],
       });

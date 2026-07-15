@@ -23,10 +23,10 @@
 > - Todas as 19 rotas × 3 locales servindo 200 com tokens Lovable
 
 > **2026-07-14 — Auditoria de Design Lovable (100% igual).** Varredura estática (`Select-String` em `apps/web/src`) + comparação ao vivo (`compare_live.py` / `validate_real.py`):
-> - **Paridade conteúdo/estrutura vs Lovable: 0 frases faltando** em TODAS as telas compartilhadas (home/map, regions, favorites, compare, dashboard, admin, plans, auth, onboarding). Telas exclusivas LandMap (search, insights, sales, world, live, studio, calculator, chat, status, terrenos, property, etc.) **não existem no Lovable** → sem referência para igualar.
+> - **Paridade conteúdo/estrutura vs Lovable: 0 frases faltando** em TODAS as telas compartilhadas (home/map, regions, favorites, compare, dashboard, admin, plans, auth, onboarding). Telas exclusivas LandMap (search, insights, sales, live, studio, calculator, chat, status, terrenos, property, etc.) **não existem no Lovable** → sem referência para igualar. (Nota: `world` foi removido em 2026-07-15.) |
 > - **Tokens de design: `globals.css` já 100% Lovable** (light/indigo `oklch`). `validate_real.py` = **160/160 (100%)** em produção (22 rotas × HTTP/título/meta/OG/fontes/CSS/sem-erro + 6 estáticos).
 > - **Migração de cores hardcoded → tokens Lovable:** 89 ocorrências de cores fora do padrão (`emerald/cyan/gold/amber/red/blue/violet`, `#050505`, `bg-white`, `neutral-*`, `black/5`) em ~50 arquivos migradas para `var(--primary)/--success/--destructive/--warning/--muted/--card/--background/--ring`. typecheck + lint verdes. Regra `DESIGN.md` §4 seguida (status = tokens semânticos; nunca emerald/cyan/violet como marca).
-> - **Exceção documentada (NÃO é drift):** a paleta "World 3D" / Sovereign data-viz (`SkylineCanvas`, `AtlasLanding`, `HeroTerritory`, `InvestmentCard`, `PropertyThumb`, `BmapViewer`, `EnergyPanel`, `LivePulse`) usa intencionalmente os tokens legados `--emerald/--cyan/--gold` + SVGs próprios. São features LandMap-únicas (ausentes no Lovable) — mantidas como palette de feature, não como desvio.
+> - **Exceção World 3D/Sovereign REMOVIDA (2026-07-15):** a paleta "World 3D"/Sovereign data-viz (`BmapViewer`, `EnergyPanel`, `LivePulse`, etc.) e a rota `/world` foram **deletadas**. Os tokens `--emerald/--cyan/--violet/--gold` (e o bloco dark legado `--bg/--surface-*`) em `packages/ui/src/styles.css`/`tokens.ts` foram **removidos** como lixo órfão. Hoje **NENHUMA** cor fora do indigo semântico é permitida (§9). |
 
 > **2026-07-12 — Spec LandMap aplicado + deployado.** Commit `d8521c5` aplica o
 > spec `landmap-design.zip` (azul institutional `#003594`, fundo claro, verde só
@@ -75,7 +75,7 @@ Stack mono-repo pnpm. Licença MIT.
 | Sales cockpit (6 agentes) | ✅ feature completa + commit `975170d` |
 | Redesign "Sovereign Cadastre" | ✅ commit `8f9c073` (removeu AI-slop) |
 | 404 de routing/locale | ✅ RESOLVIDO commit `71da3f0` (middleware p/ `src/`) |
-| **Feature "Mundo 3D" (bmap.io-style)** | ✅ **commitada** (`af050d7`) + design elevado (`70df4c2`) + **deployado** (landmap-p6k76hgks) |
+| **Feature "Mundo 3D" (bmap.io-style)** | ⚠️ **REMOVIDA em 2026-07-15** (código + rota `/world` deletados; tokens Sovereign/emerald/cyan/violet aposentados — ver DESIGN.md §8). Paleta atual = só indigo Lovable. |
 | **DNS dos domínios** | 🟡 **lado Vercel 100%** (apex+www atribuídos ao projeto + registros A/CNAME criados); **falta trocar NS no registrador** p/ `ns1/ns2.vercel-dns.com` (ver §6) |
 | Tailwind v4 | ✅ ativo (PostCSS + `@import "tailwindcss"` + `@source` p/ `@landmap/ui`); `--ring`/tints adicionados; `buttonVariants` exportado |
 
@@ -112,9 +112,9 @@ Workspace (`pnpm-workspace.yaml`): `packages/*` + `apps/*`.
 
 ## 4. Rotas do app web (`apps/web/src/app/[locale]/`)
 
-Marketing/dados: `/` (home surreal aurora+grain), `/search`, `/map`, `/compare`,
-`/favorites`, `/alerts`, `/chat` (RAG grátis MiniMax), `/calculator`, `/world` (NOVO — WIP),
-`/pricing`, `/docs` (+`/docs/embedding`), `/insights`, `/live`, `/offline`, `/status`,
+| Marketing/dados: `/` (home surreal aurora+grain), `/search`, `/map`, `/compare`,
+`/favorites` (RAG grátis MiniMax), `/calculator`, `/pricing`, `/docs` (+`/docs/embedding`),
+`/insights`, `/live`, `/offline`, `/status`, |
 `/studio`, `/sales` (cockpit), `/property/[id]`, `/admin` (`analytics`/`audit`/`exports`/`leads`/`properties`/`settings`/`webhooks`).
 
 APIs em `apps/web/src/app/api/`: `contact`, `[...route]` (catch-all p/ Hono),
@@ -122,24 +122,15 @@ APIs em `apps/web/src/app/api/`: `contact`, `[...route]` (catch-all p/ Hono),
 
 ---
 
-## 5. WIP ATUAL — Feature "Mundo 3D" (bmap.io-style)
+## 5. FEATURE "Mundo 3D" — REMOVIDA (2026-07-15)
 
-**Estado:** ✅ **commitada** (`af050d7`), com design elevado (`70df4c2`: legenda de altura + vinheta
-cinematográfica) e **deployada em produção** (deploy `landmap-p6k76hgks`, alias `landmap.us.kg`).
-Validação: typecheck mono-repo OK, lint OK (warning pré-existente em `map/page.tsx`), testes 299/299 OK,
-build remoto Vercel OK, rotas `/pt-BR/world` e `/en-US/world` retornam 200. Arquivos envolvidos:
+**Estado:** ✅ **REMOVIDA E LIMPA**. O código (`lib/bmap.ts`, `BmapViewer.tsx`, `InvestorPanel.tsx`, `EnergyPanel.tsx`, `LivePulse.tsx`, rota `world/page.tsx`), a namespace `world` nos i18n, a rota API órfã `apps/web/src/app/api/overpass/route.ts` (único consumidor de `fetchWorld`/`overpass-api`) e os tokens Sovereign/bioluminescente (`--emerald/--cyan/--violet/--gold` + dark legacy + `shadows.glow/glowDual/glowGold/glowSovereign`) foram **deletados**. Motivo: DESIGN.md §9 aposentou a paleta Sovereign; a feature não existe no Lovable (referência máxima) e não fazia parte do clone fiel. Não há WIP pendente aqui.
 
-| Arquivo | Papel |
-|---------|-------|
-| `apps/web/src/lib/bmap.ts` (~518 linhas) | Camada de dados 3D. Dado um bbox, puxa geometria REAL do OpenStreetMap (prédios, ruas, árvores) da **Overpass API** e normaliza para GeoJSON `FeatureCollection` (extrusão no MapLibre). Fallback determinístico procedural se Overpass cair. Exporta: `LngLat`, `BBox`, `WorldFeature`, `WorldData`, `EMPTY_FEATURE_COLLECTION`, `haversine`, `bboxFromCenter`, `areaKm2`, `fetchWorld`, `analyzeWorld`/`WorldAnalysis`, `fetchMarketContext`/`MarketContext`. |
-| `apps/web/src/components/BmapViewer.tsx` | Client component. Carrega **MapLibre GL v4.7.1 via CDN** (`<Script>`). Style: tiles CARTO dark/light, AWS Terrain `raster-dem`, fontes geojson (`world`, `thermal`), camada `fill-extrusion` (gradiente altura emerald→cyan→violet), camada `thermal` fill, `sky`. Controles: busca de cidade (`geoAutocomplete` de `lib/api`), slider de tamanho da caixa, toggle dia/noite, girar/parar, abas de camada (3D / Investor / Solar / Thermal), clique no mapa reconstrói o ponto. Contadores animados. |
-| `apps/web/src/components/InvestorPanel.tsx` | Oportunidades p/ fundos: KPIs (fundReady, avgCapRate, totalTicketBRL) + top-by-score (kind labels) + export JSON p/ clipboard (usa `btn btn-ghost`). |
-| `apps/web/src/components/EnergyPanel.tsx` | Energia renovável (MWp, CO₂, renewableScore) + top telhados solares + zoneamento térmico (avgHeat, greenCooling, hottest) + legenda de calor. |
-| `apps/web/src/components/LivePulse.tsx` | Hook `useLiveMarket` (jitter preço/m² e ROI a cada 2.5s) + UI "ao vivo". |
-| `apps/web/src/app/[locale]/world/page.tsx` | Rota `'use client'`, usa `Reveal` + `BmapViewer`, `t('world.*')`. |
-| `apps/web/messages/{pt-BR,en-US,es-ES}.json` | Namespace `world` **adicionada no ROOT** (válido). |
+Paleta de marca atual = **só indigo Lovable semântico** (`--primary`/`--accent`/`--muted`/`--ring`/`--success`/`--warning`/`--destructive`). Os componentes `StatPill`/`MetricStat` aceitam `tone`: `emerald|cyan|violet|gold|warning|neutral|danger` — todos mapeados para tokens semânticos (`warning`/`gold` → `var(--warning)`, `emerald`/`cyan` → `var(--primary)`, `violet` → `var(--accent)`).
 
 ---
+
+
 
 ## 6. Débitos técnicos / bloqueios conhecidos
 
@@ -216,20 +207,11 @@ Ledger de tarefas: `.hermes/todos.md`.
 
 - Componentes UI em `packages/ui/src/components`, exportados via `index.ts`, usam `cn()` (clsx+tailwind-merge).
 - i18n: `apps/web/src/i18n.ts` carrega `../messages/${locale}.json` (ou seja, `apps/web/messages/`). **NÃO** crie mensagens em `apps/web/src/messages/` — o app não as lê (já houve pasta duplicada corrompida lá que foi removida).
-- `useTranslations('world')` espera `world` no **root** do JSON de mensagens.
-- MapLibre GL é carregado via CDN (`unpkg`) dentro de `BmapViewer`, não como dependência npm.
 - Manter `CLAUDE.md` e este `MEMORY.md` em sincronia a cada mudança estrutural.
 
-| `apps/web/src/components/Navbar.tsx` | Link "Mundo 3D" (href `world`) adicionado. |
+| `apps/web/src/components/Navbar.tsx` | Link "Mundo 3D" (href `world`) **REMOVIDO** em 2026-07-15 junto com a feature. |
 
-**Como funciona (resumo):** usuário busca cidade → `geoAutocomplete` → centro →
-`bboxFromCenter` → `fetchWorld` (Overpass ou procedural) → MapLibre extruda prédios
-→ `analyzeWorld` gera análise (investimento/energia/térmica) → painéis laterais + LivePulse.
-
-**Fontes de dados:** OpenStreetMap (ODbL) via Overpass; terreno AWS Terrain Tiles; © CARTO.
-
-**Próximo passo recomendado:** nada pendente — feature completa, commitada e em produção.
-Para re-deploy: `vercel deploy --prod` (build remoto Linux). `next/font`/Geist foram **retirados em 2026-07-13/14**; as fontes agora vêm de um Google Fonts `<link>` (DM Sans/Space Grotesk/JetBrains Mono), sem o crash ESM de Windows+Node 24 — ver DESIGN.md §8.
+`next/font`/Geist foram **retirados em 2026-07-13/14**; as fontes agora vêm de um Google Fonts `<link>` (DM Sans/Space Grotesk/JetBrains Mono), sem o crash ESM de Windows+Node 24 — ver DESIGN.md §8.
 
 - **`@landmap/scraper`** — ingestão Apify/cheerio no pipeline LLM.
 - **`@landmap/seo`** — geradores schema.org + coverage CLI + AEO.

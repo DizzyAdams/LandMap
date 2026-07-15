@@ -32,7 +32,7 @@ type KpiItem = {
   label: string;
   value: string;
   icon: React.ComponentType<React.SVGProps<SVGSVGElement> & { size?: number }>;
-  tone: 'emerald' | 'cyan' | 'violet' | 'gold' | 'neutral';
+  tone: 'emerald' | 'cyan' | 'violet' | 'warning' | 'neutral';
   hint?: string;
 };
 
@@ -41,7 +41,7 @@ const KPI_DATA: KpiItem[] = [
   { label: 'Preço médio/m²', value: 'R$ 7.200', icon: MapPin, tone: 'violet', hint: 'média nacional' },
   { label: 'Bairros monitorados', value: '24', icon: Activity, tone: 'neutral', hint: 'em 6 cidades' },
   { label: 'Imóveis ativos', value: '1.847', icon: Building2, tone: 'cyan', hint: 'ativos agora' },
-  { label: 'Confiança dos dados', value: '94%', icon: ShieldCheck, tone: 'gold', hint: 'índice de qualidade' },
+  { label: 'Confiança dos dados', value: '94%', icon: ShieldCheck, tone: 'warning', hint: 'índice de qualidade' },
 ];
 
 /* ── Demo series for charts (this view has no backend fetch of its own) ── */

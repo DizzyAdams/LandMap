@@ -140,7 +140,7 @@ function KpisPageInner() {
                   thresholds={[
                     { min: 85, tone: 'emerald' },
                     { min: 70, tone: 'cyan' },
-                    { min: 0, tone: 'gold' },
+                    { min: 0, tone: 'warning' },
                   ]}
                   hint={t('confidenceHint')}
                 />

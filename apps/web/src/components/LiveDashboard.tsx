@@ -67,9 +67,9 @@ function RulerGauge({ score, label, color }: { score: number; label: string; col
 }
 
 const RULER_COLORS: Record<string, string> = {
-  claude: '#34d399',
-  jpmorgan: '#60a5fa',
-  quantum: '#c084fc',
+  claude: 'var(--success)',
+  jpmorgan: 'var(--chart-2)',
+  quantum: 'var(--chart-3)',
 };
 
 function Pulse({ on }: { on: boolean }) {
@@ -77,7 +77,7 @@ function Pulse({ on }: { on: boolean }) {
     <span className="inline-flex items-center gap-2 text-xs text-[var(--muted-foreground)]">
       <span
         className={`h-2 w-2 rounded-full ${on ? 'bg-[var(--primary)]' : 'bg-[var(--muted-foreground)]/40'}`}
-        style={{ boxShadow: on ? '0 0 10px rgba(52,211,153,0.9)' : 'none' }}
+        style={{ boxShadow: on ? '0 0 10px color-mix(in srgb, var(--success) 60%, transparent)' : 'none' }}
       />
       {on ? 'AO VIVO' : 'conectando…'}
     </span>
@@ -168,13 +168,13 @@ export function LiveDashboard() {
             </p>
             <div className="mt-6 flex flex-wrap justify-around gap-6">
               {kpi.rulers.map((r) => (
-                <RulerGauge key={r.ruler} score={r.score} label={r.ruler} color={RULER_COLORS[r.ruler] ?? '#34d399'} />
+                <RulerGauge key={r.ruler} score={r.score} label={r.ruler} color={RULER_COLORS[r.ruler] ?? 'var(--success)'} />
               ))}
             </div>
             <div className="mt-6 space-y-3">
               {kpi.rulers.map((r) => (
                 <p key={r.ruler} className="text-sm text-[var(--muted-foreground)]">
-                  <span className="font-medium" style={{ color: RULER_COLORS[r.ruler] ?? '#34d399' }}>
+                  <span className="font-medium" style={{ color: RULER_COLORS[r.ruler] ?? 'var(--success)' }}>
                     {r.label}:
                   </span>{' '}
                   {r.commentary}

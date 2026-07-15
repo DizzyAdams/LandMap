@@ -7,7 +7,7 @@ import { Logo } from './Logo';
 import { useTranslations } from 'next-intl';
 
 const focusRing =
-  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-white';
+  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--primary)]/40 focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--background)]';
 
 const navItems: { href: string; label: string; icon: string; emBreve?: boolean }[] = [
   { href: 'regions', label: 'Regiões', icon: 'regions' },
@@ -52,8 +52,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-[100dvh] bg-[var(--background)] text-[var(--foreground)]">
-      {/* Sidebar desktop 68px — azul LandMap #003594 */}
-      <aside className="sticky top-0 hidden h-[100dvh] w-[68px] shrink-0 flex-col items-center border-r border-[var(--border)] bg-[var(--secondary)] py-4 backdrop-blur-xl md:flex">
+      {/* Sidebar desktop 68px — indigo LandMap */}
+      <aside className="sticky top-0 hidden h-[100dvh] w-[68px] shrink-0 flex-col items-center border-r border-[var(--border)] bg-[var(--sidebar)] py-4 backdrop-blur-xl md:flex">
         <Link href={`/${locale}`} aria-label="LandMap" className={`mb-6 rounded-xl p-1.5 ${focusRing}`}>
           <Logo className="h-7 w-7" />
         </Link>

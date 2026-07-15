@@ -132,7 +132,7 @@ export function NotificationCenter() {
             animate={{ opacity: 1, y: 0 }}
             exit={reduce ? undefined : { opacity: 0, y: -8 }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            className="absolute right-0 top-full z-50 mt-2 w-80 rounded-lg border border-[var(--border)] bg-[var(--surface-1)]/95 p-3 backdrop-blur-md focus-visible:outline-none"
+            className="absolute right-0 top-full z-50 mt-2 w-80 rounded-lg border border-[var(--border)] bg-[var(--card)]/95 p-3 backdrop-blur-md focus-visible:outline-none"
           >
             <div className="mb-2 flex items-center justify-between px-1">
               <p className="text-xs font-semibold uppercase tracking-wide text-[var(--foreground)]">Novos matches</p>

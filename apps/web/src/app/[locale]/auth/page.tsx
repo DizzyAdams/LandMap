@@ -195,6 +195,9 @@ export default function AuthPage() {
           {tab === 'login' && (
             <form onSubmit={onLogin} className="mt-6 space-y-4">
               <h1 className="text-2xl font-bold tracking-tight">Entrar</h1>
+              <p className="mt-1 text-sm text-[var(--muted-foreground)]">
+                Acesse a plataforma com sua conta.
+              </p>
               <Field
                 label="E-mail"
                 type="email"

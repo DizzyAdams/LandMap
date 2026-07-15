@@ -1,10 +1,8 @@
 import React from 'react';
 import { cn } from './cn';
 
-// `default` is the bioluminescent primary action; `hero` keeps an explicit,
-// opt-in high-contrast white only for rare cases (never the default).
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  variant?: 'default' | 'outline' | 'ghost' | 'hero' | 'gold';
+  variant?: 'default' | 'outline' | 'ghost' | 'hero';
   size?: 'sm' | 'md' | 'lg';
 };
 
@@ -34,9 +32,8 @@ const disabledBase: React.CSSProperties = {
   pointerEvents: 'none',
 };
 
-// Bioluminescent emerald->cyan primary; neutral ghost/outline stay on-brand.
 const variantMap: Record<
-  'default' | 'outline' | 'ghost' | 'hero' | 'gold',
+  'default' | 'outline' | 'ghost' | 'hero',
   { base: React.CSSProperties; hover: React.CSSProperties }
 > = {
   default: {
@@ -63,19 +60,6 @@ const variantMap: Record<
   hero: {
     base: { backgroundColor: 'var(--foreground)', color: 'var(--background)' },
     hover: { backgroundColor: 'var(--secondary)' },
-  },
-  // Sovereign champagne gold — premium investor / capital accent (on tokens).
-  gold: {
-    base: {
-      background: 'linear-gradient(90deg, var(--gold-soft) 0%, var(--gold) 55%, var(--gold-deep) 100%)',
-      color: '#050505',
-      boxShadow: 'var(--glow-gold)',
-    },
-    hover: {
-      background: 'linear-gradient(90deg, var(--gold-bright) 0%, var(--gold) 55%, var(--gold-deep) 100%)',
-      transform: 'translateY(-1px)',
-      boxShadow: 'var(--glow-sovereign)',
-    },
   },
 };
 
@@ -159,8 +143,6 @@ export function buttonVariants({
     ghost:
       'bg-transparent text-[var(--muted-foreground)] hover:bg-[var(--muted)] hover:text-[var(--foreground)]',
     hero: 'bg-[var(--foreground)] text-[var(--background)] hover:bg-[var(--secondary)]',
-    gold:
-      'bg-[linear-gradient(90deg,var(--gold-soft),var(--gold)_55%,var(--gold-deep))] text-[var(--bg)] shadow-[var(--glow-gold)] hover:bg-[linear-gradient(90deg,var(--gold-bright),var(--gold)_55%,var(--gold-deep))] hover:-translate-y-px hover:shadow-[var(--glow-sovereign)]',
   };
   return cn(base, sizes[size], variants[variant], className);
 }

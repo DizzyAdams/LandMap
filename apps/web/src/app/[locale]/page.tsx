@@ -1,13 +1,15 @@
 'use client';
 
 import Link from 'next/link';
+import { useLocale } from 'next-intl';
 import { buttonVariants, cn } from '@landmap/ui/server';
 
 export default function LocaleHomePage() {
+  const locale = useLocale();
   return (
     <main className="relative flex min-h-[100dvh] flex-col items-center justify-center overflow-hidden px-6 text-center text-[var(--foreground)]">
       <Link
-        href="./onboarding"
+        href={`/${locale}/onboarding`}
         className="absolute right-4 top-4 text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)] animate-in fade-in duration-500"
       >
         Pular
@@ -24,13 +26,13 @@ export default function LocaleHomePage() {
 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3 opacity-0 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-300">
           <Link
-            href="./onboarding"
+            href={`/${locale}/onboarding`}
             className={cn(buttonVariants({ variant: 'default' }), 'group h-12 px-6 rounded-full')}
           >
             Continuar
           </Link>
           <Link
-            href="./auth"
+            href={`/${locale}/auth`}
             className={cn(buttonVariants({ variant: 'outline' }), 'group h-12 px-6 rounded-full')}
           >
             Já tenho conta

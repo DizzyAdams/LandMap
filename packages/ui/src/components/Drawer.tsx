@@ -96,7 +96,7 @@ export function Drawer({
         >
           <motion.div
             aria-hidden
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-[var(--background)]/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -111,7 +111,7 @@ export function Drawer({
             exit={{ x }}
             transition={{ type: 'tween', duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
             className={cn(
-              'absolute bottom-0 top-0 flex w-[min(92vw,420px)] flex-col border-[var(--border)] bg-[var(--surface-1)]/95 backdrop-blur-xl outline-none',
+              'absolute bottom-0 top-0 flex w-[min(92vw,420px)] flex-col border-[var(--border)] bg-[var(--card)]/95 backdrop-blur-xl outline-none',
               side === 'right' ? 'right-0 border-l' : 'left-0 border-r',
               className,
             )}
