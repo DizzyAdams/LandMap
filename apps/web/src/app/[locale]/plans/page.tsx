@@ -117,8 +117,8 @@ export default function PlansPage() {
               }
             >
               {p.highlight && (
-                <span className="absolute -top-2 right-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary-foreground">
-                  MAIS POPULAR
+                <span className="absolute -top-2 right-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary-foreground">
+                  Mais popular
                 </span>
               )}
 
@@ -184,10 +184,10 @@ export default function PlansPage() {
         >
           {selectedPlan.price === 0
             ? 'Começar grátis'
-            : `Assinar ${selectedPlan.name} — R$ ${formatBRL(selectedPlan.price)}/mês`}
+            : `Assinar ${selectedPlan.name} - R$ ${formatBRL(selectedPlan.price)}/mês`}
         </button>
         <p className="mt-2 text-center text-[11px] text-foreground/40">
-          Pagamento não ativado — fluxo de demonstração.
+          Pagamento não ativado - fluxo de demonstração.
         </p>
       </div>
     </div>

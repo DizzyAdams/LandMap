@@ -28,9 +28,9 @@ function CompareInner() {
             <GitCompare className="h-4 w-4" />
             Comparação
           </p>
-          <h1 className="mt-1 text-3xl font-bold tracking-tight">Comparar imóveis</h1>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight">Comparar regiões</h1>
           <p className="mt-1 text-[var(--muted-foreground)]">
-            Diff de preço, área e quartos entre os imóveis selecionados.
+            Diff de preço por m² e faixa estimada entre regiões de terrenos.
           </p>
         </div>
         <Link
@@ -43,8 +43,8 @@ function CompareInner() {
 
       {regions.length === 0 ? (
         <EmptyState
-          title="Nenhum imóvel selecionado para comparação."
-          description="Selecione imóveis na busca para compará-los lado a lado."
+          title="Nenhuma região selecionada para comparação."
+          description="Selecione regiões em Regiões ou Favoritos para compará-las lado a lado."
         />
       ) : (
         <div className="bg-[var(--card)] border border-[var(--border)] rounded-lg">

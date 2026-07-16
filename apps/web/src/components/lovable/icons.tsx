@@ -621,16 +621,19 @@ export function LandMapWordmark({ className = '' }: { className?: string }) {
   return (
     <span
       className={`inline-flex items-center gap-2 font-display text-xl font-bold tracking-tight text-[var(--foreground)] ${className}`}
+      aria-label="LandMap"
     >
       {/* eslint-disable-next-line @next/next/no-img-element -- parity: logo estático público, sem next/image */}
       <img
         src="/landmap-logo-transparent.png"
-        alt="LandMap"
+        alt=""
         width={28}
         height={28}
         className="h-7 w-7 shrink-0 object-contain"
+        aria-hidden
       />
-      <span>
+      {/* Uma única palavra "LandMap" (sem espaço) — igual ao Lovable */}
+      <span className="whitespace-nowrap">
         Land<span className="text-[var(--primary)]">Map</span>
       </span>
     </span>

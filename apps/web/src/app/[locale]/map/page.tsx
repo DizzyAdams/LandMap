@@ -251,7 +251,7 @@ function MapPageInner() {
     <main className="mx-auto flex min-h-screen max-w-7xl flex-col bg-background px-4 pb-28 pt-6">
       <header className="flex items-center justify-between">
         <Link
-          href={lh('/market')}
+          href={lh('/plans')}
           aria-label="Voltar"
           className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
         >

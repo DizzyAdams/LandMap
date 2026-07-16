@@ -40,7 +40,7 @@ const KPI_DATA: KpiItem[] = [
   { label: 'Valorização média', value: '↑ 2,4%', icon: TrendingUp, tone: 'emerald', hint: 'vs. mês anterior' },
   { label: 'Preço médio/m²', value: 'R$ 7.200', icon: MapPin, tone: 'violet', hint: 'média nacional' },
   { label: 'Bairros monitorados', value: '24', icon: Activity, tone: 'neutral', hint: 'em 6 cidades' },
-  { label: 'Imóveis ativos', value: '1.847', icon: Building2, tone: 'cyan', hint: 'ativos agora' },
+  { label: 'Terrenos ativos', value: '1.847', icon: Building2, tone: 'cyan', hint: 'ativos agora' },
   { label: 'Confiança dos dados', value: '94%', icon: ShieldCheck, tone: 'warning', hint: 'índice de qualidade' },
 ];
 
@@ -59,9 +59,9 @@ const RECENT: RegionRow[] = [
 ];
 
 const DISTRIBUTION = [
-  { label: 'Residencial', pct: 62 },
-  { label: 'Comercial', pct: 24 },
-  { label: 'Industrial', pct: 14 },
+  { label: 'Terreno urbano', pct: 58 },
+  { label: 'Terreno misto', pct: 27 },
+  { label: 'Terreno rural', pct: 15 },
 ];
 
 function DashboardPageInner() {

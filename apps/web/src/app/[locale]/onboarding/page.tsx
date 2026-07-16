@@ -79,18 +79,7 @@ export default function OnboardingPage() {
           </h1>
           <p className="mt-4 max-w-sm text-base text-foreground/60">{slide.body}</p>
         </div>
-        {/* Hidden SEO container so crawlers see all slide copy */}
-        <div className="hidden" aria-hidden="true">
-          {SLIDES.map((s, n) =>
-            n === i ? null : (
-              <div key={s.title}>
-                <h2>{s.title}</h2>
-                <p>{s.body}</p>
-              </div>
-            )
-          )}
-          <span>Ver planos</span>
-        </div>
+        {/* Sem dump SEO de todos os slides — Lovable só renderiza o slide ativo. */}
       </main>
 
       <div

@@ -40,7 +40,7 @@ function AdminDashboardPageInner() {
   const cards = stats
     ? [
         {
-          label: 'Total de Imóveis',
+          label: 'Total de Terrenos',
           value: stats.totalProperties,
           sub: `${stats.totalAvailable} disponíveis · ${stats.totalSold} vendidos`,
           color: 'border-l-[var(--primary)]',
