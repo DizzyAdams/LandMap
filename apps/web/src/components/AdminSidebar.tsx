@@ -38,7 +38,7 @@ export function AdminSidebar() {
 
   const links: { href: string; icon: IconKey; label: string }[] = [
     { href: `/${locale}/admin`, icon: 'dashboard', label: 'Dashboard' },
-    { href: `/${locale}/admin/properties`, icon: 'properties', label: 'Imóveis' },
+    { href: `/${locale}/admin/properties`, icon: 'properties', label: 'Terrenos' },
     { href: `/${locale}/admin/leads`, icon: 'leads', label: 'Leads' },
     { href: `/${locale}/admin/analytics`, icon: 'analytics', label: 'Analytics' },
     { href: `/${locale}/admin/exports`, icon: 'exports', label: 'Exportações' },

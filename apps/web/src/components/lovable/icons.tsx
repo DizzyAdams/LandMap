@@ -632,7 +632,6 @@ export function LandMapWordmark({ className = '' }: { className?: string }) {
         className="h-7 w-7 shrink-0 object-contain"
         aria-hidden
       />
-      {/* Uma única palavra "LandMap" (sem espaço) — igual ao Lovable */}
       <span className="whitespace-nowrap">
         Land<span className="text-[var(--primary)]">Map</span>
       </span>
