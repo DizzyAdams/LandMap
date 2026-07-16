@@ -97,6 +97,10 @@ const searchInput = z.object({
   modality: z.preprocess(emptyToUndef, z.enum(['venda', 'aluguel', 'lancamento']).optional()),
   city: z.preprocess(emptyToUndef, z.string().optional()),
   state: z.preprocess(emptyToUndef, z.string().optional()),
+  /** Investment grade filter (schema v2 seed). */
+  grade: z.preprocess(emptyToUndef, z.enum(['A', 'B', 'C', 'D', 'F']).optional()),
+  minScore: z.preprocess(emptyToUndef, z.coerce.number().min(0).max(100).optional()),
+  minCapRate: z.preprocess(emptyToUndef, z.coerce.number().min(0).max(1).optional()),
 });
 
 type SearchInput = z.infer<typeof searchInput>;
@@ -104,11 +108,23 @@ type SearchInput = z.infer<typeof searchInput>;
 function applySearchFilters(query: SearchInput) {
   const term = (query.q ?? query.query ?? '').toLowerCase();
   return allProperties.filter((item) => {
+    const row = item as PropertyRecord & {
+      grade?: string;
+      score?: number;
+      capRate?: number;
+      invest?: { grade?: string; score?: number; capRate?: number };
+    };
     if (term && !item.title.toLowerCase().includes(term)) return false;
     if (query.type && item.type !== query.type) return false;
     if (query.modality && item.modality !== query.modality) return false;
     if (query.city && item.city.toLowerCase() !== query.city.toLowerCase()) return false;
     if (query.state && item.state.toLowerCase() !== query.state.toLowerCase()) return false;
+    const grade = row.grade ?? row.invest?.grade;
+    const score = row.score ?? row.invest?.score;
+    const cap = row.capRate ?? row.invest?.capRate;
+    if (query.grade && grade !== query.grade) return false;
+    if (query.minScore != null && (score == null || score < query.minScore)) return false;
+    if (query.minCapRate != null && (cap == null || cap < query.minCapRate)) return false;
     return true;
   });
 }

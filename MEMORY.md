@@ -71,7 +71,7 @@ Stack mono-repo pnpm. Licença MIT.
 | App web (19 rotas + APIs) | ✅ build/typecheck/lint/testes verdes |
 | **Spec LandMap (azul #003594, claro) — ⚠️ RETIRADO em 2026-07-13/14 (substituído pelo indigo Lovable, ver DESIGN.md)** | ✅ **commit `d8521c5` + deploy `landmapprod-3iwouhmy0` (alias `landmapprod.vercel.app`) READY** (histórico) |
 | AppShell autenticado + /onboarding + /regions | ✅ commit `d8521c5` |
-| Dataset | ✅ 1.500 imóveis reais + 1.500 markdowns (10 cidades) |
+| Dataset | ✅ 3.000 imóveis sintéticos calibrados + 3.000 markdowns schema v2 (20 cidades, ≥54% terrenos, grades A–F) |
 | Sales cockpit (6 agentes) | ✅ feature completa + commit `975170d` |
 | Redesign "Sovereign Cadastre" | ✅ commit `8f9c073` (removeu AI-slop) |
 | 404 de routing/locale | ✅ RESOLVIDO commit `71da3f0` (middleware p/ `src/`) |
@@ -96,7 +96,7 @@ Workspace (`pnpm-workspace.yaml`): `packages/*` + `apps/*`.
 - **`@landmap/api`** — API REST em Hono + Zod (`/health`, `/markdowns`, `/search`,
   `/analyze`, `/cities`, `/stats`, `/compare`, `/favorites`, `/properties`,
   `/kpi`, `/geo/autocomplete`, `/sales/*`, `/integrations/*` (WABA + CRIE + OpenDesign + registry, mock-mode)).
-  Data-driven a partir de `packages/api/src/data/properties.json` (seed 1.500).
+  Data-driven a partir de `packages/api/src/data/properties.json` (seed 3.000 + bloco invest).
 - **`@landmap/config`** — config/env/i18n/constants compartilhados.
 - **`@landmap/db`** — schemas + tipos (`Property`, `PriceHistory`).
 - **`@landmap/gamification`** — XP, níveis, LandCoins, badges, quests, streaks, leaderboards (engine puro + UI).
@@ -223,6 +223,6 @@ Ledger de tarefas: `.hermes/todos.md`.
 
 ### Outros
 - `scripts/` — geradores/seed (`seed_properties.py`, `build_markdowns.py`, `live_dashboard.py`).
-- `data/markdowns/` — 1.500 datasets estruturados (10 categorias).
+- `data/markdowns/` — 3.000 dossiês investor-grade (schema v2: tese, cap rate, grade, comps).
 - `.n8n/` — workflows de automação (ingest, sync).
 - `.hermes/todos.md` — **ledger de tarefas** (histórico de sessões, marcos, pendências). Mantenha atualizado.
