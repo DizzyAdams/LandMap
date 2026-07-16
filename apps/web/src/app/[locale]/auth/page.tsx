@@ -4,9 +4,20 @@ import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
-import { Eye, EyeOff, LandMapWordmark, Lock, Mail, User } from '../../../components/lovable/icons';
+import { Eye, EyeOff, LandMapWordmark, Lock, Mail } from '../../../components/lovable/icons';
+import { Briefcase, Building2, Gem, TrendingUp, User } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { useMockUser } from '../../../lib/mockAuth';
+import { storeUserType, type UserType } from '../../../lib/mockAuth';
+
+/** Segmentos do mercado imobiliário — escolha obrigatória no cadastro. */
+const USER_TYPES: { id: UserType; label: string; icon: React.ReactNode; hint: string }[] = [
+  { id: 'corretor', label: 'Corretor', icon: <Briefcase size={18} />, hint: 'Comissão e carteira de clientes' },
+  { id: 'investidor', label: 'Investidor', icon: <TrendingUp size={18} />, hint: 'Valorização e ROI de terrenos' },
+  { id: 'fundo', label: 'Fundo de investimento', icon: <Gem size={18} />, hint: 'Gestão de portfólio institucional' },
+  { id: 'incorporadora', label: 'Incorporadora', icon: <Building2 size={18} />, hint: 'Aquisição e desenvolvimento' },
+  { id: 'comprador', label: 'Comprador', icon: <User size={18} />, hint: 'Busca direta de terreno' },
+];
 
 /** Ícone "G" oficial do Google (multicolor). */
 function GoogleG({ size = 18, className = '' }: { size?: number; className?: string }) {
@@ -81,7 +92,7 @@ export default function AuthPage() {
 
   const [fullName, setFullName] = useState('');
   const [phone, setPhone] = useState('');
-  const [userType, setUserType] = useState('');
+  const [userType, setUserType] = useState<UserType | ''>('');
   const [email, setEmail] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
   const [signupPwFocused, setSignupPwFocused] = useState(false);
@@ -102,10 +113,10 @@ export default function AuthPage() {
 
   const { signIn: signInGoogle } = useMockUser();
   const [googleLoading, setGoogleLoading] = useState(false);
-  const onGoogle = async () => {
+  const onGoogle = async (type?: UserType) => {
     setGoogleLoading(true);
     try {
-      await signInGoogle();
+      await signInGoogle(type);
       router.push(lh('/plans'));
     } finally {
       setGoogleLoading(false);
@@ -133,6 +144,7 @@ export default function AuthPage() {
     if (!pwLenMet || !pwSpecialMet)
       return setError('A senha precisa de ao menos 8 caracteres e 1 caractere especial.');
     setSignupLoading(true);
+    storeUserType(userType as UserType);
     window.setTimeout(() => setTab('login'), 400);
   };
 
@@ -252,26 +264,59 @@ export default function AuthPage() {
                 value={formatPhone(phone)}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <label className="block">
+              <div>
                 <span className="mb-1.5 block text-xs font-medium text-[var(--muted-foreground)]">
                   Tipo de usuário
                 </span>
-                <select
-                  value={userType}
-                  onChange={(e) => setUserType(e.target.value)}
-                  required
-                  className={fieldClass}
-                  style={{ borderColor: 'var(--border)' }}
+                <div
+                  role="radiogroup"
+                  aria-label="Tipo de usuário"
+                  className="grid grid-cols-1 gap-2 sm:grid-cols-2"
                 >
-                  <option value="" disabled>
-                    Selecione seu perfil
-                  </option>
-                  <option value="broker">Corretor</option>
-                  <option value="developer">Construtora</option>
-                  <option value="investor">Investidor</option>
-                  <option value="business">Empresário</option>
-                </select>
-              </label>
+                  {USER_TYPES.map((t) => {
+                    const active = userType === t.id;
+                    return (
+                      <button
+                        type="button"
+                        key={t.id}
+                        role="radio"
+                        aria-checked={active}
+                        onClick={() => setUserType(t.id)}
+                        className="flex items-start gap-3 rounded-lg border px-3 py-2.5 text-left transition"
+                        style={{
+                          borderColor: active ? 'var(--primary)' : 'var(--border)',
+                          background: active
+                            ? 'color-mix(in_srgb,var(--primary)_12%,transparent)'
+                            : 'var(--background)',
+                        }}
+                      >
+                        <span
+                          className="mt-0.5 grid h-9 w-9 shrink-0 place-items-center rounded-md"
+                          style={{
+                            background: active
+                              ? 'var(--primary)'
+                              : 'var(--muted)',
+                            color: active ? 'var(--primary-foreground)' : 'var(--foreground)',
+                          }}
+                        >
+                          {t.icon}
+                        </span>
+                        <span className="min-w-0">
+                          <span
+                            className="block text-sm font-semibold"
+                            style={{ color: active ? 'var(--foreground)' : 'var(--foreground)' }}
+                          >
+                            {t.label}
+                          </span>
+                          <span className="block truncate text-xs text-[var(--muted-foreground)]">
+                            {t.hint}
+                          </span>
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               <Field
                 label="E-mail"
                 type="email"
@@ -346,7 +391,7 @@ export default function AuthPage() {
                 />
           <button
             type="button"
-            onClick={onGoogle}
+            onClick={() => onGoogle(userType || undefined)}
             disabled={googleLoading}
             aria-label="Entrar com o Google (mock)"
             className="relative mt-4 inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-lg border bg-[var(--background)] text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--muted)] disabled:opacity-60"

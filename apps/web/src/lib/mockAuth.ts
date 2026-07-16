@@ -17,9 +17,38 @@ export type MockUser = {
   name: string;
   email: string;
   provider: 'google';
+  userType?: UserType;
 };
 
+export type UserType =
+  | 'corretor'
+  | 'investidor'
+  | 'fundo'
+  | 'incorporadora'
+  | 'comprador';
+
 const STORAGE_KEY = 'landmap_mock_user';
+const USER_TYPE_KEY = 'landmap_user_type';
+
+/** Persiste o segmento escolhido no cadastro (usado também sem login real). */
+export function storeUserType(type: UserType): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(USER_TYPE_KEY, type);
+  } catch {
+    /* ignore */
+  }
+}
+
+export function readUserType(): UserType | null {
+  if (typeof window === 'undefined') return null;
+  try {
+    const raw = window.localStorage.getItem(USER_TYPE_KEY);
+    return raw ? (raw as UserType) : null;
+  } catch {
+    return null;
+  }
+}
 
 const MOCK_GOOGLE_USER: MockUser = {
   id: 'google_' + Math.random().toString(36).slice(2, 10),
@@ -39,13 +68,15 @@ export function readMockUser(): MockUser | null {
 }
 
 /** Simula o popup/redirect do Google. Resolve após ~600ms com um perfil fake. */
-export function signInWithGoogleMock(): Promise<MockUser> {
+export function signInWithGoogleMock(userType?: UserType): Promise<MockUser> {
   return new Promise((resolve) => {
     setTimeout(() => {
+      const user: MockUser = { ...MOCK_GOOGLE_USER, userType };
       if (typeof window !== 'undefined') {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(MOCK_GOOGLE_USER));
+        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+        if (userType) storeUserType(userType);
       }
-      resolve(MOCK_GOOGLE_USER);
+      resolve(user);
     }, 600);
   });
 }
@@ -62,8 +93,8 @@ export function useMockUser() {
     setUser(readMockUser());
   }, []);
 
-  const signIn = useCallback(async (): Promise<MockUser> => {
-    const u = await signInWithGoogleMock();
+  const signIn = useCallback(async (userType?: UserType): Promise<MockUser> => {
+    const u = await signInWithGoogleMock(userType);
     setUser(u);
     return u;
   }, []);
