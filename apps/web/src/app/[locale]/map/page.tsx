@@ -106,6 +106,8 @@ type Property = {
 const TERRAIN_MARKER_COLOR = 'var(--primary)';
 /** Cap de markers no DOM (Leaflet) para manter FPS em datasets grandes. */
 const MAX_MAP_MARKERS = 180;
+/** Cap mobile (menos DOM = scroll/touch mais fluido). */
+const MAX_MAP_MARKERS_MOBILE = 80;
 /** Cap da lista lateral (scroll virtual leve via slice). */
 const MAX_SIDEBAR_ITEMS = 40;
 
@@ -117,6 +119,9 @@ function MapPageInner() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5_000_000);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  /** Filtros fechados no mobile por padrão (mapa em foco). */
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
@@ -131,6 +136,18 @@ function MapPageInner() {
   const [heat, setHeat] = useState<HeatPoint[]>([]);
   const [showHeat, setShowHeat] = useState(false);
   const [heatLoading, setHeatLoading] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 767px)');
+    const apply = () => {
+      setIsMobile(mq.matches);
+      // Desktop: filtros abertos; mobile: fechados
+      setFiltersOpen(!mq.matches);
+    };
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, []);
 
   useEffect(() => {
     if (!showHeat) return;
@@ -215,10 +232,11 @@ function MapPageInner() {
     };
   }, [query]);
 
-  // Filtro de preço + hard-cap (performance do Leaflet)
+  // Filtro de preço + hard-cap (performance do Leaflet; mobile mais agressivo)
+  const markerCap = isMobile ? MAX_MAP_MARKERS_MOBILE : MAX_MAP_MARKERS;
   const filteredItems = items
     .filter((item) => item.price >= minPrice && item.price <= maxPrice)
-    .slice(0, MAX_MAP_MARKERS);
+    .slice(0, markerCap);
 
   const brl = (n: number) =>
     new Intl.NumberFormat('pt-BR', {
@@ -248,52 +266,70 @@ function MapPageInner() {
   const priceTrend = [0.9, 0.94, 0.97, 1.0, 1.04, 1.08].map((k) => Math.round(avgPriceM2 * k));
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-7xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
+    <main className="mx-auto flex min-h-[100dvh] max-w-7xl flex-col bg-background px-3 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:px-4 sm:pt-6 md:pb-10">
+      <header className="sticky top-0 z-30 -mx-3 flex items-center justify-between border-b border-[var(--border)]/60 bg-background/95 px-3 py-2.5 backdrop-blur supports-[backdrop-filter]:bg-background/80 sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:py-0">
         <Link
           href={lh('/plans')}
           aria-label="Voltar"
-          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
+          className="grid h-11 w-11 place-items-center rounded-full transition hover:bg-muted active:scale-95 touch-manipulation"
         >
           <ArrowLeft className="h-4 w-4" />
         </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
+        <div className="flex flex-col items-center">
+          <LandMapWordmark />
+          <span className="mt-0.5 text-[10px] font-medium uppercase tracking-wider text-primary sm:hidden">
+            Free · terrenos
+          </span>
+        </div>
+        <button
+          type="button"
+          onClick={() => setFiltersOpen((v) => !v)}
+          aria-expanded={filtersOpen}
+          aria-controls="map-filters"
+          className={cn(
+            'grid h-11 w-11 place-items-center rounded-full border border-[var(--border)] transition active:scale-95 touch-manipulation sm:hidden',
+            filtersOpen ? 'bg-primary text-primary-foreground' : 'bg-[var(--card)] text-[var(--muted-foreground)]',
+          )}
+          aria-label={filtersOpen ? 'Fechar filtros' : 'Abrir filtros'}
+        >
+          <SlidersHorizontal className="h-4 w-4" />
+        </button>
+        <div className="hidden w-9 sm:block" />
       </header>
 
-      {/* Brand chip - bottom left */}
-      <div className="pointer-events-none fixed bottom-4 left-4 z-[999] md:bottom-6 md:left-6">
+      {/* Brand chip — desktop only */}
+      <div className="pointer-events-none fixed bottom-20 left-3 z-[500] hidden sm:bottom-6 sm:left-6 sm:block">
         <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)]/90 px-3 py-1.5 shadow-sm backdrop-blur">
           <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
-          <span className="font-display text-xs font-bold tracking-tight text-[var(--primary)]">LandMap</span>
+          <span className="font-display text-xs font-bold tracking-tight text-[var(--primary)]">LandMap Free</span>
         </div>
       </div>
 
-      {/* Loading overlay */}
       {loading && (
-        <div className="pointer-events-none fixed inset-0 z-[100] grid place-items-center">
-          <div className="flex items-center gap-2.5 rounded-full bg-[var(--card)]/90 px-5 py-2.5 text-sm font-medium text-foreground/75 shadow-sm backdrop-blur">
+        <div className="pointer-events-none fixed inset-x-0 top-[4.5rem] z-[100] flex justify-center sm:inset-0 sm:grid sm:place-items-center">
+          <div className="flex items-center gap-2.5 rounded-full bg-[var(--card)]/95 px-4 py-2 text-sm font-medium text-foreground/75 shadow-sm backdrop-blur">
             <span className="inline-block h-2 w-2 animate-ping rounded-full bg-[var(--primary)]" />
-            Carregando inteligência territorial…
+            Carregando terrenos…
           </div>
         </div>
       )}
 
-      <div className="mt-6">
+      {/* Título — compacto no mobile (mapa em foco) */}
+      <div className="mt-2 hidden sm:mt-6 sm:block">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
           <TrendingUp className="h-3 w-3" />
-          Inteligência Geoespacial
+          Inteligência Geoespacial · Free
         </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Mapa de valorização</h1>
-        <p className="mt-2 text-sm text-foreground/60">
-          Explore preços por m², ranking de regiões e heatmap de valorização no Brasil.
+        <h1 className="mt-3 text-3xl font-bold tracking-tight">Mapa de terrenos</h1>
+        <p className="mt-1 text-sm text-foreground/60">
+          Explore preços por m² e heatmap de valorização — acesso gratuito.
         </p>
       </div>
 
-      {/* KPIs do mapa — tokens semânticos da marca (indigo Lovable) */}
-      <section className="mt-6 grid grid-cols-2 gap-3 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 sm:grid-cols-4">
+      {/* KPIs: escondidos no mobile (economiza altura); 4 no desktop */}
+      <section className="mt-6 hidden grid-cols-2 gap-3 sm:grid sm:grid-cols-4">
         <Stat label="Preço médio /m²" value={brl(avgPriceM2)} />
-        <Stat label="Terrenos no mapa" value={String(filteredItems.length)} />
+        <Stat label="Terrenos" value={String(filteredItems.length)} />
         <Stat label="Valorização YoY" value="+2,4%" trend={2.4} />
         <Card className="p-5">
           <p className="text-xs text-[var(--muted-foreground)]">Confiança dos dados</p>
@@ -303,9 +339,8 @@ function MapPageInner() {
         </Card>
       </section>
 
-      {/* Painel de filtros */}
-      <Card className="mt-6 space-y-4 p-5 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
-        {/* Search input */}
+      {/* Busca sempre visível + filtros colapsáveis */}
+      <Card className="mt-2 space-y-3 p-3 sm:mt-6 sm:space-y-4 sm:p-5" id="map-filters">
         <div className="relative">
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
           <input
@@ -333,16 +368,16 @@ function MapPageInner() {
                 setActiveIdx(-1);
               }
             }}
-            placeholder="Buscar cidade, estado ou país…"
-            aria-label="Buscar localização no mundo todo"
-            className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] pl-10 pr-4 py-2.5 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)]"
+            placeholder="Buscar cidade…"
+            aria-label="Buscar cidade de terrenos"
+            className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)] py-3 pl-10 pr-4 text-base text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)] sm:py-2.5 sm:text-sm"
           />
           {suggestions.length > 0 && (
             <ul
               id="geo-suggestions"
               role="listbox"
               aria-label="Sugestões de localização"
-              className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
+              className="absolute z-40 mt-1 max-h-48 w-full overflow-auto rounded-lg border border-[var(--border)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
             >
               {suggestions.map((s, i) => (
                 <li
@@ -353,7 +388,7 @@ function MapPageInner() {
                   onMouseEnter={() => setActiveIdx(i)}
                   onClick={() => selectSuggestion(s)}
                   className={cn(
-                    'cursor-pointer px-4 py-2.5 text-sm transition',
+                    'cursor-pointer px-4 py-3 text-sm transition sm:py-2.5',
                     i === activeIdx ? 'bg-primary/10 text-primary' : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]',
                   )}
                 >
@@ -364,130 +399,106 @@ function MapPageInner() {
           )}
         </div>
 
-        {/* Radius slider */}
-        <div className="flex items-center gap-4">
-          <label className="text-xs text-[var(--muted-foreground)] w-28">Raio de busca:</label>
-          <input
-            type="range"
-            min={5}
-            max={200}
-            step={5}
-            value={radiusKm}
-            onChange={(e) => setRadiusKm(Number(e.target.value))}
-            aria-label="Raio de busca em quilômetros"
-            className="flex-1 accent-[var(--primary)]"
-          />
-          <span className="text-xs tabular-nums text-[var(--muted-foreground)] w-16 text-right">{radiusKm} km</span>
-        </div>
-
-        {/* Price range */}
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          <div className="flex items-center gap-3">
-            <label className="text-xs text-[var(--muted-foreground)]">Preço mín.:</label>
-            <input
-              type="range"
-              min={0}
-              max={5_000_000}
-              step={50_000}
-              value={minPrice}
-              onChange={(e) => setMinPrice(Number(e.target.value))}
-              aria-label="Preço mínimo"
-              className="flex-1 accent-[var(--primary)]"
-            />
-            <span className="text-xs tabular-nums text-[var(--muted-foreground)] w-24 text-right">{brlCompact(minPrice)}</span>
-          </div>
-          <div className="flex items-center gap-3">
-            <label className="text-xs text-[var(--muted-foreground)]">Preço máx.:</label>
-            <input
-              type="range"
-              min={0}
-              max={5_000_000}
-              step={50_000}
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(Number(e.target.value))}
-              aria-label="Preço máximo"
-              className="flex-1 accent-[var(--primary)]"
-            />
-            <span className="text-xs tabular-nums text-[var(--muted-foreground)] w-24 text-right">{brlCompact(maxPrice)}</span>
-          </div>
-        </div>
-
-        {/* Escopo: apenas terrenos */}
-        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-4">
-          <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
-            <Filter className="h-3.5 w-3.5" />
-            Escopo:
-          </span>
-          <span
-            className={cn(buttonVariants({ variant: 'default', size: 'sm' }))}
-            aria-current="true"
-          >
-            Terrenos
-          </span>
+        <div className="flex items-center justify-between gap-2 sm:hidden">
           <span className="text-xs text-[var(--muted-foreground)]">
-            Apenas terrenos · até {MAX_MAP_MARKERS} no mapa
+            Terrenos · até {markerCap} no mapa
           </span>
-        </div>
-
-        <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground)]">
-          <span className="flex items-center gap-1.5">
-            <span
-              className="inline-block h-2.5 w-2.5 rounded-full"
-              style={{ backgroundColor: TERRAIN_MARKER_COLOR }}
-            />
-            Terreno (preço / m²)
-          </span>
-        </div>
-
-        {/* Heatmap de preço */}
-        <div className="flex flex-wrap items-center gap-3 border-t border-[var(--border)] pt-4">
-          <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
-            <Layers className="h-3.5 w-3.5" />
-            Heatmap de preço:
-          </span>
-          <input
-            value={heatCity}
-            onChange={(e) => setHeatCity(e.target.value)}
-            aria-label="Cidade do heatmap"
-            placeholder="Cidade"
-            className="w-40 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-1.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]"
-          />
           <button
             type="button"
-            onClick={toggleHeat}
-            aria-pressed={showHeat}
-            className={cn(buttonVariants({ variant: showHeat ? 'default' : 'ghost', size: 'sm' }))}
+            onClick={() => setFiltersOpen((v) => !v)}
+            className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-medium text-primary"
           >
-            {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
+            <Filter className="h-3.5 w-3.5" />
+            {filtersOpen ? 'Ocultar filtros' : 'Filtros'}
           </button>
-          {heatLoading && <span className="text-xs text-[var(--muted-foreground)]">Carregando…</span>}
         </div>
 
-        {reverse && (
-          <div className="rounded-lg border border-[var(--border)]/60 bg-[var(--muted)] p-3 text-sm text-[var(--foreground)]">
-            <p className="font-medium text-primary">Local selecionado</p>
-            <p className="mt-1">{reverse.label}</p>
-            {reverse.pricePerM2 != null && (
-              <p className="mt-1 text-[var(--muted-foreground)]">
-                Preço/m²:{' '}
-                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(
-                  reverse.pricePerM2,
-                )}
-                {reverse.yoy != null && ` · ${reverse.yoy > 0 ? '+' : ''}${reverse.yoy}% a.a.`}
-              </p>
-            )}
-            {reverse.zoning && (
-              <p className="mt-1 text-[var(--muted-foreground)]">
-                Zona: {reverse.zoning}
-                {reverse.schools != null && ` · Escolas: ${reverse.schools}`}
-              </p>
+        {filtersOpen && (
+          <div className="space-y-4 border-t border-[var(--border)] pt-3">
+            <div className="flex items-center gap-3">
+              <label className="w-20 shrink-0 text-xs text-[var(--muted-foreground)] sm:w-28">Raio:</label>
+              <input
+                type="range"
+                min={5}
+                max={200}
+                step={5}
+                value={radiusKm}
+                onChange={(e) => setRadiusKm(Number(e.target.value))}
+                aria-label="Raio de busca em quilômetros"
+                className="h-2 flex-1 accent-[var(--primary)]"
+              />
+              <span className="w-14 text-right text-xs tabular-nums text-[var(--muted-foreground)]">{radiusKm} km</span>
+            </div>
+
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="flex items-center gap-2">
+                <label className="w-16 shrink-0 text-xs text-[var(--muted-foreground)]">Mín:</label>
+                <input
+                  type="range"
+                  min={0}
+                  max={5_000_000}
+                  step={50_000}
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(Number(e.target.value))}
+                  aria-label="Preço mínimo"
+                  className="h-2 flex-1 accent-[var(--primary)]"
+                />
+                <span className="w-20 text-right text-xs tabular-nums text-[var(--muted-foreground)]">{brlCompact(minPrice)}</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="w-16 shrink-0 text-xs text-[var(--muted-foreground)]">Máx:</label>
+                <input
+                  type="range"
+                  min={0}
+                  max={5_000_000}
+                  step={50_000}
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(Number(e.target.value))}
+                  aria-label="Preço máximo"
+                  className="h-2 flex-1 accent-[var(--primary)]"
+                />
+                <span className="w-20 text-right text-xs tabular-nums text-[var(--muted-foreground)]">{brlCompact(maxPrice)}</span>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2">
+              <span className={cn(buttonVariants({ variant: 'default', size: 'sm' }))} aria-current="true">
+                Terrenos
+              </span>
+              <span className="text-xs text-[var(--muted-foreground)]">Acesso gratuito · Free</span>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-3">
+              <Layers className="h-3.5 w-3.5 text-[var(--muted-foreground)]" />
+              <input
+                value={heatCity}
+                onChange={(e) => setHeatCity(e.target.value)}
+                aria-label="Cidade do heatmap"
+                placeholder="Cidade heatmap"
+                className="min-w-0 flex-1 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none focus:border-[var(--primary)] sm:max-w-[10rem]"
+              />
+              <button
+                type="button"
+                onClick={toggleHeat}
+                aria-pressed={showHeat}
+                className={cn(buttonVariants({ variant: showHeat ? 'default' : 'ghost', size: 'sm' }), 'min-h-10')}
+              >
+                {showHeat ? 'Ocultar heat' : 'Heatmap'}
+              </button>
+              {heatLoading && <span className="text-xs text-[var(--muted-foreground)]">…</span>}
+            </div>
+
+            {reverse && (
+              <div className="rounded-lg border border-[var(--border)]/60 bg-[var(--muted)] p-3 text-sm">
+                <p className="font-medium text-primary">Local selecionado</p>
+                <p className="mt-1">{reverse.label}</p>
+              </div>
             )}
           </div>
         )}
       </Card>
 
-      {/* Mapa + sidebar de resultados */}
-      <section className="mt-6 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">
+      <section className="mt-3 flex-1 sm:mt-6">
         <MapView
           items={filteredItems}
           loading={loading}
@@ -498,6 +509,7 @@ function MapPageInner() {
           flyToRef={flyToRef}
           heat={heat}
           showHeat={showHeat}
+          isMobile={isMobile}
         />
       </section>
     </main>
@@ -514,6 +526,7 @@ function MapView({
   flyToRef,
   heat,
   showHeat,
+  isMobile = false,
 }: {
   items: Property[];
   loading: boolean;
@@ -524,11 +537,14 @@ function MapView({
   flyToRef?: { current: ((lat: number, lng: number) => void) | null };
   heat: HeatPoint[];
   showHeat: boolean;
+  isMobile?: boolean;
 }) {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const mapInstance = useRef<any>(null);
   const markersRef = useRef<any[]>([]);
   const heatRef = useRef<any[]>([]);
+  const isMobileRef = useRef(isMobile);
+  isMobileRef.current = isMobile;
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -561,15 +577,32 @@ function MapView({
       .then((L) => {
         if (cancelled || !mapRef.current || mapInstance.current) return;
 
+        const mobile = isMobileRef.current;
         const map = L.map(mapRef.current, {
           center: [-15.7939, -47.8828],
-          zoom: 4,
-          zoomControl: true,
+          zoom: mobile ? 5 : 4,
+          zoomControl: false,
+          // Touch-friendly defaults (iOS/Android)
+          tapTolerance: 20,
+          touchZoom: true,
+          dragging: true,
+          doubleClickZoom: true,
+          scrollWheelZoom: !mobile,
+          preferCanvas: true,
         });
+
+        L.control
+          .zoom({
+            position: mobile ? 'bottomright' : 'topleft',
+          })
+          .addTo(map);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
           attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>',
-          maxZoom: 19,
+          maxZoom: 18,
+          // Menos tiles no mobile
+          updateWhenIdle: mobile,
+          keepBuffer: mobile ? 1 : 2,
         }).addTo(map);
 
         // Corrige ícones default do Leaflet (caminho de imagem quebrado em bundlers)
@@ -582,11 +615,23 @@ function MapView({
         });
 
         mapInstance.current = map;
-        setTimeout(() => map.invalidateSize(), 200);
+        // invalidateSize após layout mobile (header/filtros)
+        const fixSize = () => {
+          try {
+            map.invalidateSize({ animate: false });
+          } catch {
+            /* ignore */
+          }
+        };
+        setTimeout(fixSize, 80);
+        setTimeout(fixSize, 320);
+        window.addEventListener('resize', fixSize);
+        window.addEventListener('orientationchange', fixSize);
+        (map as any).__landmapFixSize = fixSize;
 
         if (flyToRef) {
           flyToRef.current = (lat: number, lng: number) => {
-            map.flyTo([lat, lng], 13, { duration: 0.8 });
+            map.flyTo([lat, lng], mobile ? 12 : 13, { duration: 0.65 });
           };
         }
         if (onMapClick) {
@@ -600,6 +645,11 @@ function MapView({
     return () => {
       cancelled = true;
       if (mapInstance.current) {
+        const fix = (mapInstance.current as any).__landmapFixSize;
+        if (fix) {
+          window.removeEventListener('resize', fix);
+          window.removeEventListener('orientationchange', fix);
+        }
         mapInstance.current.remove();
         mapInstance.current = null;
       }
@@ -609,6 +659,20 @@ function MapView({
     // would tear down and recreate the Leaflet instance on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Recalcula tamanho do Leaflet quando troca mobile/desktop ou reabre filtros
+  useEffect(() => {
+    const map = mapInstance.current;
+    if (!map) return;
+    const t = setTimeout(() => {
+      try {
+        map.invalidateSize({ animate: false });
+      } catch {
+        /* ignore */
+      }
+    }, 120);
+    return () => clearTimeout(t);
+  }, [isMobile, sidebarOpen]);
 
   // Markers: circleMarker em layerGroup (bem mais leve que divIcon × N)
   useEffect(() => {
@@ -639,17 +703,22 @@ function MapView({
     const fill = getComputedStyle(probe).color || 'rgb(120, 90, 224)';
     document.body.removeChild(probe);
 
-    // Cap já vem do parent; circleMarker usa path SVG nativo (rápido)
+    // Touch targets maiores no mobile (raio 9 vs 6)
+    const radius = isMobileRef.current ? 9 : 6;
+    const weight = isMobileRef.current ? 2 : 1.5;
+    const pad = isMobileRef.current ? 24 : 30;
+    const maxZ = isMobileRef.current ? 12 : 13;
+
     for (const item of items) {
       if (item.latitude == null || item.longitude == null) continue;
       const latlng: [number, number] = [item.latitude, item.longitude];
       bounds.push(latlng);
 
       const marker = L.circleMarker(latlng, {
-        radius: 6,
+        radius,
         fillColor: fill,
         color: '#fff',
-        weight: 1.5,
+        weight,
         fillOpacity: 0.9,
         opacity: 1,
       }).bindPopup(
@@ -658,6 +727,7 @@ function MapView({
           (item.areaM2
             ? `<br/>${money.format(Math.round(item.price / item.areaM2))}/m²`
             : ''),
+        { maxWidth: isMobileRef.current ? 240 : 300, autoPanPadding: [16, 16] },
       );
       group.addLayer(marker);
     }
@@ -666,7 +736,7 @@ function MapView({
     markersRef.current = [group];
 
     if (bounds.length > 0) {
-      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
+      map.fitBounds(bounds, { padding: [pad, pad], maxZoom: maxZ });
     }
   }, [items]);
 
@@ -688,14 +758,18 @@ function MapView({
       currency: 'BRL',
       maximumFractionDigits: 0,
     });
-    // Limita densidade do heatmap (perf)
-    const points = heat.length > 120 ? heat.filter((_, i) => i % Math.ceil(heat.length / 120) === 0) : heat;
+    // Limita densidade do heatmap (perf) — mais agressivo no mobile
+    const heatCap = isMobileRef.current ? 60 : 120;
+    const points =
+      heat.length > heatCap
+        ? heat.filter((_, i) => i % Math.ceil(heat.length / heatCap) === 0)
+        : heat;
 
     for (const p of points) {
       const color = weightColor(p.weight);
       group.addLayer(
         L.circleMarker([p.lat, p.lng], {
-          radius: 5 + p.weight * 14,
+          radius: (isMobileRef.current ? 4 : 5) + p.weight * (isMobileRef.current ? 10 : 14),
           fillColor: color,
           color,
           weight: 0.5,
@@ -712,20 +786,24 @@ function MapView({
   }, [heat, showHeat]);
 
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+    <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-3">
       <p className="sr-only" aria-live="polite">
         {loading
           ? 'Carregando terrenos no mapa…'
           : `${items.length} terreno${items.length === 1 ? '' : 's'} no mapa.`}
       </p>
-      <div className="lg:col-span-2 w-full">
-        <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-1">
+      <div className="w-full lg:col-span-2">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-0.5 sm:p-1">
           <div
             ref={mapRef}
             role="region"
             aria-label="Mapa de terrenos"
-            className="relative h-[360px] w-full overflow-hidden rounded-lg sm:h-[480px] lg:h-[520px]"
-            style={{ zIndex: 0 }}
+            className={cn(
+              'relative w-full overflow-hidden rounded-xl sm:rounded-lg',
+              // Mobile: mapa alto (viewport) — prioridade touch/visual
+              'h-[min(58dvh,480px)] min-h-[280px] sm:h-[480px] lg:h-[520px]',
+            )}
+            style={{ zIndex: 0, touchAction: 'pan-x pan-y' }}
           >
             {loading && (
               <div className="absolute inset-0 z-[1] flex items-center justify-center bg-[var(--card)]/60">
@@ -751,33 +829,35 @@ function MapView({
 
       <div className="lg:hidden">
         <button
+          type="button"
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'w-full')}
+          className={cn(
+            buttonVariants({ variant: 'outline', size: 'sm' }),
+            'min-h-11 w-full touch-manipulation',
+          )}
         >
           {sidebarOpen ? 'Ocultar resultados' : `Mostrar terrenos (${items.length})`}
         </button>
       </div>
 
-      <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block space-y-3`}>
+      <div className={`${sidebarOpen ? 'block' : 'hidden'} space-y-3 lg:block`}>
         <p className="text-xs text-[var(--muted-foreground)]" aria-live="polite">
           {items.length} terreno{items.length === 1 ? '' : 's'}
           {items.length > MAX_SIDEBAR_ITEMS ? ` · lista: ${MAX_SIDEBAR_ITEMS}` : ''}
         </p>
         <ul
           role="list"
-          className="grid max-h-[360px] gap-3 overflow-y-auto pr-1 sm:max-h-[480px] lg:max-h-[520px]"
+          className="grid max-h-[min(40dvh,320px)] gap-3 overflow-y-auto overscroll-contain pr-1 sm:max-h-[480px] lg:max-h-[520px]"
         >
           {items.slice(0, MAX_SIDEBAR_ITEMS).map((item) => (
             <li key={item.id}>
               <SpotlightCard>
                 <Link
                   href={`/${locale}/regions`}
-                  className="block rounded-xl p-4 transition duration-300 group-hover:-translate-y-1 group-hover:scale-[1.01]"
+                  className="block rounded-xl p-4 transition duration-300 active:scale-[0.99] group-hover:-translate-y-1 group-hover:scale-[1.01]"
                 >
                   <div className="flex items-start gap-2">
-                    <span
-                      className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--primary)]"
-                    />
+                    <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--primary)]" />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm text-[var(--muted-foreground)]">{item.title}</p>
                       <p className="mt-1 flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">

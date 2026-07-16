@@ -448,11 +448,13 @@ export default function AuthPage() {
           <button
             type="button"
             onClick={guest}
-            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg border text-sm font-semibold transition hover:bg-[var(--muted)]"
-            style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
+            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/5 text-sm font-semibold text-[var(--primary)] transition hover:bg-[var(--primary)]/10"
           >
-            Entrar sem cadastro
+            Continuar grátis — mapa de terrenos
           </button>
+          <p className="mt-2 text-center text-[11px] text-[var(--muted-foreground)]">
+            Sem cartão. Acesso Free ao mapa agora.
+          </p>
 
           <Link
             href={lh('/')}

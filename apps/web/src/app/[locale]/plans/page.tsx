@@ -14,10 +14,23 @@ type Plan = {
   price: number;
   features: string[];
   highlight?: boolean;
+  free?: boolean;
 };
 
-// Espelha a Lovable: 4 planos (Access, Plus, Pro, Business). Plus destacado; só Plus lista features.
+// Free + planos Lovable (Access/Plus/Pro/Business). Free = acesso gratuito ao mapa de terrenos.
 const PLANS: Plan[] = [
+  {
+    id: 'free',
+    name: 'LandMap Free',
+    price: 0,
+    free: true,
+    features: [
+      'Mapa de terrenos no Brasil',
+      'Preço médio por m²',
+      'Busca por cidade e região',
+      'Acesso ilimitado em modo visitante',
+    ],
+  },
   {
     id: 'access',
     name: 'LandMap Access',
@@ -62,17 +75,22 @@ export default function PlansPage() {
   const router = useRouter();
   const lh = (p: string) => `/${locale}${p}`;
 
-  const [selected, setSelected] = useState<string>('plus');
-  const selectedPlan = PLANS.find((p) => p.id === selected) ?? PLANS[1];
+  // Default: Free — acesso gratuito em destaque
+  const [selected, setSelected] = useState<string>('free');
+  const selectedPlan = PLANS.find((p) => p.id === selected) ?? PLANS[0];
 
-  const handleSelect = (id: string) => {
+  const activateFreeAndGoMap = (planId: string) => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('landmap:selected_plan', id);
-      // Demo Lovable: pagamento ainda não ativado — libera acesso free e entra no mapa de terrenos
+      localStorage.setItem('landmap:selected_plan', planId);
       signInAsGuestMock();
     }
-    // Fluxo Lovable: Assinar → cadastro/request; com free access, mapa de terrenos
     router.push(lh('/map'));
+  };
+
+  const handleSelect = (id: string) => {
+    const plan = PLANS.find((p) => p.id === id) ?? PLANS[0];
+    // Free e demo de pagamento: sempre libera sessão free + mapa de terrenos
+    activateFreeAndGoMap(plan.id);
   };
 
   return (
@@ -98,11 +116,11 @@ export default function PlansPage() {
           Comece a analisar o mercado agora
         </h1>
         <p className="mt-2 text-sm text-foreground/60">
-          Cancele quando quiser. Sem fidelidade.
+          Acesso gratuito ao mapa de terrenos. Planos pagos quando o pagamento estiver ativo.
         </p>
       </div>
 
-      <Stagger className="mt-6 flex flex-col gap-3 px-6" stagger={0.1} y={24}>
+      <Stagger className="mt-6 flex flex-col gap-3 px-6" stagger={0.08} y={20}>
         {PLANS.map((p) => {
           const isSel = p.id === selected;
           return (
@@ -116,6 +134,11 @@ export default function PlansPage() {
                   : 'relative w-full rounded-2xl border border-border p-5 text-left transition-all'
               }
             >
+              {p.free && (
+                <span className="absolute -top-2 left-4 rounded-full bg-[var(--success)] px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-[var(--primary-foreground)]">
+                  Acesso gratuito
+                </span>
+              )}
               {p.highlight && (
                 <span className="absolute -top-2 right-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary-foreground">
                   Mais popular
@@ -176,18 +199,20 @@ export default function PlansPage() {
         </Link>
       </div>
 
-      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-border bg-background/95 px-6 pb-6 pt-4 backdrop-blur">
+      <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-border bg-background/95 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur">
         <button
           type="button"
           onClick={() => handleSelect(selected)}
           className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition hover:bg-primary/90"
         >
-          {selectedPlan.price === 0
-            ? 'Começar grátis'
+          {selectedPlan.price === 0 || selectedPlan.free
+            ? 'Começar grátis — mapa de terrenos'
             : `Assinar ${selectedPlan.name} - R$ ${formatBRL(selectedPlan.price)}/mês`}
         </button>
         <p className="mt-2 text-center text-[11px] text-foreground/40">
-          Pagamento não ativado - fluxo de demonstração.
+          {selectedPlan.free
+            ? 'Sem cartão. Entra direto no mapa de terrenos.'
+            : 'Pagamento não ativado - fluxo de demonstração (libera acesso free).'}
         </p>
       </div>
     </div>

@@ -10,6 +10,7 @@ import {
   TrendingUp,
   ArrowRight,
 } from '../../../components/lovable/icons';
+import { signInAsGuestMock } from '../../../lib/mockAuth';
 
 const SLIDES = [
   {
@@ -104,15 +105,29 @@ export default function OnboardingPage() {
         ))}
       </div>
 
-      <div className="flex flex-col gap-3 px-6 pb-8">
+      <div className="flex flex-col gap-3 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
         {last ? (
-          <Link
-            href={lh('/plans')}
-            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
-          >
-            Ver planos
-            <ArrowRight className="h-4 w-4" />
-          </Link>
+          <>
+            <Link
+              href={lh('/map')}
+              className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+              onClick={() => {
+                signInAsGuestMock();
+                if (typeof window !== 'undefined') {
+                  localStorage.setItem('landmap:selected_plan', 'free');
+                }
+              }}
+            >
+              Começar grátis
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <Link
+              href={lh('/plans')}
+              className="flex w-full items-center justify-center rounded-md py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-accent hover:text-accent-foreground"
+            >
+              Ver planos
+            </Link>
+          </>
         ) : (
           <button
             type="button"

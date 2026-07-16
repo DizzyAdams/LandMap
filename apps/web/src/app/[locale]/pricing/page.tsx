@@ -6,6 +6,7 @@ import { ArrowLeft, Sparkles, Check } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge, Button } from '@landmap/ui';
 import { LandMapWordmark } from '../../../components/lovable/icons';
+import { ensureFreeAccess } from '../../../lib/mockAuth';
 
 const PLANS = [
   { name: 'Free', price: 'R$ 0', feats: ['3 alertas', '1 região', 'Mapa básico'], hl: false },
@@ -51,9 +52,21 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            <Link href={lh('/plans')} className="mt-4">
-              <Button className="w-full" variant={pl.hl ? 'default' : 'ghost'}>
-                Assinar {pl.name}
+            <Link
+              href={pl.name === 'Free' ? lh('/map') : lh('/plans')}
+              className="mt-4"
+              onClick={() => {
+                if (pl.name !== 'Free') return;
+                try {
+                  localStorage.setItem('landmap:selected_plan', 'free');
+                  ensureFreeAccess();
+                } catch {
+                  /* ignore */
+                }
+              }}
+            >
+              <Button className="w-full" variant={pl.hl || pl.name === 'Free' ? 'default' : 'ghost'}>
+                {pl.name === 'Free' ? 'Começar grátis' : `Assinar ${pl.name}`}
               </Button>
             </Link>
           </Card>

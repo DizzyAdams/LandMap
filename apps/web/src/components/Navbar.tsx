@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Button, NotificationCenter } from '@landmap/ui';
-import { useMockUser } from '../lib/mockAuth';
+import { ensureFreeAccess, useMockUser } from '../lib/mockAuth';
 import { Menu, X } from './lovable/icons';
 
 const focusRing =
@@ -17,6 +17,7 @@ const locales = [
 ];
 
 const primaryLinks = [
+  { href: 'map', labelKey: 'Mapa grátis' },
   { href: 'plans', labelKey: 'Planos' },
 ];
 
@@ -54,7 +55,6 @@ const marketLinks = [
   { href: 'workflows', labelKey: 'Fluxos' },
   { href: 'integrations', labelKey: 'Integrações' },
   { href: 'status', labelKey: 'Status' },
-  { href: 'map', labelKey: 'Mapa' },
 ];
 
 // Every navigable destination, used by the mobile sheet.
@@ -249,12 +249,28 @@ export function Navbar() {
             {user.name.charAt(0).toUpperCase()}
           </button>
         ) : (
-          <Link
-            href={`/${locale}/auth`}
-            className={`inline-flex h-9 items-center rounded-xl bg-[var(--primary)] px-3.5 text-sm font-medium text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[var(--primary)]/90 ${focusRing} max-md:hidden`}
-          >
-            Entrar
-          </Link>
+          <div className="hidden items-center gap-2 md:flex">
+            <Link
+              href={`/${locale}/map`}
+              onClick={() => {
+                ensureFreeAccess();
+                try {
+                  localStorage.setItem('landmap:selected_plan', 'free');
+                } catch {
+                  /* ignore */
+                }
+              }}
+              className={`inline-flex h-9 items-center rounded-xl bg-[var(--primary)] px-3.5 text-sm font-medium text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[var(--primary)]/90 ${focusRing}`}
+            >
+              Começar grátis
+            </Link>
+            <Link
+              href={`/${locale}/auth`}
+              className={`inline-flex h-9 items-center rounded-xl border border-[var(--border)] bg-[var(--card)] px-3 text-sm font-medium text-[var(--foreground)] transition hover:bg-[var(--muted)] ${focusRing}`}
+            >
+              Entrar
+            </Link>
+          </div>
         )}
 
         <button
@@ -292,23 +308,51 @@ export function Navbar() {
               </Link>
             );
           })}
-          <div className="mt-2 flex items-center justify-end gap-2 border-t border-[var(--border)] px-1 pt-3">
-            <span className="flex items-center gap-1">
-              {locales.map((l) => (
-                <Button
-                  key={l.code}
-                  variant={locale === l.code ? 'default' : 'ghost'}
-                  aria-label={`Mudar idioma para ${l.label}`}
-                  aria-pressed={locale === l.code}
-                  className={`!px-3 !py-1 !text-xs ${
-                    locale === l.code ? '' : 'text-[var(--muted-foreground)]'
-                  }`}
-                  onClick={() => switchLocale(l.code)}
+          <div className="mt-2 flex flex-col gap-2 border-t border-[var(--border)] px-1 pt-3">
+            {!user && (
+              <>
+                <Link
+                  href={`/${locale}/map`}
+                  onClick={() => {
+                    ensureFreeAccess();
+                    try {
+                      localStorage.setItem('landmap:selected_plan', 'free');
+                    } catch {
+                      /* ignore */
+                    }
+                    setMobileOpen(false);
+                  }}
+                  className={`inline-flex min-h-11 w-full items-center justify-center rounded-xl bg-[var(--primary)] px-3 text-sm font-semibold text-[var(--primary-foreground)] shadow-[var(--shadow-card)] ${focusRing}`}
                 >
-                  {l.label}
-                </Button>
-              ))}
-            </span>
+                  Começar grátis — mapa
+                </Link>
+                <Link
+                  href={`/${locale}/auth`}
+                  onClick={() => setMobileOpen(false)}
+                  className={`inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-[var(--border)] text-sm font-medium ${focusRing}`}
+                >
+                  Entrar / criar conta
+                </Link>
+              </>
+            )}
+            <div className="flex items-center justify-end gap-2">
+              <span className="flex items-center gap-1">
+                {locales.map((l) => (
+                  <Button
+                    key={l.code}
+                    variant={locale === l.code ? 'default' : 'ghost'}
+                    aria-label={`Mudar idioma para ${l.label}`}
+                    aria-pressed={locale === l.code}
+                    className={`!px-3 !py-1 !text-xs ${
+                      locale === l.code ? '' : 'text-[var(--muted-foreground)]'
+                    }`}
+                    onClick={() => switchLocale(l.code)}
+                  >
+                    {l.label}
+                  </Button>
+                ))}
+              </span>
+            </div>
           </div>
         </nav>
       </div>
