@@ -8,7 +8,7 @@
 > `apps/web/src/app/[locale]`. There are NO static Lovable HTML pages in production —
 > the live UI is the React app, kept 1:1 with the Lovable reference via shared tokens.
 > **Status:** 100% Lovable design system (light/indigo `oklch` tokens, DM Sans + Space
-> Grotesk + JetBrains Mono). Last audit: 2026-07-14.
+> Grotesk — mesmas 2 famílias do Lovable live; mono = system stack). Last audit: 2026-07-16.
 
 This document is the **single source of truth** for the LandMap frontend architecture
 and our **UX/UI standard**. It supersedes any older notes that mention *Geist* fonts or
@@ -33,8 +33,9 @@ in sync with this file.
   `apps/web/src/app/[locale]/...`. The React app is the live, production UI.
 - **Design-system entry** is `apps/web/src/app/globals.css` (Tailwind v4):
   - `@import "tailwindcss";` + `@source` scanning `@landmap/ui` components.
-  - `@theme` defines the three brand typefaces: `--font-sans` (**DM Sans**),
-    `--font-display` (**Space Grotesk**), `--font-mono` (**JetBrains Mono**).
+  - `@theme` defines typefaces: `--font-sans` (**DM Sans**),
+    `--font-display` (**Space Grotesk**), `--font-mono` (**system mono stack** — Lovable
+    não carrega JetBrains; paridade literal 2026-07-16).
   - `@theme inline` maps semantic color utilities (`bg-background`, `text-foreground`,
     `border-border`, `bg-primary`, …) to the `:root`/`.dark` vars below, so `.dark`
     overrides apply at runtime.
@@ -44,7 +45,7 @@ in sync with this file.
     `.eyebrow`, `.link-underline`, `.ledger-num`, `.btn-primary`, `.btn-ghost`,
     animation utilities (`animate-in`, `fade-in`, `slide-in-*`, `zoom-in-*`, `marquee-*`).
 - Root `app/layout.tsx` owns `<html>/<body>` and loads the brand fonts via a Google
-  Fonts `<link>` (DM Sans + Space Grotesk + JetBrains Mono). `[locale]/layout.tsx`
+  Fonts `<link>` (DM Sans + Space Grotesk only — Lovable parity). `[locale]/layout.tsx`
   wraps children in the locale shell (`ShellSwitch` → public vs authenticated),
   i18n providers, `ToastProvider`, `ErrorBoundary`, and the static cadastral-grid backdrop.
 
@@ -62,15 +63,14 @@ in sync with this file.
 
 ### 2.2 Fonts
 - **Fonts** are loaded with a Google Fonts `<link>` in the root layout
-  (DM Sans 400/500/600/700, Space Grotesk 500/600/700, JetBrains Mono 400/500/600).
+  (DM Sans 400/500/600/700, Space Grotesk 500/600/700 only — **literal Lovable parity**).
   `next/font` is **intentionally NOT used** — on Windows + Node 24 it crashes the ESM
   loader (`ERR_UNSUPPORTED_ESM_URL_SCHEME`). Fonts are defined as CSS variables in
   `globals.css` so `.font-sans` / `.font-display` / `.font-mono` work unchanged.
-  This matches the Lovable reference, which also loads DM Sans + Space Grotesk via a
-  Google Fonts `<link>` (`family=DM+Sans…&family=Space+Grotesk…`).
+  Lovable live loads only DM Sans + Space Grotesk (`family=DM+Sans…&family=Space+Grotesk…`).
   - `--font-sans` → **DM Sans** (body / UI text)
   - `--font-display` → **Space Grotesk** (headings / numbers / wordmark)
-  - `--font-mono` → **JetBrains Mono** (data / code / metrics)
+  - `--font-mono` → **system mono stack** (ui-monospace / SF Mono / Menlo…; no 3rd webfont)
 - **Type scale (Lovable):** display headings use Space Grotesk 600/700; body DM Sans
   400/500; small/muted text DM Sans 400 in `var(--muted-foreground)`.
 

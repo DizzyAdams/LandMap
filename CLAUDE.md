@@ -12,7 +12,7 @@
 > **PARIDADE 100% ALCANÇADA E VALIDADA** (Lovable live vs deploy prod `landmapprod` em todas as 9 rotas).
 > Regras OBRIGATÓRIAS para QUALQUER nova página/feature (kpis, alertas no mapa, etc.):
 > 1. Tokens: usar **só** `apps/web/src/app/globals.css` `:root`/`.dark` (`--primary`/`--accent`/`--muted`/`--ring`, indigo Lovable oklch hue≈265). NUNCA hardcodar hex fora dos tokens.
-> 2. Fontes: DM Sans (`--font-sans`) + Space Grotesk (`--font-display`) + JetBrains Mono (`--font-mono`) via Google Fonts `<link>` no root layout. NÃO usar `next/font`.
+> 2. Fontes: DM Sans (`--font-sans`) + Space Grotesk (`--font-display`) via Google Fonts `<link>` no root layout — **as mesmas 2 famílias do Lovable live**. `--font-mono` = system mono stack (sem JetBrains). NÃO usar `next/font`.
 > 3. Mono-dark premium (Linear/Vercel/Stripe): hierarquia forte, **zero gradientes baratos**, animações clean + `prefers-reduced-motion` safe.
 > 4. Componentes: preferir `@landmap/ui` (`Card`, `Badge`, `Button`/`buttonVariants`, `Sparkline`, `Progress`). Classes custom utilitárias (`packages/ui`): `.surface`/`.glass`/`.aurora`/`.glow-*`.
 > 5. Estrutura: rotas em `apps/web/src/app/[locale]` com prefixo locale; i18n `apps/web/messages/{pt-BR,en-US,es-ES}.json`.
@@ -71,10 +71,10 @@ O usado de fato (linhas atuais ~160): `linear-gradient(180deg,var(--text-strong)
 - `Sparkline.tsx`: default `color='#34d399'` → OK (bate com `--emerald`).
 - `Card/Badge/Input/etc.`: usam `white/5`, `neutral-*` (padrão Tailwind) em vez de tokens `--surface-1`/`--border`. Aceitável, mas idealmente consumir os tokens.
 
-## Fontes (DM Sans + Space Grotesk + JetBrains Mono)
-- Carregadas via Google Fonts `<link>` no root `app/layout.tsx` (DM Sans 400/500/600/700, Space Grotesk 500/600/700, JetBrains Mono 400/500/600). `next/font` é **intencionalmente NÃO usado** — em Windows + Node 24 quebra o loader ESM (`ERR_UNSUPPORTED_ESM_URL_SCHEME`).
-- `globals.css` define `--font-sans` (DM Sans), `--font-display` (Space Grotesk), `--font-mono` (JetBrains Mono) no `@theme`, então `.font-sans`/`.font-display`/`.font-mono` funcionam. ✅ **RESOLVIDO** (histórico): o `<html>` duplicado entre root e `[locale]` (React #423 / `HierarchyRequestError` em hidratação, detectado pelo `.bugprobe`) foi corrigido — o html/body agora é só do root `app/layout.tsx`.
-- ⚠️ O *family* anterior **Geist** (`--font-geist-sans`/`-mono`) foi **retirado em 2026-07-13/14** — a família é agora a do Lovable (DM Sans/Space Grotesk/JetBrains Mono), não Geist (ver DESIGN.md §8).
+## Fontes (DM Sans + Space Grotesk — paridade literal Lovable)
+- Carregadas via Google Fonts `<link>` no root `app/layout.tsx` (DM Sans 400/500/600/700, Space Grotesk 500/600/700). **Sem JetBrains Mono** (Lovable live só carrega 2 famílias). `next/font` é **intencionalmente NÃO usado** — em Windows + Node 24 quebra o loader ESM (`ERR_UNSUPPORTED_ESM_URL_SCHEME`).
+- `globals.css` define `--font-sans` (DM Sans), `--font-display` (Space Grotesk), `--font-mono` (system ui-monospace stack) no `@theme`. ✅ **RESOLVIDO** (histórico): o `<html>` duplicado entre root e `[locale]` (React #423 / `HierarchyRequestError` em hidratação, detectado pelo `.bugprobe`) foi corrigido — o html/body agora é só do root `app/layout.tsx`.
+- ⚠️ O *family* anterior **Geist** e o drift **JetBrains Mono** foram retirados — paridade literal Lovable = DM Sans + Space Grotesk (ver DESIGN.md).
 
 ## Classes utilitárias custom (raw CSS, funcionam sem Tailwind)
 Usadas no app (ex.: `[locale]/layout.tsx` usa `.aurora`, `.grain`): `.surface`, `.glass`, `.grid-bg`, `.aurora`, `.grain`, `.text-gradient`, `.text-aurora`, `.glow-emerald`, `.glow-dual`, `.hairline`, `.orb-float`, `.ring-spin`, `.marquee-track`. Todas são seletores CSS puros — não dependem do pipeline Tailwind.

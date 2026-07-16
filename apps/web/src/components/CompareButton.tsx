@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Check, Plus } from './lovable/icons';
 
 export function getCompareIds(): string[] {
   if (typeof window === 'undefined') return [];
@@ -39,27 +40,11 @@ export function CompareButton({ id, className }: { id: string; className?: strin
         e.stopPropagation();
         toggleCompareId(id);
       }}
-      className={`flex items-center justify-center rounded-full p-2 transition-colors ${selected ? 'bg-[var(--primary)] text-[var(--primary-foreground)]' : 'hover:bg-[var(--muted)] text-[var(--muted-foreground)]'}`}
+      className={`flex items-center justify-center rounded-full p-2 transition-colors ${selected ? 'bg-[var(--primary)] text-[var(--primary-foreground)]' : 'hover:bg-[var(--muted)] text-[var(--muted-foreground)]'} ${className ?? ''}`}
       aria-label={selected ? 'Remover da comparação' : 'Adicionar à comparação'}
       title={selected ? 'Remover da comparação' : 'Adicionar à comparação'}
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        {selected ? (
-          <path d="M20 6 9 17l-5-5" />
-        ) : (
-          <path d="M12 5v14m-7-7h14" />
-        )}
-      </svg>
+      {selected ? <Check size={16} strokeWidth={2} /> : <Plus size={16} strokeWidth={2} />}
     </button>
   );
 }

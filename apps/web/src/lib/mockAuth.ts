@@ -16,7 +16,7 @@ export type MockUser = {
   id: string;
   name: string;
   email: string;
-  provider: 'google';
+  provider: 'google' | 'email';
   userType?: UserType;
 };
 
@@ -67,17 +67,49 @@ export function readMockUser(): MockUser | null {
   }
 }
 
+function writeMockUser(user: MockUser): void {
+  if (typeof window === 'undefined') return;
+  try {
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
+    if (user.userType) storeUserType(user.userType);
+  } catch {
+    /* ignore */
+  }
+}
+
 /** Simula o popup/redirect do Google. Resolve após ~600ms com um perfil fake. */
 export function signInWithGoogleMock(userType?: UserType): Promise<MockUser> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      const user: MockUser = { ...MOCK_GOOGLE_USER, userType };
-      if (typeof window !== 'undefined') {
-        window.localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-        if (userType) storeUserType(userType);
-      }
+      const user: MockUser = {
+        ...MOCK_GOOGLE_USER,
+        id: 'google_' + Math.random().toString(36).slice(2, 10),
+        userType,
+      };
+      writeMockUser(user);
       resolve(user);
     }, 600);
+  });
+}
+
+/** Login e-mail/senha mock — grava sessão local para passar o RequireAuth. */
+export function signInWithEmailMock(opts?: {
+  email?: string;
+  name?: string;
+  userType?: UserType;
+}): Promise<MockUser> {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const user: MockUser = {
+        id: 'email_' + Math.random().toString(36).slice(2, 10),
+        name: opts?.name?.trim() || 'Usuário LandMap',
+        email: opts?.email?.trim() || 'usuario@landmap.app',
+        provider: 'email',
+        userType: opts?.userType ?? readUserType() ?? undefined,
+      };
+      writeMockUser(user);
+      resolve(user);
+    }, 400);
   });
 }
 
@@ -99,10 +131,19 @@ export function useMockUser() {
     return u;
   }, []);
 
+  const signInEmail = useCallback(
+    async (opts?: { email?: string; name?: string; userType?: UserType }): Promise<MockUser> => {
+      const u = await signInWithEmailMock(opts);
+      setUser(u);
+      return u;
+    },
+    [],
+  );
+
   const signOut = useCallback(() => {
     signOutMock();
     setUser(null);
   }, []);
 
-  return { user, signIn, signOut };
+  return { user, signIn, signInEmail, signOut };
 }

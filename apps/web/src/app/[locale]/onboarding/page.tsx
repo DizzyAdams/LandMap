@@ -40,11 +40,14 @@ export default function OnboardingPage() {
   const [i, setI] = useState(0);
   const last = i === SLIDES.length - 1;
   const Icon = SLIDES[i].icon;
+  const slide = SLIDES[i];
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
       <header className="flex items-center justify-between px-6 py-6">
         <div className="flex items-center">
+          {/* Lovable uses PNG logo — keep img for 1:1 parity */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/landmap-logo-transparent.png"
             alt="LandMap"
@@ -59,17 +62,24 @@ export default function OnboardingPage() {
         </Link>
       </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center text-center">
-        <div key={i} className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex flex-col">
-          <div className="mb-8 grid h-24 w-24 place-items-center rounded-3xl bg-primary/10">
-            <Icon className="h-11 w-11 text-primary" />
+      <main className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+        <div
+          key={i}
+          role="status"
+          aria-live="polite"
+          aria-atomic="true"
+          className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex w-full flex-col items-center"
+        >
+          {/* Icon box: fixed 96px square; icon perfectly centered via grid + CSS-sized SVG */}
+          <div className="mb-8 grid h-24 w-24 shrink-0 place-items-center rounded-3xl bg-primary/10">
+            <Icon className="h-11 w-11 text-primary" aria-hidden />
           </div>
-          <h1 className="text-3xl font-bold leading-tight tracking-tight">{SLIDES[i].title}</h1>
-          <p className="mt-4 max-w-sm text-base text-foreground/60">
-            {SLIDES[i].body}
-          </p>
+          <h1 className="text-3xl font-bold leading-tight tracking-tight">
+            {slide.title}
+          </h1>
+          <p className="mt-4 max-w-sm text-base text-foreground/60">{slide.body}</p>
         </div>
-        {/* Hidden SEO container to allow validation and search engines to find all slide content */}
+        {/* Hidden SEO container so crawlers see all slide copy */}
         <div className="hidden" aria-hidden="true">
           {SLIDES.map((s, n) =>
             n === i ? null : (
@@ -83,11 +93,18 @@ export default function OnboardingPage() {
         </div>
       </main>
 
-      <div className="mb-6 flex justify-center gap-2">
-        {SLIDES.map((_, n) => (
+      <div
+        className="mb-6 flex justify-center gap-2"
+        role="tablist"
+        aria-label="Slides do onboarding"
+      >
+        {SLIDES.map((s, n) => (
           <button
             key={n}
-            aria-label={`Ir para slide ${n + 1}`}
+            type="button"
+            role="tab"
+            aria-selected={n === i}
+            aria-label={`${s.title} (slide ${n + 1} de ${SLIDES.length})`}
             onClick={() => setI(n)}
             className={
               n === i
@@ -109,6 +126,7 @@ export default function OnboardingPage() {
           </Link>
         ) : (
           <button
+            type="button"
             onClick={() => setI((v) => Math.min(SLIDES.length - 1, v + 1))}
             className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
           >

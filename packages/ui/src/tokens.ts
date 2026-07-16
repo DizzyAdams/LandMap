@@ -124,7 +124,7 @@ export const fonts = {
   display: "'Space Grotesk', ui-sans-serif, system-ui, sans-serif",
   geistSans: "'DM Sans', ui-sans-serif, system-ui, -apple-system, sans-serif",
   geistMono:
-    "'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace",
+    "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace",
 } as const;
 
 /** Legacy export name kept stable for `@landmap/ui` consumers. */

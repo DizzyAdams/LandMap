@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { ChevronUp } from './lovable/icons';
 
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
@@ -29,19 +30,7 @@ export function ScrollToTop() {
       aria-label="Voltar ao topo"
       className="fixed bottom-6 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--card)] text-[var(--muted-foreground)] shadow-lg transition hover:bg-[var(--card)] hover:text-[var(--foreground)]"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M18 15l-6-6-6 6" />
-      </svg>
+      <ChevronUp size={18} strokeWidth={2} />
     </button>
   );
 }

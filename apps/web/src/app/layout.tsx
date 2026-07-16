@@ -6,11 +6,11 @@ import { LANDMAP_OG_IMAGE } from '../lib/og-image';
 // wraps). On this Windows + Node 24 environment, next/font's loader imports a
 // generated module by an absolute `c:\\\\...` path, which Node's ESM loader
 // rejects with ERR_UNSUPPORTED_ESM_URL_SCHEME — crashing every page render in
-// both `next dev` and `next build`. Instead we load DM Sans + Space Grotesk +
-// JetBrains Mono via a Google Fonts <link> below (the three families required by
-// the Lovable parity standard), and map them to the `--font-sans` /
-// `--font-display` / `--font-mono` CSS variables in globals.css. This is fully
-// cross-platform (also works on the Linux Vercel build).
+// both `next dev` and `next build`. Instead we load **only** DM Sans + Space
+// Grotesk via Google Fonts <link> — the same two families as Lovable
+// landmap-insight (JetBrains Mono was drift). Map them to `--font-sans` /
+// `--font-display` in globals.css; `--font-mono` uses the system mono stack.
+// Fully cross-platform (also works on the Linux Vercel build).
 
 export const dynamic = 'force-dynamic';
 
@@ -51,7 +51,7 @@ export default async function RootLayout({
         {/* eslint-disable-next-line @next/next/no-page-custom-font -- intentional: next/font (geist) crashes on Windows + Node 24 with ERR_UNSUPPORTED_ESM_URL_SCHEME; a <link> in the App Router root layout loads the font globally, not per-page. */}
         <link
           rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+          href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
         />
       </head>
       <body>{children}</body>

@@ -111,8 +111,9 @@ export default function AuthPage() {
 
   const guest = () => router.push(lh('/plans'));
 
-  const { signIn: signInGoogle } = useMockUser();
+  const { signIn: signInGoogle, signInEmail } = useMockUser();
   const [googleLoading, setGoogleLoading] = useState(false);
+  const [loginEmail, setLoginEmail] = useState('');
   const onGoogle = async (type?: UserType) => {
     setGoogleLoading(true);
     try {
@@ -124,10 +125,15 @@ export default function AuthPage() {
   };
 
 
-  const onLogin = (e: React.FormEvent) => {
+  const onLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoginLoading(true);
-    window.setTimeout(() => router.push(lh('/plans')), 400);
+    try {
+      await signInEmail({ email: loginEmail || undefined });
+      router.push(lh('/plans'));
+    } finally {
+      setLoginLoading(false);
+    }
   };
 
   const onSignup = (e: React.FormEvent) => {
@@ -215,6 +221,8 @@ export default function AuthPage() {
                 type="email"
                 autoComplete="email"
                 required
+                value={loginEmail}
+                onChange={(e) => setLoginEmail(e.target.value)}
                 icon={<Mail size={16} />}
               />
               <Field
@@ -224,14 +232,7 @@ export default function AuthPage() {
                 required
                 icon={<Lock size={16} />}
               />
-              <div className="text-right">
-                <Link
-                  href={lh('/auth?mode=recovery')}
-                  className="text-xs font-medium text-[var(--primary)] hover:underline"
-                >
-                  Esqueceu a senha?
-                </Link>
-              </div>
+              {/* Lovable ref não tem "Esqueceu a senha?" no login — omitido de propósito. */}
               <button
                 type="submit"
                 className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] text-sm font-semibold"
