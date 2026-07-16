@@ -1,14 +1,15 @@
 ﻿import type { Metadata } from 'next';
 import { getLocale } from 'next-intl/server';
+import { LANDMAP_OG_IMAGE } from '../lib/og-image';
 
 // NOTE: We intentionally do NOT use `next/font` (nor the `geist` package it
 // wraps). On this Windows + Node 24 environment, next/font's loader imports a
-// generated module by an absolute `c:\\...` path, which Node's ESM loader
+// generated module by an absolute `c:\\\\...` path, which Node's ESM loader
 // rejects with ERR_UNSUPPORTED_ESM_URL_SCHEME — crashing every page render in
-// both `next dev` and `next build`. Instead we load Inter + JetBrains Mono via
-// a Google Fonts <link> below, and define the `--font-geist-sans` /
-// `--font-geist-mono` CSS variables in globals.css so the rest of the styles
-// (body font, `.font-mono`) keep working unchanged. This is fully
+// both `next dev` and `next build`. Instead we load DM Sans + Space Grotesk +
+// JetBrains Mono via a Google Fonts <link> below (the three families required by
+// the Lovable parity standard), and map them to the `--font-sans` /
+// `--font-display` / `--font-mono` CSS variables in globals.css. This is fully
 // cross-platform (also works on the Linux Vercel build).
 
 export const dynamic = 'force-dynamic';
@@ -22,13 +23,13 @@ export const metadata: Metadata = {
     title: 'LandMap — Inteligência de terrenos',
     description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
     type: 'website',
-    images: [{ url: '/og-image.svg', width: 1200, height: 630 }],
+    images: [{ url: LANDMAP_OG_IMAGE, width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'LandMap — Inteligência de terrenos',
     description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
-    images: ['/og-image.svg'],
+    images: [LANDMAP_OG_IMAGE],
   },
 };
 

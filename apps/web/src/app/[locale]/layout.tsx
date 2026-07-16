@@ -1,4 +1,5 @@
 import { getMessages, unstable_setRequestLocale } from 'next-intl/server';
+import { LANDMAP_OG_IMAGE } from '../../lib/og-image';
 import { NextIntlClientProvider } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { ScrollToTop } from '../../components/ScrollToTop';
@@ -30,17 +31,17 @@ export async function generateMetadata({
   // Localized home title/description (1:1 with Lovable + our message files).
   const SEO: Record<string, { title: string; description: string }> = {
     'pt-BR': {
-      title: 'Conheça o LandMap',
+      title: 'LandMap — Inteligência de terrenos',
       description:
         'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
     },
     'en-US': {
-      title: 'Meet LandMap',
+      title: 'LandMap — Land intelligence',
       description:
         'LandMap: appreciation map, region ranking and price-per-m² history for smarter land decisions in Brazil.',
     },
     'es-ES': {
-      title: 'Conoce LandMap',
+      title: 'LandMap — Inteligencia de terrenos',
       description:
         'LandMap: mapa de valorización, ranking de regiones e historial de precio por m² para decisiones de terreno en Brasil.',
     },
@@ -65,7 +66,7 @@ export async function generateMetadata({
       locale: locale || 'pt-BR',
       images: [
         {
-          url: `${siteUrl}/og-image.svg`,
+          url: LANDMAP_OG_IMAGE,
           width: 1200,
           height: 630,
           alt: seo.title,
@@ -76,7 +77,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: seo.title,
       description: seo.description,
-      images: [`${siteUrl}/og-image.svg`],
+      images: [LANDMAP_OG_IMAGE],
       creator: '@landmap',
     },
     robots: {

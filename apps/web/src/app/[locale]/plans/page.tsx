@@ -15,18 +15,8 @@ type Plan = {
   highlight?: boolean;
 };
 
-// Espelha a Lovable: 4 planos (Access, Plus, Pro, Business) + plano Free. Plus destacado; só Plus lista features.
+// Espelha a Lovable: 4 planos (Access, Plus, Pro, Business). Plus destacado; só Plus lista features.
 const PLANS: Plan[] = [
-  {
-    id: 'free',
-    name: 'LandMap Free',
-    price: 0,
-    features: [
-      'Acesso ao mapa de valoração',
-      'Até 3 áreas favoritas',
-      'Comparação básica entre regiões',
-    ],
-  },
   {
     id: 'access',
     name: 'LandMap Access',

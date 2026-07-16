@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LANDMAP_OG_IMAGE } from '../../../lib/og-image';
 import { AdminSidebar } from '../../../components/AdminSidebar';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale?: string }> }): Promise<Metadata> {
@@ -13,13 +14,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
       url: `/${locale}/admin`,
       type: 'website',
       locale: locale,
-      images: [{ url: `${siteUrl}/og-image.svg`, width: 1200, height: 630, alt: 'Administração — LandMap' }],
+      images: [{ url: LANDMAP_OG_IMAGE, width: 1200, height: 630, alt: 'Administração — LandMap' }],
     },
     twitter: {
       card: 'summary_large_image',
       title: 'Administração — LandMap',
       description: 'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.',
-      images: [`${siteUrl}/og-image.svg`],
+      images: [LANDMAP_OG_IMAGE],
     },
   };
 }

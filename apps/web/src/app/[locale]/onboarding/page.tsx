@@ -71,12 +71,14 @@ export default function OnboardingPage() {
         </div>
         {/* Hidden SEO container to allow validation and search engines to find all slide content */}
         <div className="hidden" aria-hidden="true">
-          {SLIDES.map((s) => (
-            <div key={s.title}>
-              <h2>{s.title}</h2>
-              <p>{s.body}</p>
-            </div>
-          ))}
+          {SLIDES.map((s, n) =>
+            n === i ? null : (
+              <div key={s.title}>
+                <h2>{s.title}</h2>
+                <p>{s.body}</p>
+              </div>
+            )
+          )}
           <span>Ver planos</span>
         </div>
       </main>

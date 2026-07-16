@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { LANDMAP_OG_IMAGE } from '../../../lib/og-image';
 
 export async function generateMetadata({ params }: { params: Promise<{ locale?: string }> }): Promise<Metadata> {
   const { locale } = await params;
@@ -12,13 +13,13 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
       url: `/${locale}/dashboard`,
       type: 'website',
       locale: locale,
-      images: [{ url: `${siteUrl}/og-image.svg`, width: 1200, height: 630, alt: 'Mapa — LandMap' }],
+      images: [{ url: LANDMAP_OG_IMAGE, width: 1200, height: 630, alt: 'Mapa — LandMap' }],
     },
     twitter: {
       card: 'summary_large_image',
       title: 'Mapa — LandMap',
       description: 'Inteligência territorial premium: heatmap de valorização, score LandMap por região e análise em tempo real.',
-      images: [`${siteUrl}/og-image.svg`],
+      images: [LANDMAP_OG_IMAGE],
     },
   };
 }
