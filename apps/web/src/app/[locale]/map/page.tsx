@@ -3,14 +3,83 @@
 import { useState, useEffect, useRef } from 'react';
 import { RequireAuth } from '../../../components/RequireAuth';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
-import { EmptyState } from '@landmap/ui';
-import { Search, Filter, Layers } from '../../../components/lovable/icons';
-import { Reveal } from '../../../components/Motion';
+import { useLocale } from 'next-intl';
+import {
+  Card,
+  Badge,
+  Stat,
+  Progress,
+  Sparkline,
+  EmptyState,
+  buttonVariants,
+  cn,
+} from '@landmap/ui';
+import {
+  Search,
+  Filter,
+  Layers,
+  ArrowLeft,
+  MapPin,
+  SlidersHorizontal,
+  TrendingUp,
+  LandMapWordmark,
+} from '../../../components/lovable/icons';
 import { SpotlightCard } from '../../../components/SpotlightCard';
-import { searchProperties, geoAutocomplete, geoReverse, type AutocompleteSuggestion, type GeoFeature, type ReverseResult } from '../../../lib/api';
+import {
+  searchProperties,
+  geoAutocomplete,
+  geoReverse,
+  type AutocompleteSuggestion,
+  type ReverseResult,
+} from '../../../lib/api';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
+
+/* ─── Heatmap palette — resolved from the brand CSS tokens at runtime
+   (--success → --primary → --warning). No literal hex anywhere; the
+   gradient is interpolated from the same semantic colors used by the UI. ─── */
+let paletteCache:
+  | { low: [number, number, number]; mid: [number, number, number]; high: [number, number, number] }
+  | null = null;
+
+function resolvePalette() {
+  if (paletteCache) return paletteCache;
+  const resolve = (token: string): [number, number, number] => {
+    if (typeof window === 'undefined') return [120, 90, 224];
+    const probe = document.createElement('span');
+    probe.style.color = `var(${token})`;
+    probe.style.position = 'absolute';
+    probe.style.visibility = 'hidden';
+    document.body.appendChild(probe);
+    const cs = getComputedStyle(probe).color;
+    document.body.removeChild(probe);
+    const nums = (cs.match(/-?\d+(\.\d+)?/g) ?? []).map(Number);
+    if (cs.startsWith('rgb')) return [nums[0] ?? 120, nums[1] ?? 90, nums[2] ?? 224];
+    // oklch/oklab fallback (channel order varies) — normalize to rgba-ish
+    return [nums[1] ?? 120, nums[2] ?? 90, nums[3] ?? 224];
+  };
+  paletteCache = {
+    low: resolve('--success'),
+    mid: resolve('--primary'),
+    high: resolve('--warning'),
+  };
+  return paletteCache;
+}
+
+function weightColor(w: number): string {
+  const t = Math.max(0, Math.min(1, w));
+  const { low, mid, high } = resolvePalette();
+  const lerp = (a: number, b: number, k: number) => Math.round(a + (b - a) * k);
+  let rgb: [number, number, number];
+  if (t < 0.5) {
+    const k = t / 0.5;
+    rgb = [lerp(low[0], mid[0], k), lerp(low[1], mid[1], k), lerp(low[2], mid[2], k)];
+  } else {
+    const k = (t - 0.5) / 0.5;
+    rgb = [lerp(mid[0], high[0], k), lerp(mid[1], high[1], k), lerp(mid[2], high[2], k)];
+  }
+  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
+}
 
 type HeatPoint = {
   lat: number;
@@ -19,25 +88,6 @@ type HeatPoint = {
   neighborhood?: string;
   avgPrice?: number;
 };
-
-/** Interpola --success → --primary → --warning conforme o peso (0–1). */
-function weightColor(w: number): string {
-  const t = Math.max(0, Math.min(1, w));
-  // Pontos na paleta semântica da marca (rgb coincidentes com os tokens oklch de DESIGN.md §3.1).
-  const success = [45, 200, 140]; // --success
-  const primary = [78, 52, 224]; // --primary
-  const warning = [230, 180, 40]; // --warning
-  const lerp = (a: number, b: number, k: number) => Math.round(a + (b - a) * k);
-  let rgb: [number, number, number];
-  if (t < 0.5) {
-    const k = t / 0.5;
-    rgb = [lerp(success[0], primary[0], k), lerp(success[1], primary[1], k), lerp(success[2], primary[2], k)];
-  } else {
-    const k = (t - 0.5) / 0.5;
-    rgb = [lerp(primary[0], warning[0], k), lerp(primary[1], warning[1], k), lerp(primary[2], warning[2], k)];
-  }
-  return `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})`;
-}
 
 type Property = {
   id: string;
@@ -74,8 +124,8 @@ function MapPageInner() {
   const [typeFilter, setTypeFilter] = useState<'todos' | 'apartamento' | 'casa' | 'terreno' | 'comercial'>('todos');
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const params = useParams();
-  const locale = (params.locale as string) || 'pt-BR';
+  const locale = useLocale();
+  const lh = (p: string) => `/${locale}${p}`;
 
   const [suggestions, setSuggestions] = useState<AutocompleteSuggestion[]>([]);
   const [activeIdx, setActiveIdx] = useState(-1);
@@ -145,22 +195,16 @@ function MapPageInner() {
   useEffect(() => {
     let active = true;
     setLoading(true);
-    // Use the shared API client (honors NEXT_PUBLIC_LANDMAP_API_BASE) instead of a
-    // hardcoded origin so the map works in every environment.
     searchProperties({ q: query.trim() || undefined })
       .then((data) => {
         if (!active) return;
-        setItems(
-          (data?.items ?? []).filter((item) => item.latitude != null && item.longitude != null),
-        );
+        setItems((data?.items ?? []).filter((item) => item.latitude != null && item.longitude != null));
       })
       .catch(() => {
-        if (!active) return;
-        setItems([]);
+        if (active) setItems([]);
       })
       .finally(() => {
-        if (!active) return;
-        setLoading(false);
+        if (active) setLoading(false);
       });
 
     return () => {
@@ -168,24 +212,13 @@ function MapPageInner() {
     };
   }, [query]);
 
-  // Filter by price range
+  // Filter by price range + type
   const filteredItems = items.filter(
     (item) =>
       item.price >= minPrice &&
       item.price <= maxPrice &&
       (typeFilter === 'todos' || item.type === typeFilter),
   );
-
-  // KPIs do mapa — paleta semântica da marca (indigo/success/warning/chart).
-  const avgPriceM2 =
-    filteredItems.length > 0
-      ? Math.round(
-          filteredItems.reduce(
-            (sum, it) => sum + (it.areaM2 ? it.price / it.areaM2 : 0),
-            0,
-          ) / (filteredItems.filter((it) => it.areaM2).length || 1),
-        )
-      : 7200;
 
   const brl = (n: number) =>
     new Intl.NumberFormat('pt-BR', {
@@ -194,18 +227,43 @@ function MapPageInner() {
       maximumFractionDigits: 0,
     }).format(n);
 
-  const mapKpis = [
-    { label: 'Preço médio /m²', value: brl(avgPriceM2), color: 'var(--primary)' },
-    { label: 'Imóveis no mapa', value: String(filteredItems.length), color: 'var(--success)' },
-    { label: 'Valorização YoY', value: '+2,4%', color: 'var(--chart-2)' },
-    { label: 'Confiança dos dados', value: '94%', color: 'var(--warning)' },
-  ];
+  const brlCompact = (n: number) =>
+    new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits: 0,
+      notation: 'compact',
+    }).format(n);
+
+  // KPIs — paleta semântica da marca (indigo/success/warning/chart)
+  const avgPriceM2 =
+    filteredItems.length > 0
+      ? Math.round(
+          filteredItems.reduce((sum, it) => sum + (it.areaM2 ? it.price / it.areaM2 : 0), 0) /
+            (filteredItems.filter((it) => it.areaM2).length || 1),
+        )
+      : 7200;
+
+  // Decorative price-trend sparkline derived from the current average (no literal data).
+  const priceTrend = [0.9, 0.94, 0.97, 1.0, 1.04, 1.08].map((k) => Math.round(avgPriceM2 * k));
 
   return (
-    <main className="relative min-h-screen text-[var(--foreground)]">
+    <main className="mx-auto flex min-h-screen max-w-7xl flex-col bg-background px-4 pb-28 pt-6">
+      <header className="flex items-center justify-between">
+        <Link
+          href={lh('/market')}
+          aria-label="Voltar"
+          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
+        >
+          <ArrowLeft className="h-4 w-4" />
+        </Link>
+        <LandMapWordmark />
+        <div className="w-9" />
+      </header>
+
       {/* Brand chip - bottom left */}
       <div className="pointer-events-none fixed bottom-4 left-4 z-[999] md:bottom-6 md:left-6">
-        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-[var(--border)]/40 bg-[var(--card)]/90 px-3 py-1.5 shadow-sm backdrop-blur">
+        <div className="pointer-events-auto flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)]/90 px-3 py-1.5 shadow-sm backdrop-blur">
           <span className="h-2 w-2 rounded-full bg-[var(--primary)]" />
           <span className="font-display text-xs font-bold tracking-tight text-[var(--primary)]">LandMap</span>
         </div>
@@ -214,251 +272,234 @@ function MapPageInner() {
       {/* Loading overlay */}
       {loading && (
         <div className="pointer-events-none fixed inset-0 z-[100] grid place-items-center">
-          <div className="flex items-center gap-2.5 rounded-full bg-[var(--card)]/90 px-5 py-2.5 text-sm font-medium text-[var(--foreground)]/75 shadow-sm backdrop-blur">
+          <div className="flex items-center gap-2.5 rounded-full bg-[var(--card)]/90 px-5 py-2.5 text-sm font-medium text-foreground/75 shadow-sm backdrop-blur">
             <span className="inline-block h-2 w-2 animate-ping rounded-full bg-[var(--primary)]" />
             Carregando inteligência territorial…
           </div>
         </div>
       )}
 
-      <section className="mx-auto max-w-6xl px-6 py-16">
-        <Reveal>
-          <div className="flex items-end justify-between">
-            <div>
-              <div className="mb-3"><p className="text-sm font-medium text-[var(--primary)]">Inteligência Geoespacial</p></div>
-              <h1 className="text-3xl font-semibold tracking-tight text-[var(--foreground)]">Mapa mundial</h1>
-              <p className="mt-2 text-sm text-[var(--muted-foreground)]">
-                Navegue por localizações disponíveis ou refine por cidade.
-              </p>
-            </div>
-            <Link href={`/${locale}`} className="text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]">
-              Voltar para Home
-            </Link>
-          </div>
-        </Reveal>
+      <div className="mt-6">
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
+          <TrendingUp className="h-3 w-3" />
+          Inteligência Geoespacial
+        </div>
+        <h1 className="mt-3 text-3xl font-bold tracking-tight">Mapa de valorização</h1>
+        <p className="mt-2 text-sm text-foreground/60">
+          Explore preços por m², ranking de regiões e heatmap de valorização no Brasil.
+        </p>
+      </div>
 
-        {/* KPIs do mapa — tokens semânticos da marca (indigo Lovable) */}
-        <Reveal delay={0.15} className="mt-6">
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            {mapKpis.map((kpi) => (
-              <div
-                key={kpi.label}
-                className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-3"
-              >
-                <div className="flex items-center gap-2">
-                  <span
-                    className="inline-block h-2.5 w-2.5 rounded-full"
-                    style={{ backgroundColor: kpi.color }}
-                  />
-                  <span className="text-xs text-[var(--muted-foreground)]">{kpi.label}</span>
-                </div>
-                <div
-                  className="mt-1.5 font-display text-xl font-bold tabular-nums"
-                  style={{ color: kpi.color }}
-                >
-                  {kpi.value}
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.1} className="mt-8">
-          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 p-4 space-y-4">
-          {/* Search input */}
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
-            <input
-              ref={inputRef}
-              role="combobox"
-              aria-expanded={suggestions.length > 0}
-              aria-controls="geo-suggestions"
-              aria-autocomplete="list"
-              aria-activedescendant={activeIdx >= 0 ? `geo-opt-${activeIdx}` : undefined}
-              autoComplete="off"
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'ArrowDown') { e.preventDefault(); setActiveIdx((i) => Math.min(suggestions.length - 1, i + 1)); }
-                else if (e.key === 'ArrowUp') { e.preventDefault(); setActiveIdx((i) => Math.max(0, i - 1)); }
-                else if (e.key === 'Enter' && activeIdx >= 0 && suggestions[activeIdx]) { e.preventDefault(); selectSuggestion(suggestions[activeIdx]); }
-                else if (e.key === 'Escape') { setSuggestions([]); setActiveIdx(-1); }
-              }}
-              placeholder="Buscar cidade, estado ou país…"
-              aria-label="Buscar localização no mundo todo"
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] pl-10 pr-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)]"
-            />
-            {suggestions.length > 0 && (
-              <ul
-                id="geo-suggestions"
-                role="listbox"
-                aria-label="Sugestões de localização"
-                className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
-              >
-                {suggestions.map((s, i) => (
-                  <li
-                    key={s.id}
-                    id={`geo-opt-${i}`}
-                    role="option"
-                    aria-selected={i === activeIdx}
-                    onMouseEnter={() => setActiveIdx(i)}
-                    onClick={() => selectSuggestion(s)}
-                    className={`cursor-pointer px-4 py-2.5 text-sm transition ${i === activeIdx ? 'bg-[var(--primary)]/10 text-[var(--primary)]' : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'}`}
-                  >
-                    {s.label}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-
-          {/* Radius slider */}
-          <div className="flex items-center gap-4">
-            <label className="text-xs text-[var(--muted-foreground)] w-28">Raio de busca:</label>
-            <input
-              type="range"
-              min={5}
-              max={200}
-              step={5}
-              value={radiusKm}
-              onChange={(e) => setRadiusKm(Number(e.target.value))}
-              aria-label="Raio de busca em quilômetros"
-              className="flex-1 accent-[var(--primary)]"
-            />
-            <span className="text-xs text-[var(--muted-foreground)] w-16 text-right">{radiusKm} km</span>
-          </div>
-
-          {/* Price range */}
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="flex items-center gap-3">
-              <label className="text-xs text-[var(--muted-foreground)]">Preço mín.:</label>
-              <input
-                type="range"
-                min={0}
-                max={5_000_000}
-                step={50_000}
-                value={minPrice}
-                onChange={(e) => setMinPrice(Number(e.target.value))}
-                aria-label="Preço mínimo"
-                className="flex-1 accent-[var(--primary)]"
-              />
-              <span className="text-xs text-[var(--muted-foreground)] w-24 text-right">
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                  maximumFractionDigits: 0,
-                  notation: 'compact',
-                }).format(minPrice)}
-              </span>
-            </div>
-            <div className="flex items-center gap-3">
-              <label className="text-xs text-[var(--muted-foreground)]">Preço máx.:</label>
-              <input
-                type="range"
-                min={0}
-                max={5_000_000}
-                step={50_000}
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(Number(e.target.value))}
-                aria-label="Preço máximo"
-                className="flex-1 accent-[var(--primary)]"
-              />
-              <span className="text-xs text-[var(--muted-foreground)] w-24 text-right">
-                {new Intl.NumberFormat('pt-BR', {
-                  style: 'currency',
-                  currency: 'BRL',
-                  maximumFractionDigits: 0,
-                  notation: 'compact',
-                }).format(maxPrice)}
-              </span>
-            </div>
-          </div>
-
-          {/* Type filter */}
-          <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-4">
-            <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]"><Filter className="h-3.5 w-3.5" />Tipo de imóvel:</span>
-            {(['todos', 'apartamento', 'casa', 'terreno', 'comercial'] as const).map((t) => (
-              <button
-                key={t}
-                type="button"
-                onClick={() => setTypeFilter(t)}
-                aria-pressed={typeFilter === t}
-                className={`btn ${typeFilter === t ? 'btn-primary' : 'btn-ghost'} !px-3 !py-1 !text-xs capitalize`}
-              >
-                {t === 'terreno' ? '🏞️ Terreno' : t}
-              </button>
-            ))}
-          </div>
-
-          {/* Legend */}
-          <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground)]">
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.apartamento }} />
-              Apartamento
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.casa }} />
-              Casa
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.terreno }} />
-              Terreno
-            </span>
-            <span className="flex items-center gap-1.5">
-              <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.comercial }} />
-              Comercial
-            </span>
-          </div>
-
-          {/* Heatmap de preço */}
-          <div className="flex flex-wrap items-center gap-3 border-t border-[var(--border)] pt-4">
-            <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]"><Layers className="h-3.5 w-3.5" />Heatmap de preço:</span>
-            <input
-              value={heatCity}
-              onChange={(e) => setHeatCity(e.target.value)}
-              aria-label="Cidade do heatmap"
-              placeholder="Cidade"
-              className="w-40 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-1.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]"
-            />
-            <button
-              type="button"
-              onClick={toggleHeat}
-              aria-pressed={showHeat}
-              className={`btn ${showHeat ? 'btn-primary' : 'btn-ghost'} `}
-            >
-              {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
-            </button>
-            {heatLoading && <span className="text-xs text-[var(--muted-foreground)]">Carregando…</span>}
-          </div>
-
-          {reverse && (
-            <div className="rounded-lg border border-[var(--border)]/60 bg-[var(--muted)] p-3 text-sm text-[var(--foreground)]">
-              <p className="font-medium text-[var(--primary)]">Local selecionado</p>
-              <p className="mt-1">{reverse.label}</p>
-              {reverse.pricePerM2 != null && (
-                <p className="mt-1 text-[var(--muted-foreground)]">
-                  Preço/m²:{' '}
-                  {new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL',
-                    maximumFractionDigits: 0,
-                  }).format(reverse.pricePerM2)}
-                  {reverse.yoy != null && ` · ${reverse.yoy > 0 ? '+' : ''}${reverse.yoy}% a.a.`}
-                </p>
-              )}
-              {reverse.zoning && (
-                <p className="mt-1 text-[var(--muted-foreground)]">
-                  Zona: {reverse.zoning}
-                  {reverse.schools != null && ` · Escolas: ${reverse.schools}`}
-                </p>
-              )}
-            </div>
-          )}
-          </div>
-        </Reveal>
+      {/* KPIs do mapa — tokens semânticos da marca (indigo Lovable) */}
+      <section className="mt-6 grid grid-cols-2 gap-3 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 sm:grid-cols-4">
+        <Stat label="Preço médio /m²" value={brl(avgPriceM2)} />
+        <Stat label="Imóveis no mapa" value={String(filteredItems.length)} />
+        <Stat label="Valorização YoY" value="+2,4%" trend={2.4} />
+        <Card className="p-5">
+          <p className="text-xs text-[var(--muted-foreground)]">Confiança dos dados</p>
+          <p className="mt-2 text-2xl font-semibold tabular-nums text-[var(--foreground)]">94%</p>
+          <Progress value={94} className="mt-3" />
+          <Sparkline data={priceTrend} width={120} height={24} className="mt-3" aria-label="Tendência de preço" />
+        </Card>
       </section>
 
-      <section className="mx-auto max-w-6xl px-6 pb-24">
+      {/* Painel de filtros */}
+      <Card className="mt-6 space-y-4 p-5 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-150">
+        {/* Search input */}
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--muted-foreground)]" />
+          <input
+            ref={inputRef}
+            role="combobox"
+            aria-expanded={suggestions.length > 0}
+            aria-controls="geo-suggestions"
+            aria-autocomplete="list"
+            aria-activedescendant={activeIdx >= 0 ? `geo-opt-${activeIdx}` : undefined}
+            autoComplete="off"
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                setActiveIdx((i) => Math.min(suggestions.length - 1, i + 1));
+              } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                setActiveIdx((i) => Math.max(0, i - 1));
+              } else if (e.key === 'Enter' && activeIdx >= 0 && suggestions[activeIdx]) {
+                e.preventDefault();
+                selectSuggestion(suggestions[activeIdx]);
+              } else if (e.key === 'Escape') {
+                setSuggestions([]);
+                setActiveIdx(-1);
+              }
+            }}
+            placeholder="Buscar cidade, estado ou país…"
+            aria-label="Buscar localização no mundo todo"
+            className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] pl-10 pr-4 py-2.5 text-sm text-[var(--foreground)] placeholder:text-[var(--muted-foreground)] outline-none transition focus:border-[var(--primary)]"
+          />
+          {suggestions.length > 0 && (
+            <ul
+              id="geo-suggestions"
+              role="listbox"
+              aria-label="Sugestões de localização"
+              className="absolute z-20 mt-1 w-full overflow-hidden rounded-lg border border-[var(--border)] bg-[var(--card)]/95 shadow-xl backdrop-blur"
+            >
+              {suggestions.map((s, i) => (
+                <li
+                  key={s.id}
+                  id={`geo-opt-${i}`}
+                  role="option"
+                  aria-selected={i === activeIdx}
+                  onMouseEnter={() => setActiveIdx(i)}
+                  onClick={() => selectSuggestion(s)}
+                  className={cn(
+                    'cursor-pointer px-4 py-2.5 text-sm transition',
+                    i === activeIdx ? 'bg-primary/10 text-primary' : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]',
+                  )}
+                >
+                  {s.label}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        {/* Radius slider */}
+        <div className="flex items-center gap-4">
+          <label className="text-xs text-[var(--muted-foreground)] w-28">Raio de busca:</label>
+          <input
+            type="range"
+            min={5}
+            max={200}
+            step={5}
+            value={radiusKm}
+            onChange={(e) => setRadiusKm(Number(e.target.value))}
+            aria-label="Raio de busca em quilômetros"
+            className="flex-1 accent-[var(--primary)]"
+          />
+          <span className="text-xs tabular-nums text-[var(--muted-foreground)] w-16 text-right">{radiusKm} km</span>
+        </div>
+
+        {/* Price range */}
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <div className="flex items-center gap-3">
+            <label className="text-xs text-[var(--muted-foreground)]">Preço mín.:</label>
+            <input
+              type="range"
+              min={0}
+              max={5_000_000}
+              step={50_000}
+              value={minPrice}
+              onChange={(e) => setMinPrice(Number(e.target.value))}
+              aria-label="Preço mínimo"
+              className="flex-1 accent-[var(--primary)]"
+            />
+            <span className="text-xs tabular-nums text-[var(--muted-foreground)] w-24 text-right">{brlCompact(minPrice)}</span>
+          </div>
+          <div className="flex items-center gap-3">
+            <label className="text-xs text-[var(--muted-foreground)]">Preço máx.:</label>
+            <input
+              type="range"
+              min={0}
+              max={5_000_000}
+              step={50_000}
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(Number(e.target.value))}
+              aria-label="Preço máximo"
+              className="flex-1 accent-[var(--primary)]"
+            />
+            <span className="text-xs tabular-nums text-[var(--muted-foreground)] w-24 text-right">{brlCompact(maxPrice)}</span>
+          </div>
+        </div>
+
+        {/* Type filter */}
+        <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-4">
+          <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
+            <Filter className="h-3.5 w-3.5" />
+            Tipo de imóvel:
+          </span>
+          {(['todos', 'apartamento', 'casa', 'terreno', 'comercial'] as const).map((t) => (
+            <button
+              key={t}
+              type="button"
+              onClick={() => setTypeFilter(t)}
+              aria-pressed={typeFilter === t}
+              className={cn(buttonVariants({ variant: typeFilter === t ? 'default' : 'ghost', size: 'sm' }), 'capitalize')}
+            >
+              {t === 'terreno' ? 'Terreno' : t}
+            </button>
+          ))}
+        </div>
+
+        {/* Legend */}
+        <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground)]">
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.apartamento }} />
+            Apartamento
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.casa }} />
+            Casa
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.terreno }} />
+            Terreno
+          </span>
+          <span className="flex items-center gap-1.5">
+            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.comercial }} />
+            Comercial
+          </span>
+        </div>
+
+        {/* Heatmap de preço */}
+        <div className="flex flex-wrap items-center gap-3 border-t border-[var(--border)] pt-4">
+          <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
+            <Layers className="h-3.5 w-3.5" />
+            Heatmap de preço:
+          </span>
+          <input
+            value={heatCity}
+            onChange={(e) => setHeatCity(e.target.value)}
+            aria-label="Cidade do heatmap"
+            placeholder="Cidade"
+            className="w-40 rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-1.5 text-sm text-[var(--foreground)] outline-none transition focus:border-[var(--primary)]"
+          />
+          <button
+            type="button"
+            onClick={toggleHeat}
+            aria-pressed={showHeat}
+            className={cn(buttonVariants({ variant: showHeat ? 'default' : 'ghost', size: 'sm' }))}
+          >
+            {showHeat ? 'Ocultar heatmap' : 'Mostrar heatmap'}
+          </button>
+          {heatLoading && <span className="text-xs text-[var(--muted-foreground)]">Carregando…</span>}
+        </div>
+
+        {reverse && (
+          <div className="rounded-lg border border-[var(--border)]/60 bg-[var(--muted)] p-3 text-sm text-[var(--foreground)]">
+            <p className="font-medium text-primary">Local selecionado</p>
+            <p className="mt-1">{reverse.label}</p>
+            {reverse.pricePerM2 != null && (
+              <p className="mt-1 text-[var(--muted-foreground)]">
+                Preço/m²:{' '}
+                {new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 }).format(
+                  reverse.pricePerM2,
+                )}
+                {reverse.yoy != null && ` · ${reverse.yoy > 0 ? '+' : ''}${reverse.yoy}% a.a.`}
+              </p>
+            )}
+            {reverse.zoning && (
+              <p className="mt-1 text-[var(--muted-foreground)]">
+                Zona: {reverse.zoning}
+                {reverse.schools != null && ` · Escolas: ${reverse.schools}`}
+              </p>
+            )}
+          </div>
+        )}
+      </Card>
+
+      {/* Mapa + sidebar de resultados */}
+      <section className="mt-6 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 delay-300">
         <MapView
           items={filteredItems}
           loading={loading}
@@ -508,7 +549,6 @@ function MapView({
     let cancelled = false;
 
     // Carrega Leaflet (JS+CSS) dinamicamente via CDN — evita quebrar o SSR
-    // (Leaflet referencia `window` na importação estática).
     function loadLeaflet(): Promise<any> {
       return new Promise((resolve, reject) => {
         if ((window as any).L) return resolve((window as any).L);
@@ -589,7 +629,6 @@ function MapView({
     const L = (window as any).L;
     if (!L) return;
 
-    // Clear existing markers
     markersRef.current.forEach((m) => map.removeLayer(m));
     markersRef.current = [];
 
@@ -604,7 +643,6 @@ function MapView({
 
       const color = getMarkerColor(item.type);
 
-      // SVG marker icon colored by type
       const icon = L.divIcon({
         className: '',
         html: `<div style="
@@ -657,15 +695,17 @@ function MapView({
         color,
         weight: 1,
         fillOpacity: 0.45,
-      }).addTo(map).bindPopup(
-        `<strong>${p.neighborhood ?? 'Região'}</strong><br/>` +
-          `Preço médio: ${new Intl.NumberFormat('pt-BR', {
-            style: 'currency',
-            currency: 'BRL',
-            maximumFractionDigits: 0,
-          }).format(p.avgPrice ?? 0)}<br/>` +
-          `Densidade: ${Math.round((p.weight ?? 0) * 100)}%`,
-      );
+      })
+        .addTo(map)
+        .bindPopup(
+          `<strong>${p.neighborhood ?? 'Região'}</strong><br/>` +
+            `Preço médio: ${new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL',
+              maximumFractionDigits: 0,
+            }).format(p.avgPrice ?? 0)}<br/>` +
+            `Densidade: ${Math.round((p.weight ?? 0) * 100)}%`,
+        );
       heatRef.current.push(marker);
     });
   }, [heat, showHeat]);
@@ -678,12 +718,12 @@ function MapView({
           : `${items.length} imóvel${items.length === 1 ? '' : 'eis'} exibido${items.length === 1 ? '' : 's'} no mapa.`}
       </p>
       <div className="lg:col-span-2 w-full">
-        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-4 p-1">
+        <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-1">
           <div
             ref={mapRef}
             role="region"
             aria-label="Mapa de imóveis"
-            className="relative h-[360px] w-full sm:h-[480px] lg:h-[520px] overflow-hidden rounded-lg"
+            className="relative h-[360px] w-full overflow-hidden rounded-lg sm:h-[480px] lg:h-[520px]"
             style={{ zIndex: 0 }}
           >
             {loading && (
@@ -712,7 +752,7 @@ function MapView({
       <div className="lg:hidden">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
-          className="w-full rounded-xl border border-[var(--border)] bg-[var(--card)]/40 px-4 py-2.5 text-sm text-[var(--muted-foreground)] transition hover:border-[var(--border)]"
+          className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'w-full')}
         >
           {sidebarOpen ? 'Ocultar resultados' : `Mostrar resultados (${items.length})`}
         </button>
@@ -723,7 +763,10 @@ function MapView({
         <p className="text-xs text-[var(--muted-foreground)]" aria-live="polite">
           {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
         </p>
-        <ul role="list" className="grid gap-3 max-h-[360px] sm:max-h-[480px] lg:max-h-[520px] overflow-y-auto pr-1">
+        <ul
+          role="list"
+          className="grid max-h-[360px] gap-3 overflow-y-auto pr-1 sm:max-h-[480px] lg:max-h-[520px]"
+        >
           {items.map((item) => (
             <li key={`${item.latitude}-${item.longitude}-${item.id}`}>
               <SpotlightCard>
@@ -737,10 +780,14 @@ function MapView({
                       style={{ backgroundColor: getMarkerColor(item.type) }}
                     />
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm text-[var(--muted-foreground)] truncate">{item.title}</p>
-                      <p className="mt-1 text-xs text-[var(--muted-foreground)]">
+                      <p className="truncate text-sm text-[var(--muted-foreground)]">{item.title}</p>
+                      <p className="mt-1 flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
+                        <MapPin className="h-3 w-3" />
                         {item.city}, {item.state} · {item.areaM2} m²
                       </p>
+                      <Badge variant="info" className="mt-2">
+                        {item.type ?? 'imóvel'}
+                      </Badge>
                     </div>
                   </div>
                 </Link>

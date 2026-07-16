@@ -131,7 +131,7 @@ export function LiveDashboard() {
         <div className="flex items-end justify-between">
           <div>
             <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--card)] px-4 py-1 text-xs uppercase tracking-wide text-[var(--muted-foreground)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_rgba(0,53,148,0.35)]" />
+              <span className="h-1.5 w-1.5 rounded-full bg-[var(--primary)] shadow-[0_0_8px_color-mix(in_srgb,var(--primary)_35%,transparent)]" />
               Live Intelligence
             </span>
             <h1 className="mt-5 text-4xl font-semibold tracking-tight text-gradient">

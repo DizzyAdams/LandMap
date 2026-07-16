@@ -127,7 +127,7 @@ export function ScrollProgress() {
       ref={ref}
       style={{ transform: 'scaleX(0)', transformOrigin: 'left' }}
       aria-hidden
-      className="fixed left-0 top-0 z-50 h-0.5 w-full bg-[var(--primary)]/80 shadow-[0_0_12px_rgba(0,53,148,0.35)]"
+      className="fixed left-0 top-0 z-50 h-0.5 w-full bg-[var(--primary)]/80 shadow-[0_0_12px_color-mix(in_srgb,var(--primary)_35%,transparent)]"
     />
   );
 }

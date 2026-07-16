@@ -389,33 +389,33 @@ export default function AuthPage() {
                   required
                   className="mt-0.5 h-4 w-4 rounded border-[var(--border)] text-[var(--primary)]"
                 />
-          <button
-            type="button"
-            onClick={() => onGoogle(userType || undefined)}
-            disabled={googleLoading}
-            aria-label="Entrar com o Google (mock)"
-            className="relative mt-4 inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-lg border bg-[var(--background)] text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--muted)] disabled:opacity-60"
-            style={{ borderColor: 'var(--border)' }}
-          >
-            {googleLoading ? (
-              <span
-                className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]"
-                aria-hidden
-              />
-            ) : (
-              <GoogleG className="h-4 w-4" />
-            )}
-            {googleLoading ? 'Conectando…' : 'Entrar com Google'}
-          </button>
-
-
                 <span className="text-xs text-[var(--muted-foreground)]">
                   Aceito os Termos de Uso e a Política de Privacidade.
-                              </span>
+                </span>
               </label>
+
+              <button
+                type="button"
+                onClick={() => onGoogle(userType || undefined)}
+                disabled={googleLoading}
+                aria-label="Entrar com o Google (mock)"
+                className="relative mt-2 inline-flex h-11 w-full items-center justify-center gap-2.5 rounded-lg border bg-[var(--background)] text-sm font-semibold text-[var(--foreground)] transition hover:bg-[var(--muted)] disabled:opacity-60"
+                style={{ borderColor: 'var(--border)' }}
+              >
+                {googleLoading ? (
+                  <span
+                    className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]"
+                    aria-hidden
+                  />
+                ) : (
+                  <GoogleG className="h-4 w-4" />
+                )}
+                {googleLoading ? 'Conectando…' : 'Entrar com Google'}
+              </button>
+
               <button
                 type="submit"
-                className="inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] text-sm font-semibold"
+                className="mt-3 inline-flex h-11 w-full items-center justify-center rounded-lg bg-[var(--primary)] text-[var(--primary-foreground)] shadow-[var(--shadow-card)] transition hover:bg-[color:color-mix(in_srgb,var(--primary)_90%,transparent)] text-sm font-semibold"
               >
                 {signupLoading ? 'Enviando...' : 'Criar conta'}
               </button>

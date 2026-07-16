@@ -117,7 +117,7 @@ export default async function RootLayout({
       <style
         dangerouslySetInnerHTML={{
           __html:
-            ':focus-visible{outline:2px solid rgba(0,53,148,0.8);outline-offset:2px;border-radius:6px;}',
+            ':focus-visible{outline:2px solid color-mix(in srgb,var(--primary)_80%,transparent);outline-offset:2px;border-radius:6px;}',
         }}
       />
       <div className="relative min-h-[100dvh] pb-[88px] text-[var(--foreground)] antialiased md:pb-0">

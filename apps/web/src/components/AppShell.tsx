@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Logo } from './Logo';
 import { useTranslations } from 'next-intl';
 
 const focusRing =
@@ -55,7 +54,11 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Sidebar desktop 68px — indigo LandMap */}
       <aside className="sticky top-0 hidden h-[100dvh] w-[68px] shrink-0 flex-col items-center border-r border-[var(--border)] bg-[var(--sidebar)] py-4 backdrop-blur-xl md:flex">
         <Link href={`/${locale}`} aria-label="LandMap" className={`mb-6 rounded-xl p-1.5 ${focusRing}`}>
-          <Logo className="h-7 w-7" />
+          <img
+            src="/landmap-logo-transparent.png"
+            alt="LandMap"
+            className="h-6 w-auto object-contain"
+          />
         </Link>
         <nav className="flex flex-1 flex-col items-center gap-1" aria-label="Navegação do app">
           {navItems.map((item) => (

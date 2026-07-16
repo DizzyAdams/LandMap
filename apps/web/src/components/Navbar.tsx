@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Button, NotificationCenter } from '@landmap/ui';
-import { Logo } from './Logo';
 import { useMockUser } from '../lib/mockAuth';
 
 const focusRing =
@@ -119,13 +118,17 @@ export function Navbar() {
   }, [marketOpen]);
 
   return (
-    <header className="sticky top-3 z-50 mx-3 flex w-full max-w-5xl items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)]/85 px-4 py-2.5 backdrop-blur-xl [backdrop-filter:saturate(150%)] shadow-[0_8px_40px_-12px_rgba(0,53,148,0.18)] md:mx-auto">
+    <header className="sticky top-3 z-50 mx-3 flex w-full max-w-5xl items-center justify-between gap-3 rounded-2xl border border-[var(--border)] bg-[var(--card)]/85 px-4 py-2.5 backdrop-blur-xl [backdrop-filter:saturate(150%)] shadow-[0_8px_40px_-12px_color-mix(in_srgb,var(--primary)_18%,transparent)] md:mx-auto">
       <Link
         href={`/${locale}`}
         aria-label="LandMap - ir para a pÃ¡gina inicial"
         className={`group flex items-center gap-2 text-sm font-semibold tracking-tight ${focusRing}`}
       >
-        <Logo className="h-5 w-5 transition group-hover:scale-110" />
+        <img
+          src="/landmap-logo-transparent.png"
+          alt="LandMap"
+          className="h-6 w-auto object-contain transition group-hover:scale-105"
+        />
       </Link>
 
       <nav
@@ -186,7 +189,7 @@ export function Navbar() {
             <div
               role="menu"
               aria-label="Mercado"
-              className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-[var(--border)] bg-[var(--card)]/95 p-2 backdrop-blur-xl shadow-[0_24px_60px_-24px_rgba(0,53,148,0.22)]"
+              className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-2xl border border-[var(--border)] bg-[var(--card)]/95 p-2 backdrop-blur-xl shadow-[0_24px_60px_-24px_color-mix(in_srgb,var(--primary)_22%,transparent)]"
             >
               {marketLinks.map((link) => {
                 const href = `/${locale}/${link.href}`;
