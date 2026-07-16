@@ -154,12 +154,18 @@ export function computeOpportunities(
     const ppm2 = p.price / p.areaM2;
     const deltaPct = kpis.avgPricePerSqm ? round(((ppm2 - kpis.avgPricePerSqm) / kpis.avgPricePerSqm) * 100, 1) : 0;
 
-    // score composto (0..100)
+    // Prefer invest score from schema v2 dataset; fallback to heuristic
+    const investScore = p.score ?? p.invest?.score;
     let score = 50;
-    if (deltaPct < 0) score += Math.min(25, -deltaPct * 1.5);
-    score += Math.min(15, (p.tags?.length ?? 0) * 3);
-    if (p.modality === 'lancamento') score += 5;
-    score = Math.max(0, Math.min(100, round(score)));
+    if (typeof investScore === 'number' && investScore > 0) {
+      score = Math.max(0, Math.min(100, round(investScore)));
+    } else {
+      if (deltaPct < 0) score += Math.min(25, -deltaPct * 1.5);
+      score += Math.min(15, (p.tags?.length ?? 0) * 3);
+      if (p.modality === 'lancamento') score += 5;
+      score = Math.max(0, Math.min(100, round(score)));
+    }
+    const grade = (p.grade || p.invest?.grade || '').toUpperCase();
 
     const push = (type: OpportunityType, severity: OpportunitySeverity, title: string, description: string, delta?: number) => {
       const rule = rules.find((r) => r.type === type && r.enabled);
@@ -206,8 +212,14 @@ export function computeOpportunities(
     }
 
     const scoreRule = rules.find((r) => r.type === 'alto_score' && r.enabled);
-    if (scoreRule && score >= scoreRule.threshold) {
-      push('alto_score', score >= 90 ? 'alta' : 'media', 'Alto score de oportunidade', `${p.title} pontua ${score}/100 no índice LandMap.`, score);
+    if (scoreRule && (score >= scoreRule.threshold || grade === 'A' || grade === 'B')) {
+      push(
+        'alto_score',
+        grade === 'A' || score >= 90 ? 'alta' : 'media',
+        grade ? `Grade ${grade} · radar investidor` : 'Alto score de oportunidade',
+        `${p.title} pontua ${score}/100${grade ? ` (grade ${grade})` : ''} no índice LandMap.`,
+        score,
+      );
     }
 
     const quenteRule = rules.find((r) => r.type === 'zona_quente' && r.enabled);

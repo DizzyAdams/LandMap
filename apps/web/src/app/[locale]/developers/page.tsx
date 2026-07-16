@@ -8,10 +8,13 @@ import { Card, Badge, Stat } from '@landmap/ui';
 import { LandMapWordmark } from '../../../components/lovable/icons';
 
 const ENDPOINTS = [
-  { method: 'GET', path: '/api/market/heatmap', desc: 'Mapa de calor de preços por região' },
-  { method: 'GET', path: '/api/markdowns', desc: 'Markdown de imóvel por id' },
-  { method: 'POST', path: '/api/automations', desc: 'Cria uma regra de automação' },
-  { method: 'GET', path: '/api/geo', desc: 'Geocodificação e bounds' },
+  { method: 'GET', path: '/api/markdowns', desc: 'Catálogo 3000 · grade, minScore, type=terreno' },
+  { method: 'GET', path: '/api/markdowns/:id', desc: 'Dossiê asset schema v2 + comps + nearby' },
+  { method: 'GET', path: '/api/geo/autocomplete', desc: 'Type-ahead LandMap + Nominatim BR' },
+  { method: 'GET', path: '/api/geo/reverse', desc: 'Reverse + radar de ativos próximos' },
+  { method: 'GET', path: '/api/geo/nearby', desc: 'Ativos no raio (haversine, score)' },
+  { method: 'GET', path: '/api/market/heatmap', desc: 'Heatmap de preços por bairro' },
+  { method: 'GET', path: '/api/opportunities', desc: 'Radar oportunidades (grades A–B)' },
 ];
 
 export default function DevelopersPage() {
@@ -37,7 +40,7 @@ export default function DevelopersPage() {
       </div>
 
       <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Endpoints" value="4" />
+        <Stat label="Endpoints" value={String(ENDPOINTS.length)} />
         <Stat label="Cobertura" value="100%" />
         <Stat label="Latência p95" value="120ms" />
       </section>

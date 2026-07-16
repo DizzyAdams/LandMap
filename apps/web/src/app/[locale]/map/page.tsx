@@ -31,7 +31,10 @@ import {
   geoReverse,
   type AutocompleteSuggestion,
   type ReverseResult,
+  type Property as ApiProperty,
 } from '../../../lib/api';
+import { AssetDossierDrawer, AssetDossierDrawerBackdrop } from '../../../components/AssetDossierDrawer';
+import { gradeToken, propertyGrade, propertyScore } from '../../../lib/geoMath';
 
 const API_BASE = process.env.NEXT_PUBLIC_LANDMAP_API_BASE || '/api';
 
@@ -89,18 +92,7 @@ type HeatPoint = {
   avgPrice?: number;
 };
 
-type Property = {
-  id: string;
-  title: string;
-  city: string;
-  state: string;
-  price: number;
-  areaM2: number;
-  latitude?: number;
-  longitude?: number;
-  type?: string;
-  modality?: string;
-};
+type Property = ApiProperty;
 
 /** LandMap = inteligência de terrenos — cor única de marca para markers. */
 const TERRAIN_MARKER_COLOR = 'var(--primary)';
@@ -122,13 +114,26 @@ function MapPageInner() {
   /** Filtros fechados no mobile por padrão (mapa em foco). */
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  /** Filtro grade investidor: '' = todas */
+  const [gradeFilter, setGradeFilter] = useState<string>('');
+  const [minScore, setMinScore] = useState(0);
+  const [selectedAsset, setSelectedAsset] = useState<Property | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
 
   const [suggestions, setSuggestions] = useState<AutocompleteSuggestion[]>([]);
   const [activeIdx, setActiveIdx] = useState(-1);
-  const [reverse, setReverse] = useState<ReverseResult | null>(null);
+  const [reverse, setReverse] = useState<
+    (ReverseResult & {
+      landmap?: {
+        nearbyCount?: number;
+        topGradeCount?: number;
+        avgScore?: number;
+        nearby?: Array<{ id: string; title: string; grade?: string; distanceKm?: number }>;
+      };
+    }) | null
+  >(null);
   const flyToRef = useRef<((lat: number, lng: number) => void) | null>(null);
 
   /* ─── Heatmap de preço (toggle) ─── */
@@ -232,10 +237,13 @@ function MapPageInner() {
     };
   }, [query]);
 
-  // Filtro de preço + hard-cap (performance do Leaflet; mobile mais agressivo)
+  // Filtro preço + grade/score investidor + hard-cap (Leaflet)
   const markerCap = isMobile ? MAX_MAP_MARKERS_MOBILE : MAX_MAP_MARKERS;
   const filteredItems = items
     .filter((item) => item.price >= minPrice && item.price <= maxPrice)
+    .filter((item) => !gradeFilter || propertyGrade(item) === gradeFilter)
+    .filter((item) => propertyScore(item) >= minScore)
+    .sort((a, b) => propertyScore(b) - propertyScore(a))
     .slice(0, markerCap);
 
   const brl = (n: number) =>
@@ -468,6 +476,43 @@ function MapPageInner() {
               <span className="text-xs text-[var(--muted-foreground)]">Acesso gratuito · Free</span>
             </div>
 
+            <div className="space-y-2 border-t border-[var(--border)] pt-3">
+              <p className="text-xs font-medium text-[var(--muted-foreground)]">Radar investidor (grade)</p>
+              <div className="flex flex-wrap gap-1.5">
+                {(['', 'A', 'B', 'C', 'D', 'F'] as const).map((g) => (
+                  <button
+                    key={g || 'all'}
+                    type="button"
+                    onClick={() => setGradeFilter(g)}
+                    className={cn(
+                      'min-h-9 rounded-lg border px-2.5 text-xs font-semibold transition touch-manipulation',
+                      gradeFilter === g
+                        ? 'border-primary bg-primary text-primary-foreground'
+                        : 'border-[var(--border)] bg-[var(--card)] text-[var(--muted-foreground)]',
+                    )}
+                  >
+                    {g || 'Todas'}
+                  </button>
+                ))}
+              </div>
+              <div className="flex items-center gap-2">
+                <label className="w-20 shrink-0 text-xs text-[var(--muted-foreground)]">Score min</label>
+                <input
+                  type="range"
+                  min={0}
+                  max={90}
+                  step={5}
+                  value={minScore}
+                  onChange={(e) => setMinScore(Number(e.target.value))}
+                  aria-label="Score mínimo de investimento"
+                  className="h-2 flex-1 accent-[var(--primary)]"
+                />
+                <span className="w-10 text-right text-xs tabular-nums text-[var(--muted-foreground)]">
+                  {minScore}
+                </span>
+              </div>
+            </div>
+
             <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-3">
               <Layers className="h-3.5 w-3.5 text-[var(--muted-foreground)]" />
               <input
@@ -491,7 +536,13 @@ function MapPageInner() {
             {reverse && (
               <div className="rounded-lg border border-[var(--border)]/60 bg-[var(--muted)] p-3 text-sm">
                 <p className="font-medium text-primary">Local selecionado</p>
-                <p className="mt-1">{reverse.label}</p>
+                <p className="mt-1 text-[var(--foreground)]/80">{reverse.label}</p>
+                {reverse.landmap && (
+                  <p className="mt-2 text-xs text-[var(--muted-foreground)]">
+                    Radar: {reverse.landmap.nearbyCount ?? 0} ativos · {reverse.landmap.topGradeCount ?? 0}{' '}
+                    grade A/B · score médio {reverse.landmap.avgScore ?? '—'}
+                  </p>
+                )}
               </div>
             )}
           </div>
@@ -506,12 +557,16 @@ function MapPageInner() {
           setSidebarOpen={setSidebarOpen}
           locale={locale}
           onMapClick={handleMapClick}
+          onSelectAsset={setSelectedAsset}
           flyToRef={flyToRef}
           heat={heat}
           showHeat={showHeat}
           isMobile={isMobile}
         />
       </section>
+
+      <AssetDossierDrawerBackdrop open={!!selectedAsset} onClose={() => setSelectedAsset(null)} />
+      <AssetDossierDrawer asset={selectedAsset} onClose={() => setSelectedAsset(null)} locale={locale} />
     </main>
   );
 }
@@ -523,6 +578,7 @@ function MapView({
   setSidebarOpen,
   locale,
   onMapClick,
+  onSelectAsset,
   flyToRef,
   heat,
   showHeat,
@@ -534,6 +590,7 @@ function MapView({
   setSidebarOpen: (v: boolean) => void;
   locale: string;
   onMapClick?: (lat: number, lng: number) => void;
+  onSelectAsset?: (p: Property) => void;
   flyToRef?: { current: ((lat: number, lng: number) => void) | null };
   heat: HeatPoint[];
   showHeat: boolean;
@@ -545,6 +602,8 @@ function MapView({
   const heatRef = useRef<any[]>([]);
   const isMobileRef = useRef(isMobile);
   isMobileRef.current = isMobile;
+  const onSelectRef = useRef(onSelectAsset);
+  onSelectRef.current = onSelectAsset;
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -694,14 +753,25 @@ function MapView({
       maximumFractionDigits: 0,
     });
 
-    // Resolve --primary once (token, sem hex de marca no source)
-    const probe = document.createElement('span');
-    probe.style.color = 'var(--primary)';
-    probe.style.position = 'absolute';
-    probe.style.visibility = 'hidden';
-    document.body.appendChild(probe);
-    const fill = getComputedStyle(probe).color || 'rgb(120, 90, 224)';
-    document.body.removeChild(probe);
+    // Resolve tokens CSS (grade colors) — sem hex de marca no source
+    const resolveToken = (token: string, fallback: string) => {
+      const probe = document.createElement('span');
+      probe.style.color = token;
+      probe.style.position = 'absolute';
+      probe.style.visibility = 'hidden';
+      document.body.appendChild(probe);
+      const c = getComputedStyle(probe).color || fallback;
+      document.body.removeChild(probe);
+      return c;
+    };
+    const gradeFill: Record<string, string> = {
+      A: resolveToken('var(--success)', 'rgb(34, 197, 94)'),
+      B: resolveToken('var(--primary)', 'rgb(120, 90, 224)'),
+      C: resolveToken('var(--accent)', 'rgb(140, 120, 230)'),
+      D: resolveToken('var(--warning)', 'rgb(234, 179, 8)'),
+      F: resolveToken('var(--danger)', 'rgb(239, 68, 68)'),
+    };
+    const defaultFill = gradeFill.B;
 
     // Touch targets maiores no mobile (raio 9 vs 6)
     const radius = isMobileRef.current ? 9 : 6;
@@ -714,21 +784,33 @@ function MapView({
       const latlng: [number, number] = [item.latitude, item.longitude];
       bounds.push(latlng);
 
+      const g = propertyGrade(item);
+      const sc = propertyScore(item);
+      const cap = item.capRate ?? item.invest?.capRate;
+      const fill = gradeFill[g] || defaultFill;
       const marker = L.circleMarker(latlng, {
-        radius,
+        radius: g === 'A' || g === 'B' ? radius + 1.5 : radius,
         fillColor: fill,
         color: '#fff',
         weight,
-        fillOpacity: 0.9,
+        fillOpacity: 0.92,
         opacity: 1,
-      }).bindPopup(
-        `<strong>${item.title}</strong><br/>${item.city}, ${item.state}<br/>` +
+      });
+      marker.bindPopup(
+        `<strong>${item.title}</strong><br/>` +
+          `<span style="opacity:.8">Grade <b>${g}</b> · score ${Math.round(sc)}</span><br/>` +
+          `${item.city}, ${item.state}<br/>` +
           `${item.areaM2} m² &middot; ${money.format(item.price)}` +
+          (cap != null ? `<br/>Cap rate ${(cap * 100).toFixed(2)}%` : '') +
           (item.areaM2
             ? `<br/>${money.format(Math.round(item.price / item.areaM2))}/m²`
             : ''),
         { maxWidth: isMobileRef.current ? 240 : 300, autoPanPadding: [16, 16] },
       );
+      marker.on('click', (e: { originalEvent?: { stopPropagation?: () => void } }) => {
+        e.originalEvent?.stopPropagation?.();
+        onSelectRef.current?.(item);
+      });
       group.addLayer(marker);
     }
 
@@ -849,30 +931,45 @@ function MapView({
           role="list"
           className="grid max-h-[min(40dvh,320px)] gap-3 overflow-y-auto overscroll-contain pr-1 sm:max-h-[480px] lg:max-h-[520px]"
         >
-          {items.slice(0, MAX_SIDEBAR_ITEMS).map((item) => (
-            <li key={item.id}>
-              <SpotlightCard>
-                <Link
-                  href={`/${locale}/regions`}
-                  className="block rounded-xl p-4 transition duration-300 active:scale-[0.99] group-hover:-translate-y-1 group-hover:scale-[1.01]"
-                >
-                  <div className="flex items-start gap-2">
-                    <span className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--primary)]" />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm text-[var(--muted-foreground)]">{item.title}</p>
-                      <p className="mt-1 flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
-                        <MapPin className="h-3 w-3" />
-                        {item.city}, {item.state} · {item.areaM2} m²
-                      </p>
-                      <Badge variant="info" className="mt-2">
-                        Terreno
-                      </Badge>
+          {items.slice(0, MAX_SIDEBAR_ITEMS).map((item) => {
+            const g = propertyGrade(item);
+            return (
+              <li key={item.id}>
+                <SpotlightCard>
+                  <button
+                    type="button"
+                    onClick={() => onSelectRef.current?.(item)}
+                    className="w-full rounded-xl p-4 text-left transition duration-300 active:scale-[0.99] group-hover:-translate-y-1 group-hover:scale-[1.01]"
+                  >
+                    <div className="flex items-start gap-2">
+                      <span
+                        className="mt-1 inline-flex h-6 min-w-6 shrink-0 items-center justify-center rounded-md text-[10px] font-bold text-[var(--primary-foreground)]"
+                        style={{ background: gradeToken(g) }}
+                      >
+                        {g}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-sm font-medium text-[var(--foreground)]">{item.title}</p>
+                        <p className="mt-1 flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
+                          <MapPin className="h-3 w-3" />
+                          {item.city}, {item.state} · {item.areaM2} m²
+                        </p>
+                        <div className="mt-2 flex flex-wrap gap-1.5">
+                          <Badge variant="info">{item.type || 'Terreno'}</Badge>
+                          <span className="text-[10px] tabular-nums text-[var(--muted-foreground)]">
+                            score {Math.round(propertyScore(item))}
+                            {item.capRate != null || item.invest?.capRate != null
+                              ? ` · cap ${(((item.capRate ?? item.invest?.capRate) || 0) * 100).toFixed(1)}%`
+                              : ''}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </Link>
-              </SpotlightCard>
-            </li>
-          ))}
+                  </button>
+                </SpotlightCard>
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

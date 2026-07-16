@@ -26,6 +26,28 @@ export function apiUrl(path: string): string {
   return `${origin}${base}${path}`;
 }
 
+/** Bloco de investimento (schema v2 seed — espelho de @landmap/invest). */
+export type PropertyInvest = {
+  monthlyRentEstimate?: number;
+  capRate?: number;
+  cashOnCash?: number;
+  irrPct?: number;
+  totalReturnPct?: number;
+  monthlyCashflow?: number;
+  score?: number;
+  grade?: 'A' | 'B' | 'C' | 'D' | 'F' | string;
+  downPayment?: number;
+  netOperatingIncome?: number;
+};
+
+export type PropertyMarket = {
+  neighborhoodAvgPricePerM2?: number;
+  neighborhoodCount?: number;
+  liquidityScore?: number;
+  demandWeight?: number;
+  appreciationPct?: number;
+};
+
 export type Property = {
   id: string;
   title: string;
@@ -33,6 +55,7 @@ export type Property = {
   state: string;
   price: number;
   areaM2: number;
+  pricePerM2?: number;
   bedrooms?: number;
   type: 'apartamento' | 'casa' | 'terreno' | 'comercial';
   modality: 'venda' | 'aluguel' | 'lancamento';
@@ -49,6 +72,21 @@ export type Property = {
   tags?: string[];
   priceHistory?: { date: string; price: number; source: string }[];
   priceFormatted?: string;
+  /** Investor-grade fields (dataset 3000 schema v2) */
+  schemaVersion?: number;
+  kind?: string;
+  grade?: string;
+  score?: number;
+  capRate?: number;
+  invest?: PropertyInvest;
+  market?: PropertyMarket;
+  assumptions?: Record<string, number>;
+  risks?: string[];
+  drivers?: string[];
+  comps?: string[];
+  thesis?: string[];
+  listingAgeDays?: number;
+  monthlyRentEstimate?: number;
 };
 
 export type SearchQuery = {
@@ -57,6 +95,10 @@ export type SearchQuery = {
   modality?: Property['modality'];
   city?: string;
   state?: string;
+  grade?: string;
+  minScore?: number;
+  minCapRate?: number;
+  id?: string;
 };
 
 export type SearchResponse = {
@@ -135,6 +177,10 @@ export function searchProperties(query: SearchQuery) {
   if (query.modality) params.set('modality', query.modality);
   if (query.city) params.set('city', query.city);
   if (query.state) params.set('state', query.state);
+  if (query.grade) params.set('grade', query.grade);
+  if (query.minScore != null) params.set('minScore', String(query.minScore));
+  if (query.minCapRate != null) params.set('minCapRate', String(query.minCapRate));
+  if (query.id) params.set('id', query.id);
 
   const qs = params.toString();
   const path = `/markdowns${qs ? `?${qs}` : ''}`;
@@ -142,9 +188,27 @@ export function searchProperties(query: SearchQuery) {
 }
 
 export function getProperty(id: string) {
-  return apiFetch<{ items: Property[] }>(`/markdowns?q=`).then(
-    (data) => data.items.find((item) => item.id === id) as Property | undefined,
+  return apiFetch<{ item: Property }>(`/markdowns/${encodeURIComponent(id)}`).then(
+    (data) => data.item,
   );
+}
+
+/** GET /geo/nearby?lat=&lng=&radiusKm=&limit= — ativos LandMap no raio. */
+export function geoNearby(lat: number, lng: number, opts?: { radiusKm?: number; limit?: number; type?: string }) {
+  const params = new URLSearchParams({
+    lat: String(lat),
+    lng: String(lng),
+  });
+  if (opts?.radiusKm != null) params.set('radiusKm', String(opts.radiusKm));
+  if (opts?.limit != null) params.set('limit', String(opts.limit));
+  if (opts?.type) params.set('type', opts.type);
+  return apiFetch<{
+    lat: number;
+    lng: number;
+    radiusKm: number;
+    total: number;
+    items: Array<Property & { distanceKm: number }>;
+  }>(`/geo/nearby?${params.toString()}`);
 }
 
 /** GET /properties/recommendations/:id */
@@ -517,6 +581,21 @@ export type ReverseResult = {
   yoy?: number;
   zoning?: string;
   schools?: number;
+  /** Radar local (dataset 3000) anexado pelo /api/geo/reverse */
+  landmap?: {
+    nearbyCount?: number;
+    topGradeCount?: number;
+    avgScore?: number;
+    nearby?: Array<{
+      id: string;
+      title: string;
+      grade?: string;
+      score?: number;
+      distanceKm?: number;
+      type?: string;
+      price?: number;
+    }>;
+  };
 };
 
 export type AutocompleteSuggestion = {
@@ -526,8 +605,12 @@ export type AutocompleteSuggestion = {
   countryCode?: string;
   state?: string;
   city?: string;
+  neighborhood?: string;
   lat: number;
   lng: number;
+  source?: 'landmap' | 'nominatim';
+  assetCount?: number;
+  avgScore?: number;
 };
 
 export type Boundary = {
