@@ -152,10 +152,8 @@ export default function PlansPage() {
 
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
+                  {/* Lovable: só o badge “Mais popular” no Plus — tags Access/Pro/Business não aparecem no card colapsado */}
                   <h3 className="truncate text-lg font-bold">{p.name}</h3>
-                  {p.tag && !p.highlight && (
-                    <p className="mt-0.5 text-xs text-foreground/50">{p.tag}</p>
-                  )}
                 </div>
                 <div
                   className={
