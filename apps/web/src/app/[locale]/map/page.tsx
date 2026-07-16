@@ -630,20 +630,20 @@ function MapView({
       maximumFractionDigits: 0,
     });
 
+    // Resolve --primary once (token, sem hex de marca no source)
+    const probe = document.createElement('span');
+    probe.style.color = 'var(--primary)';
+    probe.style.position = 'absolute';
+    probe.style.visibility = 'hidden';
+    document.body.appendChild(probe);
+    const fill = getComputedStyle(probe).color || 'rgb(120, 90, 224)';
+    document.body.removeChild(probe);
+
     // Cap já vem do parent; circleMarker usa path SVG nativo (rápido)
     for (const item of items) {
       if (item.latitude == null || item.longitude == null) continue;
       const latlng: [number, number] = [item.latitude, item.longitude];
       bounds.push(latlng);
-
-      // Resolve --primary at runtime (tokens only — sem hex de marca no source)
-      const probe = document.createElement('span');
-      probe.style.color = 'var(--primary)';
-      probe.style.position = 'absolute';
-      probe.style.visibility = 'hidden';
-      document.body.appendChild(probe);
-      const fill = getComputedStyle(probe).color || 'rgb(120, 90, 224)';
-      document.body.removeChild(probe);
 
       const marker = L.circleMarker(latlng, {
         radius: 6,
