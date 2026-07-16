@@ -120,8 +120,8 @@ export default async function RootLayout({
             ':focus-visible{outline:2px solid color-mix(in srgb,var(--primary)_80%,transparent);outline-offset:2px;border-radius:6px;}',
         }}
       />
-      <div className="relative min-h-[100dvh] pb-[88px] text-[var(--foreground)] antialiased md:pb-0">
-        {/* Clean static backdrop — cadastral grid on solid ink white */}
+      {/* pb bottom-nav só no AppShell (mobile) — rotas bare (auth/plans/onboarding/map) sem padding fantasma */}
+      <div className="relative min-h-[100dvh] text-[var(--foreground)] antialiased">
         <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
           <div className="absolute inset-0 bg-[var(--background)]" />
           <div className="absolute inset-0 cadastre-grid opacity-[0.03]" />
@@ -132,7 +132,7 @@ export default async function RootLayout({
           </ToastProvider>
         </ShellSwitch>
         <ScrollToTop />
-            </div>
+      </div>
     </NextIntlClientProvider>
   );
 }

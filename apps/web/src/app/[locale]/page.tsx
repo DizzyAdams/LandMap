@@ -12,12 +12,16 @@ export async function generateMetadata({
   params: Promise<{ locale?: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  // Lovable home title shell = product brand (slides still onboarding UI)
+  const title = 'LandMap — Inteligência de terrenos';
+  const description =
+    'LandMap: mapa de valorização, ranking de regiões e histórico de preço por m² para decisões de terreno no Brasil.';
   return {
-    title: 'Conheça o LandMap',
-    description: 'Como o LandMap ajuda você a decidir sobre terrenos com dados.',
+    title,
+    description,
     openGraph: {
-      title: 'Conheça o LandMap',
-      description: 'Como o LandMap ajuda você a decidir sobre terrenos com dados.',
+      title,
+      description,
       url: `/${locale || 'pt-BR'}`,
       type: 'website',
       locale: locale || 'pt-BR',
@@ -26,14 +30,14 @@ export async function generateMetadata({
           url: LANDMAP_OG_IMAGE,
           width: 1200,
           height: 630,
-          alt: 'Conheça o LandMap',
+          alt: title,
         },
       ],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Conheça o LandMap',
-      description: 'Como o LandMap ajuda você a decidir sobre terrenos com dados.',
+      title,
+      description,
       images: [LANDMAP_OG_IMAGE],
     },
   };

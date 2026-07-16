@@ -54,8 +54,8 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
-      <header className="flex items-center justify-between px-6 py-6">
+    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background px-6 py-6">
+      <header className="flex items-center justify-between">
         <div className="flex items-center">
           {/* Lovable uses PNG logo — keep img for 1:1 parity */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -70,15 +70,15 @@ export default function OnboardingPage() {
         </Link>
       </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center px-6 text-center">
+      <main className="flex flex-1 flex-col items-center justify-center text-center">
         <div
           key={i}
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          className="flex w-full flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500"
+          className="flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500"
         >
-          <div className="mb-8 grid h-24 w-24 shrink-0 place-items-center rounded-3xl bg-primary/10">
+          <div className="mb-8 grid h-24 w-24 place-items-center rounded-3xl bg-primary/10">
             <Icon className="h-11 w-11 text-primary" aria-hidden />
           </div>
           <h1 className="text-3xl font-bold leading-tight tracking-tight">{slide.title}</h1>
@@ -86,40 +86,34 @@ export default function OnboardingPage() {
         </div>
       </main>
 
-      <div
-        className="mb-6 flex justify-center gap-2"
-        role="tablist"
-        aria-label="Slides do onboarding"
-      >
+      <div className="mb-6 flex justify-center gap-2">
         {SLIDES.map((s, n) => (
           <button
             key={n}
             type="button"
-            role="tab"
-            aria-selected={n === i}
             aria-label={`Ir para slide ${n + 1}`}
             onClick={() => setI(n)}
             className={
               n === i
-                ? 'h-1.5 w-8 rounded-full bg-primary transition-all duration-300'
-                : 'h-1.5 w-1.5 rounded-full bg-foreground/15 transition-all duration-300'
+                ? 'h-1.5 w-8 rounded-full bg-primary transition-all'
+                : 'h-1.5 w-1.5 rounded-full bg-foreground/15 transition-all'
             }
           />
         ))}
       </div>
 
-      <div className="flex flex-col gap-3 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
+      <div className="flex flex-col gap-3">
         <button
           type="button"
           onClick={onPrimary}
-          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+          className="inline-flex h-11 w-full items-center justify-center gap-1 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
         >
           {last ? 'Ver planos' : 'Continuar'}
-          <ArrowRight className="h-4 w-4" />
+          <ArrowRight className="ml-1 h-4 w-4" />
         </button>
         <Link
           href={lh('/auth')}
-          className="flex w-full items-center justify-center rounded-md py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-accent hover:text-accent-foreground"
+          className="flex h-11 w-full items-center justify-center rounded-md text-sm font-medium text-foreground/70 transition-colors hover:bg-accent hover:text-accent-foreground"
         >
           Já tenho conta
         </Link>

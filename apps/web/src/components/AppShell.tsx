@@ -124,8 +124,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Conteúdo */}
-        <main className="min-w-0 flex-1 pt-16 md:pt-0">{children}</main>
+        {/* Conteúdo — pb mobile para bottom nav (antes estava no layout global e vazava no funil) */}
+        <main className="min-w-0 flex-1 pt-16 pb-[88px] md:pb-0 md:pt-0">{children}</main>
       </div>
 
       {/* Bottom nav mobile 4 colunas */}
