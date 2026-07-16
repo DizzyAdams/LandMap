@@ -16,7 +16,9 @@ export type MockUser = {
   id: string;
   name: string;
   email: string;
-  provider: 'google' | 'email';
+  provider: 'google' | 'email' | 'guest';
+  /** Plano efetivo — guest/free liberam o produto sem paywall. */
+  plan?: 'free' | 'access' | 'plus' | 'pro' | 'business';
   userType?: UserType;
 };
 
@@ -84,6 +86,7 @@ export function signInWithGoogleMock(userType?: UserType): Promise<MockUser> {
       const user: MockUser = {
         ...MOCK_GOOGLE_USER,
         id: 'google_' + Math.random().toString(36).slice(2, 10),
+        plan: 'free',
         userType,
       };
       writeMockUser(user);
@@ -105,12 +108,37 @@ export function signInWithEmailMock(opts?: {
         name: opts?.name?.trim() || 'Usuário LandMap',
         email: opts?.email?.trim() || 'usuario@landmap.app',
         provider: 'email',
+        plan: 'free',
         userType: opts?.userType ?? readUserType() ?? undefined,
       };
       writeMockUser(user);
       resolve(user);
     }, 400);
   });
+}
+
+/**
+ * Acesso gratuito (visitante).
+ * Garante sessão local com plan=free — mapa, regiões, favoritos etc. abrem sem paywall.
+ */
+export function signInAsGuestMock(userType?: UserType): MockUser {
+  const existing = readMockUser();
+  if (existing) return existing;
+  const user: MockUser = {
+    id: 'guest_' + Math.random().toString(36).slice(2, 10),
+    name: 'Visitante',
+    email: 'guest@landmap.app',
+    provider: 'guest',
+    plan: 'free',
+    userType: userType ?? readUserType() ?? undefined,
+  };
+  writeMockUser(user);
+  return user;
+}
+
+/** Garante sessão free se ainda não houver usuário (acesso aberto). */
+export function ensureFreeAccess(): MockUser {
+  return readMockUser() ?? signInAsGuestMock();
 }
 
 export function signOutMock(): void {
@@ -140,10 +168,16 @@ export function useMockUser() {
     [],
   );
 
+  const signInGuest = useCallback((userType?: UserType): MockUser => {
+    const u = signInAsGuestMock(userType);
+    setUser(u);
+    return u;
+  }, []);
+
   const signOut = useCallback(() => {
     signOutMock();
     setUser(null);
   }, []);
 
-  return { user, signIn, signInEmail, signOut };
+  return { user, signIn, signInEmail, signInGuest, signOut };
 }

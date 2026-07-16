@@ -109,9 +109,13 @@ export default function AuthPage() {
     return `(${ddd}) ${local}`;
   };
 
-  const guest = () => router.push(lh('/plans'));
+  const { signIn: signInGoogle, signInEmail, signInGuest } = useMockUser();
 
-  const { signIn: signInGoogle, signInEmail } = useMockUser();
+  /** Acesso gratuito: sessão guest free + entra no produto (mapa). */
+  const guest = () => {
+    signInGuest();
+    router.push(lh('/map'));
+  };
   const [googleLoading, setGoogleLoading] = useState(false);
   const [loginEmail, setLoginEmail] = useState('');
   const onGoogle = async (type?: UserType) => {

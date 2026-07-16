@@ -1,30 +1,24 @@
 'use client';
 
 import { useEffect, useState, type ReactNode } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { LandMapWordmark, Lock } from './lovable/icons';
 import { Reveal } from './Motion';
-import { readMockUser } from '../lib/mockAuth';
+import { ensureFreeAccess } from '../lib/mockAuth';
 
 /**
- * Guarda de autenticação (mock). Espelha o comportamento do Lovable:
- * rotas protegidas (/regions, /favorites, /compare, /dashboard, /admin, /map)
- * redirecionam para /auth quando não há sessão. /plans e / continuam públicas.
+ * Guarda de acesso (mock). Acesso gratuito por padrão:
+ * se não houver sessão, cria visitante plan=free e libera a rota
+ * (mapa, regiões, favoritos, etc.) sem redirecionar para /auth.
  */
 export function RequireAuth({ children }: { children: ReactNode }) {
-  const locale = useLocale();
-  const router = useRouter();
   const t = useTranslations('auth');
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
-    if (!readMockUser()) {
-      router.replace(`/${locale}/auth`);
-    } else {
-      setChecked(true);
-    }
-  }, [locale, router]);
+    ensureFreeAccess();
+    setChecked(true);
+  }, []);
 
   if (!checked) {
     return (
