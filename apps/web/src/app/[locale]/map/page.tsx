@@ -102,16 +102,12 @@ type Property = {
   modality?: string;
 };
 
-const MARKER_COLORS: Record<string, string> = {
-  apartamento: 'var(--primary)',
-  casa: 'var(--success)',
-  terreno: 'var(--warning)',
-  comercial: 'var(--chart-2)',
-};
-
-function getMarkerColor(type?: string): string {
-  return MARKER_COLORS[type || ''] || 'var(--muted-foreground)';
-}
+/** LandMap = inteligência de terrenos — cor única de marca para markers. */
+const TERRAIN_MARKER_COLOR = 'var(--primary)';
+/** Cap de markers no DOM (Leaflet) para manter FPS em datasets grandes. */
+const MAX_MAP_MARKERS = 180;
+/** Cap da lista lateral (scroll virtual leve via slice). */
+const MAX_SIDEBAR_ITEMS = 40;
 
 function MapPageInner() {
   const [query, setQuery] = useState('');
@@ -121,8 +117,6 @@ function MapPageInner() {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(5_000_000);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [typeFilter, setTypeFilter] = useState<'todos' | 'apartamento' | 'casa' | 'terreno' | 'comercial'>('todos');
-
   const inputRef = useRef<HTMLInputElement | null>(null);
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
@@ -192,33 +186,39 @@ function MapPageInner() {
     }
   }
 
+  // Busca só terrenos (produto LandMap = terrenos). Debounce 350ms.
   useEffect(() => {
     let active = true;
-    setLoading(true);
-    searchProperties({ q: query.trim() || undefined })
-      .then((data) => {
-        if (!active) return;
-        setItems((data?.items ?? []).filter((item) => item.latitude != null && item.longitude != null));
-      })
-      .catch(() => {
-        if (active) setItems([]);
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-      });
-
+    const t = setTimeout(() => {
+      setLoading(true);
+      searchProperties({ q: query.trim() || undefined, type: 'terreno' })
+        .then((data) => {
+          if (!active) return;
+          const terrains = (data?.items ?? []).filter(
+            (item) =>
+              item.latitude != null &&
+              item.longitude != null &&
+              (item.type === 'terreno' || !item.type),
+          );
+          setItems(terrains);
+        })
+        .catch(() => {
+          if (active) setItems([]);
+        })
+        .finally(() => {
+          if (active) setLoading(false);
+        });
+    }, 350);
     return () => {
       active = false;
+      clearTimeout(t);
     };
   }, [query]);
 
-  // Filter by price range + type
-  const filteredItems = items.filter(
-    (item) =>
-      item.price >= minPrice &&
-      item.price <= maxPrice &&
-      (typeFilter === 'todos' || item.type === typeFilter),
-  );
+  // Filtro de preço + hard-cap (performance do Leaflet)
+  const filteredItems = items
+    .filter((item) => item.price >= minPrice && item.price <= maxPrice)
+    .slice(0, MAX_MAP_MARKERS);
 
   const brl = (n: number) =>
     new Intl.NumberFormat('pt-BR', {
@@ -293,7 +293,7 @@ function MapPageInner() {
       {/* KPIs do mapa — tokens semânticos da marca (indigo Lovable) */}
       <section className="mt-6 grid grid-cols-2 gap-3 opacity-0 animate-in fade-in slide-in-from-bottom-4 duration-500 sm:grid-cols-4">
         <Stat label="Preço médio /m²" value={brl(avgPriceM2)} />
-        <Stat label="Imóveis no mapa" value={String(filteredItems.length)} />
+        <Stat label="Terrenos no mapa" value={String(filteredItems.length)} />
         <Stat label="Valorização YoY" value="+2,4%" trend={2.4} />
         <Card className="p-5">
           <p className="text-xs text-[var(--muted-foreground)]">Confiança dos dados</p>
@@ -412,42 +412,30 @@ function MapPageInner() {
           </div>
         </div>
 
-        {/* Type filter */}
+        {/* Escopo: apenas terrenos */}
         <div className="flex flex-wrap items-center gap-2 border-t border-[var(--border)] pt-4">
           <span className="flex items-center gap-1.5 text-xs text-[var(--muted-foreground)]">
             <Filter className="h-3.5 w-3.5" />
-            Tipo de imóvel:
+            Escopo:
           </span>
-          {(['todos', 'apartamento', 'casa', 'terreno', 'comercial'] as const).map((t) => (
-            <button
-              key={t}
-              type="button"
-              onClick={() => setTypeFilter(t)}
-              aria-pressed={typeFilter === t}
-              className={cn(buttonVariants({ variant: typeFilter === t ? 'default' : 'ghost', size: 'sm' }), 'capitalize')}
-            >
-              {t === 'terreno' ? 'Terreno' : t}
-            </button>
-          ))}
+          <span
+            className={cn(buttonVariants({ variant: 'default', size: 'sm' }))}
+            aria-current="true"
+          >
+            Terrenos
+          </span>
+          <span className="text-xs text-[var(--muted-foreground)]">
+            Apenas terrenos · até {MAX_MAP_MARKERS} no mapa
+          </span>
         </div>
 
-        {/* Legend */}
         <div className="flex flex-wrap gap-4 text-xs text-[var(--muted-foreground)]">
           <span className="flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.apartamento }} />
-            Apartamento
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.casa }} />
-            Casa
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.terreno }} />
-            Terreno
-          </span>
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ backgroundColor: MARKER_COLORS.comercial }} />
-            Comercial
+            <span
+              className="inline-block h-2.5 w-2.5 rounded-full"
+              style={{ backgroundColor: TERRAIN_MARKER_COLOR }}
+            />
+            Terreno (preço / m²)
           </span>
         </div>
 
@@ -622,7 +610,7 @@ function MapView({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Update markers when items change
+  // Markers: circleMarker em layerGroup (bem mais leve que divIcon × N)
   useEffect(() => {
     const map = mapInstance.current;
     if (!map) return;
@@ -634,48 +622,55 @@ function MapView({
 
     if (items.length === 0) return;
 
+    const group = L.layerGroup();
     const bounds: [number, number][] = [];
+    const money = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits: 0,
+    });
 
-    items.forEach((item) => {
-      if (!item.latitude || !item.longitude) return;
+    // Cap já vem do parent; circleMarker usa path SVG nativo (rápido)
+    for (const item of items) {
+      if (item.latitude == null || item.longitude == null) continue;
       const latlng: [number, number] = [item.latitude, item.longitude];
       bounds.push(latlng);
 
-      const color = getMarkerColor(item.type);
+      // Resolve --primary at runtime (tokens only — sem hex de marca no source)
+      const probe = document.createElement('span');
+      probe.style.color = 'var(--primary)';
+      probe.style.position = 'absolute';
+      probe.style.visibility = 'hidden';
+      document.body.appendChild(probe);
+      const fill = getComputedStyle(probe).color || 'rgb(120, 90, 224)';
+      document.body.removeChild(probe);
 
-      const icon = L.divIcon({
-        className: '',
-        html: `<div style="
-            width: 14px; height: 14px;
-            background: ${color};
-            border: 2px solid var(--background);
-            border-radius: 50%;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.4);
-          "></div>`,
-        iconSize: [14, 14],
-        iconAnchor: [7, 7],
-      });
+      const marker = L.circleMarker(latlng, {
+        radius: 6,
+        fillColor: fill,
+        color: '#fff',
+        weight: 1.5,
+        fillOpacity: 0.9,
+        opacity: 1,
+      }).bindPopup(
+        `<strong>${item.title}</strong><br/>${item.city}, ${item.state}<br/>` +
+          `${item.areaM2} m² &middot; ${money.format(item.price)}` +
+          (item.areaM2
+            ? `<br/>${money.format(Math.round(item.price / item.areaM2))}/m²`
+            : ''),
+      );
+      group.addLayer(marker);
+    }
 
-      const marker = L.marker(latlng, { icon })
-        .addTo(map)
-        .bindPopup(
-          `<strong>${item.title}</strong><br/>${item.city}, ${item.state}<br/>` +
-            `${item.areaM2} m² &middot; ${new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-              maximumFractionDigits: 0,
-            }).format(item.price)}`,
-        );
-
-      markersRef.current.push(marker);
-    });
+    group.addTo(map);
+    markersRef.current = [group];
 
     if (bounds.length > 0) {
-      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 14 });
+      map.fitBounds(bounds, { padding: [30, 30], maxZoom: 13 });
     }
   }, [items]);
 
-  // Render heatmap de preço (CircleMarkers coloridos por peso)
+  // Heatmap: cap + circleMarker (sem recriar se vazio)
   useEffect(() => {
     const map = mapInstance.current;
     if (!map) return;
@@ -687,42 +682,48 @@ function MapView({
 
     if (!showHeat || heat.length === 0) return;
 
-    heat.forEach((p) => {
-      const color = weightColor(p.weight);
-      const marker = L.circleMarker([p.lat, p.lng], {
-        radius: 6 + p.weight * 18,
-        fillColor: color,
-        color,
-        weight: 1,
-        fillOpacity: 0.45,
-      })
-        .addTo(map)
-        .bindPopup(
-          `<strong>${p.neighborhood ?? 'Região'}</strong><br/>` +
-            `Preço médio: ${new Intl.NumberFormat('pt-BR', {
-              style: 'currency',
-              currency: 'BRL',
-              maximumFractionDigits: 0,
-            }).format(p.avgPrice ?? 0)}<br/>` +
-            `Densidade: ${Math.round((p.weight ?? 0) * 100)}%`,
-        );
-      heatRef.current.push(marker);
+    const group = L.layerGroup();
+    const money = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      maximumFractionDigits: 0,
     });
+    // Limita densidade do heatmap (perf)
+    const points = heat.length > 120 ? heat.filter((_, i) => i % Math.ceil(heat.length / 120) === 0) : heat;
+
+    for (const p of points) {
+      const color = weightColor(p.weight);
+      group.addLayer(
+        L.circleMarker([p.lat, p.lng], {
+          radius: 5 + p.weight * 14,
+          fillColor: color,
+          color,
+          weight: 0.5,
+          fillOpacity: 0.4,
+        }).bindPopup(
+          `<strong>${p.neighborhood ?? 'Região'}</strong><br/>` +
+            `Preço médio: ${money.format(p.avgPrice ?? 0)}<br/>` +
+            `Densidade: ${Math.round((p.weight ?? 0) * 100)}%`,
+        ),
+      );
+    }
+    group.addTo(map);
+    heatRef.current = [group];
   }, [heat, showHeat]);
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
       <p className="sr-only" aria-live="polite">
         {loading
-          ? 'Carregando imóveis no mapa…'
-          : `${items.length} imóvel${items.length === 1 ? '' : 'eis'} exibido${items.length === 1 ? '' : 's'} no mapa.`}
+          ? 'Carregando terrenos no mapa…'
+          : `${items.length} terreno${items.length === 1 ? '' : 's'} no mapa.`}
       </p>
       <div className="lg:col-span-2 w-full">
         <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--card)] p-1">
           <div
             ref={mapRef}
             role="region"
-            aria-label="Mapa de imóveis"
+            aria-label="Mapa de terrenos"
             className="relative h-[360px] w-full overflow-hidden rounded-lg sm:h-[480px] lg:h-[520px]"
             style={{ zIndex: 0 }}
           >
@@ -732,14 +733,14 @@ function MapView({
                   className="h-8 w-8 animate-spin rounded-full border-2 border-[var(--border)] border-t-[var(--primary)]"
                   aria-hidden="true"
                 />
-                <span className="sr-only">Carregando imóveis no mapa…</span>
+                <span className="sr-only">Carregando terrenos no mapa…</span>
               </div>
             )}
             {!loading && items.length === 0 && (
               <div className="absolute inset-0 flex items-center justify-center p-6">
                 <EmptyState
-                  title="Sem pontos para este filtro"
-                  description="Tente outro filtro ou explore as próximas tasks do roadmap."
+                  title="Nenhum terreno neste filtro"
+                  description="Ajuste o preço ou a busca por cidade."
                   className="border-0 bg-transparent"
                 />
               </div>
@@ -748,27 +749,26 @@ function MapView({
         </div>
       </div>
 
-      {/* Mobile toggle */}
       <div className="lg:hidden">
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'w-full')}
         >
-          {sidebarOpen ? 'Ocultar resultados' : `Mostrar resultados (${items.length})`}
+          {sidebarOpen ? 'Ocultar resultados' : `Mostrar terrenos (${items.length})`}
         </button>
       </div>
 
-      {/* Sidebar with collapse on mobile */}
       <div className={`${sidebarOpen ? 'block' : 'hidden'} lg:block space-y-3`}>
         <p className="text-xs text-[var(--muted-foreground)]" aria-live="polite">
-          {items.length} ponto{items.length === 1 ? '' : 's'} no mapa
+          {items.length} terreno{items.length === 1 ? '' : 's'}
+          {items.length > MAX_SIDEBAR_ITEMS ? ` · lista: ${MAX_SIDEBAR_ITEMS}` : ''}
         </p>
         <ul
           role="list"
           className="grid max-h-[360px] gap-3 overflow-y-auto pr-1 sm:max-h-[480px] lg:max-h-[520px]"
         >
-          {items.map((item) => (
-            <li key={`${item.latitude}-${item.longitude}-${item.id}`}>
+          {items.slice(0, MAX_SIDEBAR_ITEMS).map((item) => (
+            <li key={item.id}>
               <SpotlightCard>
                 <Link
                   href={`/${locale}/regions`}
@@ -776,8 +776,7 @@ function MapView({
                 >
                   <div className="flex items-start gap-2">
                     <span
-                      className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full"
-                      style={{ backgroundColor: getMarkerColor(item.type) }}
+                      className="mt-1 inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--primary)]"
                     />
                     <div className="min-w-0 flex-1">
                       <p className="truncate text-sm text-[var(--muted-foreground)]">{item.title}</p>
@@ -786,7 +785,7 @@ function MapView({
                         {item.city}, {item.state} · {item.areaM2} m²
                       </p>
                       <Badge variant="info" className="mt-2">
-                        {item.type ?? 'imóvel'}
+                        Terreno
                       </Badge>
                     </div>
                   </div>

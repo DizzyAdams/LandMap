@@ -134,7 +134,10 @@ export default function AuthPage() {
     setLoginLoading(true);
     try {
       await signInEmail({ email: loginEmail || undefined });
-      router.push(lh('/plans'));
+      // Após login: mapa de terrenos (produto) — planos só se ainda não escolheu
+      const hasPlan =
+        typeof window !== 'undefined' && localStorage.getItem('landmap:selected_plan');
+      router.push(hasPlan ? lh('/map') : lh('/plans'));
     } finally {
       setLoginLoading(false);
     }
@@ -155,7 +158,16 @@ export default function AuthPage() {
       return setError('A senha precisa de ao menos 8 caracteres e 1 caractere especial.');
     setSignupLoading(true);
     storeUserType(userType as UserType);
-    window.setTimeout(() => setTab('login'), 400);
+    void signInEmail({
+      email: email.trim(),
+      name: fullName.trim(),
+      userType: userType as UserType,
+    })
+      .then(() => {
+        // Pós-cadastro: produto = mapa de terrenos (pagamento demo no /plans)
+        router.push(lh('/map'));
+      })
+      .finally(() => setSignupLoading(false));
   };
 
   const pwLenMet = signupPassword.length >= 8;

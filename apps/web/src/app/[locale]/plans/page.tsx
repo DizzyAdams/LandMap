@@ -6,6 +6,7 @@ import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Check, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
 import { Stagger } from '../../../components/Motion';
+import { signInAsGuestMock } from '../../../lib/mockAuth';
 
 type Plan = {
   id: string;
@@ -67,8 +68,11 @@ export default function PlansPage() {
   const handleSelect = (id: string) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('landmap:selected_plan', id);
+      // Demo Lovable: pagamento ainda não ativado — libera acesso free e entra no mapa de terrenos
+      signInAsGuestMock();
     }
-    router.push(lh('/auth') + '?mode=request');
+    // Fluxo Lovable: Assinar → cadastro/request; com free access, mapa de terrenos
+    router.push(lh('/map'));
   };
 
   return (
