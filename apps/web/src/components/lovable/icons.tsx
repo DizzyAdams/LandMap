@@ -11,6 +11,7 @@ const base = (size: number) => ({
   strokeWidth: 1.8,
   strokeLinecap: 'round' as const,
   strokeLinejoin: 'round' as const,
+  style: { display: 'block' } as const,
 });
 
 export function MapPinned({ size = 24, ...p }: IconProps) {
