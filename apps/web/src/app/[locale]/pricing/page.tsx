@@ -6,12 +6,27 @@ import { ArrowLeft, Sparkles, Check } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { Card, Badge, Button } from '@landmap/ui';
 import { LandMapWordmark } from '../../../components/lovable/icons';
-import { ensureFreeAccess } from '../../../lib/mockAuth';
 
+/** Espelha /plans Lovable (Access / Plus / Pro / Business). */
 const PLANS = [
-  { name: 'Free', price: 'R$ 0', feats: ['3 alertas', '1 região', 'Mapa básico'], hl: false },
-  { name: 'Pro', price: 'R$ 99', feats: ['Alertas ilimitados', 'Todas as cidades', 'Automações', 'RAG'], hl: true },
-  { name: 'Business', price: 'R$ 299', feats: ['Agentes IA', 'API completa', 'Webhooks', 'Suporte prioritário'], hl: false },
+  {
+    name: 'Access',
+    price: 'R$ 69,90',
+    feats: ['Cidades do Brasil', 'Mapa de calor', 'Histórico m²', '10 favoritos'],
+    hl: false,
+  },
+  {
+    name: 'Plus',
+    price: 'R$ 119,90',
+    feats: ['Radar de oportunidades', 'Alertas', 'Comparação', '25 favoritos'],
+    hl: true,
+  },
+  {
+    name: 'Pro',
+    price: 'R$ 249,90',
+    feats: ['Relatório mensal', 'Avaliação de terreno', '50 regiões'],
+    hl: false,
+  },
 ];
 
 export default function PricingPage() {
@@ -20,7 +35,11 @@ export default function PricingPage() {
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
       <header className="flex items-center justify-between">
-        <Link href={lh('/')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
+        <Link
+          href={lh('/')}
+          aria-label="Voltar"
+          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
+        >
           <ArrowLeft className="h-4 w-4" />
         </Link>
         <LandMapWordmark />
@@ -33,17 +52,20 @@ export default function PricingPage() {
           Planos
         </div>
         <h1 className="mt-3 text-3xl font-bold tracking-tight">Escolha seu plano</h1>
-        <p className="mt-2 text-sm text-foreground/60">Comece grátis. Evolua quando quiser.</p>
+        <p className="mt-2 text-sm text-foreground/60">Cancele quando quiser. Sem fidelidade.</p>
       </div>
 
       <Reveal className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
         {PLANS.map((pl) => (
           <Card key={pl.name} variant={pl.hl ? 'highlight' : 'interactive'} className="flex flex-col">
             <div className="flex items-center justify-between">
-              <p className="font-semibold">{pl.name}</p>
+              <p className="font-semibold">LandMap {pl.name}</p>
               {pl.hl && <Badge variant="success">popular</Badge>}
             </div>
-            <p className="mt-2 font-display text-2xl font-bold">{pl.price}<span className="text-sm font-normal text-muted-foreground">/mês</span></p>
+            <p className="mt-2 font-display text-2xl font-bold">
+              {pl.price}
+              <span className="text-sm font-normal text-muted-foreground">/mês</span>
+            </p>
             <ul className="mt-4 flex flex-1 flex-col gap-2 text-sm">
               {pl.feats.map((f) => (
                 <li key={f} className="flex items-center gap-2">
@@ -52,21 +74,9 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            <Link
-              href={pl.name === 'Free' ? lh('/map') : lh('/plans')}
-              className="mt-4"
-              onClick={() => {
-                if (pl.name !== 'Free') return;
-                try {
-                  localStorage.setItem('landmap:selected_plan', 'free');
-                  ensureFreeAccess();
-                } catch {
-                  /* ignore */
-                }
-              }}
-            >
-              <Button className="w-full" variant={pl.hl || pl.name === 'Free' ? 'default' : 'ghost'}>
-                {pl.name === 'Free' ? 'Começar grátis' : `Assinar ${pl.name}`}
+            <Link href={lh('/plans')} className="mt-4">
+              <Button className="w-full" variant={pl.hl ? 'default' : 'ghost'}>
+                Ver planos
               </Button>
             </Link>
           </Card>

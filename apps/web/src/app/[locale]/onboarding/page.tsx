@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
+import { useRouter } from 'next/navigation';
 import {
   ShieldCheck,
   BellRing,
@@ -10,8 +11,8 @@ import {
   TrendingUp,
   ArrowRight,
 } from '../../../components/lovable/icons';
-import { signInAsGuestMock } from '../../../lib/mockAuth';
 
+/** Slides 1:1 Lovable onboarding.chunk.js */
 const SLIDES = [
   {
     icon: MapPinned,
@@ -37,11 +38,20 @@ const SLIDES = [
 
 export default function OnboardingPage() {
   const locale = useLocale();
+  const router = useRouter();
   const lh = (p: string) => `/${locale}${p}`;
   const [i, setI] = useState(0);
   const last = i === SLIDES.length - 1;
   const Icon = SLIDES[i].icon;
   const slide = SLIDES[i];
+
+  const onPrimary = () => {
+    if (last) {
+      router.push(lh('/plans'));
+      return;
+    }
+    setI((v) => Math.min(SLIDES.length - 1, v + 1));
+  };
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
@@ -55,10 +65,7 @@ export default function OnboardingPage() {
             className="h-12 w-auto object-contain"
           />
         </div>
-        <Link
-          href={lh('/plans')}
-          className="text-sm text-foreground/60 hover:text-foreground"
-        >
+        <Link href={lh('/plans')} className="text-sm text-foreground/60 hover:text-foreground">
           Pular
         </Link>
       </header>
@@ -69,18 +76,14 @@ export default function OnboardingPage() {
           role="status"
           aria-live="polite"
           aria-atomic="true"
-          className="animate-in fade-in slide-in-from-bottom-4 duration-500 flex w-full flex-col items-center"
+          className="flex w-full flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-500"
         >
-          {/* Icon box: fixed 96px square; icon perfectly centered via grid + CSS-sized SVG */}
           <div className="mb-8 grid h-24 w-24 shrink-0 place-items-center rounded-3xl bg-primary/10">
             <Icon className="h-11 w-11 text-primary" aria-hidden />
           </div>
-          <h1 className="text-3xl font-bold leading-tight tracking-tight">
-            {slide.title}
-          </h1>
+          <h1 className="text-3xl font-bold leading-tight tracking-tight">{slide.title}</h1>
           <p className="mt-4 max-w-sm text-base text-foreground/60">{slide.body}</p>
         </div>
-        {/* Sem dump SEO de todos os slides — Lovable só renderiza o slide ativo. */}
       </main>
 
       <div
@@ -94,7 +97,7 @@ export default function OnboardingPage() {
             type="button"
             role="tab"
             aria-selected={n === i}
-            aria-label={`${s.title} (slide ${n + 1} de ${SLIDES.length})`}
+            aria-label={`Ir para slide ${n + 1}`}
             onClick={() => setI(n)}
             className={
               n === i
@@ -106,38 +109,14 @@ export default function OnboardingPage() {
       </div>
 
       <div className="flex flex-col gap-3 px-6 pb-[max(2rem,env(safe-area-inset-bottom))]">
-        {last ? (
-          <>
-            <Link
-              href={lh('/map')}
-              className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
-              onClick={() => {
-                signInAsGuestMock();
-                if (typeof window !== 'undefined') {
-                  localStorage.setItem('landmap:selected_plan', 'free');
-                }
-              }}
-            >
-              Começar grátis
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-            <Link
-              href={lh('/plans')}
-              className="flex w-full items-center justify-center rounded-md py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-accent hover:text-accent-foreground"
-            >
-              Ver planos
-            </Link>
-          </>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setI((v) => Math.min(SLIDES.length - 1, v + 1))}
-            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
-          >
-            Continuar
-            <ArrowRight className="h-4 w-4" />
-          </button>
-        )}
+        <button
+          type="button"
+          onClick={onPrimary}
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90"
+        >
+          {last ? 'Ver planos' : 'Continuar'}
+          <ArrowRight className="h-4 w-4" />
+        </button>
         <Link
           href={lh('/auth')}
           className="flex w-full items-center justify-center rounded-md py-2 text-sm font-medium text-foreground/70 transition-colors hover:bg-accent hover:text-accent-foreground"

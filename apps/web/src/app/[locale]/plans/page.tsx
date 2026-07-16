@@ -6,40 +6,39 @@ import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Check, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
 import { Stagger } from '../../../components/Motion';
-import { signInAsGuestMock } from '../../../lib/mockAuth';
 
 type Plan = {
   id: string;
   name: string;
+  tag?: string;
   price: number;
   features: string[];
   highlight?: boolean;
-  free?: boolean;
 };
 
-// Free + planos Lovable (Access/Plus/Pro/Business). Free = acesso gratuito ao mapa de terrenos.
+/** Planos 1:1 com Lovable `lovable_chunk_plans.js` (sem Free no funil). */
 const PLANS: Plan[] = [
-  {
-    id: 'free',
-    name: 'LandMap Free',
-    price: 0,
-    free: true,
-    features: [
-      'Mapa de terrenos no Brasil',
-      'Preço médio por m²',
-      'Busca por cidade e região',
-      'Acesso ilimitado em modo visitante',
-    ],
-  },
   {
     id: 'access',
     name: 'LandMap Access',
+    tag: 'Comece com o essencial',
     price: 69.9,
-    features: [],
+    features: [
+      'Acesso a todas as cidades do Brasil',
+      'Mapa de valorização e desvalorização',
+      'Mapa de calor básico',
+      'Ranking das regiões mais valorizadas',
+      'Ranking das regiões em queda',
+      'Histórico de preço por m²',
+      'Busca por bairro, cidade e região',
+      'Salvar até 10 áreas favoritas',
+      'Tendência: subindo, estável ou caindo',
+    ],
   },
   {
     id: 'plus',
     name: 'LandMap Plus',
+    tag: 'Mais popular',
     price: 119.9,
     highlight: true,
     features: [
@@ -56,14 +55,29 @@ const PLANS: Plan[] = [
   {
     id: 'pro',
     name: 'LandMap Pro',
+    tag: 'Para profissionais',
     price: 249.9,
-    features: [],
+    features: [
+      'Tudo do Plus',
+      'Acompanhar áreas monitoradas (salvas)',
+      'Salvar até 50 regiões favoritas',
+      'Histórico completo da área',
+      'Relatório mensal geral',
+      'Avaliação do seu terreno',
+    ],
   },
   {
     id: 'business',
     name: 'LandMap Business',
+    tag: 'Para equipes',
     price: 699.9,
-    features: [],
+    features: [
+      'Tudo do Pro',
+      'Até 5 usuários',
+      'Painel de equipe',
+      'Relatório com marca da empresa',
+      'Histórico de análise da equipe',
+    ],
   },
 ];
 
@@ -75,29 +89,27 @@ export default function PlansPage() {
   const router = useRouter();
   const lh = (p: string) => `/${locale}${p}`;
 
-  // Default: Free — acesso gratuito em destaque
-  const [selected, setSelected] = useState<string>('free');
-  const selectedPlan = PLANS.find((p) => p.id === selected) ?? PLANS[0];
+  // Lovable default = Plus
+  const [selected, setSelected] = useState<string>('plus');
+  const selectedPlan = PLANS.find((p) => p.id === selected) ?? PLANS[1];
 
-  const activateFreeAndGoMap = (planId: string) => {
+  const handleSubscribe = () => {
     if (typeof window !== 'undefined') {
-      localStorage.setItem('landmap:selected_plan', planId);
-      signInAsGuestMock();
+      try {
+        localStorage.setItem('landmap:selected_plan', selected);
+      } catch {
+        /* ignore */
+      }
     }
-    router.push(lh('/map'));
-  };
-
-  const handleSelect = (id: string) => {
-    const plan = PLANS.find((p) => p.id === id) ?? PLANS[0];
-    // Free e demo de pagamento: sempre libera sessão free + mapa de terrenos
-    activateFreeAndGoMap(plan.id);
+    // Lovable: navigate to /auth?mode=request (signup)
+    router.push(`${lh('/auth')}?mode=request`);
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background pb-28">
-      <header className="sticky top-0 z-10 flex items-center justify-between bg-background/90 px-4 py-3 backdrop-blur">
+    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background pb-32">
+      <header className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
         <Link
-          href={lh('/auth')}
+          href={lh('/onboarding')}
           aria-label="Voltar"
           className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
         >
@@ -115,9 +127,7 @@ export default function PlansPage() {
         <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight">
           Comece a analisar o mercado agora
         </h1>
-        <p className="mt-2 text-sm text-foreground/60">
-          Acesso gratuito ao mapa de terrenos. Planos pagos quando o pagamento estiver ativo.
-        </p>
+        <p className="mt-2 text-sm text-foreground/60">Cancele quando quiser. Sem fidelidade.</p>
       </div>
 
       <Stagger className="mt-6 flex flex-col gap-3 px-6" stagger={0.08} y={20}>
@@ -130,15 +140,10 @@ export default function PlansPage() {
               onClick={() => setSelected(p.id)}
               className={
                 isSel
-                  ? 'relative w-full rounded-2xl border-2 border-primary p-5 text-left transition-all'
-                  : 'relative w-full rounded-2xl border border-border p-5 text-left transition-all'
+                  ? 'relative w-full rounded-2xl border-2 border-primary bg-primary/5 p-5 text-left shadow-[var(--shadow-card)] transition-all'
+                  : 'relative w-full rounded-2xl border border-border bg-card p-5 text-left transition-all hover:border-primary/40'
               }
             >
-              {p.free && (
-                <span className="absolute -top-2 left-4 rounded-full bg-[var(--success)] px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-[var(--primary-foreground)]">
-                  Acesso gratuito
-                </span>
-              )}
               {p.highlight && (
                 <span className="absolute -top-2 right-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary-foreground">
                   Mais popular
@@ -148,6 +153,9 @@ export default function PlansPage() {
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
                   <h3 className="truncate text-lg font-bold">{p.name}</h3>
+                  {p.tag && !p.highlight && (
+                    <p className="mt-0.5 text-xs text-foreground/50">{p.tag}</p>
+                  )}
                 </div>
                 <div
                   className={
@@ -161,24 +169,15 @@ export default function PlansPage() {
               </div>
 
               <div className="mt-3 flex items-baseline gap-1">
-                {p.price === 0 ? (
-                  <span className="text-2xl font-bold tracking-tight">Grátis</span>
-                ) : (
-                  <>
-                    <span className="text-xs text-foreground/50">R$</span>
-                    <span className="text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
-                    <span className="text-sm text-foreground/50">/mês</span>
-                  </>
-                )}
+                <span className="text-xs text-foreground/50">R$</span>
+                <span className="text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
+                <span className="text-sm text-foreground/50">/mês</span>
               </div>
 
               {isSel && p.features.length > 0 && (
                 <ul className="mt-4 space-y-2 border-t border-border/60 pt-4">
                   {p.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-2 text-sm text-foreground/75"
-                    >
+                    <li key={f} className="flex items-start gap-2 text-sm text-foreground/75">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                       <span>{f}</span>
                     </li>
@@ -191,10 +190,7 @@ export default function PlansPage() {
       </Stagger>
 
       <div className="mt-6 px-6 text-center">
-        <Link
-          href={lh('/auth')}
-          className="text-sm text-foreground/60 hover:text-foreground"
-        >
+        <Link href={lh('/auth')} className="text-sm text-foreground/60 hover:text-foreground">
           Já tem conta? <span className="font-medium text-primary">Entrar</span>
         </Link>
       </div>
@@ -202,17 +198,13 @@ export default function PlansPage() {
       <div className="fixed inset-x-0 bottom-0 z-20 mx-auto max-w-md border-t border-border bg-background/95 px-6 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-4 backdrop-blur">
         <button
           type="button"
-          onClick={() => handleSelect(selected)}
+          onClick={handleSubscribe}
           className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition hover:bg-primary/90"
         >
-          {selectedPlan.price === 0 || selectedPlan.free
-            ? 'Começar grátis — mapa de terrenos'
-            : `Assinar ${selectedPlan.name} - R$ ${formatBRL(selectedPlan.price)}/mês`}
+          Assinar {selectedPlan.name} — R$ {formatBRL(selectedPlan.price)}/mês
         </button>
         <p className="mt-2 text-center text-[11px] text-foreground/40">
-          {selectedPlan.free
-            ? 'Sem cartão. Entra direto no mapa de terrenos.'
-            : 'Pagamento não ativado - fluxo de demonstração (libera acesso free).'}
+          Pagamento não ativado — fluxo de demonstração.
         </p>
       </div>
     </div>

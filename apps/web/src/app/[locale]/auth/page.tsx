@@ -10,13 +10,15 @@ import { Reveal } from '../../../components/Motion';
 import { useMockUser } from '../../../lib/mockAuth';
 import { storeUserType, type UserType } from '../../../lib/mockAuth';
 
-/** Segmentos do mercado imobiliário — escolha obrigatória no cadastro. */
+/**
+ * Tipos Lovable (zod): broker | developer | investor | business
+ * Mapeados para UserType local 1:1 em rótulos PT.
+ */
 const USER_TYPES: { id: UserType; label: string; icon: React.ReactNode; hint: string }[] = [
   { id: 'corretor', label: 'Corretor', icon: <Briefcase size={18} />, hint: 'Comissão e carteira de clientes' },
-  { id: 'investidor', label: 'Investidor', icon: <TrendingUp size={18} />, hint: 'Valorização e ROI de terrenos' },
-  { id: 'fundo', label: 'Fundo de investimento', icon: <Gem size={18} />, hint: 'Gestão de portfólio institucional' },
   { id: 'incorporadora', label: 'Incorporadora', icon: <Building2 size={18} />, hint: 'Aquisição e desenvolvimento' },
-  { id: 'comprador', label: 'Comprador', icon: <User size={18} />, hint: 'Busca direta de terreno' },
+  { id: 'investidor', label: 'Investidor', icon: <TrendingUp size={18} />, hint: 'Valorização e ROI de terrenos' },
+  { id: 'fundo', label: 'Business / equipe', icon: <Gem size={18} />, hint: 'Painel e multi-usuário' },
 ];
 
 /** Ícone "G" oficial do Google (multicolor). */
@@ -111,8 +113,13 @@ export default function AuthPage() {
 
   const { signIn: signInGoogle, signInEmail, signInGuest } = useMockUser();
 
-  /** Acesso gratuito: sessão guest free + entra no produto (mapa). */
+  /** Lovable: "Entrar sem cadastro" → guest_mode + produto (mapa de terrenos). */
   const guest = () => {
+    try {
+      window.localStorage.setItem('guest_mode', '1');
+    } catch {
+      /* ignore */
+    }
     signInGuest();
     router.push(lh('/map'));
   };
@@ -183,7 +190,7 @@ export default function AuthPage() {
         />
         <LandMapWordmark />
         <div>
-          <h2 className="max-w-md text-4xl font-bold leading-tight">
+          <h2 className="max-w-md font-display text-4xl font-bold leading-tight">
             Inteligência de terrenos, do mapa à decisão.
           </h2>
           <p className="mt-4 max-w-md text-[color:color-mix(in_srgb,var(--primary-foreground)_80%,transparent)]">
@@ -448,13 +455,11 @@ export default function AuthPage() {
           <button
             type="button"
             onClick={guest}
-            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg border-2 border-[var(--primary)] bg-[var(--primary)]/5 text-sm font-semibold text-[var(--primary)] transition hover:bg-[var(--primary)]/10"
+            className="mt-4 inline-flex h-11 w-full items-center justify-center rounded-lg border text-sm font-semibold transition hover:bg-[var(--muted)]"
+            style={{ borderColor: 'var(--border)', color: 'var(--foreground)' }}
           >
-            Continuar grátis — mapa de terrenos
+            Entrar sem cadastro
           </button>
-          <p className="mt-2 text-center text-[11px] text-[var(--muted-foreground)]">
-            Sem cartão. Acesso Free ao mapa agora.
-          </p>
 
           <Link
             href={lh('/')}
