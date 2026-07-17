@@ -2,61 +2,109 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, User, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
+import { useMemo, useState } from 'react';
+import { User, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Stat } from '@landmap/ui';
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
+import { INTELLIGENCE_REGIONS } from '../../../lib/mapIntelligence';
 
-const LEADS = [
-  { name: 'Construtora Aurora', source: 'Site', score: 92, stage: 'qualificado' },
-  { name: 'Investidor João P.', source: 'Indicação', score: 81, stage: 'contato' },
-  { name: 'Family Office Beta', source: 'RAG', score: 76, stage: 'nutrição' },
-];
+type Lead = {
+  id: string;
+  name: string;
+  interest: string;
+  region: string;
+  stage: 'novo' | 'qualificado' | 'proposta' | 'ganho';
+  score: number;
+};
+
+const STAGES: Lead['stage'][] = ['novo', 'qualificado', 'proposta', 'ganho'];
 
 export default function LeadsPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
+  const [filter, setFilter] = useState<Lead['stage'] | 'all'>('all');
+
+  const leads = useMemo((): Lead[] => {
+    const names = ['Ana Souza', 'Bruno Lima', 'Carla Dias', 'Diego Nunes', 'Eva Rocha', 'Felipe Mota'];
+    return INTELLIGENCE_REGIONS.slice(0, 6).map((r, i) => ({
+      id: `lead-${r.id}`,
+      name: names[i] ?? `Lead ${i + 1}`,
+      interest: i % 2 === 0 ? 'Terreno residencial' : 'Lote comercial',
+      region: r.name,
+      stage: STAGES[i % STAGES.length],
+      score: r.score,
+    }));
+  }, []);
+
+  const visible = filter === 'all' ? leads : leads.filter((l) => l.stage === filter);
+
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/dashboard')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
-
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <User className="h-3 w-3" />
-          Leads
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Seus leads</h1>
-        <p className="mt-2 text-sm text-foreground/60">Oportunidades rankeadas e qualificadas por IA.</p>
-      </div>
-
-      <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Leads" value="3" />
-        <Stat label="Score médio" value="83" trend={7} />
-        <Stat label="Pipeline" value="R$ 4.1M" />
+    <ProductPageShell
+      backHref="/pipeline"
+      eyebrow={
+        <>
+          <User className="h-3 w-3" /> Leads
+        </>
+      }
+      title="Pipeline de leads"
+      description="Interessados por região do mapa intelligence — demo comercial."
+    >
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Stat label="Leads" value={String(leads.length)} />
+        <Stat label="Qualificados" value={String(leads.filter((l) => l.stage === 'qualificado').length)} />
+        <Stat label="Propostas" value={String(leads.filter((l) => l.stage === 'proposta').length)} />
+        <Stat label="Ganhos" value={String(leads.filter((l) => l.stage === 'ganho').length)} />
       </section>
 
-      <Reveal className="mt-6 flex flex-col gap-3">
-        {LEADS.map((l) => (
-          <Card key={l.name} variant="interactive">
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-primary" />
-                  <p className="truncate font-semibold">{l.name}</p>
-                  <Badge variant="info">{l.score}</Badge>
-                </div>
-                <p className="mt-1 text-xs text-muted-foreground">origem: {l.source}</p>
+      <div className="mt-4 flex flex-wrap gap-2">
+        {(['all', ...STAGES] as const).map((s) => (
+          <button
+            key={s}
+            type="button"
+            onClick={() => setFilter(s)}
+            className={cn(
+              'rounded-full border px-3 py-1.5 text-xs font-medium transition',
+              filter === s
+                ? 'border-primary bg-primary text-primary-foreground'
+                : 'border-[var(--border)] text-muted-foreground hover:text-foreground',
+            )}
+          >
+            {s === 'all' ? 'Todos' : s}
+          </button>
+        ))}
+      </div>
+
+      <Reveal className="mt-6 space-y-3">
+        {visible.map((l) => (
+          <Card key={l.id} variant="interactive" className="p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="font-semibold">{l.name}</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {l.interest} · {l.region}
+                </p>
               </div>
-              <Badge variant="outline">{l.stage}</Badge>
+              <div className="text-right">
+                <Badge variant="outline">{l.stage}</Badge>
+                <p className="mt-1 text-xs tabular-nums text-primary">Score {l.score}</p>
+              </div>
             </div>
+            <Link href={lh('/map')} className="mt-2 inline-block text-xs font-medium text-primary">
+              Ver região no mapa
+            </Link>
           </Card>
         ))}
       </Reveal>
-    </main>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        <Link href={lh('/pipeline')} className={cn(buttonVariants({ size: 'sm' }))}>
+          Pipeline IA
+        </Link>
+        <Link href={lh('/admin/leads')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+          Admin leads
+        </Link>
+      </div>
+    </ProductPageShell>
   );
 }

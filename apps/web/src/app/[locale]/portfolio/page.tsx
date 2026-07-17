@@ -2,27 +2,59 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Briefcase, TrendingUp, Sparkles } from '../../../components/lovable/icons';
+import { useEffect, useMemo, useState } from 'react';
+import {
+  ArrowLeft,
+  Building2,
+  LandMapWordmark,
+  Star,
+} from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Stat } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { Card, Badge, Stat, buttonVariants, cn, EmptyState } from '@landmap/ui';
+import {
+  INTELLIGENCE_REGIONS,
+  fmtPriceSqm,
+  scoreLabel,
+} from '../../../lib/mapIntelligence';
+import { getFavoriteIds } from '../../../lib/favorites';
 
-const HOLDINGS = [
-  { name: 'Terreno Pinheiros', city: 'São Paulo', value: 1_240_000, var: 11.8 },
-  { name: 'Lote Batel', city: 'Curitiba', value: 860_000, var: 9.8 },
-  { name: 'Área Campeche', city: 'Florianópolis', value: 2_010_000, var: 13.5 },
-];
-
-const fmtBRL = (v: number) => v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
-
+/** Carteira: favoritos de regiões (localStorage) + amostra intelligence. */
 export default function PortfolioPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
-  const total = HOLDINGS.reduce((a, h) => a + h.value, 0);
+  const [favIds, setFavIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    try {
+      setFavIds(getFavoriteIds());
+    } catch {
+      setFavIds([]);
+    }
+  }, []);
+
+  const fromIntel = useMemo(() => {
+    // Match favorites by name/id when possible; else top score sample
+    const byName = INTELLIGENCE_REGIONS.filter(
+      (r) => favIds.includes(r.id) || favIds.some((id) => id.includes(r.name)),
+    );
+    if (byName.length > 0) return byName;
+    return INTELLIGENCE_REGIONS.filter((r) => r.score >= 85).slice(0, 4);
+  }, [favIds]);
+
+  const totalValue = fromIntel.reduce((s, r) => s + r.priceSqm * 200, 0);
+  const avgScore =
+    fromIntel.length > 0
+      ? Math.round(fromIntel.reduce((s, r) => s + r.score, 0) / fromIntel.length)
+      : 0;
+
   return (
     <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
       <header className="flex items-center justify-between">
-        <Link href={lh('/dashboard')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
+        <Link
+          href={lh('/favorites')}
+          aria-label="Voltar"
+          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
+        >
           <ArrowLeft className="h-4 w-4" />
         </Link>
         <LandMapWordmark />
@@ -31,39 +63,67 @@ export default function PortfolioPage() {
 
       <div className="mt-6">
         <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Briefcase className="h-3 w-3" />
+          <Building2 className="h-3 w-3" />
           Carteira
         </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Sua carteira</h1>
-        <p className="mt-2 text-sm text-foreground/60">Valor agregado e valorização dos seus terrenos.</p>
+        <h1 className="mt-3 font-display text-3xl font-bold tracking-tight">
+          Carteira de regiões
+        </h1>
+        <p className="mt-2 text-sm text-foreground/60">
+          Áreas salvas e oportunidades de alto Score LandMap.
+        </p>
       </div>
 
       <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Total" value={fmtBRL(total)} />
-        <Stat label="Ativos" value={String(HOLDINGS.length)} />
-        <Stat label="Valorização" value="+11.2%" trend={11} />
+        <Stat label="Ativos" value={String(fromIntel.length)} />
+        <Stat label="Score médio" value={String(avgScore)} />
+        <Stat label="Proxy m²×200" value={fmtPriceSqm(totalValue)} />
       </section>
 
-      <Reveal className="mt-6 flex flex-col gap-3">
-        {HOLDINGS.map((h) => (
-          <Card key={h.name} variant="interactive">
-            <Link href={lh('/sales')} className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="h-4 w-4 text-primary" />
-                  <p className="truncate font-semibold">{h.name}</p>
-                  <Badge variant="outline">{h.city}</Badge>
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link href={lh('/favorites')} className={cn(buttonVariants({ size: 'sm' }))}>
+          <Star className="mr-1 h-3.5 w-3.5" />
+          Favoritos
+        </Link>
+        <Link href={lh('/compare')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+          Comparar
+        </Link>
+        <Link href={lh('/dashboard')} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+          Mapa
+        </Link>
+      </div>
+
+      {fromIntel.length === 0 ? (
+        <div className="mt-8">
+          <EmptyState
+            title="Carteira vazia"
+            description="Salve regiões em Favoritos ou explore o mapa intelligence."
+          />
+        </div>
+      ) : (
+        <Reveal className="mt-6 space-y-3">
+          {fromIntel.map((r) => (
+            <Card key={r.id} variant="interactive" className="p-4">
+              <Link href={lh('/dashboard')} className="block">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <p className="font-semibold">{r.name}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {r.city}, {r.state} · {fmtPriceSqm(r.priceSqm)}/m²
+                    </p>
+                  </div>
+                  <Badge variant={r.score >= 85 ? 'success' : 'info'}>
+                    {scoreLabel(r.score)} · {r.score}
+                  </Badge>
                 </div>
-                <p className="mt-1 font-mono text-lg font-semibold tabular-nums">{fmtBRL(h.value)}</p>
-              </div>
-              <span className="flex items-center gap-1 text-sm font-medium text-primary">
-                <TrendingUp className="h-4 w-4" />
-                {h.var}%
-              </span>
-            </Link>
-          </Card>
-        ))}
-      </Reveal>
+                <p className="mt-2 line-clamp-2 text-xs text-muted-foreground">
+                  {r.highlights[0]}
+                </p>
+              </Link>
+            </Card>
+          ))}
+        </Reveal>
+      )}
     </main>
   );
 }

@@ -138,13 +138,17 @@ export type AgentRole =
   | 'lead_enricher'
   | 'market_intel'
   | 'onboarding'
-  | 'negotiator';
+  | 'negotiator'
+  | 'followup'
+  | 'cold_recovery'
+  | 'waba_followup';
 
 export interface SalesAgent {
   id: string;
   role: AgentRole;
   name: string;
   description: string;
+  /** idle = em espera (standby); running = ciclo; paused = autonomia off */
   status: 'idle' | 'running' | 'paused';
   currentTask?: string;
   actionsToday: number;

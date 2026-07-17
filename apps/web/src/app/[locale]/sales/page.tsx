@@ -2,102 +2,71 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Sparkles, Building2, TrendingUp, ShieldCheck } from '../../../components/lovable/icons';
+import { Building2, TrendingUp } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Stat } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
-
-type Listing = {
-  city: string;
-  neighborhood: string;
-  areaM2: number;
-  price: number;
-  yield: number;
-  status: 'disponivel' | 'reservado' | 'vendido';
-};
-
-const LISTINGS: Listing[] = [
-  { city: 'São Paulo', neighborhood: 'Vila Madalena', areaM2: 480, price: 3400000, yield: 7.8, status: 'disponivel' },
-  { city: 'Curitiba', neighborhood: 'Água Verde', areaM2: 620, price: 2100000, yield: 8.4, status: 'disponivel' },
-  { city: 'Florianópolis', neighborhood: 'Campeche', areaM2: 540, price: 4200000, yield: 6.9, status: 'reservado' },
-  { city: 'Belo Horizonte', neighborhood: 'Lourdes', areaM2: 390, price: 1850000, yield: 9.1, status: 'disponivel' },
-  { city: 'Recife', neighborhood: 'Boa Viagem', areaM2: 510, price: 2600000, yield: 7.2, status: 'vendido' },
-  { city: 'Porto Alegre', neighborhood: 'Auxiliadora', areaM2: 430, price: 1980000, yield: 8.0, status: 'disponivel' },
-];
-
-const statusVariant = (s: Listing['status']) =>
-  s === 'disponivel' ? 'success' : s === 'reservado' ? 'warning' : 'outline';
-
-const fmtBRL = (v: number) =>
-  v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL', maximumFractionDigits: 0 });
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
+import {
+  INTELLIGENCE_REGIONS,
+  fmtPriceSqm,
+  scoreLabel,
+  topByScore,
+} from '../../../lib/mapIntelligence';
 
 export default function SalesPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
+  const lots = topByScore(6);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/map')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
-
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Building2 className="h-3 w-3" />
-          Terrenos à venda
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Oportunidades de aquisição</h1>
-        <p className="mt-2 text-sm text-foreground/60">
-          Terrenos curados com potencial de valorização validado pelo radar LandMap.
-        </p>
-      </div>
-
-      <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Anúncios ativos" value="4" />
-        <Stat label="Yield médio" value="8,1%" trend={3.2} />
-        <Stat label="Cidades" value="6" />
+    <ProductPageShell
+      backHref="/map"
+      eyebrow={
+        <>
+          <Building2 className="h-3 w-3" /> Terrenos
+        </>
+      }
+      title="Vitrine de oportunidades"
+      description="Regiões com melhor Score — use o mapa para camadas e dossiê."
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Oportunidades" value={String(lots.length)} />
+        <Stat label="Score top" value={String(lots[0]?.score ?? 0)} />
+        <Stat label="Cobertura" value={String(INTELLIGENCE_REGIONS.length)} />
       </section>
 
-      <Reveal className="mt-6 flex flex-col gap-3">
-        {LISTINGS.map((it) => (
-          <Card key={`${it.city}-${it.neighborhood}`} variant={it.status === 'disponivel' ? 'interactive' : 'default'}>
-            <div className="flex items-start justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <p className="truncate font-semibold">{it.neighborhood}</p>
-                  <Badge variant={statusVariant(it.status)}>{it.status}</Badge>
+      <div className="mt-4 flex gap-2">
+        <Link href={lh('/map')} className={cn(buttonVariants({ size: 'sm' }))}>
+          Mapa
+        </Link>
+        <Link href={lh('/leads')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+          Leads
+        </Link>
+      </div>
+
+      <Reveal className="mt-6 space-y-3">
+        {lots.map((r) => (
+          <Card key={r.id} variant="interactive" className="p-4">
+            <Link href={lh('/map')} className="block">
+              <div className="flex justify-between gap-2">
+                <div>
+                  <p className="font-semibold">{r.name}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {r.city} · {fmtPriceSqm(r.priceSqm)}/m² · {r.zoning}
+                  </p>
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">{it.city}</p>
-                <p className="mt-2 font-mono text-lg font-semibold tabular-nums">{fmtBRL(it.price)}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {it.areaM2} m² · yield{' '}
-                  <span className="inline-flex items-center gap-1 font-medium text-primary">
-                    <TrendingUp className="h-3 w-3" />
-                    {it.yield}%
-                  </span>
-                </p>
+                <Badge variant={r.score >= 80 ? 'success' : 'info'}>
+                  {scoreLabel(r.score)}
+                </Badge>
               </div>
-              {it.status === 'disponivel' && (
-                <Link
-                  href={lh('/auth')}
-                  className="inline-flex h-9 items-center rounded-xl bg-primary px-3.5 text-sm font-medium text-primary-foreground transition hover:bg-primary-glow"
-                >
-                  Tenho interesse
-                </Link>
-              )}
-            </div>
+              <p className="mt-2 flex items-center gap-1 text-xs text-primary">
+                <TrendingUp className="h-3 w-3" />
+                {r.highlights[0]}
+              </p>
+            </Link>
           </Card>
         ))}
       </Reveal>
-
-      <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <ShieldCheck className="h-4 w-4" />
-        Transações intermediadas pelo time LandMap.
-      </div>
-    </main>
+    </ProductPageShell>
   );
 }

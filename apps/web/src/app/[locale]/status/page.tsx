@@ -2,85 +2,86 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Sparkles, ShieldCheck, Activity, LandMapWordmark } from '../../../components/lovable/icons';
+import { Activity, Check, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Stat } from '@landmap/ui';
-import { ApiNotice } from '../../../components/ApiNotice';
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
 
-type Service = {
-  name: string;
-  status: 'operational' | 'degraded' | 'maintenance';
-  latency: number;
-  uptime: number;
-};
-
-const SERVICES: Service[] = [
-  { name: 'API de markdowns', status: 'operational', latency: 38, uptime: 99.98 },
-  { name: 'Mapa de valoração', status: 'operational', latency: 44, uptime: 99.95 },
-  { name: 'Radar de oportunidades', status: 'operational', latency: 51, uptime: 99.91 },
-  { name: 'Autenticação', status: 'degraded', latency: 120, uptime: 99.7 },
-  { name: 'Processamento de IA', status: 'maintenance', latency: 0, uptime: 99.4 },
+const SERVICES = [
+  { name: 'Web (Next.js)', status: 'operational', latency: '42ms' },
+  { name: 'Mapa intelligence', status: 'operational', latency: '—' },
+  { name: 'API /api/markdowns', status: 'operational', latency: '95ms' },
+  { name: 'API /api/market/heatmap', status: 'operational', latency: '110ms' },
+  { name: 'Geo autocomplete', status: 'operational', latency: '180ms' },
+  { name: 'Opportunities', status: 'operational', latency: '88ms' },
+  { name: 'RAG /rag/query', status: 'operational', latency: 'TF-IDF' },
+  { name: 'Webhooks dispatcher', status: 'operational', latency: 'HMAC' },
+  { name: 'Integrações live', status: 'operational', latency: 'var' },
 ];
 
-const statusBadge = (s: Service['status']) =>
-  s === 'operational' ? 'success' : s === 'degraded' ? 'warning' : 'outline';
-
-const statusLabel = (s: Service['status']) =>
-  s === 'operational' ? 'Operacional' : s === 'degraded' ? 'Degradado' : 'Manutenção';
+const INCIDENTS = [
+  { date: '2026-07-10', title: 'Latência elevada no RAG', resolved: true },
+  { date: '2026-07-05', title: 'Manutenção programada heatmap', resolved: true },
+];
 
 export default function StatusPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
+  const up = SERVICES.filter((s) => s.status === 'operational').length;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/map')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
-
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Activity className="h-3 w-3" />
-          Status do sistema
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Tudo operando</h1>
-        <p className="mt-2 text-sm text-foreground/60">
-          Acompanhe a saúde dos serviços LandMap em tempo real.
-        </p>
-      </div>
-
-      <ApiNotice variant="datadog" className="mt-4" />
-
-      <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Uptime global" value="99,9%" />
-        <Stat label="Serviços ativos" value="5" />
-        <Stat label="Incidentes (30d)" value="0" />
+    <ProductPageShell
+      backHref="/developers"
+      eyebrow={
+        <>
+          <Activity className="h-3 w-3" /> Status
+        </>
+      }
+      title="Status da plataforma"
+      description="Saúde dos serviços LandMap — demo com latências ilustrativas."
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Serviços" value={String(SERVICES.length)} />
+        <Stat label="Operacionais" value={String(up)} />
+        <Stat label="Degradados" value={String(SERVICES.length - up)} />
       </section>
 
-      <Reveal className="mt-6 flex flex-col gap-3">
+      <Card className="mt-4 border-primary/20 bg-primary/5 p-4">
+        <p className="flex items-center gap-2 text-sm font-medium text-primary">
+          <Check className="h-4 w-4" />
+          Todos os sistemas críticos do mapa estão operacionais.
+        </p>
+      </Card>
+
+      <Reveal className="mt-6 space-y-2">
         {SERVICES.map((s) => (
-          <Card key={s.name} variant="interactive">
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="truncate font-medium">{s.name}</p>
-                <p className="mt-1 text-xs text-muted-foreground">
-                  {s.status === 'maintenance' ? 'Em manutenção' : `${s.latency}ms · uptime ${s.uptime}%`}
-                </p>
-              </div>
-              <Badge variant={statusBadge(s.status)}>{statusLabel(s.status)}</Badge>
+          <Card key={s.name} className="flex items-center justify-between p-3">
+            <span className="text-sm font-medium">{s.name}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xs tabular-nums text-muted-foreground">{s.latency}</span>
+              <Badge variant={s.status === 'operational' ? 'success' : 'warning'}>
+                {s.status}
+              </Badge>
             </div>
           </Card>
         ))}
       </Reveal>
 
-      <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <ShieldCheck className="h-4 w-4" />
-        SLA LandMap Plus e acima.
-      </div>
-    </main>
+      <h2 className="mt-8 text-sm font-semibold">Incidentes recentes</h2>
+      <ul className="mt-3 space-y-2">
+        {INCIDENTS.map((i) => (
+          <li key={i.date} className="flex justify-between text-sm text-muted-foreground">
+            <span>
+              {i.date} · {i.title}
+            </span>
+            <Badge variant="outline">resolvido</Badge>
+          </li>
+        ))}
+      </ul>
+
+      <Link href={lh('/developers')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }), 'mt-6')}>
+        API docs
+      </Link>
+    </ProductPageShell>
   );
 }

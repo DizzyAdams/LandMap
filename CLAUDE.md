@@ -7,17 +7,18 @@
 
 > **Design source of truth = `DESIGN.md`** (fonte autoritativa de UI/UX, tokens e fontes — este arquivo e `MEMORY.md` devem estar em sincronia com ele).
 
-## 🔒 ULTIMATE DESIGN STANDARD (BLOQUEADO — 2026-07-15)
-> STANDARD DEFINITIVO do LandMap = clone fiel do Lovable `landmap-insight.lovable.app`.
-> **PARIDADE 100% ALCANÇADA E VALIDADA** (Lovable live vs deploy prod `landmapprod` em todas as 9 rotas).
-> Regras OBRIGATÓRIAS para QUALQUER nova página/feature (kpis, alertas no mapa, etc.):
+## 🔒 ULTIMATE DESIGN STANDARD (BLOQUEADO — 2026-07-15; mapa híbrido 2026-07-17)
+> STANDARD DEFINITIVO do LandMap = design system Lovable indigo (`landmap-insight.lovable.app`).
+> Shell das 9 rotas Lovable: paridade de chrome/tokens. **Mapa = padrão híbrido C** (não é clone 1:1 das camadas intelligence do dashboard Lovable) — ver `DESIGN.md` §4.1 + `docs/map-parity-audit-2026-07.md`.
+> Regras OBRIGATÓRIAS para QUALQUER nova página/feature:
 > 1. Tokens: usar **só** `apps/web/src/app/globals.css` `:root`/`.dark` (`--primary`/`--accent`/`--muted`/`--ring`, indigo Lovable oklch hue≈265). NUNCA hardcodar hex fora dos tokens.
 > 2. Fontes: DM Sans (`--font-sans`) + Space Grotesk (`--font-display`) via Google Fonts `<link>` no root layout — **as mesmas 2 famílias do Lovable live**. `--font-mono` = system mono stack (sem JetBrains). NÃO usar `next/font`.
 > 3. Mono-dark premium (Linear/Vercel/Stripe): hierarquia forte, **zero gradientes baratos**, animações clean + `prefers-reduced-motion` safe.
 > 4. Componentes: preferir `@landmap/ui` (`Card`, `Badge`, `Button`/`buttonVariants`, `Sparkline`, `Progress`). Classes custom utilitárias (`packages/ui`): `.surface`/`.glass`/`.aurora`/`.glow-*`.
 > 5. Estrutura: rotas em `apps/web/src/app/[locale]` com prefixo locale; i18n `apps/web/messages/{pt-BR,en-US,es-ES}.json`.
-> 6. Auth: rotas protegidas (regions/favorites/compare/dashboard/admin/map/kpis) usam `<RequireAuth>` (`apps/web/src/components/RequireAuth.tsx`, mock Google via localStorage) → redireciona p/ `/auth` se sem sessão. Manter este gate.
-> 7. **NUNCA quebrar a parity com o Lovable.** Qualquer UI nova deve ser indistinguível do padrão Lovable/indigo.
+> 6. Auth: rotas com `<RequireAuth>` usam free access mock (localStorage) — **não** reintroduzir paywall. Manter o gate.
+> 7. UI nova: indistinguível do chrome Lovable/indigo. **Mapa Free** (`/map`) pode ter extras de produto (grade A–F, heat API, dossier) — nunca paleta Sovereign.
+> 8. **Map System Standard:** controles devem funcionar; Leaflet sem cor de marca fora dos tokens; sem claim “mapa 100% igual Lovable” sem checklist de camadas.
 
 
 ## Stack & estrutura
@@ -25,6 +26,8 @@
 - **apps/web** (`@landmap/web`): Next.js 14.2 (App Router, `src/app`), `next-intl` 3.20 (i18n pt-BR/en-US/es-ES), React 18, Tailwind **v4.0.0** com pipeline PostCSS/Tailwind **ativo** (ver ✅ abaixo). Fontes: **DM Sans + Space Grotesk + JetBrains Mono** via Google Fonts `<link>` (ver DESIGN.md).
 - **packages/ui** (`@landmap/ui`): componentes React + design tokens. Build com `tsup`. Exporta `./styles.css` e tokens JS (`tokens.ts`).
 - Outros pacotes: `@landmap/api` (Hono), `@landmap/llm` (LangGraph/RAG/PgVector), `@landmap/db`, `@landmap/config`, `@landmap/sales`.
+- **RAG + Webhooks (2026-07-17):** UI `/rag` e `/chat` → `POST /api/rag/query` (proxy Next → `@landmap/api/platform`). Webhooks outbound multi-projeto: `POST /api/webhooks/endpoints`, HMAC `X-LandMap-Signature`, admin `/admin/webhooks`. Docs: `docs/platform-rag-webhooks-2026-07.md`.
+- **Admin agentes (2026-07-17):** `/admin/agents` — time de **14** em espera; squad FU (followup + cold_recovery + waba); **auto-loop** com countdown → `POST /api/sales/tick`; autonomia off|copilot|autopilot. Doc: `docs/admin-agents-followup-2026-07.md`. **Não** expor cockpit no app público.
 - Diagramas/planos: `docs/`, `landmap-complete-plan.md`, `ARCHITECTURE.md`.
 
 ## Comandos principais (raiz)

@@ -12,7 +12,8 @@ export {
   applyEffectsUnderAutonomy,
   syncClosedDeals,
 } from './autonomy.js';
-export { runCycle } from './orchestrator.js';
+export { runCycle, runFollowUpCycle, runStandbyTick } from './orchestrator.js';
 export { createInitialStore } from './seed.js';
 export { mulberry32, uid, pick, clamp } from './util.js';
 export { NoopCrm, CollectingCrm } from './crm.js';
+export { followupAgent, coldRecoveryAgent, wabaFollowupAgent, FOLLOWUP_SQUAD } from './agents.js';

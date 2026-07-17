@@ -182,13 +182,39 @@ The Lovable reference exposes these routes (from `lovable_routes_summary.txt` +
 | `/regions` | `regions/page.tsx` | ported · 100% equal |
 | `/favorites` | `favorites/page.tsx` | ported · 100% equal |
 | `/compare` | `compare/page.tsx` | ported · 100% equal |
-| `/dashboard` | `dashboard/page.tsx` | ported · 100% equal |
-| `/admin` | `admin/page.tsx` + `analytics` `audit` `exports` `leads` `properties` `settings` `webhooks` | ported (superset) · 100% equal |
+| `/dashboard` | `dashboard/page.tsx` | ported · painel KPI (Lovable title “Mapa — LandMap” = **outra superfície** — ver §4.1) |
+| `/admin` | `admin/page.tsx` + `analytics` `audit` `exports` `leads` `properties` `settings` `webhooks` `agents` | ported (superset) · 100% equal · **agents** = time autônomo de follow-up (admin-only) |
 | `/plans` | `plans/page.tsx` | ported · 100% equal |
 | `/auth` | `auth/page.tsx` | ported (mocked Google auth) · 100% equal |
-| `/map` | `map/page.tsx` | ported (Leaflet) · 100% equal |
+| `/map` | `map/page.tsx` | **híbrido** · chrome Lovable + produto Free terrenos (ver §4.1 Map System Standard) |
 | `/search` | `search/page.tsx` | ported (Server Component, `searchProperties` API, i18n pt-BR/en-US/es-ES, Navbar link) · 100% equal |
 | `/onboarding` | `onboarding/page.tsx` | ported · 100% equal |
+
+**Superset LandMap (mesmo design system, fora do Lovable):** `/rag`, `/chat`, `/developers`, `/integrations`, `/admin/webhooks` (outbound multi-projeto), market pages, etc. Revalidação: `docs/lovable-parity-recheck-2026-07.md`. Contrato RAG/webhooks: `docs/platform-rag-webhooks-2026-07.md`.
+
+### 4.1 Map System Standard (2026-07-17 — **Opção A: literal intelligence**)
+
+> Spec de dados/copy: `apps/web/src/lib/mapIntelligence.ts` · auditoria: `docs/map-parity-audit-2026-07.md`.
+
+| Rota | Papel |
+|---|---|
+| **`/map`** | **Map Intelligence 1:1 Lovable** — full-bleed, 8 camadas, heat+escala (Crítico→Excepcional), tops valorização/oportunidades, fluxo do índice, busca CEP/zoneamento, painel região. Metadata: **Mapa — LandMap**. (Lovable usa Google Maps; LandMap = Leaflet light + mesmo UX.) |
+| **`/dashboard`** | Painel KPI + CTA para `/map` (overview). |
+
+#### Must-match (toda UI de mapa / geo)
+
+1. Tokens só de `apps/web/src/app/globals.css`.
+2. Fontes: DM Sans + Space Grotesk; mono = system stack.
+3. `@landmap/ui` + `lovable/icons`.
+4. Leaflet sem paleta Sovereign; stroke `#fff` em markers OK.
+5. Controles funcionais; copy must-have do intelligence alinhada ao Lovable.
+6. Auth free via `RequireAuth`.
+
+#### Proibido
+
+- Paleta Sovereign/World 3D.
+- Dashboard genérico sem camadas (reverter A).
+- MapView demo órfão / sliders mortos.
 
 **Removed (no Lovable equivalent — archived, not drift):** `world` (3D "World"/Sovereign
 data-viz + `BmapViewer`/`SkylineCanvas`/`AtlasLanding`/`InvestmentCard`/`InvestorPanel`/

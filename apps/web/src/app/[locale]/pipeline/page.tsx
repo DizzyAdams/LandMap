@@ -2,74 +2,67 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
-import { ArrowLeft, GitBranch, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
+import { Activity, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Segmented, Button } from '@landmap/ui';
-import { ApiNotice } from '../../../components/ApiNotice';
+import { Card, Badge, Stat, Progress, buttonVariants, cn } from '@landmap/ui';
 
 const STAGES = [
-  { value: 'scout', label: 'Scout' },
-  { value: 'analyze', label: 'Análise' },
-  { value: 'write', label: 'Redação' },
-  { value: 'notify', label: 'Notificar' },
+  { name: 'Ingestão', pct: 100, detail: 'Markdowns + geo' },
+  { name: 'Scoring', pct: 100, detail: 'Score LandMap' },
+  { name: 'Radar', pct: 92, detail: 'Oportunidades' },
+  { name: 'Alertas', pct: 78, detail: 'Regras ativas' },
+  { name: 'CRM', pct: 64, detail: 'Leads sync' },
+  { name: 'Export', pct: 40, detail: 'Webhooks' },
 ];
-
-const DESCR: Record<string, string> = {
-  scout: 'O agente Scout varre a base e qualifica terrenos por critérios de yield e liquidez.',
-  analyze: 'O Analyzer gera o relatório de risco e valorização da região.',
-  write: 'O Writer redige a descrição do anúncio e o e-mail de abordagem.',
-  notify: 'O pipeline dispara notificação no app e cria a tarefa de follow-up.',
-};
 
 export default function PipelinePage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
-  const [stage, setStage] = useState('scout');
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/assistant')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
+    <ProductPageShell
+      backHref="/assistant"
+      eyebrow={
+        <>
+          <Activity className="h-3 w-3" /> Pipeline IA
+        </>
+      }
+      title="Pipeline de inteligência"
+      description="Do dado bruto ao lead — etapas do fluxo LandMap."
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Etapas" value={String(STAGES.length)} />
+        <Stat label="Saudável" value="4/6" />
+        <Stat label="Throughput" value="3k/dia" trend={12} />
+      </section>
 
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <GitBranch className="h-3 w-3" />
-          Pipeline de IA
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Funil autônomo</h1>
-        <p className="mt-2 text-sm text-foreground/60">Visualize e conecte cada estágio do seu pipeline.</p>
-      </div>
-
-      <ApiNotice variant="api" className="mt-4" />
-
-      <Card className="mt-6">
-        <Segmented aria-label="Estágio" options={STAGES} value={stage} onChange={setStage} />
-        <div className="mt-4 flex items-start gap-3 rounded-xl border border-dashed border-border bg-muted/40 p-4">
-          <Sparkles className="h-4 w-4 text-primary" />
-          <p className="text-sm text-foreground/70">{DESCR[stage]}</p>
-        </div>
-        <Button className="mt-4 w-full">
-          <GitBranch className="h-4 w-4" />
-          Executar pipeline
-        </Button>
-      </Card>
-
-      <Reveal className="mt-6 flex flex-col gap-2">
-        {STAGES.map((s, i) => (
-          <Card key={s.value} variant={s.value === stage ? 'highlight' : 'default'}>
-            <p className="text-sm">
-              <span className="mr-2 font-mono text-xs text-muted-foreground">{String(i + 1).padStart(2, '0')}</span>
-              {s.label}
-            </p>
+      <Reveal className="mt-6 space-y-4">
+        {STAGES.map((s) => (
+          <Card key={s.name} className="p-4">
+            <div className="mb-2 flex items-center justify-between">
+              <p className="font-semibold">{s.name}</p>
+              <Badge variant={s.pct >= 90 ? 'success' : s.pct >= 60 ? 'info' : 'warning'}>
+                {s.pct}%
+              </Badge>
+            </div>
+            <Progress value={s.pct} />
+            <p className="mt-1 text-xs text-muted-foreground">{s.detail}</p>
           </Card>
         ))}
       </Reveal>
-    </main>
+
+      <div className="mt-6 flex flex-wrap gap-2">
+        <Link href={lh('/leads')} className={cn(buttonVariants({ size: 'sm' }))}>
+          Leads
+        </Link>
+        <Link href={lh('/kpis')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+          KPIs
+        </Link>
+        <Link href={lh('/map')} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+          Mapa
+        </Link>
+      </div>
+    </ProductPageShell>
   );
 }

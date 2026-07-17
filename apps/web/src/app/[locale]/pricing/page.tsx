@@ -2,29 +2,40 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Sparkles, Check } from '../../../components/lovable/icons';
+import { Sparkles, Check } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Button } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { Card, Badge, Button, Stat } from '@landmap/ui';
 
-/** Espelha /plans Lovable (Access / Plus / Pro / Business). */
 const PLANS = [
   {
     name: 'Access',
     price: 'R$ 69,90',
-    feats: ['Cidades do Brasil', 'Mapa de calor', 'Histórico m²', '10 favoritos'],
+    feats: ['Mapa intelligence (camadas)', 'Heatmap de valorização', 'Histórico m²', '10 favoritos'],
     hl: false,
   },
   {
     name: 'Plus',
     price: 'R$ 119,90',
-    feats: ['Radar de oportunidades', 'Alertas', 'Comparação', '25 favoritos'],
+    feats: [
+      'Tudo do Access',
+      'Radar de oportunidades',
+      'Alertas inteligentes',
+      'Comparação de regiões',
+      '25 favoritos',
+    ],
     hl: true,
   },
   {
     name: 'Pro',
     price: 'R$ 249,90',
-    feats: ['Relatório mensal', 'Avaliação de terreno', '50 regiões'],
+    feats: ['Relatório mensal', 'Avaliação de terreno', 'Score detalhado', '50 regiões'],
+    hl: false,
+  },
+  {
+    name: 'Business',
+    price: 'R$ 699,90',
+    feats: ['API & webhooks', 'Multi-usuário', 'Exports admin', 'SLA comercial'],
     hl: false,
   },
 ];
@@ -32,32 +43,33 @@ const PLANS = [
 export default function PricingPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
+
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link
-          href={lh('/')}
-          aria-label="Voltar"
-          className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted"
-        >
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
+    <ProductPageShell
+      backHref="/plans"
+      eyebrow={
+        <>
+          <Sparkles className="h-3 w-3" /> Planos
+        </>
+      }
+      title="Escolha seu plano"
+      description="Comece a analisar o mercado agora. Cancele quando quiser. Sem fidelidade."
+      maxWidth="5xl"
+    >
+      <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        <Stat label="Planos" value="4" />
+        <Stat label="Mais popular" value="Plus" />
+        <Stat label="Mapa" value="incluído" />
+        <Stat label="Fidelidade" value="0 dias" />
+      </section>
 
-      <div className="mt-6 text-center">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Sparkles className="h-3 w-3" />
-          Planos
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Escolha seu plano</h1>
-        <p className="mt-2 text-sm text-foreground/60">Cancele quando quiser. Sem fidelidade.</p>
-      </div>
-
-      <Reveal className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-3">
+      <Reveal className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         {PLANS.map((pl) => (
-          <Card key={pl.name} variant={pl.hl ? 'highlight' : 'interactive'} className="flex flex-col">
+          <Card
+            key={pl.name}
+            variant={pl.hl ? 'highlight' : 'interactive'}
+            className="flex flex-col p-4"
+          >
             <div className="flex items-center justify-between">
               <p className="font-semibold">LandMap {pl.name}</p>
               {pl.hl && <Badge variant="success">popular</Badge>}
@@ -68,20 +80,27 @@ export default function PricingPage() {
             </p>
             <ul className="mt-4 flex flex-1 flex-col gap-2 text-sm">
               {pl.feats.map((f) => (
-                <li key={f} className="flex items-center gap-2">
-                  <Check className="h-4 w-4 text-primary" />
+                <li key={f} className="flex items-start gap-2">
+                  <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                   {f}
                 </li>
               ))}
             </ul>
-            <Link href={lh('/plans')} className="mt-4">
-              <Button className="w-full" variant={pl.hl ? 'default' : 'ghost'}>
-                Ver planos
+            <Link href={lh('/plans')} className="mt-4 block">
+              <Button className="w-full" variant={pl.hl ? 'default' : 'outline'}>
+                Assinar {pl.name}
               </Button>
             </Link>
           </Card>
         ))}
       </Reveal>
-    </main>
+
+      <p className="mt-6 text-center text-xs text-muted-foreground">
+        Pagamento não ativado — fluxo de demonstração.{' '}
+        <Link href={lh('/auth')} className="text-primary hover:underline">
+          Já tem conta? Entrar
+        </Link>
+      </p>
+    </ProductPageShell>
   );
 }

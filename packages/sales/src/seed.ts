@@ -32,8 +32,57 @@ export function createInitialStore(): SalesStore {
   const tasks: SalesTask[] = [
     { id: 'task-1', kind: 'outreach', agentId: 'agent-outreacher', leadId: 'lead-2', title: 'Outreach e-mail → Carlos Oliveira', detail: 'Oi Carlos, vi que você busca Casa com piscina em Florianópolis — e notei novo lançamento na região. Posso te enviar 3 opções?', draft: 'Oi Carlos, vi que você busca Casa com piscina em Florianópolis — e notei novo lançamento na região. Posso te enviar 3 opções?', channel: 'email', status: 'pending', createdAt: '2026-08-06T08:00:00Z' },
     { id: 'task-2', kind: 'review', agentId: 'agent-qualifier', leadId: 'lead-1', title: 'Abrir negócio: Ana Silva', detail: 'Lead quente detectado. Criar oportunidade de 480000 BRL.', channel: 'email', createDeal: { amount: 480000, title: 'Apartamento 2 quartos — Ana Silva' }, status: 'pending', createdAt: '2026-08-05T10:00:00Z' },
+    {
+      id: 'task-fu-1',
+      kind: 'follow_up',
+      agentId: 'agent-followup',
+      leadId: 'lead-5',
+      dealId: 'deal-2',
+      title: 'Follow-up D+1 → Juliana Lima',
+      detail: 'Oi Juliana! Passando no D+1 sobre Studio para investimento. Ainda faz sentido?',
+      draft: 'Oi Juliana! Passando no D+1 sobre Studio para investimento. Ainda faz sentido?',
+      channel: 'whatsapp',
+      status: 'pending',
+      createdAt: new Date(Date.now() - 2 * 3600 * 1000).toISOString(),
+      // overdue for due-alerts demo
+      dueAt: new Date(Date.now() - 6 * 3600 * 1000).toISOString(),
+    },
+    {
+      id: 'task-fu-2',
+      kind: 'follow_up',
+      agentId: 'agent-followup',
+      leadId: 'lead-7',
+      dealId: 'deal-4',
+      title: 'Follow-up D+3 → Larissa Souza',
+      detail: 'Olá Larissa, recontato D+3 sobre Casa de campo — pipeline em negociação.',
+      draft: 'Olá Larissa, recontato D+3 sobre Casa de campo — pipeline em negociação.',
+      channel: 'email',
+      status: 'pending',
+      createdAt: new Date(Date.now() - 3600 * 1000).toISOString(),
+      // due soon (< 24h)
+      dueAt: new Date(Date.now() + 4 * 3600 * 1000).toISOString(),
+    },
+    {
+      id: 'task-fu-3',
+      kind: 'follow_up',
+      agentId: 'agent-followup',
+      leadId: 'lead-4',
+      title: 'Follow-up D+7 → Rafael Costa',
+      detail: 'Rafael, ainda de olho no terreno 360 m²? Posso mandar comps com Score LandMap.',
+      draft: 'Rafael, ainda de olho no terreno 360 m²? Posso mandar comps com Score LandMap.',
+      channel: 'whatsapp',
+      status: 'pending',
+      createdAt: new Date().toISOString(),
+      dueAt: new Date(Date.now() + 7 * 24 * 3600 * 1000).toISOString(),
+    },
   ];
   tasks.forEach((t) => store.addTask(t));
+
+  // Time inteiro em standby (idle / em espera) no boot do admin cockpit
+  for (const a of store.agents) {
+    a.status = 'idle';
+    a.currentTask = 'Em espera na fila';
+  }
 
   store.channelStats = {
     email: { sent: 14, replies: 4 },

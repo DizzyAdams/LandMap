@@ -84,6 +84,9 @@ export function createRoster(): SalesAgent[] {
     ['prospector', 'Caçadora', 'Explora sinais de mercado e gera novos leads qualificados.'],
     ['qualifier', 'Qualificadora', 'Pontua fit e intenção, promovendo leads quentes a negócios.'],
     ['outreacher', 'Outbound', 'Redige e dispara mensagens 1:1 multicanal (e-mail/WhatsApp).'],
+    ['followup', 'Follow-up', 'Fila de recontatos autônomos — cadência D+1 / D+3 / D+7.'],
+    ['cold_recovery', 'Resgate frio', 'Recupera leads cold sem engajamento (último empurrão).'],
+    ['waba_followup', 'WhatsApp WABA', 'Follow-ups curtos só WhatsApp Business (templates).'],
     ['closer', 'Fechadora', 'Agenda visitas, envia propostas e conduz a negociação.'],
     ['account_manager', 'Sucesso', 'Cuida do pós-venda, handoff e sincroniza o CRM.'],
     ['forecaster', 'Previsora', 'Recalcula probabilidade e prevê receita do pipeline.'],
@@ -248,7 +251,7 @@ export const outreacher: AgentDef = {
       const draft = draftOutreach(lead, channel, ctx);
       const task: SalesTask = {
         id: uid('task'),
-        kind: ctx.rng() > 0.6 ? 'follow_up' : 'outreach',
+        kind: 'outreach',
         agentId: this.id,
         leadId: lead.id,
         title: `Outreach ${channel} → ${lead.name}`,
@@ -270,6 +273,132 @@ export const outreacher: AgentDef = {
       };
       effects.push({ type: 'task', task }, { type: 'event', event });
     }
+    return effects;
+  },
+};
+
+/* ─── Follow-up (cadência autônoma) ─── */
+
+const FOLLOWUP_CADENCE = [
+  { day: 1, label: 'D+1' },
+  { day: 3, label: 'D+3' },
+  { day: 7, label: 'D+7' },
+] as const;
+
+function draftFollowUp(lead: Lead, step: (typeof FOLLOWUP_CADENCE)[number], channel: 'email' | 'whatsapp'): string {
+  const first = lead.name.split(' ')[0];
+  if (channel === 'whatsapp') {
+    return (
+      `Oi ${first}! Passando no ${step.label} sobre ${lead.interest}. ` +
+      `Ainda faz sentido olharmos opções em ${lead.city ?? 'sua cidade'}? Posso mandar 2 comps atualizados.`
+    );
+  }
+  return (
+    `Olá ${first},\n\n` +
+    `Este é o follow-up ${step.label} sobre seu interesse em ${lead.interest}` +
+    (lead.city ? ` em ${lead.city}` : '') +
+    `.\n\nMantemos oportunidades alinhadas ao Score LandMap e à sua faixa de orçamento. ` +
+    `Quer que eu reabra o dossiê ou agende uma call rápida?\n\n— Time LandMap`
+  );
+}
+
+/** Agente dedicado: recontatos em espera na fila até autonomia liberar o ciclo. */
+export const followupAgent: AgentDef = {
+  id: 'agent-followup',
+  role: 'followup',
+  name: 'Follow-up',
+  description: 'Fila de recontatos autônomos — cadência D+1 / D+3 / D+7.',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const pendingFu = store.pendingTasks().filter((t) => t.kind === 'follow_up').length;
+    // Cap fila para não explodir
+    if (pendingFu >= 12) return effects;
+
+    // Leads com engajamento antigo ou worked sem deal avançado
+    const silent = store.leads.filter((l) => {
+      if (l.tier === 'cold' && (l.engagementCount || 0) === 0) return false;
+      return (l.engagementCount || 0) >= 1 || l.worked;
+    });
+
+    for (const lead of silent.slice(0, 4)) {
+      const openDeal = store.deals.find(
+        (d) => d.leadId === lead.id && d.stage !== 'closed_won' && d.stage !== 'closed_lost',
+      );
+      // Pula se já tem follow_up pending para o lead
+      if (store.pendingTasks().some((t) => t.kind === 'follow_up' && t.leadId === lead.id)) continue;
+
+      const step = pick([...FOLLOWUP_CADENCE], ctx.rng);
+      const channel = ctx.rng() > 0.45 ? 'whatsapp' : 'email';
+      const draft = draftFollowUp(lead, step, channel);
+      const due = new Date(Date.now() + step.day * 24 * 3600 * 1000).toISOString();
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'follow_up',
+        agentId: this.id,
+        leadId: lead.id,
+        dealId: openDeal?.id,
+        title: `Follow-up ${step.label} → ${lead.name}`,
+        detail: draft,
+        draft,
+        channel,
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: due,
+      };
+      const event: AgentEvent = {
+        id: uid('evt'),
+        at: ctx.now(),
+        agentId: this.id,
+        kind: 'outreach',
+        title: `Follow-up ${step.label} enfileirado`,
+        detail: `${lead.name} · ${channel} · em espera`,
+        leadId: lead.id,
+        dealId: openDeal?.id,
+        level: 'info',
+      };
+      effects.push({ type: 'task', task }, { type: 'event', event });
+    }
+
+    // Deals sem atividade recente → follow-up de pipeline
+    for (const deal of store.openDeals().slice(0, 2)) {
+      if (store.pendingTasks().some((t) => t.kind === 'follow_up' && t.dealId === deal.id)) continue;
+      const lead = store.getLead(deal.leadId);
+      if (!lead) continue;
+      const channel = 'email' as const;
+      const draft = `Re: ${deal.title}\n\nSó reforçando o próximo passo (${deal.nextAction ?? 'continuar conversa'}). Posso ajudar?`;
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'follow_up',
+        agentId: this.id,
+        leadId: lead.id,
+        dealId: deal.id,
+        title: `Recontato pipeline → ${deal.title}`,
+        detail: draft,
+        draft,
+        channel,
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: new Date(Date.now() + 2 * 24 * 3600 * 1000).toISOString(),
+      };
+      effects.push(
+        { type: 'task', task },
+        {
+          type: 'event',
+          event: {
+            id: uid('evt'),
+            at: ctx.now(),
+            agentId: this.id,
+            kind: 'note',
+            title: `Follow-up de deal: ${deal.title}`,
+            detail: 'Aguardando na fila (standby até aprovação/autopilot)',
+            dealId: deal.id,
+            leadId: lead.id,
+            level: 'info',
+          },
+        },
+      );
+    }
+
     return effects;
   },
 };
@@ -760,11 +889,121 @@ export const negotiator: AgentDef = {
   },
 };
 
+/* ─── Cold recovery ─── */
+
+export const coldRecoveryAgent: AgentDef = {
+  id: 'agent-cold_recovery',
+  role: 'cold_recovery',
+  name: 'Resgate frio',
+  description: 'Recupera leads cold sem engajamento (último empurrão).',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const colds = store.leads.filter(
+      (l) => (l.tier === 'cold' || !l.tier) && (l.engagementCount || 0) < 2 && !l.worked,
+    );
+    for (const lead of colds.slice(0, 2)) {
+      if (store.pendingTasks().some((t) => t.leadId === lead.id && t.kind === 'follow_up')) continue;
+      const draft =
+        `Oi ${lead.name.split(' ')[0]}, última chance de olhar ${lead.interest}` +
+        (lead.city ? ` em ${lead.city}` : '') +
+        `. Temos comps com Score LandMap atualizados — quer que eu envie?`;
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'follow_up',
+        agentId: this.id,
+        leadId: lead.id,
+        title: `Resgate frio → ${lead.name}`,
+        detail: draft,
+        draft,
+        channel: 'email',
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: new Date(Date.now() + 24 * 3600 * 1000).toISOString(),
+      };
+      effects.push(
+        { type: 'task', task },
+        {
+          type: 'event',
+          event: {
+            id: uid('evt'),
+            at: ctx.now(),
+            agentId: this.id,
+            kind: 'outreach',
+            title: `Resgate enfileirado: ${lead.name}`,
+            detail: 'Lead frio · em espera',
+            leadId: lead.id,
+            level: 'warn',
+          },
+        },
+      );
+    }
+    return effects;
+  },
+};
+
+/* ─── WhatsApp-only follow-up ─── */
+
+export const wabaFollowupAgent: AgentDef = {
+  id: 'agent-waba_followup',
+  role: 'waba_followup',
+  name: 'WhatsApp WABA',
+  description: 'Follow-ups curtos só WhatsApp Business (templates).',
+  run(ctx, store) {
+    const effects: SalesEffect[] = [];
+    const targets = store.leads.filter(
+      (l) => l.phone && (l.tier === 'hot' || l.tier === 'warm') && (l.engagementCount || 0) >= 1,
+    );
+    for (const lead of targets.slice(0, 3)) {
+      if (
+        store
+          .pendingTasks()
+          .some((t) => t.leadId === lead.id && t.channel === 'whatsapp' && t.status === 'pending')
+      ) {
+        continue;
+      }
+      const draft = `LandMap: hi ${lead.name.split(' ')[0]} 👋 follow-up de ${lead.interest}. Responde 1 se quiser comps ou 2 p/ agendar.`;
+      const task: SalesTask = {
+        id: uid('task'),
+        kind: 'follow_up',
+        agentId: this.id,
+        leadId: lead.id,
+        title: `WABA template → ${lead.name}`,
+        detail: draft,
+        draft,
+        channel: 'whatsapp',
+        status: 'pending',
+        createdAt: ctx.now(),
+        dueAt: new Date(Date.now() + 12 * 3600 * 1000).toISOString(),
+      };
+      effects.push(
+        { type: 'task', task },
+        {
+          type: 'event',
+          event: {
+            id: uid('evt'),
+            at: ctx.now(),
+            agentId: this.id,
+            kind: 'outreach',
+            title: `WABA na fila: ${lead.name}`,
+            detail: 'whatsapp · standby',
+            leadId: lead.id,
+            level: 'info',
+          },
+        },
+      );
+    }
+    return effects;
+  },
+};
+
 /** Ordered roster of specialised agents used by the orchestrator. */
 export const AGENTS: AgentDef[] = [
   prospector,
   qualifier,
   outreacher,
+  followupAgent,
+  coldRecoveryAgent,
+  wabaFollowupAgent,
   closer,
   accountManager,
   forecaster,
@@ -773,5 +1012,12 @@ export const AGENTS: AgentDef[] = [
   marketIntel,
   onboarding,
   negotiator,
+];
+
+/** Agentes de recontato (rodam no tick de standby / follow-up). */
+export const FOLLOWUP_SQUAD: AgentDef[] = [
+  followupAgent,
+  coldRecoveryAgent,
+  wabaFollowupAgent,
 ];
 

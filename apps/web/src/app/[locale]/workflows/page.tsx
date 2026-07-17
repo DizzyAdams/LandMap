@@ -2,68 +2,106 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Workflow, Sparkles } from '../../../components/lovable/icons';
+import { Workflow, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Stat } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
 
 const FLOWS = [
-  { name: 'Onboarding de lead', steps: 4, status: 'ativo' },
-  { name: 'Qualificação automática', steps: 3, status: 'ativo' },
-  { name: 'Follow-up de proposta', steps: 5, status: 'ativo' },
-  { name: 'Pós-venda', steps: 3, status: 'beta' },
+  {
+    id: 'alert-valorization',
+    name: 'Alerta de valorização',
+    trigger: 'Camada Valorização m² > 85',
+    actions: ['Notificar app', 'Criar lead', 'Email resumo'],
+    status: 'ativo',
+  },
+  {
+    id: 'heat-zone',
+    name: 'Zona quente',
+    trigger: 'Top oportunidades score ≥ 88',
+    actions: ['Push radar', 'Salvar favorito'],
+    status: 'ativo',
+  },
+  {
+    id: 'risk-flood',
+    name: 'Risco enchente',
+    trigger: 'floodRisk = alto',
+    actions: ['Badge alerta', 'Webhook CRM'],
+    status: 'pausado',
+  },
+  {
+    id: 'weekly-report',
+    name: 'Relatório semanal',
+    trigger: 'Cron segunda 08:00',
+    actions: ['PDF overview', 'Email assinantes'],
+    status: 'ativo',
+  },
+  {
+    id: 'rag-digest',
+    name: 'Digest RAG',
+    trigger: 'Novos markdowns',
+    actions: ['Indexar', 'Resumo no LandBot'],
+    status: 'rascunho',
+  },
 ];
 
 export default function WorkflowsPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
+  const active = FLOWS.filter((f) => f.status === 'ativo').length;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/assistant')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
-
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Workflow className="h-3 w-3" />
-          Fluxos de trabalho
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Automação ponta a ponta</h1>
-        <p className="mt-2 text-sm text-foreground/60">Templates de fluxo prontos para o seu operacional.</p>
-      </div>
-
-      <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Fluxos" value="4" />
-        <Stat label="Passos no total" value="15" />
-        <Stat label="Ativos" value="3" />
+    <ProductPageShell
+      backHref="/automations"
+      eyebrow={
+        <>
+          <Workflow className="h-3 w-3" /> Fluxos
+        </>
+      }
+      title="Fluxos de trabalho"
+      description="Automações ligadas ao mapa intelligence e ao radar de oportunidades."
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Fluxos" value={String(FLOWS.length)} />
+        <Stat label="Ativos" value={String(active)} />
+        <Stat label="Gatilhos" value="mapa · cron · RAG" />
       </section>
 
-      <Reveal className="mt-6 flex flex-col gap-3">
+      <div className="mt-4 flex gap-2">
+        <Link href={lh('/automations')} className={cn(buttonVariants({ size: 'sm' }))}>
+          Automações
+        </Link>
+        <Link href={lh('/alerts')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+          Alertas
+        </Link>
+      </div>
+
+      <Reveal className="mt-6 space-y-3">
         {FLOWS.map((f) => (
-          <Card key={f.name} variant={f.status === 'ativo' ? 'interactive' : 'default'}>
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <Workflow className="h-4 w-4 text-primary" />
-                  <p className="truncate font-semibold">{f.name}</p>
+          <Card key={f.id} variant="interactive" className="p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div>
+                <p className="font-semibold">{f.name}</p>
+                <p className="mt-1 text-xs text-muted-foreground">Quando: {f.trigger}</p>
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {f.actions.map((a) => (
+                    <Badge key={a} variant="outline">
+                      {a}
+                    </Badge>
+                  ))}
                 </div>
-                <p className="mt-1 text-xs text-muted-foreground">{f.steps} passos</p>
               </div>
-              <Badge variant={f.status === 'ativo' ? 'success' : 'warning'}>{f.status}</Badge>
+              <Badge
+                variant={
+                  f.status === 'ativo' ? 'success' : f.status === 'pausado' ? 'warning' : 'outline'
+                }
+              >
+                {f.status}
+              </Badge>
             </div>
           </Card>
         ))}
       </Reveal>
-
-      <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <Sparkles className="h-4 w-4" />
-        Editor visual no plano Pro.
-      </div>
-    </main>
+    </ProductPageShell>
   );
 }

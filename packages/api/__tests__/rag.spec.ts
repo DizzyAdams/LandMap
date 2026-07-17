@@ -38,4 +38,23 @@ describe('packages/api — rag router', () => {
     });
     expect(res.status).toBe(400);
   });
+
+  it('GET /rag/status returns index stats', async () => {
+    const res = await makeApp().request('/rag/status');
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.ok).toBe(true);
+    expect(typeof data.chunks).toBe('number');
+    expect(typeof data.documents).toBe('number');
+    expect(data.chunks).toBeGreaterThan(0);
+  });
+
+  it('POST /rag/retrieve returns sources only', async () => {
+    const res = await makeApp().request('/rag/retrieve', json({ query: 'Score LandMap' }));
+    expect(res.status).toBe(200);
+    const data = await res.json();
+    expect(data.ok).toBe(true);
+    expect(Array.isArray(data.sources)).toBe(true);
+  });
 });
+

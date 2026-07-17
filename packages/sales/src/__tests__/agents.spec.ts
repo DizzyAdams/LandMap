@@ -4,6 +4,7 @@ import {
   createRoster,
   createInitialStore,
   runCycle,
+  runFollowUpCycle,
   mulberry32,
   NoopCrm,
 } from '../index.js';
@@ -28,22 +29,25 @@ const NEW_ROLES = [
   'market_intel',
   'onboarding',
   'negotiator',
+  'followup',
+  'cold_recovery',
+  'waba_followup',
 ] as const;
 
 const GROWTH_IDS = NEW_ROLES.map((r) => `agent-${r}`);
 
 describe('growth agents (Spec 04)', () => {
-  it('extends the roster with the 5 growth agents', () => {
+  it('extends the roster with growth + followup squad', () => {
     const roster = createRoster();
     const roles = roster.map((a) => a.role);
     for (const r of NEW_ROLES) expect(roles).toContain(r);
-    expect(roster.length).toBe(11);
+    expect(roster.length).toBe(14);
   });
 
-  it('adds the 5 growth agents to the AGENTS array', () => {
+  it('adds growth + followup squad to the AGENTS array', () => {
     const roles = AGENTS.map((a) => a.role);
     for (const r of NEW_ROLES) expect(roles).toContain(r);
-    expect(AGENTS.length).toBe(11);
+    expect(AGENTS.length).toBe(14);
   });
 
   it('growth agents run and emit HITL tasks in copilot', async () => {
@@ -65,4 +69,21 @@ describe('growth agents (Spec 04)', () => {
     // create deals nor appear as deal owners.
     expect(s.deals.every((d) => !GROWTH_IDS.includes(d.ownerAgent))).toBe(true);
   });
+
+  it('seeds pending follow-ups and team on standby', () => {
+    const s = createInitialStore();
+    const fus = s.pendingTasks().filter((t) => t.kind === 'follow_up');
+    expect(fus.length).toBeGreaterThanOrEqual(3);
+    expect(s.agents.every((a) => a.status === 'idle')).toBe(true);
+    expect(s.agents.some((a) => a.role === 'followup')).toBe(true);
+  });
+
+  it('runFollowUpCycle enqueues or keeps follow_up tasks in copilot', async () => {
+    const s = createInitialStore();
+    const before = s.pendingTasks().filter((t) => t.kind === 'follow_up').length;
+    await runFollowUpCycle(s, makeCtx(s, 'copilot'));
+    const after = s.pendingTasks().filter((t) => t.kind === 'follow_up').length;
+    expect(after).toBeGreaterThanOrEqual(before);
+  });
 });
+

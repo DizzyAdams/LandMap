@@ -1,50 +1,112 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Layers } from '../../../../components/lovable/icons';
+import {
+  createWebhookEndpoint,
+  deleteWebhookEndpoint,
+  listWebhookDeliveries,
+  listWebhookEndpoints,
+  testWebhookEndpoint,
+  type WebhookDelivery,
+  type WebhookEndpoint,
+  type WebhookEventType,
+} from '../../../../lib/api';
 
-type WebhookConfig = {
-  url: string;
-  events: string[];
-};
-
-const STORAGE_KEY = 'landmap_webhooks';
-const AVAILABLE_EVENTS = [
+const AVAILABLE_EVENTS: WebhookEventType[] = [
   'property.created',
   'property.updated',
   'property.deleted',
   'lead.created',
   'lead.updated',
+  'alert.fired',
+  'rag.query',
+  'score.updated',
+  'favorite.added',
+  'ping',
 ];
 
 export default function AdminWebhooksPage() {
-  const [config, setConfig] = useState<WebhookConfig>({ url: '', events: ['property.created'] });
-  const [saved, setSaved] = useState(false);
+  const [items, setItems] = useState<WebhookEndpoint[]>([]);
+  const [deliveries, setDeliveries] = useState<WebhookDelivery[]>([]);
+  const [name, setName] = useState('Meu projeto');
+  const [url, setUrl] = useState('https://webhook.site/your-id');
+  const [events, setEvents] = useState<WebhookEventType[]>(['ping', 'rag.query', 'lead.created']);
+  const [lastSecret, setLastSecret] = useState<string | null>(null);
+  const [msg, setMsg] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  const refresh = useCallback(async () => {
     try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) setConfig(JSON.parse(stored));
-    } catch {}
+      const [eps, dels] = await Promise.all([
+        listWebhookEndpoints(),
+        listWebhookDeliveries(40),
+      ]);
+      setItems(eps.items);
+      setDeliveries(dels.items);
+      setError(null);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'API indisponível');
+    }
   }, []);
 
-  function toggleEvent(event: string) {
-    setConfig((prev) => {
-      const has = prev.events.includes(event);
-      return {
-        ...prev,
-        events: has
-          ? prev.events.filter((e) => e !== event)
-          : [...prev.events, event],
-      };
-    });
-    setSaved(false);
+  useEffect(() => {
+    void refresh();
+  }, [refresh]);
+
+  function toggleEvent(event: WebhookEventType) {
+    setEvents((prev) =>
+      prev.includes(event) ? prev.filter((e) => e !== event) : [...prev, event],
+    );
   }
 
-  function handleSave() {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+  async function handleCreate() {
+    setBusy(true);
+    setMsg(null);
+    try {
+      const res = await createWebhookEndpoint({ name, url, events });
+      setLastSecret(res.endpoint.secret);
+      setMsg(`Endpoint ${res.endpoint.id} criado. Guarde o secret (mostrado uma vez).`);
+      await refresh();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : 'Erro ao criar');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleTest(id: string) {
+    setBusy(true);
+    try {
+      const res = await testWebhookEndpoint(id);
+      const d = res.deliveries[0];
+      setMsg(
+        d
+          ? d.ok
+            ? `Ping OK · HTTP ${d.status} · ${d.durationMs}ms`
+            : `Ping falhou · ${d.error || d.status}`
+          : 'Sem delivery (endpoint inativo?)',
+      );
+      await refresh();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : 'Teste falhou');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    setBusy(true);
+    try {
+      await deleteWebhookEndpoint(id);
+      setMsg('Removido');
+      await refresh();
+    } catch (e) {
+      setMsg(e instanceof Error ? e.message : 'Erro ao remover');
+    } finally {
+      setBusy(false);
+    }
   }
 
   return (
@@ -55,65 +117,170 @@ export default function AdminWebhooksPage() {
         </div>
         <div>
           <p className="text-sm font-medium text-[var(--primary)]">Integrações</p>
-          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">Webhooks</h1>
-          <p className="mt-1 text-[var(--muted-foreground)]">Configurar URLs de callback para eventos do LandMap</p>
+          <h1 className="mt-1 text-3xl font-bold tracking-tight text-[var(--foreground)]">
+            Webhooks
+          </h1>
+          <p className="mt-1 text-[var(--muted-foreground)]">
+            Conecte outros projetos — HMAC-SHA256 em{' '}
+            <code className="text-xs">X-LandMap-Signature</code>
+          </p>
         </div>
       </header>
 
-      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 max-w-lg">
-        <div className="space-y-5">
-          {/* URL input */}
-          <label className="block">
-            <span className="mb-1 block text-[11px] text-[var(--muted-foreground)]">URL do Webhook</span>
-            <input
-              type="url"
-              value={config.url}
-              onChange={(e) => {
-                setConfig((prev) => ({ ...prev, url: e.target.value }));
-                setSaved(false);
-              }}
-              placeholder="https://exemplo.com/webhook"
-              className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm text-[var(--foreground)] outline-none placeholder:text-[var(--muted-foreground)] focus:border-[var(--primary)]"
-            />
-          </label>
+      {error && (
+        <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-4 text-sm text-[var(--muted-foreground)]">
+          {error}
+          <br />
+          <span className="text-xs">Garanta proxy `/api` → Hono com rota `/webhooks`.</span>
+        </div>
+      )}
 
-          {/* Events */}
-          <div>
-            <p className="mb-2 text-[11px] text-[var(--muted-foreground)]">Eventos</p>
-            <div className="space-y-2">
-              {AVAILABLE_EVENTS.map((event) => (
-                <label
-                  key={event}
-                  className="flex cursor-pointer items-center gap-3 rounded-lg border border-[var(--border)] bg-[var(--muted)] px-3 py-2 transition hover:border-[var(--primary)]"
-                >
-                  <input
-                    type="checkbox"
-                    checked={config.events.includes(event)}
-                    onChange={() => toggleEvent(event)}
-                    className="h-4 w-4 rounded border-[var(--border)] bg-[var(--card)] accent-[var(--primary)]"
-                  />
-                  <span className="text-xs text-[var(--foreground)] font-mono">{event}</span>
-                </label>
-              ))}
+      <div className="grid gap-6 lg:grid-cols-2">
+        <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
+          <h2 className="text-sm font-semibold text-[var(--foreground)]">Novo endpoint</h2>
+          <div className="mt-4 space-y-4">
+            <label className="block">
+              <span className="mb-1 block text-[11px] text-[var(--muted-foreground)]">Nome</span>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm outline-none focus:border-[var(--primary)]"
+              />
+            </label>
+            <label className="block">
+              <span className="mb-1 block text-[11px] text-[var(--muted-foreground)]">
+                URL (https ou localhost)
+              </span>
+              <input
+                type="url"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+                placeholder="https://meu-app.com/hooks/landmap"
+                className="w-full rounded-lg border border-[var(--border)] bg-[var(--card)] px-3 py-2 text-sm outline-none focus:border-[var(--primary)]"
+              />
+            </label>
+            <div>
+              <p className="mb-2 text-[11px] text-[var(--muted-foreground)]">Eventos</p>
+              <div className="grid max-h-48 gap-1 overflow-y-auto sm:grid-cols-2">
+                {AVAILABLE_EVENTS.map((event) => (
+                  <label
+                    key={event}
+                    className="flex cursor-pointer items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--muted)] px-2 py-1.5"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={events.includes(event)}
+                      onChange={() => toggleEvent(event)}
+                      className="accent-[var(--primary)]"
+                    />
+                    <span className="font-mono text-[10px] text-[var(--foreground)]">{event}</span>
+                  </label>
+                ))}
+              </div>
             </div>
+            <button
+              type="button"
+              disabled={busy}
+              onClick={() => void handleCreate()}
+              className="rounded-lg bg-[var(--primary)] px-4 py-2 text-xs font-medium text-[var(--primary-foreground)] transition hover:bg-[var(--primary)]/90 disabled:opacity-50"
+            >
+              Criar endpoint
+            </button>
+            {lastSecret && (
+              <div className="rounded-lg border border-[var(--primary)]/30 bg-[var(--primary)]/5 p-3 text-xs">
+                <p className="font-medium text-[var(--primary)]">Secret (copie agora)</p>
+                <code className="mt-1 block break-all font-mono text-[var(--foreground)]">
+                  {lastSecret}
+                </code>
+              </div>
+            )}
+            {msg && <p className="text-xs text-[var(--muted-foreground)]">{msg}</p>}
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
+            <h2 className="text-sm font-semibold">Endpoints ({items.length})</h2>
+            <ul className="mt-3 space-y-3">
+              {items.length === 0 && (
+                <li className="text-xs text-[var(--muted-foreground)]">Nenhum ainda.</li>
+              )}
+              {items.map((ep) => (
+                <li
+                  key={ep.id}
+                  className="rounded-xl border border-[var(--border)] bg-[var(--muted)] p-3"
+                >
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <div>
+                      <p className="text-sm font-medium">{ep.name}</p>
+                      <p className="font-mono text-[10px] text-[var(--muted-foreground)]">
+                        {ep.id}
+                      </p>
+                      <p className="mt-1 truncate text-xs">{ep.url}</p>
+                      <p className="mt-1 font-mono text-[10px] text-[var(--muted-foreground)]">
+                        {ep.events.join(', ')}
+                      </p>
+                      {ep.lastDeliveryAt && (
+                        <p className="mt-1 text-[10px] text-[var(--muted-foreground)]">
+                          Último: {ep.lastStatus ?? '—'} · {ep.lastDeliveryAt}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex gap-2">
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => void handleTest(ep.id)}
+                        className="rounded-lg border border-[var(--border)] px-2 py-1 text-[10px] hover:border-[var(--primary)]"
+                      >
+                        Test ping
+                      </button>
+                      <button
+                        type="button"
+                        disabled={busy}
+                        onClick={() => void handleDelete(ep.id)}
+                        className="rounded-lg border border-[var(--border)] px-2 py-1 text-[10px] text-red-500 hover:border-red-400"
+                      >
+                        Remover
+                      </button>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          {/* Save */}
-          <button
-            onClick={handleSave}
-            className="rounded-lg bg-[var(--primary)] px-4 py-2 text-xs font-medium text-[var(--primary-foreground)] transition hover:bg-[var(--primary)]/90"
-          >
-            {saved ? '✓ Salvo' : 'Salvar Configuração'}
-          </button>
-
-          {config.url && (
-            <p className="text-xs text-[var(--muted-foreground)]">
-              Webhook configurado para: <span className="text-[var(--foreground)]">{config.url}</span>
-              <br />
-              Eventos: {config.events.length > 0 ? config.events.join(', ') : 'nenhum'}
-            </p>
-          )}
+          <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6">
+            <h2 className="text-sm font-semibold">Entregas recentes</h2>
+            <ul className="mt-3 max-h-64 space-y-2 overflow-y-auto">
+              {deliveries.length === 0 && (
+                <li className="text-xs text-[var(--muted-foreground)]">Sem entregas.</li>
+              )}
+              {deliveries.map((d) => (
+                <li
+                  key={d.id + d.createdAt}
+                  className="flex justify-between gap-2 font-mono text-[10px] text-[var(--muted-foreground)]"
+                >
+                  <span>
+                    {d.event} · {d.ok ? 'OK' : 'FAIL'} {d.status ?? d.error}
+                  </span>
+                  <span>{d.durationMs}ms</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
+      </div>
+
+      <div className="rounded-2xl border border-[var(--border)] bg-[var(--card)] p-6 text-xs text-[var(--muted-foreground)]">
+        <p className="font-medium text-[var(--foreground)]">Como conectar outro projeto</p>
+        <pre className="mt-2 overflow-x-auto rounded-lg bg-[var(--muted)] p-3 font-mono text-[10px] text-[var(--foreground)]">{`curl -X POST $API/webhooks/endpoints \\
+  -H 'content-type: application/json' \\
+  -d '{"name":"outro-app","url":"https://…","events":["rag.query","lead.created"]}'
+
+# Verificar assinatura (Node):
+# crypto.createHmac('sha256', secret).update(rawBody).digest('hex')
+# compare com header X-LandMap-Signature (sem prefixo sha256=)`}</pre>
       </div>
     </div>
   );

@@ -2,110 +2,177 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { useState } from 'react';
-import { ArrowLeft, BookOpen, Search, FileText, LandMapWordmark } from '../../../components/lovable/icons';
-import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Tabs, Accordion, Input, Button } from '@landmap/ui';
-import { ApiNotice } from '../../../components/ApiNotice';
+import { useCallback, useEffect, useState } from 'react';
+import { BookOpen, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
+import { Card, Badge, Button, Stat, buttonVariants, cn } from '@landmap/ui';
+import {
+  ragQuery,
+  ragStatus,
+  type RagQueryResult,
+  type RagStatus,
+} from '../../../lib/api';
+import { INTELLIGENCE_REGIONS } from '../../../lib/mapIntelligence';
 
-type Doc = { id: string; title: string; source: string; snippet: string };
-
-const DOCS: Doc[] = [
-  { id: 'd1', title: 'Metodologia de valoração LandMap', source: 'docs/valuation.md', snippet: 'Combina preço/m² de transações, valorização 12m e liquidez por bairro.' },
-  { id: 'd2', title: 'Risco regulatório por zona', source: 'docs/risk.md', snippet: 'Classifica zones quanto a restrições de construção e distanciamento.' },
-  { id: 'd3', title: 'Glossário de indicadores', source: 'docs/glossary.md', snippet: 'Yield, cap rate, liquidez e valorização explicados.' },
-];
-
-const RESULTS = [
-  { q: 'como a LandMap calcula valorização?', a: 'A LandMap cruza o preço/m² de transações recentes com a variação dos últimos 12 meses e o volume de buscas na região. (docs/valuation.md)' },
-  { q: 'o que é liquidez de um terreno?', a: 'Liquidez mede a facilidade de venda: tempo médio de estoque e número de compradores ativos. (docs/glossary.md)' },
+const EXAMPLES = [
+  'O que é o Score LandMap?',
+  'Como funcionam os webhooks?',
+  'Heatmap de preço por bairro',
+  'Inteligência territorial Fortaleza',
+  'RAG retrieval e fontes',
 ];
 
 export default function RagPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
-  const [query, setQuery] = useState('');
-  const [asked, setAsked] = useState(false);
+  const [q, setQ] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [result, setResult] = useState<RagQueryResult | null>(null);
+  const [status, setStatus] = useState<RagStatus | null>(null);
+
+  useEffect(() => {
+    ragStatus()
+      .then(setStatus)
+      .catch(() =>
+        setStatus({
+          ok: false,
+          chunks: 0,
+          documents: 0,
+          dirs: [],
+          mode: 'offline',
+          generatedAt: new Date().toISOString(),
+        }),
+      );
+  }, []);
+
+  const run = useCallback(async (query: string) => {
+    const text = query.trim();
+    if (!text) return;
+    setQ(text);
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await ragQuery(text);
+      setResult(res);
+    } catch (e) {
+      setResult(null);
+      setError(e instanceof Error ? e.message : 'Falha na consulta RAG');
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/assistant')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
+    <ProductPageShell
+      backHref="/assistant"
+      eyebrow={
+        <>
+          <BookOpen className="h-3 w-3" /> Base RAG
+        </>
+      }
+      title="Perguntas com fontes"
+      description="Retrieval real via POST /rag/query sobre corpus local + docs de produto."
+      maxWidth="3xl"
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Docs" value={status ? String(status.documents) : '…'} />
+        <Stat label="Chunks" value={status ? String(status.chunks) : '…'} />
+        <Stat label="Modo" value={status?.mode ?? '…'} />
+      </section>
 
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <BookOpen className="h-3 w-3" />
-          RAG · Base de conhecimento
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Pergunte à base</h1>
-        <p className="mt-2 text-sm text-foreground/60">
-          Respostas fundamentadas nos documentos oficiais da LandMap.
-        </p>
+      <p className="mt-2 text-xs text-muted-foreground">
+        {INTELLIGENCE_REGIONS.length} regiões no mapa · API{' '}
+        <code className="font-mono text-[10px]">/rag/query</code>
+      </p>
+
+      <div className="mt-4 flex flex-wrap gap-2">
+        {EXAMPLES.map((ex) => (
+          <button
+            key={ex}
+            type="button"
+            onClick={() => run(ex)}
+            className="rounded-full border border-[var(--border)] px-3 py-1.5 text-xs transition hover:border-primary hover:bg-muted"
+          >
+            {ex}
+          </button>
+        ))}
       </div>
 
-      <ApiNotice variant="api" className="mt-4" />
-
-      <Card className="mt-6">
-        <div className="flex items-center gap-2">
-          <Search className="h-4 w-4 text-muted-foreground" />
-          <Input
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && setAsked(true)}
-            placeholder="Faça uma pergunta..."
-            aria-label="Pergunta"
-            className="border-0 bg-transparent px-0 focus-visible:ring-0"
-          />
-        </div>
+      <Card className="mt-6 space-y-3 p-4">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && !loading && run(q)}
+          placeholder="Ex.: Score LandMap, webhooks, Meireles…"
+          className="w-full rounded-xl border border-[var(--border)] px-4 py-3 text-sm outline-none focus:border-primary"
+          disabled={loading}
+        />
+        <Button type="button" onClick={() => run(q)} disabled={loading || !q.trim()}>
+          <Sparkles className="mr-1.5 h-4 w-4" />
+          {loading ? 'Consultando…' : 'Buscar na base'}
+        </Button>
       </Card>
 
-      <Tabs tabs={[{ id: 'ask', label: 'Perguntar' }, { id: 'sources', label: 'Fontes' }]} defaultId="ask">
-        {(active) =>
-          active === 'ask' ? (
-            <Reveal className="mt-6 flex flex-col gap-3">
-              {asked || query
-                ? RESULTS.map((r, i) => (
-                    <Card key={i} variant="highlight">
-                      <p className="text-sm font-medium">{r.q}</p>
-                      <p className="mt-2 text-sm text-foreground/70">{r.a}</p>
-                    </Card>
-                  ))
-                : (
-                  <Card>
-                    <p className="text-sm text-muted-foreground">Digite uma pergunta para ver respostas da base.</p>
-                  </Card>
-                )}
-            </Reveal>
-          ) : (
-            <Reveal className="mt-6">
-              <Accordion
-                type="single"
-                defaultValue={['d1']}
-                items={DOCS.map((d) => ({
-                  id: d.id,
-                  title: (
-                    <span className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-primary" />
-                      {d.title}
-                    </span>
-                  ),
-                  content: (
-                    <div>
-                      <Badge variant="outline">{d.source}</Badge>
-                      <p className="mt-2 text-sm text-foreground/70">{d.snippet}</p>
-                    </div>
-                  ),
-                }))}
-              />
-            </Reveal>
-          )
-        }
-      </Tabs>
-    </main>
+      {error && (
+        <Card className="mt-4 border-destructive/30 p-4 text-sm text-destructive">
+          {error}
+          <p className="mt-2 text-xs text-muted-foreground">
+            Suba a API (`pnpm dev:api`) ou use o proxy `/api`. Corpus builtin funciona sem
+            markdowns.
+          </p>
+        </Card>
+      )}
+
+      {result && (
+        <>
+          <Card className="mt-4 p-4">
+            <div className="flex flex-wrap items-center gap-2">
+              <Badge variant="info">resposta</Badge>
+              <Badge variant={result.usedMock ? 'warning' : 'success'}>
+                {result.usedMock ? 'demo / mock LLM' : 'LLM live'}
+              </Badge>
+            </div>
+            <p className="mt-3 text-sm leading-relaxed whitespace-pre-wrap">{result.answer}</p>
+            <p className="mt-2 text-[10px] text-muted-foreground">{result.generatedAt}</p>
+          </Card>
+
+          {result.sources?.length > 0 && (
+            <div className="mt-4 space-y-2">
+              <h2 className="text-sm font-semibold">Fontes</h2>
+              {result.sources.map((s, i) => (
+                <Card key={`${s.path}-${i}`} className="p-3">
+                  <div className="flex items-start justify-between gap-2">
+                    <p className="text-sm font-medium">{s.title}</p>
+                    <Badge variant="outline">{(s.score * 100).toFixed(0)}%</Badge>
+                  </div>
+                  <p className="mt-1 truncate font-mono text-[10px] text-muted-foreground">
+                    {s.path}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      <div className="mt-8 flex flex-wrap gap-2">
+        <Link href={lh('/chat')} className={cn(buttonVariants({ size: 'sm' }))}>
+          Chat LandBot
+        </Link>
+        <Link
+          href={lh('/developers')}
+          className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
+        >
+          API docs
+        </Link>
+        <Link
+          href={lh('/admin/webhooks')}
+          className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}
+        >
+          Webhooks
+        </Link>
+      </div>
+    </ProductPageShell>
   );
 }

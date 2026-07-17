@@ -15,6 +15,7 @@ import { createInsightsRouter } from './routes/insights.js';
 import { createSearchSuggestionsRouter } from './routes/search-suggestions.js';
 import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
+import { createWebhooksRouter } from './routes/webhooks.js';
 import { createSalesRouter } from './routes/sales.js';
 import { createIntegrationsRouter } from './routes/integrations.js';
 import { loadProperties } from './loadJson.js';
@@ -433,10 +434,13 @@ app.route('/insights', createInsightsRouter());
 /* ?* LangFlow-style workflow routes ?* */
 app.route('/langflow', createLangflowRouter());
 
-/* ?* RAG chat routes ?* */
+/* RAG chat routes */
 app.route('/rag', createRagRouter());
 
-/* â”€â”€â”€ Autonomous Sales Agent routes â”€â”€â”€ */
+/* Outbound webhooks (multi-project) */
+app.route('/webhooks', createWebhooksRouter());
+
+/* Autonomous Sales Agent routes */
 app.route('/geo', createGeoRouter(createGeoSource()));
 app.route('/sales', createSalesRouter());
 

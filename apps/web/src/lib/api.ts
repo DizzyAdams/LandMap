@@ -463,6 +463,311 @@ export function ragQuery(query: string) {
     body: JSON.stringify({ query }),
   });
 }
+
+export type RagStatus = {
+  ok: boolean;
+  chunks: number;
+  documents: number;
+  dirs: string[];
+  mode: 'llm' | 'demo' | string;
+  generatedAt: string;
+};
+
+export function ragStatus() {
+  return apiFetch<RagStatus>('/rag/status');
+}
+
+/* ─── Outbound webhooks ─── */
+
+export type WebhookEventType =
+  | 'property.created'
+  | 'property.updated'
+  | 'property.deleted'
+  | 'lead.created'
+  | 'lead.updated'
+  | 'alert.fired'
+  | 'rag.query'
+  | 'score.updated'
+  | 'favorite.added'
+  | 'ping';
+
+export type WebhookEndpoint = {
+  id: string;
+  name: string;
+  url: string;
+  secret: string;
+  events: WebhookEventType[];
+  active: boolean;
+  createdAt: string;
+  lastDeliveryAt?: string;
+  lastStatus?: number;
+  secretPreview?: string;
+};
+
+export type WebhookDelivery = {
+  id: string;
+  endpointId: string;
+  event: WebhookEventType;
+  url: string;
+  status: number | null;
+  ok: boolean;
+  error?: string;
+  createdAt: string;
+  durationMs: number;
+};
+
+export function listWebhookEndpoints() {
+  return apiFetch<{ ok: boolean; items: WebhookEndpoint[]; total: number }>('/webhooks/endpoints');
+}
+
+export function createWebhookEndpoint(input: {
+  name: string;
+  url: string;
+  events?: WebhookEventType[];
+}) {
+  return apiFetch<{ ok: boolean; endpoint: WebhookEndpoint }>('/webhooks/endpoints', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+}
+
+export function deleteWebhookEndpoint(id: string) {
+  return apiFetch<{ ok: boolean }>(`/webhooks/endpoints/${encodeURIComponent(id)}`, {
+    method: 'DELETE',
+  });
+}
+
+export function testWebhookEndpoint(id: string) {
+  return apiFetch<{ ok: boolean; deliveries: WebhookDelivery[] }>(
+    `/webhooks/endpoints/${encodeURIComponent(id)}/test`,
+    { method: 'POST', body: '{}' },
+  );
+}
+
+export function listWebhookDeliveries(limit = 30) {
+  return apiFetch<{ ok: boolean; items: WebhookDelivery[] }>(
+    `/webhooks/deliveries?limit=${limit}`,
+  );
+}
+
+export function listWebhookEvents() {
+  return apiFetch<{
+    ok: boolean;
+    events: WebhookEventType[];
+    sample: Record<string, unknown>;
+    headers: Record<string, string>;
+  }>('/webhooks/events');
+}
+
+/* ─── Admin sales agents (autonomous follow-ups) ─── */
+
+export type AutonomyLevel = 'off' | 'copilot' | 'autopilot';
+
+export type SalesAgentView = {
+  id: string;
+  role: string;
+  name: string;
+  description: string;
+  status: 'idle' | 'running' | 'paused';
+  currentTask?: string;
+  actionsToday: number;
+  successToday: number;
+  lastActionAt?: string;
+};
+
+export type SalesTaskView = {
+  id: string;
+  kind: string;
+  agentId: string;
+  dealId?: string;
+  leadId?: string;
+  title: string;
+  detail: string;
+  channel?: string;
+  draft?: string;
+  status: string;
+  createdAt: string;
+  dueAt?: string;
+  lead?: { id: string; name: string; city?: string; tier?: string };
+  deal?: { id: string; title: string; stage: string };
+};
+
+export type SalesStateView = {
+  autonomy: AutonomyLevel;
+  agents: SalesAgentView[];
+  leads: unknown[];
+  deals: unknown[];
+  tasks: SalesTaskView[];
+  events: Array<{
+    id: string;
+    at: string;
+    agentId: string;
+    kind: string;
+    title: string;
+    detail?: string;
+    level: string;
+  }>;
+  analytics?: {
+    totals: {
+      pipelineValue: number;
+      weightedPipeline: number;
+      wonValue: number;
+      wonCount: number;
+      meetingsBooked: number;
+    };
+  };
+  meta?: {
+    teamSize: number;
+    standby: number;
+    running: number;
+    pendingFollowUps: number;
+    pendingTasks: number;
+    lastTickAt?: string | null;
+    tickCount?: number;
+    followupSquad?: string[];
+    dueAlerts?: { total: number; overdue: number; dueSoon: number };
+    crm?: {
+      mode: 'live' | 'ledger';
+      twentyConfigured: boolean;
+      twentyBaseUrl?: string;
+      ledgerLeads: number;
+      ledgerDeals: number;
+      recentSyncs: number;
+    };
+  };
+};
+
+export type DueAlert = {
+  id: string;
+  taskId: string;
+  title: string;
+  leadId?: string;
+  dealId?: string;
+  channel?: string;
+  agentId: string;
+  dueAt: string;
+  hoursDelta: number;
+  severity: 'overdue' | 'due_soon' | 'upcoming';
+  draft?: string;
+};
+
+export type CrmLedger = {
+  ok: boolean;
+  leads: unknown[];
+  deals: unknown[];
+  syncs: Array<{
+    id: string;
+    at: string;
+    kind: string;
+    entityId: string;
+    title: string;
+    target: string;
+    ok: boolean;
+    error?: string;
+    externalId?: string;
+  }>;
+  status: {
+    mode: 'live' | 'ledger';
+    twentyConfigured: boolean;
+    twentyBaseUrl?: string;
+    ledgerLeads: number;
+    ledgerDeals: number;
+    recentSyncs: number;
+  };
+};
+
+export function getSalesState() {
+  return apiFetch<SalesStateView>('/sales/state');
+}
+
+export function getSalesAgents() {
+  return apiFetch<{ ok: boolean; autonomy: AutonomyLevel; agents: SalesAgentView[]; teamSize: number }>(
+    '/sales/agents',
+  );
+}
+
+export function getSalesFollowups() {
+  return apiFetch<{ ok: boolean; items: SalesTaskView[]; total: number }>('/sales/followups');
+}
+
+export function runSalesCycle(autonomy?: AutonomyLevel) {
+  return apiFetch<{ result: unknown; state: SalesStateView }>('/sales/cycle', {
+    method: 'POST',
+    body: JSON.stringify(autonomy ? { autonomy } : {}),
+  });
+}
+
+export function runFollowUpCycle(autonomy?: AutonomyLevel) {
+  return apiFetch<{ result: unknown; state: SalesStateView }>('/sales/followups/run', {
+    method: 'POST',
+    body: JSON.stringify(autonomy ? { autonomy } : {}),
+  });
+}
+
+export function setSalesAutonomy(level: AutonomyLevel) {
+  return apiFetch<{ autonomy: AutonomyLevel; agents: SalesAgentView[] }>('/sales/autonomy', {
+    method: 'POST',
+    body: JSON.stringify({ level }),
+  });
+}
+
+export function approveSalesTask(id: string) {
+  return apiFetch<{ task: SalesTaskView; state: SalesStateView }>(
+    `/sales/approve/${encodeURIComponent(id)}`,
+    { method: 'POST', body: '{}' },
+  );
+}
+
+export function rejectSalesTask(id: string) {
+  return apiFetch<{ task: SalesTaskView; state: SalesStateView }>(
+    `/sales/reject/${encodeURIComponent(id)}`,
+    { method: 'POST', body: '{}' },
+  );
+}
+
+export function approveAllFollowups() {
+  return apiFetch<{ ok: boolean; count: number; state: SalesStateView }>(
+    '/sales/approve-all-followups',
+    { method: 'POST', body: '{}' },
+  );
+}
+
+/** Heartbeat do time em espera (auto-loop admin). */
+export function salesTick(mode: 'followup' | 'full' = 'followup') {
+  return apiFetch<{
+    ok: boolean;
+    skipped?: boolean;
+    reason?: string;
+    result?: unknown;
+    state: SalesStateView;
+  }>('/sales/tick', {
+    method: 'POST',
+    body: JSON.stringify({ mode }),
+  });
+}
+
+export function getDueAlerts() {
+  return apiFetch<{
+    ok: boolean;
+    items: DueAlert[];
+    summary: { total: number; overdue: number; dueSoon: number };
+  }>('/sales/alerts/due');
+}
+
+export function getCrmLedger() {
+  return apiFetch<CrmLedger>('/sales/crm');
+}
+
+export function syncCrm() {
+  return apiFetch<{
+    ok: boolean;
+    leads: number;
+    deals: number;
+    status: CrmLedger['status'];
+    ledger: Omit<CrmLedger, 'ok'>;
+  }>('/sales/crm/sync', { method: 'POST', body: '{}' });
+}
+
 /* ─── Terrenos (terrain intelligence) ─── */
 
 export type TerrainPlot = {

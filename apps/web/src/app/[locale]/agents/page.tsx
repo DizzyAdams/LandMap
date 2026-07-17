@@ -2,76 +2,58 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, Bot, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
+import { Bot, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge } from '@landmap/ui';
-import { ApiNotice } from '../../../components/ApiNotice';
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
 
-type Agent = {
-  id: string;
-  name: string;
-  role: string;
-  status: 'pronto' | 'treinando' | 'beta';
-};
-
-const AGENTS: Agent[] = [
-  { id: 'a1', name: 'Scout', role: 'Busca e qualifica terrenos', status: 'pronto' },
-  { id: 'a2', name: 'Analyzer', role: 'Cruza dados e gera relatório de risco', status: 'pronto' },
-  { id: 'a3', name: 'Writer', role: 'Redige anúncios e e-mails', status: 'pronto' },
-  { id: 'a4', name: 'Negotiator', role: 'Sugere estratégia de proposta', status: 'beta' },
-  { id: 'a5', name: 'Closer', role: 'Acompanha pipeline até o fechamento', status: 'treinando' },
+const AGENTS = [
+  { id: 'scout', name: 'Scout territorial', role: 'Mapa & camadas', desc: 'Varre Score LandMap e top valorização.', href: '/map' },
+  { id: 'analyst', name: 'Analista de risco', role: 'Risco', desc: 'Cruza enchente, ambiental e zoneamento.', href: '/alerts' },
+  { id: 'writer', name: 'Copywriter de anúncio', role: 'Conteúdo', desc: 'Gera descrições de terreno e região.', href: '/writer' },
+  { id: 'sales', name: 'Closer de leads', role: 'Vendas', desc: 'Prioriza leads por score da região.', href: '/leads' },
+  { id: 'rag', name: 'Bibliotecário RAG', role: 'Conhecimento', desc: 'Responde com base nos markdowns.', href: '/rag' },
+  { id: 'ops', name: 'Ops de alertas', role: 'Automação', desc: 'Dispara fluxos quando a camada muda.', href: '/workflows' },
 ];
-
-const variant = (s: Agent['status']) => (s === 'pronto' ? 'success' : s === 'beta' ? 'warning' : 'outline');
 
 export default function AgentsPage() {
   const locale = useLocale();
   const lh = (p: string) => `/${locale}${p}`;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/assistant')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
+    <ProductPageShell
+      backHref="/assistant"
+      eyebrow={
+        <>
+          <Bot className="h-3 w-3" /> Agentes
+        </>
+      }
+      title="Catálogo de agentes IA"
+      description="Especialistas virtuais no padrão visual LandMap / Lovable indigo."
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Agentes" value={String(AGENTS.length)} />
+        <Stat label="Domínios" value="6" />
+        <Stat label="Status" value="demo" />
+      </section>
 
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <Bot className="h-3 w-3" />
-          Catálogo de agentes
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Agentes IA LandMap</h1>
-        <p className="mt-2 text-sm text-foreground/60">Especialistas autônomos para cada etapa do seu funil.</p>
-      </div>
-
-      <ApiNotice variant="api" className="mt-4" />
-
-      <Reveal className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <Reveal className="mt-6 grid gap-3 sm:grid-cols-2">
         {AGENTS.map((a) => (
-          <Card key={a.id} variant="interactive">
-            <div className="flex items-start gap-3">
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-primary/10 text-primary">
-                <Bot className="h-4 w-4" />
-              </span>
-              <div className="min-w-0">
-                <div className="flex items-center gap-2">
-                  <p className="font-semibold">{a.name}</p>
-                  <Badge variant={variant(a.status)}>{a.status}</Badge>
-                </div>
-                <p className="mt-1 text-xs text-muted-foreground">{a.role}</p>
+          <Card key={a.id} variant="interactive" className="p-4">
+            <Link href={lh(a.href)} className="block">
+              <div className="flex items-center justify-between gap-2">
+                <p className="font-semibold">{a.name}</p>
+                <Badge variant="outline">{a.role}</Badge>
               </div>
-            </div>
+              <p className="mt-2 text-xs text-muted-foreground">{a.desc}</p>
+            </Link>
           </Card>
         ))}
       </Reveal>
 
-      <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <Sparkles className="h-4 w-4" />
-        Orquestre agentes no plano Business.
-      </div>
-    </main>
+      <Link href={lh('/automations')} className={cn(buttonVariants({ size: 'sm' }), 'mt-6')}>
+        Ver automações
+      </Link>
+    </ProductPageShell>
   );
 }

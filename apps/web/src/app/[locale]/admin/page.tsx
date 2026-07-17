@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { RequireAuth } from '../../../components/RequireAuth';
 import { LANDMAP_API_BASE } from '../../../lib/api';
@@ -26,6 +28,8 @@ const SIMULATED_VIEWS = 1283;
 const SIMULATED_CONVERSION = 3.2;
 
 function AdminDashboardPageInner() {
+  const params = useParams();
+  const locale = (params.locale as string) || 'pt-BR';
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -78,6 +82,19 @@ function AdminDashboardPageInner() {
           <p className="mt-1 text-[var(--muted-foreground)]">Resumo geral do LandMap</p>
         </div>
       </header>
+
+      <Link
+        href={`/${locale}/admin/agents`}
+        className="flex items-center justify-between rounded-2xl border border-[var(--primary)]/25 bg-[var(--primary)]/5 px-5 py-4 transition hover:border-[var(--primary)]"
+      >
+        <div>
+          <p className="text-sm font-semibold text-[var(--foreground)]">Time de agentes · em espera</p>
+          <p className="mt-0.5 text-xs text-[var(--muted-foreground)]">
+            Follow-ups autônomos, auto-loop e fila HITL — só admin
+          </p>
+        </div>
+        <span className="text-xs font-medium text-[var(--primary)]">Abrir cockpit →</span>
+      </Link>
 
       {loading ? (
         <Stagger className="grid gap-4 sm:grid-cols-2" stagger={0.08} y={20}>

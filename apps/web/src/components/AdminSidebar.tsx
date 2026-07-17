@@ -21,6 +21,7 @@ const ICONS = {
   dashboard: LineChart,
   properties: Building2,
   leads: Star,
+  agents: Activity,
   analytics: SlidersHorizontal,
   exports: ArrowUpDown,
   webhooks: Layers,
@@ -40,6 +41,7 @@ export function AdminSidebar() {
     { href: `/${locale}/admin`, icon: 'dashboard', label: 'Dashboard' },
     { href: `/${locale}/admin/properties`, icon: 'properties', label: 'Terrenos' },
     { href: `/${locale}/admin/leads`, icon: 'leads', label: 'Leads' },
+    { href: `/${locale}/admin/agents`, icon: 'agents', label: 'Agentes' },
     { href: `/${locale}/admin/analytics`, icon: 'analytics', label: 'Analytics' },
     { href: `/${locale}/admin/exports`, icon: 'exports', label: 'Exportações' },
     { href: `/${locale}/admin/webhooks`, icon: 'webhooks', label: 'Webhooks' },
@@ -73,7 +75,11 @@ export function AdminSidebar() {
       {/* Nav links */}
       <nav className="flex-1 space-y-1 p-3">
         {links.map((link) => {
-          const active = pathname === link.href;
+          const active =
+            pathname === link.href ||
+            (link.href.endsWith('/admin')
+              ? pathname?.endsWith('/admin')
+              : Boolean(pathname?.startsWith(link.href)));
           const Icon = ICONS[link.icon];
           return (
             <Link

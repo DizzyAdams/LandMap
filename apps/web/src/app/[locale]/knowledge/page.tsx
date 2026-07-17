@@ -2,16 +2,20 @@
 
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import { ArrowLeft, BookOpen, Sparkles } from '../../../components/lovable/icons';
+import { BookOpen, Sparkles } from '../../../components/lovable/icons';
+import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Stat } from '@landmap/ui';
-import { LandMapWordmark } from '../../../components/lovable/icons';
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
 
 const DOCS = [
-  { title: 'Como ler o índice de liquidez', tag: 'guia', read: '4 min' },
-  { title: 'Validação de zoneamento', tag: 'técnico', read: '7 min' },
-  { title: 'Pipeline de automação passo a passo', tag: 'tutorial', read: '6 min' },
-  { title: 'Glossário de indicadores', tag: 'referência', read: '3 min' },
+  { title: 'Arquitetura do mapa intelligence', tag: 'mapa', href: '/map' },
+  { title: 'Camadas e Score LandMap', tag: 'score', href: '/glossary' },
+  { title: 'Como usar alertas', tag: 'ops', href: '/alerts' },
+  { title: 'Pipeline de leads', tag: 'vendas', href: '/leads' },
+  { title: 'Base RAG e markdowns', tag: 'ia', href: '/rag' },
+  { title: 'API REST', tag: 'dev', href: '/developers' },
+  { title: 'Integrações live', tag: 'dev', href: '/integrations' },
+  { title: 'Playbooks de due diligence', tag: 'legal', href: '/resources' },
 ];
 
 export default function KnowledgePage() {
@@ -19,48 +23,44 @@ export default function KnowledgePage() {
   const lh = (p: string) => `/${locale}${p}`;
 
   return (
-    <main className="mx-auto flex min-h-screen max-w-3xl flex-col bg-background px-4 pb-28 pt-6">
-      <header className="flex items-center justify-between">
-        <Link href={lh('/assistant')} aria-label="Voltar" className="grid h-9 w-9 place-items-center rounded-full transition hover:bg-muted">
-          <ArrowLeft className="h-4 w-4" />
-        </Link>
-        <LandMapWordmark />
-        <div className="w-9" />
-      </header>
-
-      <div className="mt-6">
-        <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
-          <BookOpen className="h-3 w-3" />
-          Central de conhecimento
-        </div>
-        <h1 className="mt-3 text-3xl font-bold tracking-tight">Aprenda o método LandMap</h1>
-        <p className="mt-2 text-sm text-foreground/60">Guias, tutoriais e referências para usar a plataforma como um pro.</p>
-      </div>
-
-      <section className="mt-6 grid grid-cols-3 gap-3">
-        <Stat label="Artigos" value="42" />
-        <Stat label="Tutoriais" value="11" trend={9} />
-        <Stat label="Categorias" value="5" />
+    <ProductPageShell
+      backHref="/assistant"
+      eyebrow={
+        <>
+          <BookOpen className="h-3 w-3" /> Conhecimento
+        </>
+      }
+      title="Base de conhecimento"
+      description="Documentação interna e playbooks — espelha a suite IA e o mapa."
+    >
+      <section className="grid grid-cols-3 gap-3">
+        <Stat label="Artigos" value={String(DOCS.length)} />
+        <Stat label="Temas" value="6" />
+        <Stat label="Atualização" value="hoje" />
       </section>
 
-      <Reveal className="mt-6 flex flex-col gap-3">
+      <div className="mt-4 flex flex-wrap gap-2">
+        <Link href={lh('/rag')} className={cn(buttonVariants({ size: 'sm' }))}>
+          Perguntar ao RAG
+        </Link>
+        <Link href={lh('/glossary')} className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}>
+          Glossário
+        </Link>
+        <Link href={lh('/resources')} className={cn(buttonVariants({ variant: 'ghost', size: 'sm' }))}>
+          Recursos
+        </Link>
+      </div>
+
+      <Reveal className="mt-6 grid gap-3 sm:grid-cols-2">
         {DOCS.map((d) => (
-          <Card key={d.title} variant="interactive">
-            <div className="flex items-center justify-between gap-4">
-              <div className="min-w-0">
-                <p className="truncate font-semibold">{d.title}</p>
-                <p className="mt-1 text-xs text-muted-foreground">{d.read} de leitura</p>
-              </div>
+          <Card key={d.title} variant="interactive" className="p-4">
+            <Link href={lh(d.href)} className="block">
               <Badge variant="outline">{d.tag}</Badge>
-            </div>
+              <p className="mt-2 font-semibold">{d.title}</p>
+            </Link>
           </Card>
         ))}
       </Reveal>
-
-      <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground">
-        <Sparkles className="h-4 w-4" />
-        Conteúdo curado pela equipe LandMap.
-      </div>
-    </main>
+    </ProductPageShell>
   );
 }
