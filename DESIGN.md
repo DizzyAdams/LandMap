@@ -186,15 +186,16 @@ The Lovable reference exposes these routes (from `lovable_routes_summary.txt` +
 | `/admin` | `admin/page.tsx` + `analytics` `audit` `exports` `leads` `properties` `settings` `webhooks` `agents` | ported (superset) · 100% equal · **agents** = time autônomo de follow-up (admin-only) |
 | `/plans` | `plans/page.tsx` | ported · 100% equal |
 | `/auth` | `auth/page.tsx` | ported (mocked Google auth) · 100% equal |
-| `/map` | `map/page.tsx` | **híbrido** · chrome Lovable + produto Free terrenos (ver §4.1 Map System Standard) |
+| `/map` | `map/page.tsx` | **híbrido C (TRAVADO)** · chrome/tokens 100% Lovable indigo + produto Free terrenos (grade A–F, heat API, dossier). Ver §4.1 + `docs/map-parity-audit-2026-07.md`. Não é clone 1:1 do intelligence Lovable — é extra LandMap documentado. |
 | `/search` | `search/page.tsx` | ported (Server Component, `searchProperties` API, i18n pt-BR/en-US/es-ES, Navbar link) · 100% equal |
 | `/onboarding` | `onboarding/page.tsx` | ported · 100% equal |
 
 **Superset LandMap (mesmo design system, fora do Lovable):** `/rag`, `/chat`, `/developers`, `/integrations`, `/admin/webhooks` (outbound multi-projeto), market pages, etc. Revalidação: `docs/lovable-parity-recheck-2026-07.md`. Contrato RAG/webhooks: `docs/platform-rag-webhooks-2026-07.md`.
 
-### 4.1 Map System Standard (2026-07-17 — **Opção A: literal intelligence**)
+### 4.1 Map System Standard (2026-07-17 — **Híbrido C (TRAVADO como padrão oficial)**)
 
 > Spec de dados/copy: `apps/web/src/lib/mapIntelligence.ts` · auditoria: `docs/map-parity-audit-2026-07.md`.
+> **Decisão travada:** `/map` = **Híbrido C** — design system / chrome 100% Lovable indigo (tokens `var(--*)`, DM Sans + Space Grotesk, `@landmap/ui`, `lovable/icons`); o **canvas e o produto Free terrenos** (grade A–F, heat API, dossier) são **extras LandMap documentados**, NÃO clone 1:1 do intelligence do Lovable. Claims de "mapa 100% igual Lovable" estão **proibidos** sem captura autenticada + checklist de camadas (ver audit). O padrão de conformidade é **token-compliance**, não clone visual.
 
 | Rota | Papel |
 |---|---|

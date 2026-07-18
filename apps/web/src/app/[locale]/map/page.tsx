@@ -29,7 +29,7 @@ import {
 } from '@landmap/ui';
 import {
   COPY,
-  HEAT_SCALE_GRADIENT,
+  heatScaleGradient,
   INTELLIGENCE_LAYERS,
   INTELLIGENCE_REGIONS,
   MAP_CENTER,
@@ -106,7 +106,7 @@ function MapPageInner() {
       const marker = L.circleMarker([r.lat, r.lng], {
         radius,
         fillColor: color,
-        color: isSel ? '#003594' : '#ffffff',
+        color: isSel ? 'var(--primary)' : '#ffffff',
         weight: isSel ? 3 : 2,
         fillOpacity: heat ? 0.35 + (w / 100) * 0.45 : 0.92,
         opacity: 1,
@@ -192,7 +192,7 @@ function MapPageInner() {
   const sparkData = selected?.priceHistory.map((p) => p.value) ?? [];
 
   return (
-    <div className="relative h-[100dvh] w-full overflow-hidden bg-[#f8fafc] text-[var(--foreground)]">
+    <div className="relative h-[100dvh] w-full overflow-hidden bg-[var(--background)] text-[var(--foreground)]">
       {/* Full-bleed map */}
       {mapError ? (
         <div className="grid h-full place-items-center p-6">
@@ -352,7 +352,7 @@ function MapPageInner() {
             </p>
             <div
               className="h-2 w-full rounded-full"
-              style={{ background: HEAT_SCALE_GRADIENT }}
+              style={{ background: heatScaleGradient() }}
               aria-hidden
             />
             <div className="mt-1 flex justify-between text-[10px] text-foreground/50">

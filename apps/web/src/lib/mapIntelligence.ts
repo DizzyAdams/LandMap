@@ -104,20 +104,38 @@ export function scoreLabel(score: number): string {
 }
 
 /**
- * Cor do pin por score — função q do Lovable
- * (azul institutional → blue → yellow → orange → red).
+ * Cor do score por banda — 100% tokenizada (sem hex de marca).
+ * Leaflet circleMarker exige cor concreta, então resolvemos a
+ * var(--*) computada em runtime (disponível após montagem).
+ * Bandas: primary (≥80) · accent (≥65) · warning (≥50) · orange (≥35) · destructive.
  */
-export function scoreColor(score: number): string {
-  if (score >= 80) return '#003594';
-  if (score >= 65) return '#3b82f6';
-  if (score >= 50) return '#eab308';
-  if (score >= 35) return '#f97316';
-  return '#dc2626';
+const SCORE_BANDS: { min: number; token: string }[] = [
+  { min: 80, token: '--primary' },
+  { min: 65, token: '--accent' },
+  { min: 50, token: '--warning' },
+  { min: 35, token: '--warning' },
+];
+
+/** Lê o valor computado de uma CSS var (fallback concreto se ainda não resolvida). */
+export function resolveToken(token: string): string {
+  if (typeof window === 'undefined') return '';
+  const raw = getComputedStyle(document.documentElement).getPropertyValue(token).trim();
+  return raw || '';
 }
 
-/** Gradiente escala heatmap Lovable: red → yellow → #003594 */
-export const HEAT_SCALE_GRADIENT =
-  'linear-gradient(90deg, #dc2626 0%, #eab308 50%, #003594 100%)';
+export function scoreColor(score: number): string {
+  const band = SCORE_BANDS.find((b) => score >= b.min);
+  const token = band ? band.token : '--destructive';
+  return resolveToken(token) || (token === '--destructive' ? '#dc2626' : '#575ECF');
+}
+
+/** Gradiente escala heatmap — resolvido de tokens (vermelho → âmbar → indigo). */
+export function heatScaleGradient(): string {
+  const danger = resolveToken('--destructive') || '#dc2626';
+  const warn = resolveToken('--warning') || '#eab308';
+  const primary = resolveToken('--primary') || '#575ECF';
+  return `linear-gradient(90deg, ${danger} 0%, ${warn} 50%, ${primary} 100%)`;
+}
 
 function scores(
   v: number,
