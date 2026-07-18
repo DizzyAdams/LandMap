@@ -36,13 +36,10 @@ SCREENS = {
     "onboarding":("/onboarding",  "/pt-BR/onboarding"),
     "insights":  ("/insights",    "/pt-BR/insights"),
     "sales":     ("/sales",       "/pt-BR/sales"),
-    "terrenos":  ("/terrenos",    "/pt-BR/terrenos"),
     "calculator":("/calculator",  "/pt-BR/calculator"),
     "chat":      ("/chat",        "/pt-BR/chat"),
-    "studio":    ("/studio",      "/pt-BR/studio"),
-    "world":     ("/world",       "/pt-BR/world"),
-    "live":      ("/live",        "/pt-BR/live"),
-    "status":    ("/status",      "/pt-BR/status"),
+    "live":       ("/live",        "/pt-BR/live"),
+    "status":     ("/status",      "/pt-BR/status"),
 }
 
 SKIP = {"script", "style", "head", "noscript", "svg"}

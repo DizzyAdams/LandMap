@@ -28,7 +28,7 @@ if not BASE.startswith("http"):
 HOME = ["/pt-BR", "/en-US", "/es-ES"]
 PT = ["/pt-BR/regions", "/pt-BR/favorites", "/pt-BR/compare", "/pt-BR/dashboard",
       "/pt-BR/admin", "/pt-BR/plans", "/pt-BR/auth", "/pt-BR/map", "/pt-BR/onboarding",
-      "/pt-BR/world", "/pt-BR/insights", "/pt-BR/sales", "/pt-BR/terrenos",
+      "/pt-BR/insights", "/pt-BR/sales",
       "/pt-BR/chat", "/pt-BR/search", "/pt-BR/calculator", "/pt-BR/studio",
       "/pt-BR/live", "/pt-BR/status"]
 ALL = HOME + PT
