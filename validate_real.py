@@ -51,7 +51,9 @@ EXPECT_TITLE = {
 ERROR_TEXTS = ["application error", "missing required error component",
                "this page could not be found", "Internal Server Error"]
 
-FONTS = ["DM+Sans", "Space+Grotesk", "JetBrains+Mono"]
+# Canonical fonts per design standard: DM Sans + Space Grotesk only
+# (JetBrains Mono was drift — removed; Lovable live loads exactly these 2).
+FONTS = ["DM+Sans", "Space+Grotesk"]
 
 
 def fetch(url):
