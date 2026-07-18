@@ -9,6 +9,8 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { RequireAuth } from '../../../components/RequireAuth';
 import {
   LandMapWordmark,
@@ -129,53 +131,34 @@ function MapPageInner() {
     if (!mapRef.current || mapInstance.current) return;
     let cancelled = false;
 
-    function loadLeaflet(): Promise<any> {
-      return new Promise((resolve, reject) => {
-        if ((window as any).L) return resolve((window as any).L);
-        if (!document.getElementById('leaflet-css')) {
-          const link = document.createElement('link');
-          link.id = 'leaflet-css';
-          link.rel = 'stylesheet';
-          link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-          document.head.appendChild(link);
-        }
-        const s = document.createElement('script');
-        s.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-        s.crossOrigin = '';
-        s.onload = () => resolve((window as any).L);
-        s.onerror = () => reject(new Error(COPY.failMap));
-        document.head.appendChild(s);
+    try {
+      if (cancelled || !mapRef.current || mapInstance.current) return;
+      const map = L.map(mapRef.current, {
+        center: MAP_CENTER,
+        zoom: MAP_DEFAULT_ZOOM,
+        zoomControl: false,
+        preferCanvas: true,
+        attributionControl: true,
       });
+      L.control.zoom({ position: 'bottomright' }).addTo(map);
+      // Light basemap close to Lovable Google Maps light style
+      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OSM &copy; CARTO',
+        maxZoom: 19,
+        subdomains: 'abcd',
+      }).addTo(map);
+      mapInstance.current = map;
+      setMapReady(true);
+      setTimeout(() => {
+        try {
+          map.invalidateSize({ animate: false });
+        } catch {
+          /* ignore */
+        }
+      }, 120);
+    } catch {
+      setMapError(true);
     }
-
-    loadLeaflet()
-      .then((L) => {
-        if (cancelled || !mapRef.current || mapInstance.current) return;
-        const map = L.map(mapRef.current, {
-          center: MAP_CENTER,
-          zoom: MAP_DEFAULT_ZOOM,
-          zoomControl: false,
-          preferCanvas: true,
-          attributionControl: true,
-        });
-        L.control.zoom({ position: 'bottomright' }).addTo(map);
-        // Light basemap close to Lovable Google Maps light style
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-          attribution: '&copy; OSM &copy; CARTO',
-          maxZoom: 19,
-          subdomains: 'abcd',
-        }).addTo(map);
-        mapInstance.current = map;
-        setMapReady(true);
-        setTimeout(() => {
-          try {
-            map.invalidateSize({ animate: false });
-          } catch {
-            /* ignore */
-          }
-        }, 120);
-      })
-      .catch(() => setMapError(true));
 
     return () => {
       cancelled = true;
