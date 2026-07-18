@@ -238,7 +238,7 @@ export function computeOpportunities(
 export function opportunitySeverityColor(sev: OpportunitySeverity): string {
   switch (sev) {
     case 'alta':
-      return 'var(--danger)';
+      return 'var(--destructive)';
     case 'media':
       return 'var(--accent)';
     default:

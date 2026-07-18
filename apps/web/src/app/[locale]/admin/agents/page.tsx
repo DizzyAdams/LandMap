@@ -425,7 +425,7 @@ export default function AdminAgentsPage() {
               key={a.id}
               className={`flex flex-wrap items-center justify-between gap-2 rounded-xl border px-3 py-2 ${
                 a.severity === 'overdue'
-                  ? 'border-red-500/30 bg-red-500/5'
+                  ? 'border-[var(--destructive)]/30 bg-[var(--destructive)]/5'
                   : 'border-[var(--primary)]/25 bg-[var(--primary)]/5'
               }`}
             >
@@ -626,7 +626,7 @@ export default function AdminAgentsPage() {
                           setMsg(`Rejeitado: ${t.title}`);
                         })
                       }
-                      className="rounded-lg border border-[var(--border)] px-2 py-1 text-[10px] text-red-500"
+                      className="rounded-lg border border-[var(--border)] px-2 py-1 text-[10px] text-[var(--destructive)]"
                     >
                       Rejeitar
                     </button>
@@ -658,7 +658,7 @@ export default function AdminAgentsPage() {
 
       {selectedDraft && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-[var(--foreground)]/40 p-4"
           role="dialog"
           onClick={() => setSelectedDraft(null)}
         >

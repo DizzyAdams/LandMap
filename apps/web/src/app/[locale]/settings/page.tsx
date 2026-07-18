@@ -78,7 +78,7 @@ export default function SettingsPage() {
 
   return (
     <ProductPageShell
-      backHref={`/${locale}`}
+      backHref="/"
       eyebrow="Conta"
       title="Configurações"
       description="Gerencie seu perfil, preferências e plano."

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useLocale, useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { ProductPageShell } from '../../../../components/ProductPageShell';
 import { Card, Badge, Button } from '@landmap/ui';
@@ -31,7 +30,6 @@ interface Dossier {
 }
 
 export default function PropertyDossierPage() {
-  const locale = useLocale();
   const params = useParams<{ id: string }>();
   const id = params?.id as string;
   const [p, setP] = useState<Dossier | null>(null);
@@ -54,7 +52,7 @@ export default function PropertyDossierPage() {
 
   return (
     <ProductPageShell
-      backHref={`/${locale}/search`}
+      backHref="/search"
       eyebrow="Dossier"
       title={p?.title ?? 'Imóvel'}
       description={p ? `${p.city}, ${p.state}${p.neighborhood ? ` · ${p.neighborhood}` : ''}` : 'Carregando…'}

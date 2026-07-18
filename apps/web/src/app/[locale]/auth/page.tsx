@@ -145,7 +145,7 @@ export default function AuthPage() {
       <aside className="relative hidden overflow-hidden bg-[var(--gradient-hero)] p-12 text-[var(--primary-foreground)] lg:flex lg:flex-col lg:justify-between">
         <div
           className="pointer-events-none absolute inset-0 opacity-30"
-          style={{ backgroundImage: 'var(--gradient-hero-glow)' }}
+          style={{ backgroundImage: 'var(--primary-glow)' }}
         />
         <LandMapWordmark />
         <div className="relative">

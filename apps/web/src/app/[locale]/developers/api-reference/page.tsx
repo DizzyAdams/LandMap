@@ -82,7 +82,7 @@ export default function ApiReferencePage() {
 
   return (
     <ProductPageShell
-      backHref={`/${locale}/developers`}
+      backHref="/developers"
       eyebrow="API"
       title="Referência da API"
       description="REST endpoints para integrar a inteligência de terrenos LandMap."

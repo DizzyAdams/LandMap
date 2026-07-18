@@ -108,7 +108,7 @@ export default function ActivityPage() {
 
   return (
     <ProductPageShell
-      backHref={`/${locale}`}
+      backHref="/"
       eyebrow="Atividade"
       title="Histórico de atividade"
       description="Um resumo das suas ações recentes na plataforma."

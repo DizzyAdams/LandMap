@@ -39,6 +39,7 @@ import {
   fmtDelta,
   fmtPriceSqm,
   layerValue,
+  resolveToken,
   scoreColor,
   scoreLabel,
   topByScore,
@@ -106,7 +107,7 @@ function MapPageInner() {
       const marker = L.circleMarker([r.lat, r.lng], {
         radius,
         fillColor: color,
-        color: isSel ? 'var(--primary)' : '#ffffff',
+        color: isSel ? resolveToken('--primary') || '#575ECF' : '#ffffff',
         weight: isSel ? 3 : 2,
         fillOpacity: heat ? 0.35 + (w / 100) * 0.45 : 0.92,
         opacity: 1,
@@ -334,7 +335,7 @@ function MapPageInner() {
                 aria-checked={showHeat}
                 onClick={() => setShowHeat((v) => !v)}
                 className={cn(
-                  'relative h-6 w-11 rounded-full transition',
+                  'relative h-6 w-11 rounded-full transition motion-reduce:transition-none',
                   showHeat ? 'bg-primary' : 'bg-muted-foreground/30',
                 )}
               >
@@ -430,7 +431,7 @@ function MapPageInner() {
               <Sparkline
                 data={
                   selected?.priceHistory.map((p) => p.value) ??
-                  INTELLIGENCE_REGIONS[0].priceHistory.map((p) => p.value)
+                  (INTELLIGENCE_REGIONS[0]?.priceHistory.map((p) => p.value) ?? [])
                 }
                 width={260}
                 height={56}

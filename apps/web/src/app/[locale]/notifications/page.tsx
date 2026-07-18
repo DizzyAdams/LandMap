@@ -79,7 +79,7 @@ export default function NotificationsPage() {
 
   return (
     <ProductPageShell
-      backHref={`/${locale}`}
+      backHref="/"
       eyebrow="Notificações"
       title="Central de notificações"
       description="Seus matches de imóveis, alertas e favoritos em um só lugar."

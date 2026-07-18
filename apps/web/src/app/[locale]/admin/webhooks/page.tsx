@@ -239,7 +239,7 @@ export default function AdminWebhooksPage() {
                         type="button"
                         disabled={busy}
                         onClick={() => void handleDelete(ep.id)}
-                        className="rounded-lg border border-[var(--border)] px-2 py-1 text-[10px] text-red-500 hover:border-red-400"
+                        className="rounded-lg border border-[var(--border)] px-2 py-1 text-[10px] text-[var(--destructive)] hover:border-[var(--destructive)]"
                       >
                         Remover
                       </button>

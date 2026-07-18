@@ -6,6 +6,7 @@ import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Check, Sparkles, LandMapWordmark } from '../../../components/lovable/icons';
 import { Stagger } from '../../../components/Motion';
+import { PLANS as PLAN_META, formatBRL } from '../../../lib/plans';
 
 type Plan = {
   id: string;
@@ -16,73 +17,56 @@ type Plan = {
   highlight?: boolean;
 };
 
-/** Planos 1:1 com Lovable `lovable_chunk_plans.js` (sem Free no funil). */
-const PLANS: Plan[] = [
-  {
-    id: 'access',
-    name: 'LandMap Access',
-    tag: 'Comece com o essencial',
-    price: 69.9,
-    features: [
-      'Acesso a todas as cidades do Brasil',
-      'Mapa de valorização e desvalorização',
-      'Mapa de calor básico',
-      'Ranking das regiões mais valorizadas',
-      'Ranking das regiões em queda',
-      'Histórico de preço por m²',
-      'Busca por bairro, cidade e região',
-      'Salvar até 10 áreas favoritas',
-      'Tendência: subindo, estável ou caindo',
-    ],
-  },
-  {
-    id: 'plus',
-    name: 'LandMap Plus',
-    tag: 'Mais popular',
-    price: 119.9,
-    highlight: true,
-    features: [
-      'Tudo do Access',
-      'Radar de oportunidades LandMap',
-      'Alertas inteligentes de valorização',
-      'Alertas de queda de preço',
-      'Ranking de oportunidades por cidade',
-      'Comparação entre regiões',
-      'Notas automáticas sobre potencial da área',
-      'Salvar até 25 áreas favoritas',
-    ],
-  },
-  {
-    id: 'pro',
-    name: 'LandMap Pro',
-    tag: 'Para profissionais',
-    price: 249.9,
-    features: [
-      'Tudo do Plus',
-      'Acompanhar áreas monitoradas (salvas)',
-      'Salvar até 50 regiões favoritas',
-      'Histórico completo da área',
-      'Relatório mensal geral',
-      'Avaliação do seu terreno',
-    ],
-  },
-  {
-    id: 'business',
-    name: 'LandMap Business',
-    tag: 'Para equipes',
-    price: 699.9,
-    features: [
-      'Tudo do Pro',
-      'Até 5 usuários',
-      'Painel de equipe',
-      'Relatório com marca da empresa',
-      'Histórico de análise da equipe',
-    ],
-  },
-];
+const FEATURES: Record<string, string[]> = {
+  access: [
+    'Acesso a todas as cidades do Brasil',
+    'Mapa de valorização e desvalorização',
+    'Mapa de calor básico',
+    'Ranking das regiões mais valorizadas',
+    'Ranking das regiões em queda',
+    'Histórico de preço por m²',
+    'Busca por bairro, cidade e região',
+    'Salvar até 10 áreas favoritas',
+    'Tendência: subindo, estável ou caindo',
+  ],
+  plus: [
+    'Tudo do Access',
+    'Radar de oportunidades LandMap',
+    'Alertas inteligentes de valorização',
+    'Alertas de queda de preço',
+    'Ranking de oportunidades por cidade',
+    'Comparação entre regiões',
+    'Notas automáticas sobre potencial da área',
+    'Salvar até 25 áreas favoritas',
+  ],
+  pro: [
+    'Tudo do Plus',
+    'Acompanhar áreas monitoradas (salvas)',
+    'Salvar até 50 regiões favoritas',
+    'Histórico completo da área',
+    'Relatório mensal geral',
+    'Avaliação do seu terreno',
+  ],
+  business: [
+    'Tudo do Pro',
+    'Até 5 usuários',
+    'Painel de equipe',
+    'Relatório com marca da empresa',
+    'Histórico de análise da equipe',
+  ],
+};
+const HIGHLIGHT: Record<string, boolean> = { plus: true };
 
-const formatBRL = (v: number) =>
-  v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+/** Planos 1:1 com Lovable `lovable_chunk_plans.js` (sem Free no funil).
+ *  Nome/tagline/preço vêm de lib/plans (fonte única); features são do funil. */
+const PLANS: Plan[] = PLAN_META.map((m) => ({
+  id: m.id,
+  name: m.name,
+  tag: m.tagline,
+  price: m.priceBRL,
+  features: FEATURES[m.id] ?? [],
+  highlight: HIGHLIGHT[m.id] ?? false,
+}));
 
 export default function PlansPage() {
   const locale = useLocale();
@@ -124,7 +108,7 @@ export default function PlansPage() {
           <Sparkles className="h-3 w-3" />
           Escolha seu plano
         </div>
-        <h1 className="mt-3 text-3xl font-bold leading-tight tracking-tight">
+        <h1 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight">
           Comece a analisar o mercado agora
         </h1>
         <p className="mt-2 text-sm text-foreground/60">Cancele quando quiser. Sem fidelidade.</p>
@@ -168,7 +152,7 @@ export default function PlansPage() {
 
               <div className="mt-3 flex items-baseline gap-1">
                 <span className="text-xs text-foreground/50">R$</span>
-                <span className="text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
+                <span className="font-display text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
                 <span className="text-sm text-foreground/50">/mês</span>
               </div>
 

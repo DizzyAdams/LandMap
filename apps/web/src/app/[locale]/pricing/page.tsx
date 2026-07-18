@@ -5,7 +5,7 @@ import { useLocale } from 'next-intl';
 import { Sparkles, Check } from '../../../components/lovable/icons';
 import { ProductPageShell } from '../../../components/ProductPageShell';
 import { Reveal } from '../../../components/Motion';
-import { Card, Badge, Button, Stat } from '@landmap/ui';
+import { Card, Badge, Stat, buttonVariants, cn } from '@landmap/ui';
 
 const PLANS = [
   {
@@ -68,11 +68,14 @@ export default function PricingPage() {
           <Card
             key={pl.name}
             variant={pl.hl ? 'highlight' : 'interactive'}
-            className="flex flex-col p-4"
+            className={cn(
+              'flex flex-col p-4',
+              pl.hl && 'shadow-[var(--shadow-card)]',
+            )}
           >
             <div className="flex items-center justify-between">
               <p className="font-semibold">LandMap {pl.name}</p>
-              {pl.hl && <Badge variant="success">popular</Badge>}
+              {pl.hl && <Badge variant="default">Mais popular</Badge>}
             </div>
             <p className="mt-2 font-display text-2xl font-bold">
               {pl.price}
@@ -86,10 +89,14 @@ export default function PricingPage() {
                 </li>
               ))}
             </ul>
-            <Link href={lh('/plans')} className="mt-4 block">
-              <Button className="w-full" variant={pl.hl ? 'default' : 'outline'}>
-                Assinar {pl.name}
-              </Button>
+            <Link
+              href={lh('/plans')}
+              className={cn(
+                buttonVariants({ variant: pl.hl ? 'default' : 'outline' }),
+                'mt-4 w-full',
+              )}
+            >
+              Assinar {pl.name}
             </Link>
           </Card>
         ))}
