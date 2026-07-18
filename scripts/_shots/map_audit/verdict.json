@@ -1,0 +1,29 @@
+{
+  "date": "2026-07-17",
+  "standard": "hybrid-C",
+  "verdict": {
+    "literal_lovable_map_intelligence": "FAIL",
+    "lovable_chrome_tokens_on_map": "PASS",
+    "hybrid_standard_frozen": "PASS",
+    "old_parity_method_for_map": "INVALID"
+  },
+  "p0_fixed": [
+    "radiusKm filter via searchCenter + haversineKm",
+    "removed unused dashboard/MapView.tsx",
+    "DESIGN.md §4.1 Map System Standard",
+    "docs/map-parity-audit-2026-07.md"
+  ],
+  "p1_fixed": [
+    "dashboard metadata title Painel — LandMap",
+    "map empty state contextual radiusActive",
+    "Claude.md hybrid map standard note",
+    "ready_for_pages.md gate checklist"
+  ],
+  "lovable_surface": "dashboard chunk — layers, heatmap scale, top lists, Score LandMap",
+  "landmap_surface": "/map Free terrenos — grade A-F, heat API, dossier",
+  "references": [
+    "docs/map-parity-audit-2026-07.md",
+    "DESIGN.md §4.1",
+    "scripts/_lovable_pull/reference_public/lovable_chunk_dashboard.js"
+  ]
+}

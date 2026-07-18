@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Button, NotificationCenter } from '@landmap/ui';
+import { PlanBadge } from './PlanGate';
 import { ensureFreeAccess, useMockUser } from '../lib/mockAuth';
 import { Menu, X } from './lovable/icons';
 
@@ -40,6 +41,10 @@ const marketLinks = [
   { href: 'resources', labelKey: 'Recursos' },
   { href: 'developers', labelKey: 'Desenvolvedores' },
   { href: 'pricing', labelKey: 'Preços' },
+  { href: 'reports', labelKey: 'Relatório' },
+  { href: 'watchlist', labelKey: 'Monitoradas' },
+  { href: 'api-keys', labelKey: 'API & Webhooks' },
+  { href: 'team', labelKey: 'Equipe' },
   { href: 'portfolio', labelKey: 'Carteira' },
   { href: 'leads', labelKey: 'Leads' },
   { href: 'glossary', labelKey: 'Glossário' },
@@ -220,6 +225,8 @@ export function Navbar() {
         <span className="hidden md:block">
           <NotificationCenter />
         </span>
+
+        <PlanBadge />
 
         <span className="hidden items-center gap-0.5 rounded-full border border-[var(--border)] bg-[var(--card)] p-0.5 md:flex">
           {locales.map((l) => (

@@ -1,0 +1,51 @@
+{
+  "onboarding": {
+    "must_ok": [
+      "Todo o Brasil no mapa",
+      "Explore terrenos e regiões",
+      "Continuar",
+      "Já tenho conta",
+      "Pular"
+    ],
+    "must_fail_prod": [],
+    "must_fail_lov": [],
+    "forbidden_hit": []
+  },
+  "plans": {
+    "must_ok": [
+      "Comece a analisar o mercado agora",
+      "Cancele quando quiser. Sem fidelidade.",
+      "LandMap Access",
+      "LandMap Plus",
+      "LandMap Pro",
+      "LandMap Business",
+      "Assinar LandMap Plus",
+      "Pagamento não ativado",
+      "Já tem conta?"
+    ],
+    "must_fail_prod": [],
+    "must_fail_lov": [],
+    "forbidden_hit": []
+  },
+  "auth": {
+    "must_ok": [
+      "Inteligência de terrenos, do mapa à decisão. (prod SSR / lov client)",
+      "Acesse a plataforma com sua conta. (prod SSR / lov client)",
+      "Entrar",
+      "Criar conta (prod SSR / lov client)",
+      "Entrar sem cadastro (prod SSR / lov client)",
+      "Voltar para o site (prod SSR / lov client)"
+    ],
+    "must_fail_prod": [],
+    "must_fail_lov": [],
+    "forbidden_hit": []
+  },
+  "home": {
+    "must_ok": [
+      "LandMap — Inteligência de terrenos"
+    ],
+    "must_fail_prod": [],
+    "must_fail_lov": [],
+    "forbidden_hit": []
+  }
+}
