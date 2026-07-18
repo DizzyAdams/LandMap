@@ -9,7 +9,7 @@
 > **Design source of truth = `DESIGN.md`** (fonte autoritativa de UI/UX, tokens e fontes — mantenha este arquivo e `CLAUDE.md` em sincronia com ele).
 
 
-Última atualização: 2026-07-14 (branch `main` — Design Audit Lovable 100% concluído).
+Última atualização: 2026-07-18 (branch `main` — parity Lovable 100%, verde typecheck/lint/test(357)/build).
 
 > **2026-07-13 — Migração Lovable COMPLETA. Alinhamento final: assets, manifest, metadata, OG, ícones + drift tokens.** Commit `5b93677` + `5cd2ef0`:
 > - `tokens.ts` re-alinhado ao indigo Lovable (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis)
@@ -192,7 +192,7 @@ pnpm -F @landmap/ui build          # build do design system
 pnpm dev                           # Next.js (localhost:3000)
 pnpm dev:api                       # API Hono (localhost:4000)
 pnpm typecheck / lint / test / build   # -r (todos os pacotes)
-pnpm test                          # vitest run (suíte atual: ~299 testes)
+pnpm test                          # vitest run (suíte atual: 357 testes, 45 files)
 ```
 Verificação rápida só do web:
 ```powershell
