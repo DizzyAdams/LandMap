@@ -9,9 +9,9 @@
 > **Design source of truth = `DESIGN.md`** (fonte autoritativa de UI/UX, tokens e fontes — mantenha este arquivo e `CLAUDE.md` em sincronia com ele).
 
 
-Última atualização: 2026-07-18 (branch `main` — parity Lovable 100%, verde typecheck/lint/test(357)/build).
+Última atualização: 2026-07-18 (branch `main` — parity Lovable 100%, audit prod 146/146 + parity 0 missing; deploy `landmapprod-4y4bov6ql`).
 
-> **2026-07-13 — Migração Lovable COMPLETA. Alinhamento final: assets, manifest, metadata, OG, ícones + drift tokens.** Commit `5b93677` + `5cd2ef0`:
+> **2026-07-18 — Audit de produção + correção i18n.** `validate_real.py` rodado contra `landmapprod.vercel.app`: 146/146 (100%) — HTTP/títulos/MetaDesc/OG/fonts(DM Sans+Space Grotesk)/CSS/sem-erro/statics. `compare_live.py` (frase-a-frase vs Lovable live): **0 missing**. Bug real encontrado e corrigido: `apps/web/src/app/[locale]/page.tsx` (home) tinha `generateMetadata` com título fixo pt-BR, sobrescrevendo o locale → `/en-US` e `/es-ES` serviam título pt-BR. Agora localiza (pt-BR/en-US/es-ES). Scripts de audit limpos (`/world` e `/terrenos` removidos das listas — rotas inexistentes no app ativo; `/terrenos` nunca existiu pós-migração Lovable). Deploy `landmapprod-4y4bov6ql-dizzys-projects-d5a44b36.vercel.app` (alias `landmapprod.vercel.app` + `landmap.us.kg`).
 > - `tokens.ts` re-alinhado ao indigo Lovable (corrigido drift `#003594`/`emeraldTint`/`cyanTint` azuis)
 > - Root `layout.tsx`: `metadata` export com favicon.svg, OG image, twitter card
 > - `[locale]/layout.tsx`: OG image atualizado de `.png` → `.svg`
@@ -59,8 +59,7 @@ Stack mono-repo pnpm. Licença MIT.
 - Repo: `origin` = https://github.com/DizzyAdams/LandMap.git — branch `main`.
 - Commits em **pt-BR** são o padrão do projeto (ok manter).
 - Produção (Vercel): projeto **`landmapprod`** (projectId `prj_yGGRzfAXO3nfp96QwuvdA1jWARkt`), escopo `dizzys-projects-d5a44b36`.
-  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-3vepf2emb`, status `READY` — port design Lovable light/indigo de TODAS as telas do Lote 5 + auxiliares, 2026-07-13).
-  Outros aliases ativos: `landmap.us.kg`, `getlandmap.app`, `landmap.com.br` (+ www). Deploy via `vercel deploy --prod` (build remoto; `NEXT_PUBLIC_SITE_URL` em `vercel.json`).
+  **Alias canônico de produção: `https://landmapprod.vercel.app`** (deploy atual `landmapprod-4y4bov6ql-dizzys-projects-d5a44b36.vercel.app`, status `READY` — 2026-07-18, audit 146/146 + parity 0 missing). Outros aliases ativos: `landmap.us.kg`, `getlandmap.app`, `landmap.com.br` (+ www). Deploy via `vercel deploy --prod` (build remoto; `NEXT_PUBLIC_SITE_URL` em `vercel.json`).
 
 ---
 
