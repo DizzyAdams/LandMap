@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams, usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { Button, NotificationCenter } from '@landmap/ui';
@@ -136,9 +137,11 @@ export function Navbar() {
         aria-label="LandMap - ir para a pÃ¡gina inicial"
         className={`group flex items-center gap-2 text-sm font-semibold tracking-tight ${focusRing}`}
       >
-        <img
+        <Image
           src="/landmap-logo-transparent.png"
           alt="LandMap"
+          width={24}
+          height={24}
           className="h-6 w-auto object-contain transition group-hover:scale-105"
         />
       </Link>

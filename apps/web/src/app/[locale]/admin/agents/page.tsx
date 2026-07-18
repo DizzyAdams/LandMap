@@ -99,7 +99,7 @@ export default function AdminAgentsPage() {
     void refresh();
   }, [refresh]);
 
-  const agents: SalesAgentView[] = state?.agents ?? [];
+  const agents = useMemo(() => state?.agents ?? [], [state?.agents]);
   const meta = state?.meta;
   const autonomy = state?.autonomy ?? 'copilot';
 

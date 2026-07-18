@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { Eye, EyeOff, LandMapWordmark } from '../../../components/lovable/icons';
 import { Reveal } from '../../../components/Motion';
 import { useMockUser, storeUserType, type UserType } from '../../../lib/mockAuth';
@@ -51,7 +51,7 @@ function Field({
   );
 }
 
-export default function AuthPage() {
+function AuthPageInner() {
   const locale = useLocale();
   const router = useRouter();
   const params = useSearchParams();
@@ -336,5 +336,13 @@ export default function AuthPage() {
         </Reveal>
       </main>
     </div>
+  );
+}
+
+export default function AuthPage() {
+  return (
+    <Suspense fallback={null}>
+      <AuthPageInner />
+    </Suspense>
   );
 }
