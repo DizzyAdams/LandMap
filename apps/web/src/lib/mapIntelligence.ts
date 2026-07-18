@@ -108,13 +108,14 @@ export function scoreLabel(score: number): string {
  * Leaflet circleMarker exige cor concreta, então resolvemos a
  * var(--*) computada em runtime (disponível após montagem).
  * Bandas: primary (≥80) · accent (≥65) · warning (≥50) · orange (≥35) · destructive.
- */
-const SCORE_BANDS: { min: number; token: string }[] = [
-  { min: 80, token: '--primary' },
-  { min: 65, token: '--accent' },
-  { min: 50, token: '--warning' },
-  { min: 35, token: '--warning' },
-];
+ /** scoreColor: banda de cor alinhada a scoreLabel.
+  * primary(≥80) · accent(≥65 e ≥50 "Médio") · warning(35–49 "Baixo") · destructive(<35 "Crítico"). */
+ const SCORE_BANDS: { min: number; token: string }[] = [
+   { min: 80, token: '--primary' },
+   { min: 65, token: '--accent' },
+   { min: 50, token: '--accent' },
+   { min: 35, token: '--warning' },
+ ];
 
 /** Lê o valor computado de uma CSS var (fallback concreto se ainda não resolvida). */
 export function resolveToken(token: string): string {
