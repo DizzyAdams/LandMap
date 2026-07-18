@@ -45,6 +45,8 @@ const marketLinks = [
   { href: 'watchlist', labelKey: 'Monitoradas' },
   { href: 'api-keys', labelKey: 'API & Webhooks' },
   { href: 'team', labelKey: 'Equipe' },
+  { href: 'radar', labelKey: 'Radar' },
+  { href: 'heatmap', labelKey: 'Heatmap' },
   { href: 'activity', labelKey: 'Atividade' },
   { href: 'notifications', labelKey: 'Notificações' },
   { href: 'settings', labelKey: 'Configurações' },
