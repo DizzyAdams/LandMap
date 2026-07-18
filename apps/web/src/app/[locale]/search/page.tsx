@@ -172,7 +172,7 @@ function SearchPageInner() {
               href={`/${locale}`}
               className="text-xs text-[var(--muted-foreground)] transition hover:text-[var(--foreground)]"
             >
-              {t('empty') ? 'Voltar para Home' : 'Voltar para Home'}
+              {t('empty')}
             </Link>
           </div>
         </Reveal>

@@ -282,7 +282,7 @@ function MapPageInner() {
               )}
             </div>
             {suggestOpen && query.trim() && suggestions.length > 0 && (
-              <div className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-border/50 bg-white/98 shadow-lg animate-in fade-in">
+              <div className="absolute inset-x-0 top-full z-30 mt-2 overflow-hidden rounded-2xl border border-border/50 bg-white/98 shadow-lg animate-in fade-in motion-reduce:animate-none">
                 {suggestions.map((r) => (
                   <button
                     key={r.id}
@@ -552,7 +552,7 @@ function MapPageInner() {
                 href={lh('/regions')}
                 className={cn(buttonVariants({ variant: 'outline', size: 'sm' }))}
               >
-                Regiões
+                {COPY.regions}
               </Link>
             </div>
           </div>

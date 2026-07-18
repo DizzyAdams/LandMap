@@ -81,6 +81,7 @@ export const COPY = {
   history: 'Histórico do m²',
   failMap: 'Falha ao carregar o mapa',
   compare: 'Comparar',
+  regions: 'Regiões',
   stateRank: 'Ranking estadual',
   nationalRank: 'Ranking nacional',
   avgPrice: 'Preço médio m²',
