@@ -28,8 +28,7 @@
     "inputs": 2,
     "len": 124,
     "errors": [
-      "PAGEERR Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors a",
-      "Failed to load resource: the server responded with a status of 500 ()"
+      "PAGEERR Minified React error #418; visit https://react.dev/errors/418?args[]=HTML&args[]= for the full message or use the non-minified dev environment for full errors a"
     ]
   },
   "prod": {
@@ -70,8 +69,6 @@
     "panels": 0,
     "inputs": 1,
     "len": 686,
-    "errors": [
-      "Failed to load resource: the server responded with a status of 500 ()"
-    ]
+    "errors": []
   }
 }
