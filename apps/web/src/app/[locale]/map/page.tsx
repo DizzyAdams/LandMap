@@ -9,7 +9,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useLocale } from 'next-intl';
-import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { RequireAuth } from '../../../components/RequireAuth';
 import {
@@ -131,34 +130,39 @@ function MapPageInner() {
     if (!mapRef.current || mapInstance.current) return;
     let cancelled = false;
 
-    try {
-      if (cancelled || !mapRef.current || mapInstance.current) return;
-      const map = L.map(mapRef.current, {
-        center: MAP_CENTER,
-        zoom: MAP_DEFAULT_ZOOM,
-        zoomControl: false,
-        preferCanvas: true,
-        attributionControl: true,
-      });
-      L.control.zoom({ position: 'bottomright' }).addTo(map);
-      // Light basemap close to Lovable Google Maps light style
-      L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-        attribution: '&copy; OSM &copy; CARTO',
-        maxZoom: 19,
-        subdomains: 'abcd',
-      }).addTo(map);
-      mapInstance.current = map;
-      setMapReady(true);
-      setTimeout(() => {
-        try {
-          map.invalidateSize({ animate: false });
-        } catch {
-          /* ignore */
-        }
-      }, 120);
-    } catch {
-      setMapError(true);
-    }
+    (async () => {
+      try {
+        if (cancelled || !mapRef.current || mapInstance.current) return;
+        // Leaflet is imported dynamically: its module touches `window` at import
+        // time, which breaks SSR. Loading it here (client-only) avoids that.
+        const L = (await import('leaflet')).default;
+        const map = L.map(mapRef.current, {
+          center: MAP_CENTER,
+          zoom: MAP_DEFAULT_ZOOM,
+          zoomControl: false,
+          preferCanvas: true,
+          attributionControl: true,
+        });
+        L.control.zoom({ position: 'bottomright' }).addTo(map);
+        // Light basemap close to Lovable Google Maps light style
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; OSM &copy; CARTO',
+          maxZoom: 19,
+          subdomains: 'abcd',
+        }).addTo(map);
+        mapInstance.current = map;
+        setMapReady(true);
+        setTimeout(() => {
+          try {
+            map.invalidateSize({ animate: false });
+          } catch {
+            /* ignore */
+          }
+        }, 120);
+      } catch {
+        setMapError(true);
+      }
+    })();
 
     return () => {
       cancelled = true;
