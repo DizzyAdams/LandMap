@@ -90,7 +90,7 @@ export default function PlansPage() {
   };
 
   return (
-    <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background pb-32">
+    <div className="mx-auto flex min-h-[100dvh] max-w-md flex-col bg-background pb-32">
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
         <Link
           href={lh('/onboarding')}
@@ -157,7 +157,7 @@ export default function PlansPage() {
               </div>
 
               {isSel && p.features.length > 0 && (
-                <ul className="mt-4 space-y-2 border-t border-border/60 pt-4">
+                <ul className="mt-4 max-h-[40vh] space-y-2 overflow-y-auto border-t border-border/60 pt-4">
                   {p.features.map((f) => (
                     <li key={f} className="flex items-start gap-2 text-sm text-foreground/75">
                       <Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />

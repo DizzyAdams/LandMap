@@ -5,20 +5,20 @@ export async function generateMetadata({ params }: { params: Promise<{ locale?: 
   const { locale } = await params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://landmapprod.vercel.app';
   return {
-    title: 'Painel — LandMap',
-    description: 'Visão geral do mercado: preço médio m², regiões e score LandMap em um só painel.',
+    title: 'Painel â€” LandMap',
+    description: 'VisÃ£o geral do mercado: preÃ§o mÃ©dio mÂ², regiÃµes e score LandMap em um sÃ³ painel.',
     openGraph: {
-      title: 'Painel — LandMap',
-      description: 'Visão geral do mercado: preço médio m², regiões e score LandMap em um só painel.',
+      title: 'Painel â€” LandMap',
+      description: 'VisÃ£o geral do mercado: preÃ§o mÃ©dio mÂ², regiÃµes e score LandMap em um sÃ³ painel.',
       url: `/${locale}/dashboard`,
       type: 'website',
       locale: locale,
-      images: [{ url: LANDMAP_OG_IMAGE, width: 1200, height: 630, alt: 'Painel — LandMap' }],
+      images: [{ url: LANDMAP_OG_IMAGE, width: 1200, height: 630, alt: 'Painel â€” LandMap' }],
     },
     twitter: {
       card: 'summary_large_image',
-      title: 'Painel — LandMap',
-      description: 'Visão geral do mercado: preço médio m², regiões e score LandMap em um só painel.',
+      title: 'Painel â€” LandMap',
+      description: 'VisÃ£o geral do mercado: preÃ§o mÃ©dio mÂ², regiÃµes e score LandMap em um sÃ³ painel.',
       images: [LANDMAP_OG_IMAGE],
     },
   };

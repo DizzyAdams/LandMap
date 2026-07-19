@@ -166,12 +166,41 @@ function MapPageInner() {
 
     return () => {
       cancelled = true;
+      window.removeEventListener('resize', onResize);
       if (mapInstance.current) {
         mapInstance.current.remove();
         mapInstance.current = null;
       }
     };
+  });
+
+  // Keep the Leaflet canvas sized correctly on mobile when the URL bar
+  // shows/hides or the device is rotated (avoids greyed/clipped tiles).
+  const onResize = useCallback(() => {
+    const map = mapInstance.current;
+    if (!map) return;
+    // debounce-ish: rAF coalesces bursts of resize events
+    if ((window as any).__mapResizeRAF) cancelAnimationFrame((window as any).__mapResizeRAF);
+    (window as any).__mapResizeRAF = requestAnimationFrame(() => {
+      try {
+        map.invalidateSize({ animate: false });
+      } catch {
+        /* ignore */
+      }
+    });
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize);
+    window.addEventListener('orientationchange', onResize);
+    // initial pass in case the viewport changed before mount
+    const t = setTimeout(onResize, 250);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('resize', onResize);
+      window.removeEventListener('orientationchange', onResize);
+    };
+  }, [onResize]);
 
   useEffect(() => {
     if (mapReady) paintMarkers();
@@ -298,7 +327,7 @@ function MapPageInner() {
       {/* Layers panel — Lovable floating card */}
       {layersOpen && (
         <div className="pointer-events-none absolute bottom-[auto] left-3 top-[8.5rem] z-20 w-[min(100%-1.5rem,20rem)] sm:left-4 sm:top-[9rem]">
-          <div className="pointer-events-auto rounded-2xl border border-border/50 bg-white/98 p-4 shadow-lg backdrop-blur">
+          <div className="pointer-events-auto max-h-[calc(100dvh-9.5rem)] overflow-y-auto rounded-2xl border border-border/50 bg-white/98 p-4 shadow-lg backdrop-blur">
             <div className="mb-3 flex items-center justify-between">
               <p className="font-display text-sm font-semibold">{COPY.layersTitle}</p>
               <button
@@ -373,40 +402,45 @@ function MapPageInner() {
         </div>
       )}
 
-      {/* Bottom ranking cards — Lovable grid */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:p-4">
-        <div className="pointer-events-auto mx-auto grid max-w-[1400px] gap-3 md:grid-cols-2 lg:grid-cols-3">
-          <RankCard
-            title={COPY.topValorization}
-            icon={<TrendingUp className="h-3.5 w-3.5" />}
-            items={topVal.map((r) => ({
-              id: r.id,
-              name: r.name,
-              hint: r.city,
-              value: fmtDelta(r.priceSqmDelta12m),
-              positive: r.priceSqmDelta12m >= 0,
-            }))}
-            onSelect={(id) => {
-              const r = INTELLIGENCE_REGIONS.find((x) => x.id === id);
-              if (r) selectRegion(r);
-            }}
-          />
-          <RankCard
-            title={COPY.topOpportunities}
-            icon={<MapPin className="h-3.5 w-3.5" />}
-            items={topOpp.map((r) => ({
-              id: r.id,
-              name: r.name,
-              hint: `${r.city} · ${r.zoning}`,
-              value: String(r.score),
-              positive: true,
-            }))}
-            onSelect={(id) => {
-              const r = INTELLIGENCE_REGIONS.find((x) => x.id === id);
-              if (r) selectRegion(r);
-            }}
-          />
-          <div className="hidden lg:block">
+      {/* Bottom ranking cards — Lovable grid on desktop; horizontal scroller on mobile
+          so the cards never stack over the whole map. */}
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 p-3 sm:p-4">
+        <div className="pointer-events-auto flex snap-x snap-mandatory gap-3 overflow-x-auto pb-[max(0.25rem,env(safe-area-inset-bottom))] md:mx-auto md:max-w-[1400px] md:grid md:grid-cols-2 md:overflow-visible md:pb-0 lg:grid-cols-3">
+          <div className="w-[85vw] max-w-sm shrink-0 snap-start sm:w-80 md:w-auto md:max-w-none md:shrink">
+            <RankCard
+              title={COPY.topValorization}
+              icon={<TrendingUp className="h-3.5 w-3.5" />}
+              items={topVal.map((r) => ({
+                id: r.id,
+                name: r.name,
+                hint: r.city,
+                value: fmtDelta(r.priceSqmDelta12m),
+                positive: r.priceSqmDelta12m >= 0,
+              }))}
+              onSelect={(id) => {
+                const r = INTELLIGENCE_REGIONS.find((x) => x.id === id);
+                if (r) selectRegion(r);
+              }}
+            />
+          </div>
+          <div className="w-[85vw] max-w-sm shrink-0 snap-start sm:w-80 md:w-auto md:max-w-none md:shrink">
+            <RankCard
+              title={COPY.topOpportunities}
+              icon={<MapPin className="h-3.5 w-3.5" />}
+              items={topOpp.map((r) => ({
+                id: r.id,
+                name: r.name,
+                hint: `${r.city} · ${r.zoning}`,
+                value: String(r.score),
+                positive: true,
+              }))}
+              onSelect={(id) => {
+                const r = INTELLIGENCE_REGIONS.find((x) => x.id === id);
+                if (r) selectRegion(r);
+              }}
+            />
+          </div>
+          <div className="hidden w-[85vw] max-w-sm shrink-0 snap-start sm:block sm:w-80 md:w-auto md:max-w-none md:shrink lg:block">
             <div className="rounded-2xl border border-border/50 bg-white/98 p-4 shadow-lg backdrop-blur">
               <div className="mb-2 flex items-center gap-2">
                 <LineChart className="h-3.5 w-3.5 text-primary" />
@@ -431,7 +465,7 @@ function MapPageInner() {
 
       {/* Region detail sheet */}
       {selected && (
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center p-3 pb-[max(12rem,env(safe-area-inset-bottom))] sm:bottom-auto sm:left-auto sm:right-4 sm:top-[8.5rem] sm:w-[22rem] sm:p-0 sm:pb-0">
+        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-30 flex justify-center p-3 pb-[max(11rem,env(safe-area-inset-bottom))] sm:bottom-auto sm:left-auto sm:right-4 sm:top-[8.5rem] sm:w-[22rem] sm:p-0 sm:pb-0">
           <div className="pointer-events-auto max-h-[min(70dvh,520px)] w-full max-w-lg overflow-y-auto rounded-2xl border border-border/60 bg-white p-4 shadow-xl sm:max-w-none">
             <div className="flex items-start justify-between gap-2">
               <div>

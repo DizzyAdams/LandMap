@@ -2,7 +2,7 @@ import React from 'react';
 
 /**
  * Route-transition wrapper. App Router remounts `template.tsx` on every
- * navigation, so the `animate-in` utility replays — a subtle, tasteful
+ * navigation, so the `animate-in` utility replays â€” a subtle, tasteful
  * fade-and-rise that reads as "premium" without ever getting in the way.
  * Neutralized under `prefers-reduced-motion` (see globals.css).
  */
