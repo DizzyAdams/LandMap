@@ -195,3 +195,16 @@ export type {
   SearchSuggestion,
   SuggestionsResult,
 } from './generators/suggestions.js';
+
+/* ---- Autonomous Agents ---- */
+export {
+  AgentExecutor,
+  AGENT_REGISTRY,
+  type AgentId,
+  type ExecutionContext,
+  type ExecutionResult,
+} from './agents/executor.js';
+export { SalesAgent } from './agents/SalesAgent.js';
+export { BaseAgent, AgentConfig, AgentMessage, AgentResult } from './agents/base.js';
+export { AgentMemory, type MemoryChunk } from './agents/memory.js';
+export { AGENT_TOOLS, getTool, getAllTools } from './agents/tools.js';
