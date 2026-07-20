@@ -3,10 +3,15 @@
  * Integrates RAG, tools, and memory
  */
 
-export { BaseAgent, AgentConfig, AgentMessage, AgentResult } from './base';
-export { AGENT_REGISTRY, type AgentId } from './registry';
-export { AGENT_TOOLS, getTool, getAllTools } from './tools';
-export { AgentMemory, type MemoryChunk } from './memory';
+import { BaseAgent, type AgentConfig, type AgentMessage, type AgentResult } from './base.js';
+import { AGENT_REGISTRY, type AgentId } from './registry.js';
+import { AGENT_TOOLS, getTool, getAllTools } from './tools.js';
+import { AgentMemory, type MemoryChunk } from './memory.js';
+
+export { BaseAgent, type AgentConfig, type AgentMessage, type AgentResult } from './base.js';
+export { AGENT_REGISTRY, type AgentId } from './registry.js';
+export { AGENT_TOOLS, getTool, getAllTools } from './tools.js';
+export { AgentMemory, type MemoryChunk } from './memory.js';
 
 export interface ExecutionContext {
   agentId: string;
@@ -48,9 +53,8 @@ export class AgentExecutor {
     // Add user message to memory
     memory.add({
       content: context.input,
-      role: 'user',
       timestamp: new Date(),
-      metadata: { userId: context.userId, sessionId: context.sessionId },
+      metadata: { role: 'user', userId: context.userId, sessionId: context.sessionId },
     });
 
     try {
@@ -63,9 +67,8 @@ export class AgentExecutor {
       // Add assistant response to memory
       memory.add({
         content: result.response,
-        role: 'assistant',
         timestamp: new Date(),
-        metadata: { toolsUsed: result.toolsUsed },
+        metadata: { role: 'assistant', toolsUsed: result.toolsUsed },
       });
 
       const latency = Date.now() - startTime;

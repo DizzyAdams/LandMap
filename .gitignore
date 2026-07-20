@@ -37,8 +37,9 @@ coverage/
 # ─── Backups ───
 *.bak
 
-# ─── Stray debug dumps ───
-apps/web/1000
+# ─── Stray build dumps at repo root (Next/Tailwind export artifacts, not source) ───
+prod.css
+prod_page.html
 
 # ─── Local deploy / process temp artifacts (created by helper scripts) ───
 *.pid

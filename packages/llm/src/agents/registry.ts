@@ -3,7 +3,7 @@
  * Similar to LangChain AgentExecutor
  */
 
-export { BaseAgent, AgentConfig, AgentMessage, AgentResult } from './base';
+export { BaseAgent, AgentConfig, AgentMessage, AgentResult } from './base.js';
 
 export const AGENT_REGISTRY = {
   // Commercial agents

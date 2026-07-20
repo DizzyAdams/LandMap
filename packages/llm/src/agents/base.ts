@@ -65,6 +65,6 @@ export abstract class BaseAgent {
   }
 
   protected buildSystemPrompt(): string {
-    return `You are ${this.name}, a ${this.role}.\n\n${this.description}\n\nYou have access to the following tools: ${this.tools.keys().join(', ')}.\n\nAlways be helpful, accurate, and concise. Use tools when needed.`;
+    return `You are ${this.name}, a ${this.role}.\n\n${this.description}\n\nYou have access to the following tools: ${Array.from(this.tools.keys()).join(', ')}.\n\nAlways be helpful, accurate, and concise. Use tools when needed.`;
   }
 }
