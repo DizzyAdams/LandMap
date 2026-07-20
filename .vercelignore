@@ -1,0 +1,15 @@
+# Reduce Vercel upload/deploy payload — keep only what the build needs.
+# (Vercel already ignores node_modules and .gitignore'd paths; this trims
+#  the rest of the monorepo that the apps/web build never touches.)
+
+node_modules
+dist
+*.tsbuildinfo
+*.log
+
+# Non-build dirs (audit/reference/docs/scripts)
+scripts
+docs
+reference
+archive_landmap_only_*
+*.bak
