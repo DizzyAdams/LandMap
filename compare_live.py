@@ -20,8 +20,16 @@ PROD = os.environ.get("PROD_URL", "https://landmapprod.vercel.app")
 # Lovable editor noise that must never be treated as product content
 NOISE = {"edit with", "preview", "publish", "share", "components", "code",
          "settings", "logout", "log out", "upgrade", "invite", "domain",
-         "back to editor", "preview mode", "landmap — inteligência de terrenos"}
+         "back to editor", "preview mode", "landmap — inteligência de terrenos",
+         # Product name / Lovable <title> tag — not unique body content. The
+         # dashboard is an intentionally distinct surface (DESIGN.md §4.1), so its
+         # title differing from Lovable's "Mapa — LandMap" is expected, not a gap.
+         "mapa — landmap"}
 
+# Only routes that exist in the Lovable source (verified 200 live). LandMap
+# superset routes below do NOT exist on Lovable and were removed from the check
+# to avoid false "Lovable unreachable 404" noise:
+#   search, insights, sales, calculator, chat, live, status
 SCREENS = {
     "home":      ("/",            "/pt-BR"),
     "regions":   ("/regions",     "/pt-BR/regions"),
@@ -32,14 +40,7 @@ SCREENS = {
     "plans":     ("/plans",       "/pt-BR/plans"),
     "auth":      ("/auth",        "/pt-BR/auth"),
     "map":       ("/map",         "/pt-BR/map"),
-    "search":    ("/search",      "/pt-BR/search"),
     "onboarding":("/onboarding",  "/pt-BR/onboarding"),
-    "insights":  ("/insights",    "/pt-BR/insights"),
-    "sales":     ("/sales",       "/pt-BR/sales"),
-    "calculator":("/calculator",  "/pt-BR/calculator"),
-    "chat":      ("/chat",        "/pt-BR/chat"),
-    "live":       ("/live",        "/pt-BR/live"),
-    "status":     ("/status",      "/pt-BR/status"),
 }
 
 SKIP = {"script", "style", "head", "noscript", "svg"}
