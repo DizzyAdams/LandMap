@@ -8,7 +8,6 @@ import {
   useSpring,
   useReducedMotion,
 } from 'framer-motion';
-import { unstable_setRequestLocale } from 'next-intl/server';
 
 /* ------------------------------------------------------------------ *
  * LandMap — Surreal Launch Presentation
@@ -34,7 +33,6 @@ const FEATURES = [
 ];
 
 export default function LaunchPage({ params }: { params: { locale: string } }) {
-  unstable_setRequestLocale(params.locale);
   const reduce = useReducedMotion() ?? false;
   const root = useRef<HTMLDivElement>(null);
 
