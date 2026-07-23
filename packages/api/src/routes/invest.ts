@@ -10,11 +10,13 @@ const allPropertiesData = loadProperties();
 const allProperties = allPropertiesData as unknown as Property[];
 
 function normalize(s: string): string {
-  return s
-    .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
-    .trim()
-    .toLowerCase();
+  const nfd = s.normalize('NFD');
+  let folded = '';
+  for (const ch of nfd) {
+    const code = ch.codePointAt(0) ?? 0;
+    if (code < 0x0300 || code > 0x036f) folded += ch;
+  }
+  return folded.trim().toLowerCase();
 }
 
 function filterByCity(city: string): Property[] {
