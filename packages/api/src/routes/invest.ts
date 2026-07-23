@@ -9,9 +9,17 @@ const allPropertiesData = loadProperties();
 
 const allProperties = allPropertiesData as unknown as Property[];
 
+function normalize(s: string): string {
+  return s
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .trim()
+    .toLowerCase();
+}
+
 function filterByCity(city: string): Property[] {
-  const target = city.trim().toLowerCase();
-  return allProperties.filter((p) => p.city.toLowerCase() === target);
+  const target = normalize(city);
+  return allProperties.filter((p) => normalize(p.city) === target);
 }
 
 /* Validação dos parâmetros de query de /invest/analyze (strings → números).
