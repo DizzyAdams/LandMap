@@ -18,6 +18,7 @@ import { createRagRouter } from './routes/rag.js';
 import { createWebhooksRouter } from './routes/webhooks.js';
 import { createSalesRouter } from './routes/sales.js';
 import { createFunnelRouter } from './routes/funnel.js';
+import { createInspectRouter } from './routes/inspect.js';
 import { createIntegrationsRouter } from './routes/integrations.js';
 import { loadProperties } from './loadJson.js';
 const allPropertiesData = loadProperties();
@@ -447,6 +448,9 @@ app.route('/sales', createSalesRouter());
 
 /* Funnel analytics (self-hosted, NDJSON) */
 app.route('/funnel', createFunnelRouter());
+
+/* Inspection image analysis (proxies the Python serving service when configured) */
+app.route('/inspect', createInspectRouter());
 
 /* â”€â”€â”€ Integrations hub (WABA + CRIE + OpenDesign + registry) â”€â”€â”€ */
 app.route('/integrations', createIntegrationsRouter());
