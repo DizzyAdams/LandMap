@@ -5,9 +5,15 @@ import { z } from 'zod';
 import { analyze, estimateMonthlyRent } from '@landmap/invest';
 import type { InvestmentAssumptions, InvestmentResult } from '@landmap/invest';
 import { loadProperties } from '../loadJson.js';
-const allPropertiesData = loadProperties();
 
-const allProperties = allPropertiesData as unknown as Property[];
+// Carga PREGUIÇOSA: em runtime serverless o cwd no import-time pode não ter o
+// data file (o build avisa "empty dataset"). Ler por requisição garante dados.
+let _allPropertiesCache: Property[] | null = null;
+function allProperties(): Property[] {
+  if (_allPropertiesCache) return _allPropertiesCache;
+  _allPropertiesCache = loadProperties() as unknown as Property[];
+  return _allPropertiesCache;
+}
 
 function normalize(s: string): string {
   const nfd = s.normalize('NFD');
@@ -21,7 +27,7 @@ function normalize(s: string): string {
 
 function filterByCity(city: string): Property[] {
   const target = normalize(city);
-  return allProperties.filter((p) => normalize(p.city) === target);
+  return allProperties().filter((p) => normalize(p.city) === target);
 }
 
 /* Validação dos parâmetros de query de /invest/analyze (strings → números).
