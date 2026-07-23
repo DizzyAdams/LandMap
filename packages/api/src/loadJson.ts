@@ -16,8 +16,11 @@ export function loadProperties(): unknown[] {
     join(process.cwd(), 'data', 'properties.json'),
     join(process.cwd(), 'src', 'data', 'properties.json'),
     join(process.cwd(), 'dist', 'data', 'properties.json'),
+    join(process.cwd(), '..', 'packages', 'api', 'src', 'data', 'properties.json'),
+    join(process.cwd(), '..', 'packages', 'api', 'dist', 'data', 'properties.json'),
     join(here, '..', 'data', 'properties.json'),
     join(here, 'data', 'properties.json'),
+    join(here, '..', '..', 'packages', 'api', 'src', 'data', 'properties.json'),
   ];
   for (const p of candidates) {
     try {
