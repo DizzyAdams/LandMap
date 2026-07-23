@@ -13,7 +13,15 @@
     "declaration": true,
     "declarationMap": true,
     "paths": {
-      "@landmap/llm": ["./node_modules/@landmap/llm"]
+      "@landmap/config": ["../config/src/index.ts"],
+      "@landmap/db": ["../db/src/index.ts"],
+      "@landmap/geo": ["../geo/src/index.ts"],
+      "@landmap/integrations": ["../integrations/src/index.ts"],
+      "@landmap/invest": ["../invest/src/index.ts"],
+      "@landmap/llm": ["../llm/src/index.ts"],
+      "@landmap/llm/*": ["../llm/src/*"],
+      "@landmap/sales": ["../sales/src/index.ts"],
+      "@landmap/sales/*": ["../sales/src/*"]
     }
   },
   "include": ["src/**/*"],

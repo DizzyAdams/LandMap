@@ -13,7 +13,7 @@ import type {
   InvestmentAssumptions,
   InvestmentGrade,
   InvestmentResult,
-} from './types';
+} from './types.js';
 
 // ─── Helpers numéricos ──────────────────────────────────────────────────────
 
@@ -477,4 +477,3 @@ export function analyze(a: InvestmentAssumptions): InvestmentResult {
     grade: gr,
   };
 }
-

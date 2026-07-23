@@ -74,7 +74,7 @@ export default function PlansPage() {
   const lh = (p: string) => `/${locale}${p}`;
 
   // Lovable default = Plus
-  const [selected, setSelected] = useState<string>('plus');
+  const [selected, setSelected] = useState<string>('free');
   const selectedPlan = PLANS.find((p) => p.id === selected) ?? PLANS[1];
 
   const handleSubscribe = () => {
@@ -111,7 +111,9 @@ export default function PlansPage() {
         <h1 className="mt-3 font-display text-3xl font-bold leading-tight tracking-tight">
           Comece a analisar o mercado agora
         </h1>
-        <p className="mt-2 text-sm text-foreground/60">Cancele quando quiser. Sem fidelidade.</p>
+        <p className="mt-2 text-sm text-foreground/60">
+          14 dias gratuitos com cartão de crédito. Cancele quando quiser.
+        </p>
       </div>
 
       <Stagger className="mt-6 flex flex-col gap-3 px-6" stagger={0.08} y={20}>
@@ -131,6 +133,11 @@ export default function PlansPage() {
               {p.highlight && (
                 <span className="absolute -top-2 right-4 rounded-full bg-primary px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-primary-foreground">
                   Mais popular
+                </span>
+              )}
+              {p.id === 'free' && (
+                <span className="absolute -top-2 left-4 rounded-full bg-emerald-500 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-white">
+                  14 dias grátis
                 </span>
               )}
 
@@ -155,6 +162,11 @@ export default function PlansPage() {
                 <span className="font-display text-2xl font-bold tracking-tight">{formatBRL(p.price)}</span>
                 <span className="text-sm text-foreground/50">/mês</span>
               </div>
+              {p.id === 'free' && (
+                <p className="mt-1 text-xs text-foreground/60">
+                  14 dias gratuitos. Cartão de crédito necessário para ativação.
+                </p>
+              )}
 
               {isSel && p.features.length > 0 && (
                 <ul className="mt-4 max-h-[40vh] space-y-2 overflow-y-auto border-t border-border/60 pt-4">
@@ -183,7 +195,9 @@ export default function PlansPage() {
           onClick={handleSubscribe}
           className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-primary text-sm font-semibold text-primary-foreground shadow-[var(--shadow-card)] transition hover:bg-primary/90"
         >
-          Assinar {selectedPlan.name} — R$ {formatBRL(selectedPlan.price)}/mês
+          {selectedPlan.id === 'free'
+            ? 'Começar teste grátis por 14 dias'
+            : `Assinar ${selectedPlan.name} — R$ ${formatBRL(selectedPlan.price)}/mês`}
         </button>
         <p className="mt-2 text-center text-[11px] text-foreground/40">
           Pagamento não ativado — fluxo de demonstração.

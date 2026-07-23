@@ -4,7 +4,7 @@ const nextConfig = {
   eslint: { ignoreDuringBuilds: true },
   typescript: { ignoreBuildErrors: true },
   reactStrictMode: true,
-  transpilePackages: ['@landmap/sales'],
+  transpilePackages: ['@landmap/api', '@landmap/sales', '@landmap/ui'],
   experimental: {
     // typedRoutes kept off to avoid build friction across the large route tree
   },

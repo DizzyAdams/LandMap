@@ -15,8 +15,8 @@
 // Convenções BR: valores em BRL; taxas como frações (0.06 = 6%). Ver
 // docs/war-room/07-invest-opportunity.md para a composição do score.
 
-import { analyze, grade } from './metrics';
-import type { InvestmentAssumptions, InvestmentGrade } from './types';
+import { analyze, grade } from './metrics.js';
+import type { InvestmentAssumptions, InvestmentGrade } from './types.js';
 
 // ─── Tipos de entrada (espelham packages/api/src/routes/market.ts) ────────────
 
@@ -284,5 +284,4 @@ export function rankOpportunities(
     }))
     .sort((a, b) => b.score.score - a.score.score);
 }
-
 

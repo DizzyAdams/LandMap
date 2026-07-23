@@ -8,6 +8,8 @@ dependencies = [
     "uvicorn[standard]>=0.30",
     "pydantic>=2.8",
     "numpy>=2.0",
+    "python-multipart>=0.0.9",
+    "pillow>=10.4",
     "landmap-data",
     "landmap-features",
     "landmap-models",
@@ -17,6 +19,7 @@ dependencies = [
 # Deep refiner engine. numpy hot path works without it; install for the
 # PyTorch inference engine: `uv sync --extra torch`.
 torch = ["torch>=2.2"]
+vision = ["opencv-python-headless>=4.10"]
 
 [tool.uv.sources]
 landmap-data = { workspace = true }

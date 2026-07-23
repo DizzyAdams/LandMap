@@ -25,8 +25,8 @@ const ICON_PROPS = {
 
 const ITEMS: NavItem[] = [
   {
-    href: 'plans',
-    label: 'Planos',
+    href: 'search',
+    label: 'Buscar',
     icon: (
       <svg {...ICON_PROPS}>
         <circle cx="11" cy="11" r="7" />
@@ -46,11 +46,12 @@ const ITEMS: NavItem[] = [
     ),
   },
   {
-    href: 'favorites',
-    label: 'Favoritos',
+    href: 'inspect',
+    label: 'Capturar',
     icon: (
       <svg {...ICON_PROPS}>
-        <path d="M12 21s-7.5-4.6-10-9.2C.5 8.4 2.2 5 5.5 5c2 0 3.4 1.2 4.5 2.6C11.1 6.2 12.5 5 14.5 5 17.8 5 19.5 8.4 22 11.8 19.5 16.4 12 21 12 21Z" />
+        <path d="M4 7h3l2-3h6l2 3h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
+        <circle cx="12" cy="13" r="3.5" />
       </svg>
     ),
   },
@@ -70,11 +71,11 @@ const ITEMS: NavItem[] = [
     ),
   },
   {
-    href: 'admin',
-    label: 'Admin',
+    href: 'chat',
+    label: 'Chat',
     icon: (
       <svg {...ICON_PROPS}>
-        <path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12Z" />
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
       </svg>
     ),
   },
@@ -91,7 +92,7 @@ export function MobileBottomNav() {
 
   const isActive = (href: string) => {
     const full = `/${locale}/${href}`;
-    return pathname === full || pathname.startsWith(href + '/');
+    return pathname === full || pathname.startsWith(full + '/');
   };
 
   return (

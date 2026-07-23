@@ -1,4 +1,4 @@
-﻿import { Hono } from 'hono';
+import { Hono } from 'hono';
 import { z } from 'zod';
 import { handle } from 'hono/vercel';
 import type { AnalyzeInput, AnalyzeResult, LlmMessage } from '@landmap/llm';
@@ -17,6 +17,7 @@ import { createLangflowRouter } from './routes/langflow.js';
 import { createRagRouter } from './routes/rag.js';
 import { createWebhooksRouter } from './routes/webhooks.js';
 import { createSalesRouter } from './routes/sales.js';
+import { createFunnelRouter } from './routes/funnel.js';
 import { createIntegrationsRouter } from './routes/integrations.js';
 import { loadProperties } from './loadJson.js';
 const allPropertiesData = loadProperties();
@@ -443,6 +444,9 @@ app.route('/webhooks', createWebhooksRouter());
 /* Autonomous Sales Agent routes */
 app.route('/geo', createGeoRouter(createGeoSource()));
 app.route('/sales', createSalesRouter());
+
+/* Funnel analytics (self-hosted, NDJSON) */
+app.route('/funnel', createFunnelRouter());
 
 /* â”€â”€â”€ Integrations hub (WABA + CRIE + OpenDesign + registry) â”€â”€â”€ */
 app.route('/integrations', createIntegrationsRouter());

@@ -89,3 +89,19 @@ class RealtimeBatchResponse(BaseModel):
     avg_latency_us: float
     engine: str
     torch_available: bool
+
+
+class InspectionAnalysisResponse(BaseModel):
+    model_config = ConfigDict(alias_generator=to_camel, populate_by_name=True)
+
+    brightness: int
+    contrast: int
+    sharpness: int
+    score: int
+    verdict: str
+    notes: list[str]
+    dominant_color: str
+    edges_ratio: float
+    focus_score: float
+    image_width: int
+    image_height: int

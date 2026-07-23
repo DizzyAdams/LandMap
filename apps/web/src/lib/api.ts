@@ -819,6 +819,83 @@ export function getTerrain(city: string) {
   return apiFetch<TerrainResponse>(`/market/terrain?city=${encodeURIComponent(city)}`);
 }
 
+/* ─── Investment underwriting ─────────────────────────────────────────── */
+
+export type InvestScoreRequest = {
+  price: number;
+  monthlyRent: number;
+  downPaymentPct: number;
+  interestRatePct: number;
+  loanTermYears: number;
+  annualExpensesPct: number;
+  vacancyPct: number;
+  annualAppreciationPct: number;
+  holdingYears: number;
+  taxRatePct?: number;
+};
+
+export type InvestScoreResponse = {
+  downPayment: number;
+  loanAmount: number;
+  monthlyMortgage: number;
+  grossAnnualRent: number;
+  effectiveGrossIncome: number;
+  operatingExpenses: number;
+  netOperatingIncome: number;
+  capRate: number;
+  cashOnCash: number;
+  priceToRent: number;
+  grossRentMultiplier: number;
+  monthlyCashflow: number;
+  annualCashflow: number;
+  remainingLoanBalance: number;
+  totalEquityEnd: number;
+  totalReturnPct: number;
+  irrPct: number;
+  score: number;
+  grade: 'A' | 'B' | 'C' | 'D' | 'F' | string;
+};
+
+export type InspectionAnalysis = {
+  brightness: number;
+  contrast: number;
+  sharpness: number;
+  score: number;
+  verdict: 'boa' | 'ok' | 'ruim' | string;
+  notes: string[];
+  dominantColor: string;
+  edgesRatio: number;
+  focusScore: number;
+  imageWidth: number;
+  imageHeight: number;
+};
+
+export function scoreInvestment(body: InvestScoreRequest) {
+  return apiFetch<InvestScoreResponse>('/invest/score', {
+    method: 'POST',
+    body: JSON.stringify(body),
+  });
+}
+
+export async function analyzeInspectionImage(file: File, maxWidth = 1024) {
+  const form = new FormData();
+  form.append('image', file);
+  form.append('max_width', String(maxWidth));
+
+  const res = await fetch(apiUrl('/inspect/image'), {
+    method: 'POST',
+    body: form,
+    cache: 'no-store',
+  });
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => '');
+    throw new Error(`API error ${res.status}: ${text || res.statusText}`);
+  }
+
+  return res.json() as Promise<InspectionAnalysis>;
+}
+
 /* ─── Real-time valuation (numpy-ts prior, sub-ms) ─── */
 
 export type RealtimeValuation = {

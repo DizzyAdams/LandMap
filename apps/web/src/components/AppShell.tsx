@@ -11,6 +11,7 @@ import {
   Map,
   MapPin,
   Search,
+  MessageSquare,
   Settings,
   Star,
   User,
@@ -21,6 +22,26 @@ const focusRing =
 
 type IconComponent = ComponentType<{ size?: number; className?: string }>;
 
+function CameraGlyph({ size = 24, className }: { size?: number; className?: string }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
+    >
+      <path d="M4 7h3l2-3h6l2 3h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2Z" />
+      <circle cx="12" cy="13" r="3.5" />
+    </svg>
+  );
+}
+
 const navItems: { href: string; label: string; Icon: IconComponent; emBreve?: boolean }[] = [
   { href: 'regions', label: 'Regiões', Icon: MapPin },
   { href: 'favorites', label: 'Favoritos', Icon: Star },
@@ -28,6 +49,8 @@ const navItems: { href: string; label: string; Icon: IconComponent; emBreve?: bo
   { href: 'dashboard', label: 'Dashboard', Icon: LayoutGrid },
   { href: 'search', label: 'Buscar', Icon: Search },
   { href: 'map', label: 'Mapa', Icon: Map },
+  { href: 'inspect', label: 'Capturar', Icon: CameraGlyph },
+  { href: 'chat', label: 'Chat', Icon: MessageSquare },
   { href: 'admin', label: 'Admin', Icon: Settings },
 ];
 
@@ -42,7 +65,9 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     return pathname === full || pathname.startsWith(full + '/');
   };
 
-  const bottomItems = navItems.slice(0, 4);
+  const bottomItems = navItems.filter((item) =>
+    ['search', 'map', 'inspect', 'compare', 'chat'].includes(item.href),
+  );
 
   useEffect(() => {
     setMobileNav(false);
@@ -128,13 +153,13 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </header>
 
         {/* Conteúdo — pb mobile para bottom nav (antes estava no layout global e vazava no funil) */}
-        <main className="min-w-0 flex-1 pt-16 pb-[88px] md:pb-0 md:pt-0">{children}</main>
+        <main className="min-w-0 flex-1 pt-16 pb-[96px] md:pb-0 md:pt-0">{children}</main>
       </div>
 
       {/* Bottom nav mobile 4 colunas */}
       <nav
         aria-label="Navegação mobile"
-        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-4 border-t border-[var(--border)] bg-[var(--card)] backdrop-blur-xl md:hidden"
+        className="fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 border-t border-[var(--border)] bg-[var(--card)] backdrop-blur-xl md:hidden"
       >
         {bottomItems.map((item) => (
           <Link

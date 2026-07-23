@@ -1,11 +1,14 @@
-"""FastAPI app exposing `/value` (valuation) and `/forecast` (city trend)."""
+"""FastAPI app exposing `/value`, `/forecast`, and `/inspect/image`."""
 
 from __future__ import annotations
 
 from contextlib import asynccontextmanager
+from io import BytesIO
+from typing import Any
 
+import numpy as np
 import polars as pl
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 
 from landmap_data.datasets import load_price_history
 from landmap_models.forecast import CityForecaster
@@ -16,6 +19,7 @@ from .schema import (
     ForecastPoint,
     ForecastRequest,
     ForecastResponse,
+    InspectionAnalysisResponse,
     RealtimeBatchRequest,
     RealtimeBatchResponse,
     RealtimeValueRequest,
@@ -23,6 +27,13 @@ from .schema import (
     ValueRequest,
     ValueResponse,
 )
+
+try:  # pragma: no cover - optional vision dependency
+    import cv2  # type: ignore
+except Exception:  # pragma: no cover - fallback path
+    cv2 = None  # type: ignore[assignment]
+
+from PIL import Image
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
@@ -135,3 +146,99 @@ def forecast(req: ForecastRequest) -> ForecastResponse:
         for r in sub.iter_rows(named=True)
     ]
     return ForecastResponse(city=req.city, forecasts=points)
+
+
+def _inspect_array(image: np.ndarray) -> dict[str, Any]:
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if cv2 is not None else image.mean(axis=2).astype(np.uint8)
+    if gray.ndim != 2:
+        raise ValueError("Invalid grayscale conversion")
+    brightness = float(gray.mean())
+    contrast = float(gray.std())
+
+    if cv2 is not None:
+        lap = cv2.Laplacian(gray, cv2.CV_64F)
+        focus_score = float(lap.var())
+        edges = cv2.Canny(gray, 80, 180)
+        edges_ratio = float(edges.mean() / 255.0)
+        rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        hist = cv2.calcHist([rgb], [0, 1, 2], None, [4, 4, 4], [0, 256, 0, 256, 0, 256]).flatten()
+        dominant = int(hist.argmax())
+        r = (dominant // 16) * 64
+        g = ((dominant // 4) % 4) * 64
+        b = (dominant % 4) * 64
+    else:
+        focus_score = float(np.abs(np.diff(gray.astype(np.float32), axis=0)).mean() if gray.shape[0] > 1 else 0.0)
+        gx = np.abs(np.diff(gray.astype(np.float32), axis=1)).mean() if gray.shape[1] > 1 else 0.0
+        edges_ratio = float((focus_score + gx) / 255.0)
+        rgb = image[:, :, ::-1]
+        r, g, b = (int(x) for x in rgb.mean(axis=(0, 1)))
+
+    score = int(
+        np.clip(
+            100
+            - abs(brightness - 130) * 1.0
+            + min(20.0, contrast * 0.65)
+            + min(20.0, focus_score * 0.05)
+            - max(0.0, (0.04 - edges_ratio) * 250.0),
+            0,
+            100,
+        )
+    )
+    notes: list[str] = []
+    if brightness < 60:
+        notes.append("Pouca luz")
+    if brightness > 200:
+        notes.append("Imagem muito clara")
+    if contrast < 25:
+        notes.append("Pouco contraste")
+    if focus_score < 120:
+        notes.append("Foco fraco")
+    if not notes:
+        notes.append("Imagem apta para underwriting")
+
+    verdict = "boa" if score >= 75 else "ok" if score >= 55 else "ruim"
+    return {
+        "brightness": int(round(brightness)),
+        "contrast": int(round(contrast)),
+        "sharpness": int(round(min(100.0, focus_score / 8.0))),
+        "score": score,
+        "verdict": verdict,
+        "notes": notes,
+        "dominant_color": f"rgb({r}, {g}, {b})",
+        "edges_ratio": round(edges_ratio, 4),
+        "focus_score": round(focus_score, 2),
+    }
+
+
+@app.post("/inspect/image", response_model=InspectionAnalysisResponse)
+async def inspect_image(
+    image: UploadFile = File(...),
+    max_width: int = Form(1024),
+) -> InspectionAnalysisResponse:
+    """Analyze a property photo using the Python vision backend."""
+    raw = await image.read()
+    if not raw:
+        raise HTTPException(status_code=400, detail="Empty image upload")
+
+    try:
+        pil = Image.open(BytesIO(raw)).convert("RGB")
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Invalid image upload") from exc
+
+    width, height = pil.size
+    if width > max_width:
+        new_height = max(1, round(height * (max_width / width)))
+        pil = pil.resize((max_width, new_height))
+        width, height = pil.size
+
+    rgb = np.asarray(pil, dtype=np.uint8)
+    if cv2 is not None:
+        metrics = _inspect_array(cv2.cvtColor(rgb, cv2.COLOR_RGB2BGR))
+    else:
+        # Fallback keeps the endpoint useful in environments without the OpenCV wheel.
+        metrics = _inspect_array(rgb[:, :, ::-1])
+    return InspectionAnalysisResponse(
+        image_width=width,
+        image_height=height,
+        **metrics,
+    )

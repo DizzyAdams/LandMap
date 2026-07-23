@@ -8,6 +8,12 @@
     "jsx": "preserve",
     "skipLibCheck": true,
     "paths": {
+      "@landmap/api": [
+        "../../packages/api/src/index.ts"
+      ],
+      "@landmap/api/*": [
+        "../../packages/api/src/*"
+      ],
       "@landmap/ui": [
         "../packages/ui/src/index.ts"
       ],

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useLocale, useTranslations } from 'next-intl';
 import { RequireAuth } from '../../../components/RequireAuth';
 import { Reveal } from '../../../components/Motion';
-import { MetricStat, Badge } from '@landmap/ui';
+import { MetricStat, Badge, Skeleton } from '@landmap/ui';
 import {
   getOpportunities,
   type Opportunity,
@@ -180,10 +180,7 @@ function KpisPageInner() {
               <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
                 {loading
                   ? Array.from({ length: 4 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="h-24 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--card)]"
-                      />
+                      <Skeleton key={i} className="h-24" />
                     ))
                   : topCities.slice(0, 8).map((c) => (
                       <MetricStat
@@ -210,10 +207,7 @@ function KpisPageInner() {
               <div className="mt-3 space-y-3">
                 {loading ? (
                   Array.from({ length: 5 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="h-20 animate-pulse rounded-xl border border-[var(--border)] bg-[var(--card)]"
-                    />
+                    <Skeleton key={i} className="h-20" />
                   ))
                 ) : opportunities.length === 0 ? (
                   <div className="rounded-xl border border-[var(--border)] bg-[var(--card)] p-10 text-center">
