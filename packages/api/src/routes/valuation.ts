@@ -64,13 +64,14 @@ export function valueRealtime(input: {
 
 const bodySchema = z.object({
   areaM2: z.coerce.number().positive('areaM2 deve ser > 0'),
+  area_m2: z.coerce.number().positive().optional(),
   type: z.enum(['apartamento', 'casa', 'terreno', 'comercial']).optional(),
   bedrooms: z.coerce.number().int().min(0).max(20).optional(),
   basePpm2: z.coerce.number().positive().nullable().optional(),
   yoyPct: z.coerce.number().optional(),
   volatility: z.coerce.number().optional(),
   isLaunch: z.coerce.boolean().optional(),
-});
+}).transform((d) => ({ ...d, areaM2: d.areaM2 ?? d.area_m2 ?? 0 }));
 
 const batchSchema = z.object({
   items: z.array(bodySchema).min(1, 'items não pode ser vazio').max(500),
@@ -96,7 +97,7 @@ valuationApp.post('/realtime', async (c) => {
 /* GET /value/realtime?areaM2=..&type=.. — query variant (fácil de plugar em UI). */
 valuationApp.get('/realtime', (c) => {
   const parsed = bodySchema.safeParse({
-    areaM2: c.req.query('areaM2'),
+    areaM2: c.req.query('areaM2') ?? c.req.query('area_m2') ?? undefined,
     type: c.req.query('type') ?? undefined,
     bedrooms: c.req.query('bedrooms') ?? undefined,
     basePpm2: c.req.query('basePpm2') ?? undefined,

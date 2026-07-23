@@ -92,7 +92,7 @@ function toAssumptions(d: LooseQuery): InvestmentAssumptions {
 export const investApp = new Hono<Env>();
 
 /* GET /invest/analyze?price=...&monthlyRent=...&... → InvestmentResult */
-investApp.get('/invest/analyze', (c) => {
+investApp.get('/analyze', (c) => {
   const result = analyzeQuerySchema.safeParse({
     price: c.req.query('price') ?? undefined,
     monthlyRent: c.req.query('monthlyRent') ?? undefined,
@@ -116,7 +116,7 @@ investApp.get('/invest/analyze', (c) => {
 });
 
 /* GET /invest/opportunities?city=X[&limit=N] → top N imóveis por score desc */
-investApp.get('/invest/opportunities', (c) => {
+investApp.get('/opportunities', (c) => {
   const city = c.req.query('city') ?? '';
   if (!city.trim()) {
     return c.json({ error: 'O parâmetro "city" é obrigatório' }, 400);
@@ -143,7 +143,7 @@ investApp.get('/invest/opportunities', (c) => {
 });
 
 /* POST /invest/score → analyze(body: InvestmentAssumptions) */
-investApp.post('/invest/score', async (c) => {
+investApp.post('/score', async (c) => {
   let body: unknown;
   try {
     body = await c.req.json();
