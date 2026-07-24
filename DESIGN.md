@@ -166,15 +166,22 @@ and `.dark` define them; `@theme inline` exposes them as Tailwind utilities
 
 ## 4. Route Map (Lovable reference → local Next.js port)
 
-**The local app is now a literal 1:1 clone of the Lovable reference.** It contains
-**only** the screens that exist in Lovable. All LandMap-unique screens (that had no
-Lovable equivalent) were removed on **2026-07-14** per the parity directive ("deixe só
-100% igual") and archived under `archive_landmap_only_2026-07-14/` (reversible, out of
-the build). This keeps the product faithful to the Lovable UX/UI standard and eliminates
-any drift surface.
+**Padrão oficial (decisão 2026-07-24):** o LandMap **porta fielmente as telas que existem
+no Lovable** (elas ficam **LITERALMENTE IGUAIS** — mesmo estrutura, copy, tokens, ícones,
+espaçamentos) e **ADICIONA nossas próprias páginas** (produto LandMap) no mesmo design
+system (indigo Lovable, `var(--*)`, `@landmap/ui`, `lovable/icons`, i18n). Ou seja: o
+Lovable é a **fonte de verdade do UX/UI** para as telas compartilhadas; as telas
+LandMap-only seguem o mesmo padrão visual mas têm layout próprio.
 
-The Lovable reference exposes these routes (from `lovable_routes_summary.txt` +
-`lovable_html_*.html` captures). **Every one is ported and must stay LITERALLY EQUAL:**
+> **Correção de auditoria (2026-07-24):** a afirmação anterior de que "o app contém SÓ as
+> telas do Lovable e as demais foram removidas em 2026-07-14" está **OBSOLETA**. O app tem
+> **63 rotas** `page.tsx`. Telas LandMap-only (live, studio, calculator, chat, status,
+> insights, sales, property, agents, cockpit, radar, heatmap, assistant, automations,
+> pipeline, writer, knowledge, etc.) **estão no disco e ativas** — elas são *features de
+> produto*, não drift. O Lovable serve como padrão de design para as telas compartilhadas,
+> não como teto de escopo.
+
+### 4.0 Telas compartilhadas (Lovable → local, devem ficar 100% iguais)
 
 | Lovable route | Local route (`/[locale]`) | Status |
 |---|---|---|
@@ -190,7 +197,18 @@ The Lovable reference exposes these routes (from `lovable_routes_summary.txt` +
 | `/search` | `search/page.tsx` | ported (Server Component, `searchProperties` API, i18n pt-BR/en-US/es-ES, Navbar link) · 100% equal |
 | `/onboarding` | `onboarding/page.tsx` | ported · 100% equal |
 
-**Superset LandMap (mesmo design system, fora do Lovable):** `/rag`, `/chat`, `/developers`, `/integrations`, `/admin/webhooks` (outbound multi-projeto), market pages, etc. Revalidação: `docs/lovable-parity-recheck-2026-07.md`. Contrato RAG/webhooks: `docs/platform-rag-webhooks-2026-07.md`.
+### 4.0.1 Superset LandMap (mesmo design system, fora do Lovable)
+
+São **features de produto**, tratadas como *on-brand* (indigo `var(--*)`, `@landmap/ui`,
+i18n), não como desvio (drift): `/rag`, `/chat`, `/developers`, `/integrations`,
+`/live`, `/studio`, `/calculator`, `/status`, `/insights`, `/sales`, `/property/[id]`,
+`/agents`, `/cockpit`, `/radar`, `/heatmap`, `/assistant`, `/automations`, `/pipeline`,
+`/writer`, `/knowledge`, `/recommendations`, `/workflows`, `/leads`, `/team`,
+`/portfolio`, `/alerts`, `/cities`, `/neighborhoods`, `/valorization`, `/market`,
+`/notifications`, `/activity`, `/settings`, `/api-keys`, `/watchlist`, `/reports`,
+`/glossary`, `/resources`, `/inspect`, `/kpis`, `/launch`, `/plans/manage`,
+`/admin/webhooks` (outbound multi-projeto). Revalidação: `docs/lovable-parity-recheck-2026-07.md`.
+Contrato RAG/webhooks: `docs/platform-rag-webhooks-2026-07.md`.
 
 ### 4.1 Map System Standard (2026-07-17 — **Híbrido C (TRAVADO como padrão oficial)**)
 
@@ -217,14 +235,16 @@ The Lovable reference exposes these routes (from `lovable_routes_summary.txt` +
 - Dashboard genérico sem camadas (reverter A).
 - MapView demo órfão / sliders mortos.
 
-**Removed (no Lovable equivalent — archived, not drift):** `world` (3D "World"/Sovereign
-data-viz + `BmapViewer`/`SkylineCanvas`/`AtlasLanding`/`InvestmentCard`/`InvestorPanel`/
-`EnergyPanel`/`LivePulse`/`HeroTerritory`/`PropertyThumb`/`InvestmentLegend` + `lib/bmap.ts`),
-`live`, `studio`, `calculator`, `chat`, `status`, `terrenos`, `property`, `insights`,
-`sales`, and the shared `FeaturePage.tsx`. These were moved to
-`archive_landmap_only_2026-07-14/` on 2026-07-14 so the app stays a pure Lovable clone.
-If a feature needs to return, port it back as an *on-brand* screen (indigo tokens,
-`var(--*)`, `@landmap/ui`, i18n) — never as Lovable drift.
+**Removed (de fato, fora do build):** `world` (3D "World"/Sovereign data-viz +
+`BmapViewer`/`SkylineCanvas`/`AtlasLanding`/`InvestmentCard`/`InvestorPanel`/
+`EnergyPanel`/`LivePulse`/`HeroTerritory`/`PropertyThumb`/`InvestmentLegend` +
+`lib/bmap.ts`) e `terrenos` foram movidos para `archive_landmap_only_2026-07-14/`.
+> **Nota (2026-07-24):** as telas `live`, `studio`, `calculator`, `chat`, `status`,
+> `insights`, `sales`, `property` citadas como "removidas" em versões anteriores do doc
+> **NÃO foram removidas** — permanecem ativas como features de produto (§4.0.1). O único
+> removido de verdade dentre as citadas é `world` (paleta Sovereign aposentada, DESIGN §8).
+Se uma feature precisar retornar, portá-la como tela *on-brand* (indigo tokens,
+`var(--*)`, `@landmap/ui`, i18n) — nunca como Lovable drift.
 
 ## 5. User Workflow (mirrored from Lovable: Describe → Watch → Refine → Ship)
 

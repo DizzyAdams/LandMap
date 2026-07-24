@@ -2,9 +2,9 @@ import { describe, it, expect } from 'vitest';
 import investApp from '../src/routes/invest.js';
 
 describe('invest API', () => {
-  it('GET /invest/analyze retorna InvestmentResult com capRate', async () => {
+  it('GET /analyze retorna InvestmentResult com capRate', async () => {
     const res = await investApp.request(
-      '/invest/analyze?price=500000&monthlyRent=3000&downPaymentPct=0.2&interestRatePct=7&loanTermYears=30&annualExpensesPct=0.35&vacancyPct=0.08&annualAppreciationPct=0.05&holdingYears=5',
+      '/analyze?price=500000&monthlyRent=3000&downPaymentPct=0.2&interestRatePct=7&loanTermYears=30&annualExpensesPct=0.35&vacancyPct=0.08&annualAppreciationPct=0.05&holdingYears=5',
     );
     expect(res.status).toBe(200);
     const data = await res.json();
@@ -15,13 +15,13 @@ describe('invest API', () => {
     expect(data).toHaveProperty('cashOnCash');
   });
 
-  it('GET /invest/analyze sem price retorna 400', async () => {
-    const res = await investApp.request('/invest/analyze');
+  it('GET /analyze sem price retorna 400', async () => {
+    const res = await investApp.request('/analyze');
     expect(res.status).toBe(400);
   });
 
-  it('GET /invest/opportunities?city=Curitiba retorna array ranqueado', async () => {
-    const res = await investApp.request('/invest/opportunities?city=Curitiba');
+  it('GET /opportunities?city=Curitiba retorna array ranqueado', async () => {
+    const res = await investApp.request('/opportunities?city=Curitiba');
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(Array.isArray(data)).toBe(true);
@@ -37,15 +37,15 @@ describe('invest API', () => {
     expect(typeof first.result.score).toBe('number');
   });
 
-  it('GET /invest/opportunities respeita o limite máximo de 50', async () => {
-    const res = await investApp.request('/invest/opportunities?city=Curitiba&limit=999');
+  it('GET /opportunities respeita o limite máximo de 50', async () => {
+    const res = await investApp.request('/opportunities?city=Curitiba&limit=999');
     expect(res.status).toBe(200);
     const data = await res.json();
     expect(data.length).toBeLessThanOrEqual(50);
   });
 
-  it('POST /invest/score com body válido retorna 200', async () => {
-    const res = await investApp.request('/invest/score', {
+  it('POST /score com body válido retorna 200', async () => {
+    const res = await investApp.request('/score', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({
@@ -66,8 +66,8 @@ describe('invest API', () => {
     expect(data).toHaveProperty('score');
   });
 
-  it('POST /invest/score com body inválido retorna 400', async () => {
-    const res = await investApp.request('/invest/score', {
+  it('POST /score com body inválido retorna 400', async () => {
+    const res = await investApp.request('/score', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ price: -1 }),

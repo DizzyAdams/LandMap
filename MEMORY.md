@@ -9,7 +9,7 @@
 > **Design source of truth = `DESIGN.md`** (fonte autoritativa de UI/UX, tokens e fontes — mantenha este arquivo e `CLAUDE.md` em sincronia com ele).
 
 
-Última atualização: 2026-07-18 (branch `main` — parity Lovable 100%, audit prod 146/146 + parity 0 missing; deploy live `landmapprod-28cmfdy2a`).
+Última atualização: 2026-07-24 (audit paridade — ver bloco abaixo; corrigido descompasso docs×código).
 
 > **2026-07-18 (SESSÃO 2) — Deploy 100% green + hardening escalabilidade.** `validate_real.py`=146/146, `compare_live.py`=TOTAL MISSING 0. Deploy `landmapprod-ghn0aobna-dizzys-projects-d5a44b36.vercel.app` (alias `landmapprod.vercel.app`, `landmap.us.kg`). **Build/deploy = pnpm (estável, commitado):** `vercel.json` → `installCommand: "pnpm install --frozen-lockfile"`, `buildCommand: "pnpm --filter @landmap/web run build"`, `outputDirectory: "apps/web/.next"`, `framework: "nextjs"`. Workspaces via `pnpm-workspace.yaml` (não o campo `workspaces` do package.json). **Deploy da RAIZ:** `vercel deploy --prod --yes` (sem `--cwd apps/web`) para o `vercel.json` raiz ser lido. Projeto Vercel em Node `20.x`. Live: `/pt-BR` e `/en-US` retornam HTTP 200. **Hardening aplicado e commitado:** `apps/web/next.config.mjs` ganhou CSP (self + Google Fonts), `Permissions-Policy`, cache longo p/ assets estáticos (immutable) e `s-maxage=60/stale-while-revalidate=300` p/ rotas; `apps/web/src/middleware.ts` ganhou rate-limit sliding-window (120 req/IP/min) + `Cache-Control` em GET `/api`. Lint 0, build local + remoto verdes. NOTA: tentativa anterior de trocar o install para `bun` foi **revertida** (commit `bf1d155`) — manter `pnpm` no `vercel.json`.
 
@@ -52,6 +52,13 @@
 
 ---
 
+> **2026-07-24 — AUDITORIA DE PARIDADE (multi-agente patterns, executada inline).** Constatado descompasso DOC×CÓDIGO:
+> - **Rotas reais no disco = 63** `page.tsx` (não "19–30" como diziam DESIGN.md §4 / MEMORY §2/§4). O app é um **superset grande**, NÃO um clone 1:1 mínimo do Lovable.
+> - DESIGN.md §4 afirma "removidas/arquivadas em 2026-07-14": world, live, studio, calculator, chat, status, insights, sales, property, terrenos. **Realidade:** live/studio/calculator/chat/status/insights/sales/property/[id] **AINDA ESTÃO no disco**; só world e terrenos sumiram. Doc obsoleto.
+> - Rotas LandMap-only NÃO documentadas (drift de doc): agents, cockpit, radar, heatmap, assistant, automations, pipeline, writer, knowledge, recommendations, workflows, leads, team, portfolio, alerts, cities, neighborhoods, valorization, market, notifications, activity, settings, api-keys, watchlist, reports, glossary, resources, developers, integrations, inspect, kpis, launch, plans/manage, admin/*(9), property/[id].
+> - **Tokens/cores/fontes:** ~95% Lovable-indigo OK (globals.css indigo oklch, DM Sans+Space Grotesk via <link>, system mono; 0 lucide-react). **Violação real:** `apps/web/src/app/[locale]/plans/page.tsx:139` usa `bg-emerald-500 text-white` (badge) — emerald-500 como marca é proibido por DESIGN §9; corrigir para `bg-[var(--success)] text-[var(--success-foreground)]`. `kpis/page.tsx` tone emerald/cyan/violet em MetricStat = LEGAL (§5 mapeia p/ tokens). map/page.tsx `#575ECF` só como fallback + `#fff` marker (ok §4.1); `bg-white/95` nos popovers do mapa = menor (Híbrido C).
+> - **NÃO verificado nesta sessão:** build/typecheck/lint/test (sem shell/terminal aqui; `delegate_task` 403 saldo) e paridade ao vivo vs Lovable (web_extract sem créditos Firecrawl). Scripts `validate_real.py`/`compare_live.py` só cobrem 15 rotas-amostra → "100% parity" anterior é baseada em amostra, não nas 63 reais. **AÇÃO:** usuário deve rodar `pnpm -r run typecheck && pnpm -r run lint` + `pnpm --filter @landmap/web run build` e `git status`/`git log`.
+
 ## 1. O que é o LandMap
 
 Plataforma open-source de **inteligência imobiliária** — API REST, busca
@@ -69,7 +76,7 @@ Stack mono-repo pnpm. Licença MIT.
 
 | Item | Estado |
 |------|--------|
-| App web (19 rotas + APIs) | ✅ build/typecheck/lint/testes verdes |
+| App web (**63 rotas** + APIs — ver audit 2026-07-24; doc "19 rotas" obsoleto) | 🟡 build/typecheck/lint NÃO re-verificados nesta sessão (sem shell); designs system ~95% Lovable-indigo |
 | **Spec LandMap (azul #003594, claro) — ⚠️ RETIRADO em 2026-07-13/14 (substituído pelo indigo Lovable, ver DESIGN.md)** | ✅ **commit `d8521c5` + deploy `landmapprod-3iwouhmy0` (alias `landmapprod.vercel.app`) READY** (histórico) |
 | AppShell autenticado + /onboarding + /regions | ✅ commit `d8521c5` |
 | Dataset | ✅ 3.000 imóveis sintéticos calibrados + 3.000 markdowns schema v2 (20 cidades, ≥54% terrenos, grades A–F) |
@@ -113,10 +120,16 @@ Workspace (`pnpm-workspace.yaml`): `packages/*` + `apps/*`.
 
 ## 4. Rotas do app web (`apps/web/src/app/[locale]/`)
 
-| Marketing/dados: `/` (home surreal aurora+grain), `/search`, `/map`, `/compare`,
-`/favorites` (RAG grátis MiniMax), `/calculator`, `/pricing`, `/docs` (+`/docs/embedding`),
-`/insights`, `/live`, `/offline`, `/status`, |
-`/studio`, `/sales` (cockpit), `/property/[id]`, `/admin` (`analytics`/`audit`/`exports`/`leads`/`properties`/`settings`/`webhooks`).
+**63 rotas `page.tsx` (audit 2026-07-24).** Padrao: telas que existem no Lovable ficam
+100% iguais (home, regions, favorites, compare, dashboard, admin/*, plans, auth, map,
+search, onboarding); telas LandMap-only sao features de produto no mesmo design system
+(ver DESIGN.md 4.0/4.0.1). `/world` e `/terrenos` foram os unicos removidos de verdade
+(archivados 2026-07-14/15).
+
+| Grupo | Rotas |
+|---|---|
+| Compartilhadas (Lovable) | `/`, `/regions`, `/favorites`, `/compare`, `/dashboard`, `/admin`(+9 sub), `/plans`, `/auth`, `/map`, `/search`, `/onboarding` |
+| Produto LandMap | `/rag`, `/chat`, `/developers`, `/integrations`, `/live`, `/studio`, `/calculator`, `/status`, `/insights`, `/sales`, `/property/[id]`, `/agents`, `/cockpit`, `/radar`, `/heatmap`, `/assistant`, `/automations`, `/pipeline`, `/writer`, `/knowledge`, `/recommendations`, `/workflows`, `/leads`, `/team`, `/portfolio`, `/alerts`, `/cities`, `/neighborhoods`, `/valorization`, `/market`, `/notifications`, `/activity`, `/settings`, `/api-keys`, `/watchlist`, `/reports`, `/glossary`, `/resources`, `/inspect`, `/kpis`, `/launch`, `/plans/manage`, `/admin/webhooks` |
 
 APIs em `apps/web/src/app/api/`: `contact`, `[...route]` (catch-all p/ Hono),
 `geo/autocomplete`, `sales/state|cycle|approve|reject`, etc.

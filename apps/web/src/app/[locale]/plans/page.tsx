@@ -136,7 +136,7 @@ export default function PlansPage() {
                 </span>
               )}
               {p.id === 'free' && (
-                <span className="absolute -top-2 left-4 rounded-full bg-emerald-500 px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-white">
+                <span className="absolute -top-2 left-4 rounded-full bg-[var(--success)] px-2.5 py-0.5 text-[10px] font-semibold tracking-wider text-[var(--success-foreground)]">
                   14 dias grátis
                 </span>
               )}
